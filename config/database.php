@@ -8,7 +8,7 @@ class Database
     {
         $host = "localhost";
         $db = "electronic_shop";
-        $user = "root";
+        $user = "root"; 
         $pass = "";
         $charset = "utf8mb4";
 
