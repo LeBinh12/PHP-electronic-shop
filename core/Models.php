@@ -84,4 +84,27 @@ abstract class Model
         $stmt->execute($data);
         return $this->pdo->lastInsertId();
     }
+
+    public function update($id, $data)
+    {
+        $setPart = [];
+        foreach ($data as $column => $value) {
+            $setParts[] = "$column = :$column";
+        }
+
+        $setClause = implode(", ", $setParts);
+
+        $data['id'] = $id;
+
+        $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute($data);
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
+    }
 }
