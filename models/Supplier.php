@@ -11,6 +11,7 @@ class Supplier extends Model
         'contact_person' => 'VARCHAR(255)',
         'Phone' => 'VARCHAR(20)',
         'Email' => ' VARCHAR(255)',
-        'Address' => 'TEXT'
+        'Address' => 'TEXT',
+        'isDeleted' => 'BIT',
     ];
 }

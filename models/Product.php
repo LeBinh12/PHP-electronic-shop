@@ -15,6 +15,7 @@
             'image_url' => 'VARCHAR(500)',
             'category_id' => 'INT',
             'supplier_id' => 'INT',
+            'isDeleted' => 'BIT',
             'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
         ];
         protected $foreignKeys = [

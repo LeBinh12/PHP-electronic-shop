@@ -1,0 +1,8 @@
+{
+    "description": "student manager",
+    "name": "phuocbinh/bao-cao",
+    "require": {
+        "respect/validation": "^2.4"
+    },
+    "type": "project"
+}

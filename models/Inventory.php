@@ -8,7 +8,8 @@
             'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
             'stock_quantity' => 'INT',
             'last_update' => 'DATETIME',
-            'product_id' => 'INT'
+            'product_id' => 'INT',
+            'isDeleted' => 'BIT',
         ];
 
         protected $foreignKeys = [

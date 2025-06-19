@@ -65,15 +65,22 @@ abstract class Model
 
     public function all()
     {
-        $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
+        $stmt = $this->pdo->query("SELECT * FROM {$this->table} WHERE isDeleted = 0");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function find($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id AND isDeleted = 0");
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function existsByName($name): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} WHERE name = :name AND isDeleted = 0");
+        $stmt->execute(['name' => $name]);
+        return $stmt->fetchColumn() > 0;
     }
 
     public function insert($data): mixed
@@ -96,7 +103,7 @@ abstract class Model
 
         $data['id'] = $id;
 
-        $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id";
+        $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id AND isDeleted = 0";
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute($data);
@@ -105,6 +112,12 @@ abstract class Model
     public function delete($id)
     {
         $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
+    }
+
+    public function updateDeleted($id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 1 WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
 }
