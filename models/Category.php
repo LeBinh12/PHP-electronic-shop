@@ -10,6 +10,7 @@ class Category extends Model
         'name' => 'VARCHAR(255) NOT NULL',
         'status' => 'BIT',
         'icon' => 'VARCHAR(255)',
+        'isDeleted' => 'BIT',
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 }

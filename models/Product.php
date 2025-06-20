@@ -30,8 +30,9 @@
             $stmt = $this->pdo->query("
                 SELECT p.*, c.name as category_name
                 FROM products p
-                JOIN categories c ON p.category_id = $id
+                JOIN categories c ON p.category_id = $:id
             ");
+            $stmt->execute(['id' => $id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
