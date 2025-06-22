@@ -23,6 +23,39 @@
             'supplier_id' => 'suppliers(id)',
         ];
 
+        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null)
+        {
+            $sql = "
+        SELECT p.*, c.name as category_name, s.name as supplier_name
+        FROM products p
+        JOIN categories c ON p.category_id = c.id
+        JOIN suppliers s ON p.supplier_id = s.id
+        WHERE p.isDeleted = 0
+    ";
+
+            $params = [];
+
+            if ($categoryId !== null) {
+                $sql .= " AND p.category_id = :category_id";
+                $params['category_id'] = $categoryId;
+            }
+
+            if ($supplierId !== null) {
+                $sql .= " AND p.supplier_id = :supplier_id";
+                $params['supplier_id'] = $supplierId;
+            }
+
+            if (!empty($keyword)) {
+                $sql .= " AND p.name LIKE :keyword";
+                $params['keyword'] = '%' . $keyword . '%';
+            }
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+
 
         // dưới đây là các hàm xử lý trực tiếp trên server
         public function getProductsByCategory($id)

@@ -33,13 +33,13 @@ $listProduct = $product->getAll();
                         <td><?= htmlspecialchars($item['image_url']) ?></td>
                         <td>
                             <?php
-                            $categoryItem = $category->getById($item["id"]);
+                            $categoryItem = $category->getById($item["category_id"]);
                             echo $categoryItem['name'];
                             ?>
                         </td>
                         <td>
                             <?php
-                            $supplierItem = $supplier->getById($item["id"]);
+                            $supplierItem = $supplier->getById($item["supplier_id"]);
                             echo $supplierItem['name'];
                             ?>
                         </td>

@@ -26,6 +26,11 @@ class ProductController
         return $this->productModel->getProductsByCategory($id);
     }
 
+    public function getFilterProducts($categoryId, $supplierId, $keyword)
+    {
+        return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword);
+    }
+
     public function add($data)
     {
         if ($this->productModel->existsByName($data['name'])) {

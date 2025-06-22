@@ -12,6 +12,10 @@ require_once  './models/Inventory.php';
 require_once  './models/Review.php';
 require_once  './models/Admin.php';
 require_once './controllers/ProductController.php';
+require_once  './models/Banner.php';
+
+$banner = new Banner();
+$banner->createTable();
 
 $user = new User();
 $user->createTable();
