@@ -190,3 +190,17 @@ img {
   max-width: 100%;
   height: auto;
 }
+.modal-dialog {
+  max-width: 800px !important;
+}
+/* Ẩn mặc định */
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  margin-left: 20px;  
+}
+
+/* Khi có class .show thì hiển thị */
+.dropdown-content.show {
+  display: flex;
+}

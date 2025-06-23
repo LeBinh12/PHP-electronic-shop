@@ -1,0 +1,22 @@
+.thumb-img {
+width: 100px;
+height: 70px;
+object-fit: cover;
+cursor: pointer;
+}
+
+.related-product img {
+height: 180px;
+object-fit: cover;
+}
+
+#mainImage {
+width: 100%;
+max-width: 450px;
+height: 200px;
+object-fit: contain;
+}
+
+.text-justify-custom {
+text-align: justify;
+}

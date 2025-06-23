@@ -2,7 +2,9 @@
     "description": "student manager",
     "name": "phuocbinh/bao-cao",
     "require": {
-        "respect/validation": "^2.4"
+        "respect/validation": "^2.4",
+        "cloudinary/cloudinary_php": "^3.1",
+        "firebase/php-jwt": "^6.11"
     },
     "type": "project"
 }

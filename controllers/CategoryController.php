@@ -22,6 +22,16 @@ class CategoryController
         return $this->categoryModel->find($id);
     }
 
+    public function getFilterCategories($limit, $offset, $keyword)
+    {
+        return $this->categoryModel->getFilteredCategories($limit, $offset, $keyword);
+    }
+
+    public function countCategories()
+    {
+        return $this->categoryModel->countCategory();
+    }
+
     public function add($data)
     {
         if ($this->categoryModel->existsByName($data['name'])) {
@@ -57,6 +67,7 @@ class CategoryController
             }
         }
         $categoryEdit = $this->categoryModel->update($id, $data);
+        var_dump($existingcategory);
         return [
             'success' => true,
             'message' => 'Cập nhật thể loại thành công!',

@@ -21,6 +21,16 @@ class SupplierController
         return $this->supplierModel->find($id);
     }
 
+    public function getFilterSuppliers($limit, $offset, $keyword)
+    {
+        return $this->supplierModel->getFilteredSuppliers($limit, $offset, $keyword);
+    }
+
+    public function countSuppliers()
+    {
+        return $this->supplierModel->countSupplier();
+    }
+
     public function add($data)
     {
         if ($this->supplierModel->existsByName($data['name'])) {
@@ -65,6 +75,10 @@ class SupplierController
 
     public function delete($id)
     {
-        return $this->supplierModel->updateDeleted($id);
+        $supplierDelete = $this->supplierModel->updateDeleted($id);
+        return [
+            'success' => true,
+            'message' => 'Cập nhật nhà cung cấp thành công!',
+        ];
     }
 }

@@ -1,0 +1,116 @@
+<?php
+// $listSupplier = $supplier->getAll();
+
+
+$keyword = '';
+
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+
+
+$totalSuppliers = $supplier->countSuppliers();
+$totalPages = ceil($totalSuppliers / $limit);
+$listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
+
+
+
+?>
+<?php require_once 'modules/Admin/Suppliers/AddSupplier.php'; ?>
+<?php require_once 'modules/Admin/Suppliers/UpdateSupplier.php'; ?>
+<?php require_once 'modules/Admin/Suppliers/DeleteSupplier.php'; ?>
+<div class="text-center mb-2">
+    <h1 class="h3">Danh sách nhà cung cấp</h1>
+</div>
+<div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+        <i class="fas fa-plus-circle me-1"></i> Thêm nhà cung cấp
+    </button>
+</div>
+
+
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-lg custom-table mx-auto" style="width: auto;">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Người liên hệ</th>
+                    <th>Điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($listSuppliers as $item): ?>
+                    <tr>
+                        <td><?= $item["id"] ?></td>
+                        <td><?= htmlspecialchars($item["name"]) ?></td>
+                        <td><?= htmlspecialchars($item["contact_person"] ?? '') ?></td>
+                        <td><?= htmlspecialchars($item["Phone"] ?? '') ?></td>
+                        <td><?= htmlspecialchars($item["Email"] ?? '') ?></td>
+                        <td><?= htmlspecialchars($item["Address"] ?? '') ?></td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" onclick="openEditSupplierModal(
+                                <?= $item['id'] ?>,
+                               '<?= addslashes($item['name']) ?>',
+                               '<?= addslashes($item['contact_person'] ?? '') ?>',
+                               '<?= addslashes($item['Phone'] ?? '') ?>',
+                               '<?= addslashes($item['Email'] ?? '') ?>',
+                               '<?= addslashes($item['Address'] ?? '') ?>')">
+                                    <i class="fas fa-edit"></i> Sửa
+                                </button>
+
+                                <button class="btn btn-sm btn-danger delete-supplier-btn" data-id="<?= $item['id'] ?>"
+                                    data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
+                                    <i class="fas fa-trash-alt"></i> Xóa
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                <a class="page-link" href="Admin.php?page=modules/Admin/Suppliers/Supplier.php&search=<?= $keyword ?>&number=<?= $i ?>">
+                    <?= $i ?>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
+</nav>
+
+<script>
+    function openEditSupplierModal(id, name, contact, phone, email, address) {
+        document.getElementById('editSupplierId').value = id;
+        document.getElementById('editSupplierName').value = name;
+        document.getElementById('editSupplierContact').value = contact;
+        document.getElementById('editSupplierPhone').value = phone;
+        document.getElementById('editSupplierEmail').value = email;
+        document.getElementById('editSupplierAddress').value = address;
+        new bootstrap.Modal(document.getElementById('editSupplierModal')).show();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.delete-supplier-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('deleteSupplierId').value = button.dataset.id;
+                document.getElementById('deleteSupplierName').innerText = button.dataset.name;
+                new bootstrap.Modal(document.getElementById('deleteSupplierModal')).show();
+            });
+        });
+    });
+</script>

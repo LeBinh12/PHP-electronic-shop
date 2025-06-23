@@ -15,4 +15,11 @@ class User extends Model
         'PasswordHash' => 'VARCHAR(255)',
         'CreatedAt' => 'DATETIME'
     ];
+
+    public function findByEmail($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE Email = :email");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

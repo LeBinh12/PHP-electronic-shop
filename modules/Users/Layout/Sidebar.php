@@ -1,22 +1,47 @@
-<div class="bg-white shadow-sm p-3 h-100"
-    style="position: sticky; top: 70px; z-index: 1029; min-width: 320px; background-color: #f8f9fa; border-right: 1px solid #dee2e6;">
-    <h5 class="fw-bold mb-3 text-danger">THƯƠNG HIỆU</h5>
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a href="index.php?category=laptop&id=1" class="text-decoration-none text-dark">
-                <i class="bi bi-laptop"></i> Laptop
-            </a>
-        </li>
-        <li class="list-group-item"><i class="bi bi-controller me-2"></i> Laptop Gaming</li>
-        <li class="list-group-item"><i class="bi bi-cpu me-2"></i> PC GVN</li>
-        <li class="list-group-item">Main, CPU, VGA</li>
-        <li class="list-group-item">Case, Nguồn, Tản</li>
-        <li class="list-group-item">Ổ cứng, RAM, Thẻ nhớ</li>
-        <li class="list-group-item">Loa, Micro, Webcam</li>
-        <li class="list-group-item">Màn hình</li>
-        <li class="list-group-item">Bàn phím</li>
-        <li class="list-group-item">Chuột + Lót chuột</li>
-        <li class="list-group-item">Tai nghe</li>
-        <li class="list-group-item">Phụ kiện khác...</li>
-    </ul>
+<div class="bg-white shadow-sm p-3 h-100 rounded border"
+    style="position: sticky; top: 70px; z-index: 1029; min-width: 320px; background-color: #fff;">
+
+    <h5 class="fw-bold mb-3 text-danger">
+        <i class="bi bi-filter-circle me-2"></i> Lọc theo giá
+    </h5>
+
+    <form method="get" id="filterForm">
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="price[]" value="1" id="price1">
+            <label class="form-check-label" for="price1">Dưới 5 triệu</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="price[]" value="2" id="price2">
+            <label class="form-check-label" for="price2">Từ 5 - 10 triệu</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="price[]" value="3" id="price3">
+            <label class="form-check-label" for="price3">Từ 10 - 20 triệu</label>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="price[]" value="4" id="price4">
+            <label class="form-check-label" for="price4">Trên 20 triệu</label>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-danger mt-4">
+            <i class="bi bi-award me-2"></i> Thương hiệu
+        </h5>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="brand[]" value="acer" id="brand1">
+            <label class="form-check-label" for="brand1">Acer</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="brand[]" value="asus" id="brand2">
+            <label class="form-check-label" for="brand2">ASUS</label>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="brand[]" value="apple" id="brand3">
+            <label class="form-check-label" for="brand3">Apple</label>
+        </div>
+
+        <button type="submit" class="btn btn-danger w-100 mt-3">
+            <i class="bi bi-filter-circle"></i> Áp dụng
+        </button>
+    </form>
 </div>

@@ -3,10 +3,13 @@ session_start();
 require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
+require_once './controllers/ImageController.php';
 
 $product = new ProductController();
 $supplier = new SupplierController();
 $category = new CategoryController();
+$imageController = new ImageController();
+
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +36,30 @@ $category = new CategoryController();
             if (isset($_GET['page'])) {
                 require $_GET['page'];
             } else {
-                echo "<h3 class='text-primary'>🎉 Chào mừng đến trang Admin!</h3>";
+                require './modules/Admin/Dashboard/index.php';
             }
             ?>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+        function toggleDropdown(id, event) {
+            event.preventDefault(); // ❗ Chặn hành vi mặc định của thẻ <a>
+            const el = document.getElementById(id);
+            el.classList.toggle('show');
+        }
+    </script>
+
 </body>
 
 </html>

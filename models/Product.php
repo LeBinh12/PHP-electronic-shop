@@ -15,7 +15,8 @@
             'image_url' => 'VARCHAR(500)',
             'category_id' => 'INT',
             'supplier_id' => 'INT',
-            'isDeleted' => 'BIT',
+            'content' => 'TEXT',
+            'isDeleted' => 'TINYINT(1)',
             'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
         ];
         protected $foreignKeys = [
@@ -23,7 +24,7 @@
             'supplier_id' => 'suppliers(id)',
         ];
 
-        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null)
+        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0)
         {
             $sql = "
         SELECT p.*, c.name as category_name, s.name as supplier_name
@@ -50,10 +51,21 @@
                 $params['keyword'] = '%' . $keyword . '%';
             }
 
+            $sql .= " ORDER BY p.id DESC LIMIT :limit OFFSET :offset";
+
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($params);
+
+            foreach ($params as $key => $val) {
+                $stmt->bindValue(":$key", $val);
+            }
+
+            $stmt->bindValue(":limit", (int)$limit, PDO::PARAM_INT);
+            $stmt->bindValue(":offset", (int)$offset, PDO::PARAM_INT);
+
+            $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
 
 
 
@@ -67,5 +79,41 @@
             ");
             $stmt->execute(['id' => $id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function countFilteredProducts($categoryId = null, $supplierId = null, $keyword = null)
+        {
+            $sql = "
+        SELECT COUNT(*) as total
+        FROM products p
+        WHERE p.isDeleted = 0
+    ";
+
+            $params = [];
+
+            if ($categoryId !== null) {
+                $sql .= " AND p.category_id = :category_id";
+                $params['category_id'] = $categoryId;
+            }
+
+            if ($supplierId !== null) {
+                $sql .= " AND p.supplier_id = :supplier_id";
+                $params['supplier_id'] = $supplierId;
+            }
+
+            if (!empty($keyword)) {
+                $sql .= " AND p.name LIKE :keyword";
+                $params['keyword'] = '%' . $keyword . '%';
+            }
+
+            $stmt = $this->pdo->prepare($sql);
+
+            foreach ($params as $key => $val) {
+                $stmt->bindValue(":$key", $val);
+            }
+
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'] ?? 0;
         }
     }

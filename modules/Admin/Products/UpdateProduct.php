@@ -1,42 +1,147 @@
+<?php
+
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    echo "<h3>Không tìm thấy sản phẩm!</h3>";
+    exit;
+}
+
+
+
+$oldProduct = $product->getById($id);
+if (!$oldProduct) {
+    echo "<h3>Sản phẩm không tồn tại!</h3>";
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
+    $name = $_POST['nameProduct'] ?? '';
+    $price = $_POST['priceProduct'] ?? 0;
+    $discount = $_POST['discountProduct'] ?? 0;
+    $description = $_POST['descriptionProduct'] ?? '';
+    $category_id = $_POST['category_id'] ?? 1;
+    $supplier_id = $_POST['supplier_id'] ?? 1;
+    $imageUrl = $_POST['image_url'] ?? $oldProduct['image_url'];
+    $content = $_POST['contentProduct'] ?? '';
+    $uploadDir = __DIR__ . '/../../../uploads/';
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
+        $targetFile = $uploadDir . $fileName;
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+            $imageUrl = 'uploads/' . $fileName;
+        }
+    }
+
+    $updateData = [
+        'name' => $name,
+        'price' => $price,
+        'discount' => $discount,
+        'description' => $description,
+        'category_id' => $category_id,
+        'supplier_id' => $supplier_id,
+        'image_url' => $imageUrl,
+        'isDeleted' => 0
+    ];
+    $result = $product->edit($id, $updateData);
+
+    if ($result['success']) {
+        $hasNewExtraImages = false;
+
+        if (isset($_FILES['extra_images'])) {
+            foreach ($_FILES['extra_images']['error'] as $err) {
+                if ($err === UPLOAD_ERR_OK) {
+                    $hasNewExtraImages = true;
+                    break;
+                }
+            }
+        }
+
+        if ($hasNewExtraImages) {
+            $imageController->deleteProductId($id);
+
+            $imageFiles = $_FILES['extra_images'];
+            for ($i = 0; $i < count($imageFiles['name']) && $i < 4; $i++) {
+                if ($imageFiles['error'][$i] === UPLOAD_ERR_OK) {
+                    $extraName = uniqid() . '_' . basename($imageFiles['name'][$i]);
+                    $extraTarget = $uploadDir . $extraName;
+
+                    if (move_uploaded_file($imageFiles['tmp_name'][$i], $extraTarget)) {
+                        $extraUrl = 'uploads/' . $extraName;
+                        $imageController->add([
+                            'image_url' => $extraUrl,
+                            'product_id' => $id,
+                            'isDeleted' => 0
+                        ]);
+                    }
+                }
+            }
+        }
+
+        header("Location: Admin.php?page=modules/Admin/Products/Product.php");
+        exit;
+    } else {
+        echo "<h4>{$result['message']}</h4>";
+    }
+}
+
+
+
+?>
+
+
 <form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label">Tên sản phẩm</label>
-        <input type="text" name="nameProduct" class="form-control" required>
+        <input type="text" name="nameProduct" class="form-control" required value="<?= htmlspecialchars($oldProduct['name']) ?>">
     </div>
     <div class="mb-3">
         <label class="form-label">Giá</label>
-        <input type="number" name="priceProduct" class="form-control"
-            required>
+        <input type="number" name="priceProduct" class="form-control" required value="<?= $oldProduct['price'] ?>">
     </div>
     <div class="mb-3">
         <label class="form-label">Giảm giá (%)</label>
-        <input type="number" name="discountProduct"
-            class="form-control" step="0.01" min="0" max="100">
+        <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= $oldProduct['discount'] ?>">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mô tả ngắn</label>
+        <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
     </div>
     <div class="mb-3">
         <label class="form-label">Mô tả</label>
-        <textarea name="descriptionProduct"
-            class="form-control"></textarea>
+        <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
     </div>
+
     <div class="mb-3">
-        <label class="form-label">URL Ảnh (hoặc để trống nếu upload)</label>
-        <input type="url" name="image_url"
-            class="form-control">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Ảnh (upload mới)</label>
+        <label class="form-label">Upload ảnh mới (nếu có)</label>
         <input type="file" name="image" class="form-control" accept="image/*">
+        <p>Ảnh hiện tại:</p>
+        <img src="<?= $oldProduct['image_url'] ?>" alt="Ảnh hiện tại" width="100">
     </div>
+    <div class="mb-3">
+        <label class="form-label">Ảnh phụ (tối đa 4 ảnh)</label>
+        <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple>
+        <p>Ảnh phụ hiện tại:</p>
+        <?php
+        $images = $imageController->getImageById($id);
+        foreach ($images as $img) {
+            echo "<img src='{$img['image_url']}' width='80' style='margin-right:10px'>";
+        }
+        ?>
+    </div>
+
     <div class="mb-3">
         <label class="form-label">Loại</label>
         <select name="category_id" class="form-select">
             <?php
-            // $categoriesStmt = $pdo->query("SELECT id, name FROM categories");
-            // $categories = $categoriesStmt->fetchAll();
-            // foreach ($categories as $cat) {
-            //     $selected = $cat['id'] == $product['category_id'] ? 'selected' : '';
-            //     echo "<option value='{$cat['id']}' $selected>{$cat['name']}</option>";
-            // }
+            $categories = $category->getAll();
+            foreach ($categories as $cat) {
+                $selected = ($cat['id'] == $oldProduct['category_id']) ? 'selected' : '';
+                echo "<option value='{$cat['id']}' $selected>{$cat['name']}</option>";
+            }
             ?>
         </select>
     </div>
@@ -44,15 +149,14 @@
         <label class="form-label">Nhà cung cấp</label>
         <select name="supplier_id" class="form-select">
             <?php
-            // $suppliersStmt = $pdo->query("SELECT id, name FROM suppliers");
-            // $suppliers = $suppliersStmt->fetchAll();
-            // foreach ($suppliers as $sup) {
-            //     $selected = $sup['id'] == $product['supplier_id'] ? 'selected' : '';
-            //     echo "<option value='{$sup['id']}' $selected>{$sup['name']}</option>";
-            // }
+            $suppliers = $supplier->getAll();
+            foreach ($suppliers as $sup) {
+                $selected = ($sup['id'] == $oldProduct['supplier_id']) ? 'selected' : '';
+                echo "<option value='{$sup['id']}' $selected>{$sup['name']}</option>";
+            }
             ?>
         </select>
     </div>
     <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>
-    <a href="../Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>
+    <a href="Admin.php?page=modules/Admin/Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>
 </form>

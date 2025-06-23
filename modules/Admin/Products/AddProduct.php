@@ -1,4 +1,9 @@
 <?php
+
+require_once  './././config/cloudinary.php';
+
+use Cloudinary\Api\Upload\UploadApi;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $name = $_POST['name'] ?? '';
@@ -7,28 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = $_POST['description'] ?? '';
         $category_id = $_POST['category_id'] ?? 1;
         $supplier_id = $_POST['supplier_id'] ?? 1;
-        echo "<h1>$name</h1>";
-        // Handle image (either upload or URL)
-        $imageUrl = $_POST['image_url'] ?? ''; // URL from form
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../uploads/'; // Đường dẫn tới uploads trong thư mục v1
-            if (!file_exists($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
+        $content = $_POST['content'] ?? '';
 
-            $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
-            $targetFile = $uploadDir . $fileName;
+        $uploadDir = __DIR__ . '/../../uploads/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
 
-            // Debug information
-            error_log("Uploading to: $targetFile");
-            error_log("Temp file: " . $_FILES['image']['tmp_name']);
+        // Xử lý ảnh chính
+        $imageUrl = $_POST['image_url'] ?? '';
+        if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
+            $uploadResult = (new UploadApi())->upload($_FILES['main_image']['tmp_name'], [
+                'folder' => 'products/main'
+            ]);
 
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-                $imageUrl = 'uploads/' . $fileName; // Đường dẫn tương đối nếu upload
-                error_log("Upload successful, image_url: $imageUrl");
-            } else {
-                error_log("Upload failed for: " . $_FILES['image']['name'] . " - Error: " . $_FILES['image']['error']);
-            }
+            $imageUrl = $uploadResult['secure_url'];
         }
 
         $data = [
@@ -38,18 +36,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'description' => $description,
             'category_id' => $category_id,
             'supplier_id' => $supplier_id,
-            'isDeleted' => false,
+            'isDeleted' => 0,
+            'content' => $content,
             'image_url' => $imageUrl
         ];
         $result = $product->add($data);
         if ($result['success']) {
-            echo "<h1>{$result['message']}</h1>";
+            $productId = $result['product'];
+            if (isset($_FILES['extra_images'])) {
+                $imageFiles = $_FILES['extra_images'];
+                for ($i = 0; $i < count($imageFiles['name']) && $i < 4; $i++) {
+                    if ($imageFiles['error'][$i] === UPLOAD_ERR_OK) {
+                        $uploadExtra = (new UploadApi())->upload($imageFiles['tmp_name'][$i], [
+                            'folder' => 'products/extra'
+                        ]);
+
+                        $extraUrl = $uploadExtra['secure_url'];
+
+                        $imageController->add([
+                            'image_url' => $extraUrl,
+                            'product_id' => $productId,
+                            'isDeleted' => 0
+                        ]);
+                    }
+                }
+            }
+
             header("Location: Admin.php");
         } else {
             echo "<h1>{$result['message']}</h1>";
         }
-    } catch (Exception) {
-        echo "Lỗi $Exception";
+    } catch (Exception $e) {
+        echo "Lỗi: " . $e->getMessage();
     }
 }
 ?>
@@ -69,23 +87,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="number" name="discount" class="form-control" step="0.01" min="0" max="100">
     </div>
     <div class="mb-3">
+        <label class="form-label">Mô tả ngắn</label>
+        <textarea name="content" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Mô tả</label>
         <textarea name="description" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label class="form-label">URL Ảnh (hoặc để trống nếu upload)</label>
-        <input type="url" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+        <label class="form-label">Ảnh chính (upload)</label>
+        <input type="file" name="main_image" class="form-control" accept="image/*">
     </div>
     <div class="mb-3">
-        <label class="form-label">Ảnh (upload)</label>
-        <input type="file" name="image" class="form-control" accept="image/*">
+        <label class="form-label">Ảnh phụ (tối đa 4 ảnh)</label>
+        <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple>
     </div>
     <div class="mb-3">
         <label class="form-label">Loại</label>
         <select name="category_id" class="form-select">
             <?php
-            $categories = $category->getAll();
-            foreach ($categories as $cat) {
+            $categoriesItem = $category->getAll();
+            foreach ($categoriesItem as $cat) {
                 echo "<option value='{$cat['id']}'>{$cat['name']}</option>";
             }
             ?>
@@ -95,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="form-label">Nhà cung cấp</label>
         <select name="supplier_id" class="form-select">
             <?php
-            $suppliers = $supplier->getAll();
-            foreach ($suppliers as $sup) {
+            $suppliersItem = $supplier->getAll();
+            foreach ($suppliersItem as $sup) {
                 echo "<option value='{$sup['id']}'>{$sup['name']}</option>";
             }
             ?>

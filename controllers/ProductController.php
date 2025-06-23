@@ -26,9 +26,14 @@ class ProductController
         return $this->productModel->getProductsByCategory($id);
     }
 
-    public function getFilterProducts($categoryId, $supplierId, $keyword)
+    public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0)
     {
-        return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword);
+        return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
+    }
+
+    public function countProducts($categoryId, $supplierId, $keyword)
+    {
+        return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
     }
 
     public function add($data)
@@ -46,6 +51,7 @@ class ProductController
             'product' => $product
         ];
     }
+
 
     public function edit($id, $data)
     {

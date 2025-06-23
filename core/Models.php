@@ -94,7 +94,7 @@ abstract class Model
 
     public function update($id, $data)
     {
-        $setPart = [];
+        $setParts = [];
         foreach ($data as $column => $value) {
             $setParts[] = "$column = :$column";
         }
