@@ -38,7 +38,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
 // var_dump($products);
 ?>
 
-<div class="container mt-4">
+<div class="container mt-3">
 
     <div class="row g-3">
         <?php foreach ($products as $item) { ?>
@@ -46,7 +46,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
                 <div class="card h-100 shadow-sm">
                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($item['name']) ?>" style="height: 200px; object-fit: contain;">
                     <div class="card-body">
-                        <h5 class="card-title"><a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
+                        <h5 class="card-title"><a class="text-decoration-none" href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
                         <p class="card-text"><?= htmlspecialchars($item['content']) ?></p>
                     </div>
                     <div class="card-footer bg-white border-top-0 text-center">
