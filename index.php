@@ -27,6 +27,7 @@ $userController = new UserController();
     <link rel="stylesheet" href="./Style/Users/Header.css">
     <link rel="stylesheet" href="./Style/Users/Detail.css">
     <link rel="stylesheet" href="./Style/Users/Sidebar.css">
+    <link rel="stylesheet" href="./Style/Users/Cart.css">
     <link rel="stylesheet" href="./Style/Users/Chat.css">
 </head>
 

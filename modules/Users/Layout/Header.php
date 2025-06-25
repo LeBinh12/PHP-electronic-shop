@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <a href="index.php?subpage=modules/Users/page/Cart.php" class="nav-link text-white">
                             <i class="bi bi-cart-fill me-1"></i> Giỏ hàng
                         </a>
                     </li>
