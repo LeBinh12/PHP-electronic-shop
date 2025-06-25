@@ -11,6 +11,7 @@ class Order extends Model
         'payment_id' => 'INT',
         'shipping_id' => 'INT',
         'user_id' => 'INT',
+        'note' => 'TEXT',
         'create_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
