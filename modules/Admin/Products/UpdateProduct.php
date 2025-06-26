@@ -106,14 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         <label class="form-label">Giảm giá (%)</label>
         <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= $oldProduct['discount'] ?>">
     </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả ngắn</label>
-        <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả</label>
-        <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
-    </div>
 
     <div class="mb-3">
         <label class="form-label">Upload ảnh mới (nếu có)</label>
@@ -156,6 +148,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             }
             ?>
         </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mô tả ngắn</label>
+        <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mô tả</label>
+        <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
     </div>
     <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>
     <a href="Admin.php?page=modules/Admin/Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>

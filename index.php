@@ -5,6 +5,8 @@ require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/ImageController.php';
 require_once './controllers/UserController.php';
+require_once './controllers/OrderController.php';
+require_once './controllers/OrderItemController.php';
 
 require 'vendor/autoload.php';
 
@@ -13,6 +15,12 @@ $supplier = new SupplierController();
 $category = new CategoryController();
 $imageController = new ImageController();
 $userController = new UserController();
+$orderController = new OrderController();
+$orderItemController = new OrderItemController();
+$cart = $_SESSION['cart'] ?? [];
+$userData = $userController->getCurrentUser();
+
+
 ?>
 
 <!DOCTYPE html>

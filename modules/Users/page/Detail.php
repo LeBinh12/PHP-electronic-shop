@@ -44,9 +44,14 @@ $imageByProductId = $imageController->getImageById($id_product);
             <?= $productById['content'] ?>
             <h4 class="text-danger">Giá: <?= $productById['price'] ?></h4>
 
-            <form class="d-flex align-items-center my-3" style="gap: 10px;">
-                <input type="number" value="1" min="1" class="form-control w-25">
-                <button class="btn btn-primary">Thêm giỏ hàng</button>
+            <form class="d-flex align-items-center my-3" style="gap: 10px;" method="post"
+                action="index.php?subpage=modules/Users/page/Cart.php">
+                <input type="hidden" name="id" value="<?= $productById['id'] ?>">
+                <input type="hidden" name="name" value="<?= $productById['name'] ?>">
+                <input type="hidden" name="price" value="<?= $productById['price'] ?>">
+                <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
+                <input type="number" name="quantity" value="1" min="1" class="form-control w-25">
+                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
             </form>
         </div>
     </div>
