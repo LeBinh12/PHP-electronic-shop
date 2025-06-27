@@ -64,7 +64,7 @@ $imageByProductId = $imageController->getImageById($id_product);
     <!-- Sp tương tự -->
     <div class="mt-5">
         <h4>Sản phẩm tương tự</h4>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="row row-cols-1 row-cols-md-5 g-4">
             <?php
             $count = 0;
             foreach ($productByCategoryId as $item) {
@@ -76,7 +76,7 @@ $imageByProductId = $imageController->getImageById($id_product);
                         <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="Sản phẩm 3">
                         <div class="card-body">
                             <h5 class="card-title"><?= $item['name'] ?></h5>
-                            <p class="text-danger fw-bold">Giá: <?= $item['price'] ?>đ</p>
+                            <p class="card-price">Giá: <?= $item['price'] ?>đ</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ $imageByProductId = $imageController->getImageById($id_product);
     </div>
 
     <!-- Bài viết -->
-    <div class="mt-5">
+    <!-- <div class="mt-5">
         <h4>Bài viết liên quan</h4>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
@@ -128,5 +128,5 @@ $imageByProductId = $imageController->getImageById($id_product);
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
