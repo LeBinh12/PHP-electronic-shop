@@ -9,6 +9,7 @@ class Supplier extends Model
         'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
         'name' => 'VARCHAR(255) NOT NULL',
         'contact_person' => 'VARCHAR(255)',
+        'image_url' => 'VARCHAR(255)',
         'Phone' => 'VARCHAR(20)',
         'Email' => ' VARCHAR(255)',
         'Address' => 'TEXT',

@@ -14,10 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $supplier_id = $_POST['supplier_id'] ?? 1;
         $content = $_POST['content'] ?? '';
 
-        $uploadDir = __DIR__ . '/../../uploads/';
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
 
         // Xử lý ảnh chính
         $imageUrl = $_POST['image_url'] ?? '';

@@ -1,13 +1,35 @@
 <?php
 // Xử lý cập nhật nhà cung cấp
+
+require_once  './././config/cloudinary.php';
+
+use Cloudinary\Api\Upload\UploadApi;
+
+$id = $_POST['supplier_id'] ?? null;
+
+$oldSupplier = $supplier->getById($id);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
-    $id = $_POST['supplier_id'] ?? null;
+    $imageUrl = $oldSupplier['image_url'] ?? '';
+
+    if (isset($_FILES['image_supplier']) && $_FILES['image_supplier']['error'] === UPLOAD_ERR_OK) {
+        try {
+            $uploadResult = (new UploadApi())->upload(
+                $_FILES['image_supplier']['tmp_name'],
+                ['folder' => 'suppliers']
+            );
+            $imageUrl = $uploadResult['secure_url'] ?? $imageUrl;
+        } catch (Exception $e) {
+            $errorMessageUpdate = 'Lỗi upload ảnh: ' . $e->getMessage();
+        }
+    }
+
     $data = [
         'name' => $_POST['name'] ?? '',
         'contact_person' => $_POST['contact_person'] ?? '',
-        'phone' => $_POST['phone'] ?? '',
-        'email' => $_POST['email'] ?? '',
-        'address' => $_POST['address'] ?? ''
+        'Phone' => $_POST['phone'] ?? '',
+        'Email' => $_POST['email'] ?? '',
+        'Address' => $_POST['address'] ?? '',
+        'image_url' => $imageUrl
     ];
 
     $result = $supplier->edit($id, $data);
@@ -28,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="update_supplier" value="1">
                 <input type="hidden" name="supplier_id" id="editSupplierId">
 
@@ -69,6 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
                         <label class="form-label">Địa chỉ</label>
                         <input type="text" name="address" id="editSupplierAddress" class="form-control">
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ảnh hiện tại</label><br>
+                        <img id="editSupplierPreview" src="" class="img-thumbnail mb-2" style="max-width: 200px">
+                        <input type="file" name="image_supplier" class="form-control" accept="image/*">
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">
@@ -84,13 +112,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 
 <!-- Script mở modal sửa -->
 <script>
-    function openEditSupplierModal(id, name, contact, phone, email, address) {
+    function openEditSupplierModal(id, name, contact, phone, email, address, imageUrl) {
         document.getElementById('editSupplierId').value = id;
         document.getElementById('editSupplierName').value = name;
         document.getElementById('editSupplierContact').value = contact;
         document.getElementById('editSupplierPhone').value = phone;
         document.getElementById('editSupplierEmail').value = email;
         document.getElementById('editSupplierAddress').value = address;
+        document.getElementById('editSupplierPreview').src = imageUrl || 'path/to/no-image.png';
 
         const modal = new bootstrap.Modal(document.getElementById('editSupplierModal'));
         modal.show();
