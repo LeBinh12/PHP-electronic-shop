@@ -26,9 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     } else
         echo $res['message'];
 }
-
-
-
 ?>
 
 <div id="multiBannerCarousel" class="carousel slide mb-2 mt-1" data-bs-ride="carousel">
@@ -59,6 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                 </div>
             </div>
         </div>
+        <div class="carousel-item">
+            <div class="row g-0">
+                <div class="col-12">
+                    <img src="https://theme.hstatic.net/200000722513/1001090675/14/headblog_banner.jpg?v=9171"
+                        class="img-fluid w-100"
+                        alt="Banner 3"
+                        style="height: 200px; object-fit: cover; border-radius: 0.25rem;">
+                </div>
+            </div>
+        </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#multiBannerCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
@@ -69,8 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
-
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-danger shadow-sm sticky-top" style="z-index: 1031;">
     <div class="container-fluid">
@@ -82,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         <div class="collapse navbar-collapse" id="navbarMain">
             <div class="d-flex align-items-center w-100 justify-content-between" style="gap: 1rem;">
-
                 <!-- Bên trái: Danh mục + tìm kiếm -->
                 <div class="d-flex align-items-center flex-grow-1" style="gap: 1rem;">
                     <div class="dropdown">
@@ -171,7 +175,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                             </ul>
                         <?php } ?>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -210,6 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     </div>
 </div>
 </div>
+
 
 <!-- Modal Đăng ký -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">

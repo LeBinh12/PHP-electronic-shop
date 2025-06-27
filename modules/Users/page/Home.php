@@ -47,10 +47,10 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($item['name']) ?>" style="height: 200px; object-fit: contain;">
                     <div class="card-body">
                         <h5 class="card-title"><a class="text-decoration-none" href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
-                        <p class="card-text"><?= htmlspecialchars($item['content']) ?></p>
+                        <p class="card-text"><?= $item['content'] ?></p>
                     </div>
                     <div class="card-footer bg-white border-top-0 text-center">
-                        <p class="text-danger fw-bold mb-2"><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <p class="text-danger fw-bold mb-2 fs-5"><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
                         <!-- <a href="#" class="text-primary text-decoration-none">Xem chi tiết >></a> -->
                     </div>
                 </div>
