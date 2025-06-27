@@ -47,14 +47,18 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($listSuppliers as $item): ?>
+                <?php
+                $imageFail = 'https://res.cloudinary.com/diizgvtq9/image/upload/v1751033642/suppliers/xgzffwxlcyraw9ncvdch.jpg';
+                foreach ($listSuppliers as $item): ?>
                     <tr>
                         <td><?= $item["id"] ?></td>
                         <td><?= htmlspecialchars($item["name"]) ?></td>
                         <td><?= htmlspecialchars($item["contact_person"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Phone"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Email"] ?? '') ?></td>
-                        <td><?= htmlspecialchars($item["Address"] ?? '') ?></td>
+                        <td>
+                            <img src="<?= htmlspecialchars($item['image_url'] ?? $imageFail) ?>" alt="Ảnh sản phẩm" width="80" height="80" style="object-fit:cover;">
+                        </td>
                         <td>
                             <div class="d-flex gap-2">
                                 <button class="btn btn-sm btn-primary" onclick="openEditSupplierModal(
@@ -63,7 +67,9 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                                '<?= addslashes($item['contact_person'] ?? '') ?>',
                                '<?= addslashes($item['Phone'] ?? '') ?>',
                                '<?= addslashes($item['Email'] ?? '') ?>',
-                               '<?= addslashes($item['Address'] ?? '') ?>')">
+                               '<?= addslashes(string: $item['Address'] ?? '') ?>',
+                               '<?= addslashes(string: $item['image_url'] ?? '') ?>')">
+
                                     <i class="fas fa-edit"></i> Sửa
                                 </button>
 
@@ -94,13 +100,15 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
 </nav>
 
 <script>
-    function openEditSupplierModal(id, name, contact, phone, email, address) {
+    function openEditSupplierModal(id, name, contact, phone, email, address, imageUrl) {
         document.getElementById('editSupplierId').value = id;
         document.getElementById('editSupplierName').value = name;
         document.getElementById('editSupplierContact').value = contact;
         document.getElementById('editSupplierPhone').value = phone;
         document.getElementById('editSupplierEmail').value = email;
         document.getElementById('editSupplierAddress').value = address;
+        document.getElementById('editSupplierPreview').src = imageUrl || 'path/to/no-image.png';
+
         new bootstrap.Modal(document.getElementById('editSupplierModal')).show();
     }
 

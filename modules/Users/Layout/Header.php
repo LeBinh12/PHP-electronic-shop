@@ -1,7 +1,6 @@
 <?php
 $categoryGetAll = $category->getAll();
 $supplierGetAll = $supplier->getAll();
-$userData = $userController->getCurrentUser();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $res = $userController->register([

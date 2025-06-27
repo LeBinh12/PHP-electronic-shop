@@ -48,6 +48,8 @@ $userData = $userController->getCurrentUser();
         } else {
             require './modules/Users/Layout/Main.php';
         }
+        require './modules/Users/Layout/Supplier.php';
+
         require './modules/Users/Layout/Footer.php';
         ?>
     </div>

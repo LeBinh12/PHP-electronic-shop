@@ -1,4 +1,9 @@
 <?php
+
+require_once  './././config/cloudinary.php';
+
+use Cloudinary\Api\Upload\UploadApi;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     $name = $_POST['name'] ?? '';
     $contact_person = $_POST['contact_person'] ?? '';
@@ -6,18 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
 
+
+    $imageUrl = $_POST['image_url'] ?? '';
+    if (isset($_FILES['image_supplier']) && $_FILES['image_supplier']['error'] === UPLOAD_ERR_OK) {
+        $uploadResult = (new UploadApi())->upload($_FILES['image_supplier']['tmp_name'], [
+            'folder' => 'suppliers'
+        ]);
+
+        $imageUrl = $uploadResult['secure_url'];
+    }
+
     $data = [
         'name' => $name,
         'contact_person' => $contact_person,
         'email' => $email,
         'phone' => $phone,
         'address' => $address,
-        'isDeleted' => 0
+        'isDeleted' => 0,
+        'image_url' => $imageUrl
     ];
 
     $result = $supplier->add($data);
     if ($result['success']) {
-        header(header: "Location: Admin.php?page=modules/Admin/Suppliers/Supplier.php");
+        echo "<script>
+            alert('Cập nhật nhà cung cấp thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
+        </script>";
         exit;
     } else {
         $errorMessage = $result['message'];
@@ -31,7 +50,7 @@ $listSupplier = $supplier->getAll();
 <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="add_supplier" value="1">
 
                 <div class="modal-header bg-primary text-white">
@@ -70,6 +89,10 @@ $listSupplier = $supplier->getAll();
                     <div class="mb-3">
                         <label class="form-label">Địa chỉ</label>
                         <textarea name="address" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ảnh đại diện thương hiệu</label>
+                        <input type="file" name="image_supplier" class="form-control" accept="image/*">
                     </div>
                 </div>
 
