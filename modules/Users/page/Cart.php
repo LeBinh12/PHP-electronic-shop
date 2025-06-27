@@ -103,21 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-
     echo '<meta http-equiv="refresh" content="0">';
 }
 
-
-
-
-
-
-
 $_SESSION['cart'] = $cart;
-
-
-
-
 // $cart = $_SESSION['cart'] ?? [
 //     [
 //         'id' => 1,
@@ -135,55 +124,63 @@ $_SESSION['cart'] = $cart;
 //     ],
 // ];
 ?>
+<?php
+    $total = 0;
+?>
 <form method="post" action="">
-
     <div class="container my-4 cart-container">
         <div class="cart-layout">
             <div class="cart-left">
-                <!-- Nút xoá selected -->
-                <div class="cart-header d-flex justify-content-between">
-                    <div>
-                        <input type="checkbox" id="checkAll"> <label for="checkAll">Chọn tất cả</label>
+                <?php if (empty($cart)) { ?>
+                    <div class="text-center">
+                        <img src="Style/Images/emptyCart.png" alt="Giỏ hàng trống" style="max-width: 500px; width: 100%;">
+                        <p class="mt-3 fw-bold">Giỏ hàng của bạn đang trống.</p>
                     </div>
-                    <button type="submit"
-                        name="action" value="delete_selected"
-                        class="btn btn-outline-none text-danger">
-                        <i class="bi bi-trash"></i> Xoá đã chọn
-                    </button>
-                </div>
-
-                <?php
-                $total = 0;
-                foreach ($cart as $item) {
-                    $itemTotal = $item['price'] * $item['quantity'];
-                    $total += $itemTotal;
-                ?>
-                    <div class="cart-item">
-                        <input type="checkbox"
-                            name="selected[]"
-                            value="<?= $item['id'] ?>"
-                            class="item-checkbox me-2">
-
-                        <img src="<?= $item['image'] ?>" alt="">
-                        <div class="product-info">
-                            <h6><?= $item['name'] ?></h6>
-                            <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                <?php } else { ?>
+                    <!-- Nút xoá selected -->
+                    <div class="cart-header d-flex justify-content-between">
+                        <div>
+                            <input type="checkbox" id="checkAll"> <label for="checkAll">Chọn tất cả</label>
                         </div>
-
-                        <!-- tăng / giảm / xoá 1 sản phẩm -->
-                        <div class="quantity-control">
-                            <button name="action" value="dec_<?= $item['id'] ?>"
-                                class="btn btn-outline-secondary btn-sm">-</button>
-                            <span class="mx-1"><?= $item['quantity'] ?></span>
-                            <button name="action" value="inc_<?= $item['id'] ?>"
-                                class="btn btn-outline-secondary btn-sm">+</button>
-                        </div>
-
-
-                        <button name="action" value="remove_<?= $item['id'] ?>" class="btn btn-link remove-btn">
-                            <i class="bi bi-trash-fill"></i>
+                        <button type="submit"
+                            name="action" value="delete_selected"
+                            class="btn btn-outline-none text-danger">
+                            <i class="bi bi-trash"></i> Xoá đã chọn
                         </button>
                     </div>
+
+                    <?php
+                    $total = 0;
+                    foreach ($cart as $item) {
+                        $itemTotal = $item['price'] * $item['quantity'];
+                        $total += $itemTotal;
+                    ?>
+                        <div class="cart-item">
+                            <input type="checkbox"
+                                name="selected[]"
+                                value="<?= $item['id'] ?>"
+                                class="item-checkbox me-2">
+
+                            <img src="<?= $item['image'] ?>" alt="">
+                            <div class="product-info">
+                                <h6><?= $item['name'] ?></h6>
+                                <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                            </div>
+
+                            <!-- tăng / giảm / xoá 1 sản phẩm -->
+                            <div class="quantity-control">
+                                <button name="action" value="dec_<?= $item['id'] ?>"
+                                    class="btn btn-outline-secondary btn-sm">-</button>
+                                <span class="mx-1"><?= $item['quantity'] ?></span>
+                                <button name="action" value="inc_<?= $item['id'] ?>"
+                                    class="btn btn-outline-secondary btn-sm">+</button>
+                            </div>
+
+                            <button name="action" value="remove_<?= $item['id'] ?>" class="btn btn-link remove-btn">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </div>
+                    <?php } ?>
                 <?php } ?>
             </div>
 
@@ -231,7 +228,6 @@ $_SESSION['cart'] = $cart;
                     </button>
                 <?php } ?>
             </div>
-
         </div>
     </div>
 </form>
