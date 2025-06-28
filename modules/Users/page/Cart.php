@@ -133,8 +133,9 @@ $_SESSION['cart'] = $cart;
             <div class="cart-left">
                 <?php if (empty($cart)) { ?>
                     <div class="text-center">
-                        <img src="Style/Images/emptyCart.png" alt="Giỏ hàng trống" style="max-width: 500px; width: 100%;">
-                        <p class="mt-3 fw-bold">Giỏ hàng của bạn đang trống.</p>
+                        <img src="Style/Images/emptyCart.png" alt="Giỏ hàng trống" style="max-width: 700px; width: 100%;">
+                        <p class="mt-3 fw-bold fs-4">Chưa có sản phẩm nào trong giỏ hàng</p>
+                        <p class="text-muted">Hãy thêm sản phẩm để bắt đầu mua sắm!</p>
                     </div>
                 <?php } else { ?>
                     <!-- Nút xoá selected -->
