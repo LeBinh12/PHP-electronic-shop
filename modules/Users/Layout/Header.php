@@ -86,47 +86,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         <div class="collapse navbar-collapse" id="navbarMain">
             <div class="d-flex align-items-center w-100 justify-content-between" style="gap: 1rem;">
-                <!-- Bên trái: Danh mục + tìm kiếm -->
                 <div class="d-flex align-items-center flex-grow-1" style="gap: 1rem;">
+                    <!-- Dropdown Danh mục -->
                     <div class="dropdown">
                         <a class="nav-link fw-bold dropdown-toggle text-white" href="#" id="categoryDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-list"></i> Danh mục
                         </a>
-                        <ul class="dropdown-menu p-2 shadow" aria-labelledby="categoryDropdown"
-                            style="max-height: 400px; min-width: 250px;">
-                            <li><a class="dropdown-item"
-                                    href="index.php?<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>"><i
-                                        class="bi bi-controller"></i>Tất cả</a></li>
-                            <?php
-                            foreach ($categoryGetAll as $item) {
-                            ?>
+
+                        <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="categoryDropdown">
+                            <li>
+                                <a class="dropdown-item"
+                                    href="index.php?<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>">
+                                    <i class="bi bi-controller"></i> Tất cả
+                                </a>
+                            </li>
+                            <?php foreach ($categoryGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
                                         href="index.php?category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
-                                        <i class="bi bi-controller"></i><?= $item['name'] ?>
+                                        <i class="bi bi-controller"></i> <?= $item['name'] ?>
                                     </a>
-                                </li> <?php
-                                    }
-                                        ?>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </div>
 
+                    <!-- Dropdown Thương hiệu -->
                     <div class="dropdown">
-                        <a class="nav-link fw-bold dropdown-toggle text-white" href="#" id="categoryDropdown"
+                        <a class="nav-link fw-bold dropdown-toggle text-white" href="#" id="supplierDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-box-seam"></i> Thương hiệu
                         </a>
-                        <ul class="dropdown-menu p-2 shadow" aria-labelledby="categoryDropdown"
-                            style="max-height: 400px; min-width: 250px;">
-                            <li><a class="dropdown-item"
-                                    href="index.php?<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>"><i
-                                        class="bi bi-controller"></i>Tất cả</a></li>
+                        <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="supplierDropdown">
+                            <li>
+                                <a class="dropdown-item"
+                                    href="index.php?<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
+                                    <i class="bi bi-controller"></i> Tất cả
+                                </a>
+                            </li>
                             <?php foreach ($supplierGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
                                         href="index.php?supplier=<?= $item['id'] ?>&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
-                                        <i class="bi bi-controller"></i><?= $item['name'] ?>
+                                        <i class="bi bi-controller"></i> <?= $item['name'] ?>
                                     </a>
                                 </li>
                             <?php } ?>
