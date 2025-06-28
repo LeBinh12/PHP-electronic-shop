@@ -9,7 +9,7 @@
             'stock_quantity' => 'INT',
             'last_update' => 'DATETIME',
             'product_id' => 'INT',
-            'isDeleted' => 'BIT',
+            'isDeleted' => 'TINYINT(1)',
         ];
 
         protected $foreignKeys = [

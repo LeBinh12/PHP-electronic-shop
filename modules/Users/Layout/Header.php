@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <span class="input-group-text bg-white"><i class="bi bi-eye"></i></span>
                     </div>
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="#" class="small text-decoration-none">Quên mật khẩu?</a>
+                        <a href="#" class="small text-decoration-none" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Quên mật khẩu?</a>
                     </div>
                     <button class="btn btn-primary w-100 mb-3" type="submit" name="login">Đăng nhập</button>
                     <p class="mb-0">Bạn chưa có tài khoản?
@@ -256,6 +256,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     </p>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Quên mật khẩu -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-danger fw-bold w-100 text-center">Quên mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0 text-center">
+                <p class="text-muted mb-4">Nhập email để nhận mã xác nhận</p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
+                    <input type="email" id="forgotEmail" class="form-control" placeholder="Email">
+                </div>
+                <button class="btn btn-danger w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#verifyOtpModal">Gửi mã xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Xác nhận mã và đổi mật khẩu -->
+<div class="modal fade" id="verifyOtpModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-success fw-bold w-100 text-center">Xác nhận đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0 text-center">
+                <p class="text-muted mb-4">Nhập mã xác nhận và mật khẩu mới</p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-white"><i class="bi bi-shield-lock"></i></span>
+                    <input type="text" id="otpCode" class="form-control" placeholder="Mã xác nhận">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                    <input type="password" id="newPassword" class="form-control" placeholder="Mật khẩu mới">
+                </div>
+                <button class="btn btn-success w-100" id="confirmResetBtn">Xác nhận đổi mật khẩu</button>
+            </div>
         </div>
     </div>
 </div>
