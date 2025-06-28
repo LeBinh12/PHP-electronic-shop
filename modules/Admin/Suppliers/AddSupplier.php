@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
         'isDeleted' => 0,
         'image_url' => $imageUrl
     ];
-
     $result = $supplier->add($data);
     if ($result['success']) {
         echo "<script>
