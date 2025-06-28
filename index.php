@@ -37,6 +37,7 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/Sidebar.css">
     <link rel="stylesheet" href="./Style/Users/Cart.css">
     <link rel="stylesheet" href="./Style/Users/Chat.css">
+    <link rel="stylesheet" href="./Style/Users/Supplier.css">
 </head>
 
 <body>
