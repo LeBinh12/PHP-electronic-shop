@@ -11,6 +11,6 @@ class Banner extends Model
         'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
         'image' => 'VARCHAR(255)',
         'status' => 'BIT',
-        'isDeleted' => 'BIT'
+        'isDeleted' => 'TINYINT(1)',
     ];
 }
