@@ -30,11 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
         'isDeleted' => 0,
         'image_url' => $imageUrl
     ];
-
     $result = $supplier->add($data);
     if ($result['success']) {
         echo "<script>
-            alert('Cập nhật nhà cung cấp thành công!');
+            alert('Tạo mới nhà cung cấp thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
         </script>";
         exit;
