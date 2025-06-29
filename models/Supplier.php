@@ -43,16 +43,24 @@ class Supplier extends Model
     }
 
 
-    public function countSupplier()
+    public function countSupplier($keyword = '')
     {
-        $sql = "
-        SELECT COUNT(*) as total
-        FROM suppliers 
-        WHERE isDeleted = 0
-    ";
+        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
+        $params = [];
+
+        if (!empty($keyword)) {
+            $sql .= " AND name LIKE :keyword";
+            $params[':keyword'] = '%' . $keyword . '%';
+        }
+
         $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $val) {
+            $stmt->bindValue($key, $val, PDO::PARAM_STR);
+        }
+
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['total'] ?? 0;
+        return (int) ($result['total'] ?? 0);
     }
 }

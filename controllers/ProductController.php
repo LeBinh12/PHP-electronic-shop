@@ -1,5 +1,6 @@
 <?php
 require_once './models/Product.php';
+require_once './core/RedisCache.php';
 
 
 class ProductController
@@ -13,27 +14,78 @@ class ProductController
 
     public function getAll()
     {
-        return $this->productModel->all();
+        $cacheKey = 'products:all';
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+
+        $products = $this->productModel->all();
+        RedisCache::set($cacheKey, json_encode($products));
+
+        return $products;
+        // return $this->productModel->all();
     }
 
     public function getById($id)
     {
-        return $this->productModel->find($id);
+        $cacheKey = "products:{$id}";
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $product = $this->productModel->find($id);
+        RedisCache::set($cacheKey, json_encode($product));
+        return $product;
+        // return $this->productModel->find($id);
     }
 
     public function getProductByCategory($id)
     {
-        return $this->productModel->getProductsByCategory($id);
+        $cacheKey = "products:category:{$id}";
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $products = $this->productModel->getProductsByCategory($id);
+        RedisCache::set($cacheKey, json_encode($products));
+        return $products;
+        // return $this->productModel->getProductsByCategory($id);
     }
 
     public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0)
     {
-        return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
+        $start = microtime(true);
+
+        $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$limit:$offset";
+        if (RedisCache::exists($cacheKey)) {
+
+            $end = microtime(true);
+            echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
+        RedisCache::set($cacheKey, json_encode($products));
+
+        $end = microtime(true);
+        echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
+
+        return $products;
+        // return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
     }
 
     public function countProducts($categoryId, $supplierId, $keyword)
     {
-        return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
+        $cacheKey = "products:count:$categoryId:$supplierId:$keyword";
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $total = $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
+        RedisCache::set($cacheKey, json_encode($total));
+        return $total;
+        // return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
     }
 
     public function add($data)
@@ -44,11 +96,12 @@ class ProductController
                 'message' => 'Tên sản phẩm đã tồn tại!'
             ];
         }
-        $product = $this->productModel->insert($data);
+        $productId = $this->productModel->insert($data);
+        $this->clearCacheAfterChange($productId);
         return [
             'success' => true,
             'message' => 'Thêm sản phẩm thành công',
-            'product' => $product
+            'product' => $productId
         ];
     }
 
@@ -72,6 +125,7 @@ class ProductController
             }
         }
         $productEdit = $this->productModel->update($id, $data);
+        $this->clearCacheAfterChange($id);
         return [
             'success' => true,
             'message' => 'Cập nhật sản phẩm thành công!',
@@ -81,6 +135,21 @@ class ProductController
 
     public function delete($id)
     {
-        return $this->productModel->updateDeleted($id);
+        $deleted = $this->productModel->updateDeleted($id);
+        $this->clearCacheAfterChange($id);
+        return $deleted;
+    }
+
+    private function clearCacheAfterChange($id)
+    {
+        RedisCache::delete("products:all");
+        $filterKeys = RedisCache::keys('products:filter:*');
+        $countKeys = RedisCache::keys('products:count:*');
+
+        foreach (array_merge($filterKeys, $countKeys) as $key) {
+            RedisCache::delete($key);
+        }
+        if ($id !== null)
+            RedisCache::delete("product:$id");
     }
 }

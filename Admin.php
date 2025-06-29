@@ -4,6 +4,7 @@ require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/ImageController.php';
+require 'vendor/autoload.php';
 
 $product = new ProductController();
 $supplier = new SupplierController();

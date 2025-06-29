@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     $name = $_POST['name'] ?? '';
-    $status = $_POST['status'] ?? 1;
+    $status = $_POST['status'] ?? 0;
     $icon = $_POST['icon'] ?? '';
 
     $data = [

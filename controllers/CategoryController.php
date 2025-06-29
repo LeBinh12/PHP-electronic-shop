@@ -2,6 +2,7 @@
 <?php
 
 require_once './models/Category.php';
+require_once './core/RedisCache.php';
 
 class CategoryController
 {
@@ -14,22 +15,46 @@ class CategoryController
 
     public function getAll()
     {
-        return $this->categoryModel->all();
+        $key = 'categories:all';
+        if (RedisCache::exists($key)) {
+            return json_decode(RedisCache::get($key), true);
+        }
+        $data = $this->categoryModel->all();
+        RedisCache::set($key, json_encode($data));
+        return $data;
     }
 
     public function getById($id)
     {
-        return $this->categoryModel->find($id);
+        $key = "category:$id";
+        if (RedisCache::exists($key)) {
+            return json_decode(RedisCache::get($key), true);
+        }
+        $data = $this->categoryModel->find($id);
+        RedisCache::set($key, json_encode($data));
+        return $data;
     }
 
     public function getFilterCategories($limit, $offset, $keyword)
     {
-        return $this->categoryModel->getFilteredCategories($limit, $offset, $keyword);
+        $key = "categories:filter:$limit:$offset:$keyword";
+        if (RedisCache::exists($key)) {
+            return json_decode(RedisCache::get($key), true);
+        }
+        $data = $this->categoryModel->getFilteredCategories($limit, $offset, $keyword);
+        RedisCache::set($key, json_encode($data));
+        return $data;
     }
 
-    public function countCategories()
+    public function countCategories($keyword = '')
     {
-        return $this->categoryModel->countCategory();
+        $key = "categories:count:$keyword";
+        if (RedisCache::exists($key)) {
+            return (int) RedisCache::get($key);
+        }
+        $total = $this->categoryModel->countCategory($keyword);
+        RedisCache::set($key, $total);
+        return $total;
     }
 
     public function add($data)
@@ -41,6 +66,7 @@ class CategoryController
             ];
         }
         $category = $this->categoryModel->insert($data);
+        $this->invalidateCache();
         return [
             'success' => true,
             'message' => 'Thêm thể loại thành công',
@@ -67,7 +93,7 @@ class CategoryController
             }
         }
         $categoryEdit = $this->categoryModel->update($id, $data);
-        var_dump($existingcategory);
+        $this->invalidateCache($id);
         return [
             'success' => true,
             'message' => 'Cập nhật thể loại thành công!',
@@ -77,6 +103,25 @@ class CategoryController
 
     public function delete($id)
     {
-        return $this->categoryModel->updateDeleted($id);
+        $categoryDelete = $this->categoryModel->updateDeleted($id);
+        $this->invalidateCache($id);
+        return $categoryDelete;
+    }
+
+    private function invalidateCache($id = null)
+    {
+        RedisCache::delete('categories:all');
+        RedisCache::delete('categories:filter');
+
+        $filterKeys = RedisCache::keys('categories:filter:*');
+        $countKeys = RedisCache::keys('categories:count:*');
+
+        foreach (array_merge($filterKeys, $countKeys) as $key) {
+            RedisCache::delete($key);
+        }
+
+        if ($id !== null) {
+            RedisCache::delete("category:$id");
+        }
     }
 }
