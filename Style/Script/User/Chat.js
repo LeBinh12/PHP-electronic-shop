@@ -46,7 +46,7 @@ sendMessage.addEventListener("click", () => {
   if (message) {
     addMessage(message, true);
     chatInput.value = "";
-    // Demo phản hồi tự động
+  
     setTimeout(() => {
       addMessage("Cảm ơn bạn, chúng tôi sẽ phản hồi sớm!", false);
     }, 1000);

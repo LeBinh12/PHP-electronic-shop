@@ -18,34 +18,24 @@ $imageByProductId = $imageController->getImageById($id_product);
 
 <div class="container py-5">
     <!-- Sản phẩm -->
-    <div class="row">
-        <div class="col-md-6">
-            <img
-                src="<?= $productById['image_url'] ?>"
-                class="img-fluid border rounded mb-3"
-                id="mainImage"
-                alt="MacBook Air M3">
-            <div class="d-flex gap-2">
-                <?php
-                foreach ($imageByProductId as $item) {
-                ?>
-                    <img src="<?= $item['image_url'] ?>"
-                        class="thumb-img border"
-                        onclick="document.getElementById('mainImage').src=this.src;">
+    <div class="row align-items-start">
+        <div class="col-lg-5 col-md-6 col-12 product-image-col">
+            <img src="<?= $productById['image_url'] ?>" class="img-fluid border rounded mb-3" id="mainImage" alt="Ảnh sản phẩm" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal">
 
-                <?php
-                }
-                ?>
+            <div class="d-flex gap-2 flex-wrap">
+                <?php foreach ($imageByProductId as $item) { ?>
+                    <img src="<?= $item['image_url'] ?>" class="thumb-img border" onclick="swapImage(this);">
+                <?php } ?>
             </div>
         </div>
 
-        <div class="col-md-6">
+
+        <div class="col-lg-7 col-md-6 col-12">
             <h2><?= $productById['name'] ?></h2>
             <?= $productById['content'] ?>
-            <h4 class="text-danger">Giá: <?= $productById['price'] ?></h4>
+            <h4 class="text-danger">Giá: <?= $productById['price'] ?>đ</h4>
 
-            <form class="d-flex align-items-center my-3" style="gap: 10px;" method="post"
-                action="index.php?subpage=modules/Users/page/Cart.php">
+            <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
                 <input type="hidden" name="price" value="<?= $productById['price'] ?>">
@@ -55,6 +45,7 @@ $imageByProductId = $imageController->getImageById($id_product);
             </form>
         </div>
     </div>
+
 
     <div class="mt-5">
         <h4>Mô tả sản phẩm</h4>
@@ -86,47 +77,22 @@ $imageByProductId = $imageController->getImageById($id_product);
             ?>
         </div>
     </div>
+</div>
 
-    <!-- Bài viết -->
-    <!-- <div class="mt-5">
-        <h4>Bài viết liên quan</h4>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/laptop_mau_den_9381eecd93.jpg" class="card-img-top" alt="Bài viết 1">
-                    <div class="card-body">
-                        <h5 class="card-title">So sánh Macbook Air M2 và M3</h5>
-                        <p class="card-text text-justify-custom">Khám phá sự khác biệt giữa hai dòng Macbook nổi bật, từ hiệu năng đến thời lượng pin và thiết kế mỏng nhẹ.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="text-primary text-decoration-none">Đọc tiếp</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/laptop_cho_sinh_vien_ngoai_ngu_duoi_15_trieu_2025_00_330438b01a.jpg" class="card-img-top" alt="Bài viết 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Top 5 Laptop văn phòng năm 2024</h5>
-                        <p class="card-text text-justify-custom">Danh sách các dòng laptop mỏng nhẹ, pin trâu, hiệu năng ổn định được đánh giá cao nhất dành cho dân văn phòng.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="text-primary text-decoration-none">Đọc tiếp</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/laptop_cho_sinh_vien_ngoai_ngu_duoi_15_trieu_2025_00_330438b01a.jpg" class="card-img-top" alt="Bài viết 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Top 5 Laptop văn phòng năm 2024</h5>
-                        <p class="card-text text-justify-custom">Danh sách các dòng laptop mỏng nhẹ, pin trâu, hiệu năng ổn định được đánh giá cao nhất dành cho dân văn phòng.</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="text-primary text-decoration-none">Đọc tiếp</a>
-                    </div>
-                </div>
+<!-- modal hình  -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content bg-dark border-0 position-relative">
+            <!-- <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            <div class="modal-body text-center position-relative p-0">
+                <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y" style="z-index:2;" onclick="prevImage()">
+                    &#10094;
+                </button>
+                <img src="" id="modalImage" class="img-fluid rounded">
+                <button class="btn btn-light position-absolute top-50 end-0 translate-middle-y" style="z-index:2;" onclick="nextImage()">
+                    &#10095;
+                </button>
             </div>
         </div>
-    </div> -->
+    </div>
 </div>
