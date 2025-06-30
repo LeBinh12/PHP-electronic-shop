@@ -81,7 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             }
         }
 
-        header("Location: Admin.php?page=modules/Admin/Products/Product.php");
+        echo "<script>
+            alert('Cập nhật sản phẩm thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+        </script>";
         exit;
     } else {
         echo "<h4>{$result['message']}</h4>";
