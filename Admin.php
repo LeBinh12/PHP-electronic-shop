@@ -26,6 +26,7 @@ $inventoryController = new InventoryController();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./Style/Admin/style.css">
+    <link rel="stylesheet" href="./Style/Admin/Sidebar.css">
 </head>
 
 <body>
@@ -49,7 +50,7 @@ $inventoryController = new InventoryController();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
+    <script src="./Script/Admin/Sidebar.js"></script>
     <script>
         tinymce.init({
             selector: 'textarea',

@@ -44,6 +44,7 @@
                 data-bs-toggle="collapse" href="#recycleCollapse" role="button" aria-expanded="false"
                 aria-controls="recycleCollapse">
                 <i class="fas fa-trash me-1"></i> Recycle Bin
+                <i class="fas fa-chevron-right ms-auto arrow-icon"></i>
             </a>
 
             <div class="collapse <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'show' : '' ?>"
