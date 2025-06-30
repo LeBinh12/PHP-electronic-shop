@@ -1,19 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const recycleLink = document.querySelector('a[href="#recycleCollapse"]');
-    const collapseElement = document.querySelector('#recycleCollapse');
-    const arrowIcon = recycleLink.querySelector('.arrow-icon');
+    const recycleToggle = document.querySelector('a[href="#recycleCollapse"]');
+    const collapseEl = document.getElementById('recycleCollapse');
 
-    if (collapseElement && arrowIcon) {
-        collapseElement.addEventListener('show.bs.collapse', function () {
-            arrowIcon.classList.add('rotate');
-            console.log('Collapse opened');
-        });
+    if (!recycleToggle || !collapseEl) return;
 
-        collapseElement.addEventListener('hide.bs.collapse', function () {
-            arrowIcon.classList.remove('rotate');
-            console.log('Collapse closed');
-        });
-    } else {
-        console.error('Elements not found: collapseElement or arrowIcon');
+    const arrowIcon = recycleToggle.querySelector('.arrow-icon');
+
+    // Lắng nghe sự kiện Bootstrap
+    collapseEl.addEventListener('shown.bs.collapse', function () {
+        arrowIcon.classList.add('rotate');
+    });
+
+    collapseEl.addEventListener('hidden.bs.collapse', function () {
+        arrowIcon.classList.remove('rotate');
+    });
+
+    // Nếu đang mở sẵn (F5 khi đang trong RecycleBin)
+    if (collapseEl.classList.contains('show')) {
+        arrowIcon.classList.add('rotate');
     }
 });
