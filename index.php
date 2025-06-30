@@ -92,19 +92,6 @@ $userData = $userController->getCurrentUser();
             </button>
         </div>
     </div>
-    <!-- <script>
-        const chatToggle = document.getElementById('chat-toggle');
-        const chatForm = document.getElementById('chat-form');
-        const chatClose = document.getElementById('chat-close');
-
-        chatToggle.addEventListener('click', () => {
-            chatForm.style.display = chatForm.style.display === 'none' ? 'block' : 'none';
-        });
-
-        chatClose.addEventListener('click', () => {
-            chatForm.style.display = 'none';
-        });
-    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>

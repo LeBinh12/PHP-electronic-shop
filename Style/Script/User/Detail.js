@@ -1,4 +1,5 @@
 
+// Ảnh sản phẩm
 const mainImage = document.getElementById('mainImage');
 const modalImage = document.getElementById('modalImage');
 const thumbnails = document.querySelectorAll('.thumb-img');

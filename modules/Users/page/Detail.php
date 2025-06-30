@@ -57,9 +57,14 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
     </div>
 
 
-    <div class="mt-5">
+    <div class="mt-5 product-description">
         <h4>Mô tả sản phẩm</h4>
-        <p><?= $productById['description'] ?></p>
+        <div id="descriptionContent" class="product-description-content">
+            <?= $productById['description'] ?>
+        </div>
+        <div class="show-more-wrapper">
+            <span id="toggleDescription" class="show-more-btn" style="display: none;">Xem thêm</span>
+        </div>
     </div>
 
     <!-- Sp tương tự -->
@@ -106,3 +111,24 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
         </div>
     </div>
 </div>
+
+<script>
+    const description = document.getElementById('descriptionContent');
+    const toggleBtn = document.getElementById('toggleDescription');
+
+    // Kiểm tra xem nội dung có bị tràn hay không
+    window.addEventListener('load', () => {
+        if (description.scrollHeight > description.clientHeight + 5) {
+            toggleBtn.style.display = 'inline-block';
+        }
+    });
+
+    toggleBtn.addEventListener('click', function() {
+        description.classList.toggle('expanded');
+        if (description.classList.contains('expanded')) {
+            toggleBtn.textContent = 'Thu gọn';
+        } else {
+            toggleBtn.textContent = 'Xem thêm';
+        }
+    });
+</script>

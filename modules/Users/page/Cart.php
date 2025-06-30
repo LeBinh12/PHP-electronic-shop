@@ -228,7 +228,7 @@ $total = 0;
                     <textarea name="note" id="note" placeholder="Ghi chú thêm nếu cần..."></textarea>
                 </div>
                 <p class="text-danger small mb-2">
-                    Lưu ý: Bạn cần phải tích vào những sản phẩm muốn thanh toán
+                    Lưu ý: Bạn cần phải chọn những sản phẩm muốn thanh toán
                 </p>
                 <?php if ($userData === null) { ?>
                     <button type="button"

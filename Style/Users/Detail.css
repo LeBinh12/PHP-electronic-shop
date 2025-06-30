@@ -92,6 +92,31 @@
     border-radius: 8px;
     line-height: 1.7;
     border: 1px solid #ddd;
+    text-align: justify;
+}
+
+.product-description-content {
+    max-height: 250px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease;
+    text-align: justify;
+}
+
+.product-description-content.expanded {
+    max-height: 1000px;
+}
+
+.show-more-wrapper {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.show-more-btn {
+    display: inline-block;
+    color: #0d6efd;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 @media (max-width: 992px) {
