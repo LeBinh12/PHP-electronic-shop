@@ -12,7 +12,7 @@
                 if (isset($_GET['page'])) {
                     require $_GET['page'];
                 } else {
-                    require './modules/Users/page/Home.php';
+                    require './modules/Users/page/Product.php';
                 }
                 ?>
             </div>
