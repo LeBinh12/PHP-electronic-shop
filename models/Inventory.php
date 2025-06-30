@@ -15,4 +15,13 @@
         protected $foreignKeys = [
             'product_id' => 'products(id)'
         ];
+
+        public function getInventoryProduct($id)
+        {
+            $stmt = $this->pdo->prepare("
+        SELECT * FROM inventory WHERE product_id = :id AND isDeleted = 0
+    ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
     }

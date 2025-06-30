@@ -12,7 +12,7 @@ $productByCategoryId = $product->getFilterProducts($productById['category_id'], 
 
 $imageByProductId = $imageController->getImageById($id_product);
 
-
+$inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
 ?>
 
 
@@ -34,14 +34,24 @@ $imageByProductId = $imageController->getImageById($id_product);
             <h2><?= $productById['name'] ?></h2>
             <?= $productById['content'] ?>
             <h4 class="text-danger">Giá: <?= $productById['price'] ?>đ</h4>
-
+            <p>Hàng tồn kho: <?= $inventoryProduct['stock_quantity'] ?> sản phẩm</p>
             <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
                 <input type="hidden" name="price" value="<?= $productById['price'] ?>">
                 <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
-                <input type="number" name="quantity" value="1" min="1" class="form-control w-25">
-                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
+                <?php
+                if ($inventoryProduct['stock_quantity'] > 0) {
+                ?>
+                    <input type="number" name="quantity" value="1" min="1" max="<?= $inventoryProduct['stock_quantity'] ?>" class="form-control w-25">
+                    <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
+                <?php
+                } else {
+                ?>
+                    <p class="btn btn-primary">Hết hàng</p>
+                <?php
+                }
+                ?>
             </form>
         </div>
     </div>

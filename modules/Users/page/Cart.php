@@ -5,10 +5,17 @@ if (isset($_POST['addCart'])) {
     $price = $_POST['price'];
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
+    $productInventory = $inventoryController->getProductInventory($id);
 
     if ($id && $price) {
         if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $quantity;
+            $checkQuantity = $cart[$id]['quantity'];
+            $sumQuantity = $cart[$id]['quantity'] += $quantity;
+            if ($sumQuantity < $productInventory['stock_quantity']) {
+                $cart[$id]['quantity'] += $quantity;
+            } else {
+                $cart[$id]['quantity'] = $productInventory['stock_quantity'];
+            }
         } else {
             $cart[$id] = [
                 'id'       => $id,
@@ -92,7 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($cart[$id])) {
             switch ($cmd) {
                 case 'inc':
-                    $cart[$id]['quantity']++;
+                    $productInventory = $inventoryController->getProductInventory($id);
+                    if ($cart[$id]['quantity'] < $productInventory['stock_quantity']) {
+                        $cart[$id]['quantity']++;
+                    }
                     break;
                 case 'dec':
                     if ($cart[$id]['quantity'] > 1) $cart[$id]['quantity']--;
@@ -125,7 +135,7 @@ $_SESSION['cart'] = $cart;
 // ];
 ?>
 <?php
-    $total = 0;
+$total = 0;
 ?>
 <form method="post" action="">
     <div class="container my-4 cart-container">
@@ -153,8 +163,14 @@ $_SESSION['cart'] = $cart;
                     <?php
                     $total = 0;
                     foreach ($cart as $item) {
-                        $itemTotal = $item['price'] * $item['quantity'];
-                        $total += $itemTotal;
+                        $price = (float) preg_replace('/[^\d.]/', '', $item['price']); // 1.200.000₫ -> 1200000
+
+                        // 2. Ép kiểu số nguyên cho quantity
+                        $qty   = (int) $item['quantity'];
+
+                        // 3. Tính tiền dòng
+                        $itemTotal = $price * $qty;
+                        $total    += $itemTotal;
                     ?>
                         <div class="cart-item">
                             <input type="checkbox"

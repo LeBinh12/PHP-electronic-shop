@@ -21,6 +21,12 @@ class InventoryController
         return $this->InventoryController->find($id);
     }
 
+    public function getProductInventory($id)
+    {
+        var_dump($id);
+        return $this->InventoryController->getInventoryProduct($id);
+    }
+
     public function add($data)
     {
         $supplier = $this->InventoryController->insert($data);

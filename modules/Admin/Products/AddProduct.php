@@ -3,6 +3,7 @@
 require_once  './././config/cloudinary.php';
 
 use Cloudinary\Api\Upload\UploadApi;
+use Respect\Validation\Rules\Date;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -13,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $category_id = $_POST['category_id'] ?? 1;
         $supplier_id = $_POST['supplier_id'] ?? 1;
         $content = $_POST['content'] ?? '';
-
+        $stockQuantity = $_POST['stockQuantity'];
 
         // Xử lý ảnh chính
         $imageUrl = $_POST['image_url'] ?? '';
@@ -37,8 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'image_url' => $imageUrl
         ];
         $result = $product->add($data);
+
         if ($result['success']) {
             $productId = $result['product'];
+
+            // xử lý thêm các ảnh liên quan
             if (isset($_FILES['extra_images'])) {
                 $imageFiles = $_FILES['extra_images'];
                 for ($i = 0; $i < count($imageFiles['name']) && $i < 4; $i++) {
@@ -58,7 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            header("Location: Admin.php");
+            $dataInventory = [
+                "stock_quantity" => $stockQuantity,
+                "product_id" => $productId,
+                "isDeleted" => 0,
+                "last_update" => date("Y-m-d H:i:s")
+            ];
+            $inventoryController->add($dataInventory);
+
+            echo "<script>
+            alert('Tạo mới sản phẩm thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+        </script>";
         } else {
             echo "<h1>{$result['message']}</h1>";
         }
@@ -81,6 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="mb-3">
         <label class="form-label">Giảm giá (%)</label>
         <input type="number" name="discount" class="form-control" step="0.01" min="0" max="100">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Số lượng hàng nhập</label>
+        <input type="number" name="stockQuantity" class="form-control" step="0.01" min="0">
     </div>
     <div class="mb-3">
         <label class="form-label">Mô tả ngắn</label>

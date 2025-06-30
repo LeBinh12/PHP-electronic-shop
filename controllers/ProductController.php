@@ -124,6 +124,7 @@ class ProductController
                 ];
             }
         }
+
         $productEdit = $this->productModel->update($id, $data);
         $this->clearCacheAfterChange($id);
         return [
