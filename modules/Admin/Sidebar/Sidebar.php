@@ -8,7 +8,7 @@
 
     <ul class="nav flex-column p-3">
         <li class="nav-item">
-            <a class="nav-link <?= ($currentPage === 'dashboard') ? 'active' : '' ?>" href="Admin.php">
+            <a class="nav-link <?= ($currentPage === '' || $currentPage === 'dashboard') ? 'active' : '' ?>" href="Admin.php">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
         </li>
@@ -40,15 +40,18 @@
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-history"></i> History</a></li>
         <li class="nav-item">
-            <a class="nav-link <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'active' : '' ?>"
-                data-bs-toggle="collapse" href="#recycleCollapse" role="button" aria-expanded="false"
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'active' : '' ?>"
+                data-bs-toggle="collapse"
+                href="#recycleCollapse"
+                role="button"
+                aria-expanded="<?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'true' : 'false' ?>"
                 aria-controls="recycleCollapse">
                 <i class="fas fa-trash me-1"></i> Recycle Bin
-                <i class="fas fa-chevron-right ms-auto arrow-icon"></i>
+                <i class="fas fa-chevron-right ms-auto arrow-icon <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'rotate' : '' ?>"></i>
             </a>
 
-            <div class="collapse <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'show' : '' ?>"
-                id="recycleCollapse">
+            <div class="collapse <?= str_starts_with($currentPage, 'modules/Admin/RecycleBin') ? 'show' : '' ?>" id="recycleCollapse">
                 <ul class="nav flex-column ms-4">
                     <li>
                         <a class="nav-link <?= ($currentPage === 'modules/Admin/RecycleBin/Product/Product.php') ? 'active' : '' ?>"
@@ -71,6 +74,7 @@
                 </ul>
             </div>
         </li>
+
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-language"></i> Language</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-cogs"></i> Settings</a></li>

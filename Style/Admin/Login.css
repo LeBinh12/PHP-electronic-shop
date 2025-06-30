@@ -1,4 +1,4 @@
-/* body {
+body {
   background: #ffffff;
   height: 100vh;
   display: flex;
@@ -51,4 +51,4 @@
 
 .btn-login:hover {
   background: #0762eb;
-} */
+}
