@@ -16,25 +16,25 @@
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Products/Product.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin/Products/Product.php">
-                <i class="fas fa-box"></i> Products
+                <i class="fas fa-box"></i> Sản Phẩm
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin/Categories/Category.php">
-                <i class="fas fa-table"></i> Categories
+                <i class="fas fa-table"></i> Loại Sản Phẩm
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin/Suppliers/Supplier.php">
-                <i class="fas fa-truck"></i> Suppliers
+                <i class="fas fa-truck"></i> Đối Tác Cung Cấp
             </a>
         </li>
 
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users"></i> Customers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users"></i> Kho Hàng</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Orders</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a></li>

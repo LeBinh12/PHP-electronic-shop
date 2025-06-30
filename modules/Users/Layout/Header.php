@@ -149,9 +149,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
                 <ul class="navbar-nav" style="gap: 0.75rem;">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">
-                            <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
-                        </a>
+                        <?php if ($userData === null) { ?>
+                            <a data-bs-toggle="modal"
+                                data-bs-target="#loginModal" href="#" class="nav-link text-white">
+                                <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
+                            </a>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="#" class="nav-link text-white">
+                                <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
+                            </a>
+                        <?php
+                        }
+                        ?>
                     </li>
                     <li class="nav-item">
                         <a href="index.php?subpage=modules/Users/page/Cart.php" class="nav-link text-white">
