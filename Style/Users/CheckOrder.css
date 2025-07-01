@@ -192,7 +192,7 @@
     flex: 1;
 }
 
-.product-price {
+.order-product-price {
     color: #d0021b;
     min-width: 100px;
     text-align: right;

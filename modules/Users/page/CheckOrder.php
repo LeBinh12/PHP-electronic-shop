@@ -110,7 +110,7 @@
                                         <img src="<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
                                         <div class="order-product-info">
                                             <h6><?= $product['name'] ?></h6>
-                                            <div class="product-price"><?= number_format($product['price'], 0, ',', '.') ?>₫</div>
+                                            <div class="order-product-price"><?= number_format($product['price'], 0, ',', '.') ?>₫</div>
                                             <p>Số lượng: <?= $product['quantity'] ?></p>
                                         </div>
                                     </div>
