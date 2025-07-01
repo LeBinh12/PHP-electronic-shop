@@ -42,6 +42,7 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/Chat.css">
     <link rel="stylesheet" href="./Style/Users/Supplier.css">
     <link rel="stylesheet" href="./Style/Users/Product.css">
+    <link rel="stylesheet" href="./Style/Users/CheckOrder.css">
 </head>
 
 <body>
@@ -95,6 +96,7 @@ $userData = $userController->getCurrentUser();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
+    <script src="./Style/Script/User/CheckOrder.js"></script>
 
 </body>
 

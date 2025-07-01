@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <?php
                         } else {
                         ?>
-                            <a href="#" class="nav-link text-white">
+                            <a href="index.php?subpage=modules/Users/page/CheckOrder.php" class="nav-link text-white">
                                 <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
                             </a>
                         <?php
