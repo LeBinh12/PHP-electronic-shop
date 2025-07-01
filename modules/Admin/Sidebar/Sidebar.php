@@ -34,7 +34,7 @@
             </a>
         </li>
 
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users"></i> Kho Hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-users"></i> Kho Hàng</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Orders</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a></li>
