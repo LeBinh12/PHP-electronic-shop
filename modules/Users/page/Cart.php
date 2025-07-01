@@ -50,6 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($method === 'cod') {
             $totalAmount;
+            $dataPayment = [
+                "method" => 'Thanh toán khi nhận hàng',
+                "status" => 'Chưa thanh toán',
+                "paid_at" => date("Y-m-d H:i:s")
+            ];
+            $paymentId = $paymentController->add($dataPayment);
             foreach ($_POST['selected'] as $id) {
                 $priceProduct = $product->getById(id: $id);
 
@@ -63,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'total_amount' => $totalAmount,
                 'status' => "đang giao",
                 'user_id' => $userData->id,
-                'note' => $note
+                'note' => $note,
+                'payment_id' => $paymentId
             ];
             $order = $orderController->add($data);
             foreach ($_POST['selected'] as $id) {

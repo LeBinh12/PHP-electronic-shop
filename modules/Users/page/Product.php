@@ -2,6 +2,7 @@
 
 $id_category = null;
 $id_supplier = null;
+$priceRanges = [];
 $arrayBrand = [];
 $arrayPrice = [];
 $keyword = null;
@@ -22,6 +23,10 @@ if (isset($_GET['price']) && $_GET['price'] !== '') {
     var_dump($arrayPrice);
 }
 
+if (isset($_GET['price']) && $_GET['price'] !== '') {
+    $priceRanges = $_GET['price'];
+}
+
 if (isset($_GET['search'])) {
     $keyword = $_GET['search'];
 }
@@ -30,10 +35,10 @@ $page = $_GET['number'] ?? 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
 
-$totalProducts = $product->countProducts($id_category, $id_supplier, $keyword);
+$totalProducts = $product->countProducts($id_category, $id_supplier, $keyword, $priceRanges);
 $totalPages = ceil($totalProducts / $limit);
 
-$products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $limit, $offset);
+$products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $limit, $offset, $priceRanges);
 
 // var_dump($products);
 ?>

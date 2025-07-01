@@ -8,6 +8,8 @@ require_once './controllers/UserController.php';
 require_once './controllers/OrderController.php';
 require_once './controllers/OrderItemController.php';
 require_once './controllers/InventoryController.php';
+require_once './controllers/PaymentController.php';
+
 
 require 'vendor/autoload.php';
 
@@ -19,6 +21,7 @@ $userController = new UserController();
 $orderController = new OrderController();
 $orderItemController = new OrderItemController();
 $inventoryController = new InventoryController();
+$paymentController = new PaymentController();
 
 $cart = $_SESSION['cart'] ?? [];
 $userData = $userController->getCurrentUser();

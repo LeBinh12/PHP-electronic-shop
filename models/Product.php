@@ -24,7 +24,7 @@
             'supplier_id' => 'suppliers(id)',
         ];
 
-        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0)
+        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0, array $priceRanges = [])
         {
             $sql = "
         SELECT p.*, c.name as category_name, s.name as supplier_name
@@ -49,6 +49,31 @@
             if (!empty($keyword)) {
                 $sql .= " AND p.name LIKE :keyword";
                 $params['keyword'] = '%' . $keyword . '%';
+            }
+
+            if (!empty($priceRanges)) {
+                $priceClauses = [];
+
+                foreach ($priceRanges as $range) {
+                    switch ($range) {
+                        case 1: // < 5
+                            $priceClauses[] = "(p.price < 5000000)";
+                            break;
+                        case 2: // 5 – <10
+                            $priceClauses[] = "(p.price >= 5000000 AND p.price < 10000000)";
+                            break;
+                        case 3: // 10 – <20
+                            $priceClauses[] = "(p.price >= 10000000 AND p.price < 20000000)";
+                            break;
+                        case 4: // >= 20
+                            $priceClauses[] = "(p.price >= 20000000)";
+                            break;
+                    }
+                }
+
+                if ($priceClauses) {
+                    $sql .= " AND (" . implode(' OR ', $priceClauses) . ")";
+                }
             }
 
             $sql .= " ORDER BY p.id DESC LIMIT :limit OFFSET :offset";
@@ -81,7 +106,7 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function countFilteredProducts($categoryId = null, $supplierId = null, $keyword = null)
+        public function countFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, array $priceRanges = [])
         {
             $sql = "
         SELECT COUNT(*) as total
@@ -104,6 +129,31 @@
             if (!empty($keyword)) {
                 $sql .= " AND p.name LIKE :keyword";
                 $params['keyword'] = '%' . $keyword . '%';
+            }
+
+            if (!empty($priceRanges)) {
+                $priceClauses = [];
+
+                foreach ($priceRanges as $range) {
+                    switch ($range) {
+                        case 1: // < 5
+                            $priceClauses[] = "(p.price < 5000000)";
+                            break;
+                        case 2: // 5 – <10
+                            $priceClauses[] = "(p.price >= 5000000 AND p.price < 10000000)";
+                            break;
+                        case 3: // 10 – <20
+                            $priceClauses[] = "(p.price >= 10000000 AND p.price < 20000000)";
+                            break;
+                        case 4: // >= 20
+                            $priceClauses[] = "(p.price >= 20000000)";
+                            break;
+                    }
+                }
+
+                if ($priceClauses) {
+                    $sql .= " AND (" . implode(' OR ', $priceClauses) . ")";
+                }
             }
 
             $stmt = $this->pdo->prepare($sql);

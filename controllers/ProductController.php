@@ -40,6 +40,11 @@ class ProductController
         // return $this->productModel->find($id);
     }
 
+    public function getByIdToDB($id)
+    {
+        return $this->productModel->find($id);
+    }
+
     public function getProductByCategory($id)
     {
         $cacheKey = "products:category:{$id}";
@@ -53,11 +58,11 @@ class ProductController
         // return $this->productModel->getProductsByCategory($id);
     }
 
-    public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0)
+    public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [])
     {
         $start = microtime(true);
-
-        $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$limit:$offset";
+        $priceKey = implode(',', $priceRanges);
+        $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$priceKey:$limit:$offset";
         if (RedisCache::exists($cacheKey)) {
 
             $end = microtime(true);
@@ -65,7 +70,7 @@ class ProductController
             return json_decode(RedisCache::get($cacheKey), true);
         }
 
-        $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
+        $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset, $priceRanges);
         RedisCache::set($cacheKey, json_encode($products));
 
         $end = microtime(true);
@@ -75,14 +80,15 @@ class ProductController
         // return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
     }
 
-    public function countProducts($categoryId, $supplierId, $keyword)
+    public function countProducts($categoryId, $supplierId, $keyword, array $priceRanges = [])
     {
-        $cacheKey = "products:count:$categoryId:$supplierId:$keyword";
+        $priceKey = implode(',', $priceRanges);
+        $cacheKey = "products:count:$categoryId:$supplierId:$keyword:$priceKey";
         if (RedisCache::exists($cacheKey)) {
             return json_decode(RedisCache::get($cacheKey), true);
         }
 
-        $total = $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
+        $total = $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword,);
         RedisCache::set($cacheKey, json_encode($total));
         return $total;
         // return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
