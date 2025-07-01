@@ -1,0 +1,50 @@
+<?php
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
+//     $productId = $_POST['product_id'] ?? '';
+//     $stockQuantity = $_POST['stock_quantity'] ?? 0;
+
+//     $data = [
+//         'product_id' => $productId,
+//         'stock_quantity' => $stockQuantity,
+//         'last_update' => date('Y-m-d H:i:s')
+//     ];
+
+//     $result = $inventory->add($data);
+//     if ($result['success']) {
+//         echo "<script>
+//             alert('Thêm sản phẩm kho thành công!');
+//             window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
+//         </script>";
+//         exit;
+//     } else {
+//         $errorMessage = $result['message'];
+//     }
+// }
+?>
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-success fw-bold w-100 text-center">Thêm sản phẩm vào kho</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <form method="POST">
+                <input type="hidden" name="add_item" value="1">
+                <input type="hidden" name="id" id="addItemWarehouseId">
+                <div class="modal-body pt-0">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" name="product_name" id="addItemProductName" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Số lượng</label>
+                        <input type="number" name="stock_quantity" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-plus-circle me-1"></i> Thêm vào kho
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
