@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="supplierDropdown">
                             <li>
                                 <a class="dropdown-item"
-                                    href="index.php?<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
+                                    href="index.php?page=modules/Users/page/Product?<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
                                     <i class="bi bi-controller"></i> Tất cả
                                 </a>
                             </li>

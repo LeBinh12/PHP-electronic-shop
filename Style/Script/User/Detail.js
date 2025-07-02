@@ -11,12 +11,15 @@ function swapImage(thumb) {
     const tempSrc = mainImage.src;
     mainImage.src = thumb.src;
     thumb.src = tempSrc;
+    
 
     imageList[0] = mainImage.src;
     for (let i = 0; i < thumbnails.length; i++) {
         imageList[i + 1] = thumbnails[i].src;
     }
 }
+
+
 
 mainImage.addEventListener('click', function () {
     updateImage(0);

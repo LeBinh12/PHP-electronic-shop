@@ -53,7 +53,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
                         <h5 class="product-title fs-6"><a class="text-decoration-none" href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
                     </div>
                     <div class="product-footer">
-                        <p class="product-price mb-3">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <p class="product-price mb-2">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
                         <!-- <a href="#" class="text-primary text-decoration-none">Xem chi tiết >></a> -->
                     </div>
                 </div>
