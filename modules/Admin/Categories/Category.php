@@ -1,6 +1,7 @@
 <?php
 
-$keyword = '';
+$keyword = $_GET['search'] ?? '';
+
 
 
 $page = $_GET['number'] ?? 1;
@@ -23,6 +24,18 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
 <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
     <i class="fas fa-plus-circle me-1"></i> Thêm loại sản phẩm
 </button>
+<form class="d-flex justify-content-end mb-3 position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
+    <input type="hidden" name="page" value="modules/Admin/Categories/Category.php">
+    <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
+        <i class="bi bi-search text-muted"></i>
+    </button>
+    <input type="search"
+        name="search"
+        value="<?= htmlspecialchars($keyword) ?>"
+        class="form-control ps-5 rounded-pill"
+        placeholder="Tìm loại sản phẩm...">
+</form>
+
 
 <!-- Nhúng các modal -->
 <?php require_once 'modules/Admin/Categories/AddCategory.php'; ?>
@@ -85,33 +98,3 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
     </ul>
 </nav>
 
-<!-- Script để mở modal sửa -->
-<script>
-    function openEditCategoryModal(id, name, icon, status) {
-        document.getElementById('editCategoryId').value = id;
-        document.getElementById('editCategoryName').value = name;
-        document.getElementById('editCategoryIcon').value = icon;
-        document.getElementById('editCategoryStatus').value = status;
-
-        const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-        modal.show();
-    }
-
-    // Script để mở modal xóa
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.delete-category-btn');
-
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const name = this.dataset.name;
-
-                document.getElementById('deleteCategoryId').value = id;
-                document.getElementById('deleteCategoryName').innerText = name;
-
-                const modal = new bootstrap.Modal(document.getElementById('deleteCategoryModal'));
-                modal.show();
-            });
-        });
-    });
-</script>

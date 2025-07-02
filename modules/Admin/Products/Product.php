@@ -3,7 +3,8 @@
 // $listProduct = $product->getAll();
 $id_category = null;
 $id_supplier = null;
-$keyword = null;
+$keyword = $_GET['search'] ?? '';
+
 
 $page = $_GET['number'] ?? 1;
 $limit = 8;
@@ -30,6 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
 
 <h1 class="h3">Danh sách sản phẩm</h1>
 <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success mb-3">Thêm sản phẩm</a>
+<form class="d-flex justify-content-end mb-3 position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
+    <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
+    <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
+        <i class="bi bi-search text-muted"></i>
+    </button>
+    <input type="search"
+        name="search"
+        value="<?= htmlspecialchars($keyword) ?>"
+        class="form-control ps-5 rounded-pill"
+        placeholder="Tìm sản phẩm...">
+</form>
+
 <div class="d-flex justify-content-center">
     <div class="table-container">
         <table class="table table-bordered table-hover table-lg custom-table">
@@ -70,18 +83,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
                             ?>
                         </td>
                         <td class="action-buttons">
-                            <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
-                                class="btn btn-sm btn-primary">Sửa</a>
-                            <button type="button"
-                                class="btn btn-sm btn-danger delete-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteProductModal"
-                                data-id="<?= $item['id'] ?>"
-                                data-name="<?= htmlspecialchars($item['name']) ?>">
-                                Xóa
-                            </button>
+    <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
+       class="btn btn-sm btn-primary text-white">
+        <i class="fas fa-edit me-1"></i> Sửa
+    </a>
+    <button type="button"
+        class="btn btn-sm btn-danger delete-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteProductModal"
+        data-id="<?= $item['id'] ?>"
+        data-name="<?= htmlspecialchars($item['name']) ?>">
+        <i class="fas fa-trash-alt me-1"></i> Xóa
+    </button>
+</td>
 
-                        </td>
                     </tr>
                 <?php
                 }
