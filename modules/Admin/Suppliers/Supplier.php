@@ -2,7 +2,8 @@
 // $listSupplier = $supplier->getAll();
 
 
-$keyword = '';
+$keyword = $_GET['search'] ?? '';
+
 
 
 $page = $_GET['number'] ?? 1;
@@ -29,6 +30,18 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
         <i class="fas fa-plus-circle me-1"></i> Thêm nhà cung cấp
     </button>
 </div>
+ <!-- Tìm kiếm -->
+    <form class="d-flex position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
+        <input type="hidden" name="page" value="modules/Admin/Suppliers/Supplier.php">
+        <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
+            <i class="bi bi-search text-muted"></i>
+        </button>
+        <input type="search"
+            name="search"
+            value="<?= htmlspecialchars($keyword) ?>"
+            class="form-control ps-5 rounded-pill"
+            placeholder="Tìm nhà cung cấp...">
+    </form>
 
 
 
@@ -99,26 +112,3 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
     </ul>
 </nav>
 
-<script>
-    function openEditSupplierModal(id, name, contact, phone, email, address, imageUrl) {
-        document.getElementById('editSupplierId').value = id;
-        document.getElementById('editSupplierName').value = name;
-        document.getElementById('editSupplierContact').value = contact;
-        document.getElementById('editSupplierPhone').value = phone;
-        document.getElementById('editSupplierEmail').value = email;
-        document.getElementById('editSupplierAddress').value = address;
-        document.getElementById('editSupplierPreview').src = imageUrl || 'path/to/no-image.png';
-
-        new bootstrap.Modal(document.getElementById('editSupplierModal')).show();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.delete-supplier-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                document.getElementById('deleteSupplierId').value = button.dataset.id;
-                document.getElementById('deleteSupplierName').innerText = button.dataset.name;
-                new bootstrap.Modal(document.getElementById('deleteSupplierModal')).show();
-            });
-        });
-    });
-</script>

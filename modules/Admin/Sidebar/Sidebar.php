@@ -43,14 +43,21 @@ $currentPage = $_GET['page'] ?? '';
     </a>
 </li>
 
-<!-- 
+
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-heart"></i> Wishlist</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
-        </li>
-        <li class="nav-item">
+    <a class="nav-link <?= ($currentPage === 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>"
+       href="Admin.php?page=modules/Admin/Customers/Customer.php">
+        <i class="fas fa-users"></i> Khách hàng
+    </a>
+</li>
+
+         <li class="nav-item">
+    <a class="nav-link <?= ($currentPage === 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>"
+       href="Admin.php?page=modules/Admin/Orders/Order.php">
+        <i class="fas fa-shopping-cart"></i> Đơn hàng
+    </a>
+</li>
+  <!--       <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a>
         </li>
         <li class="nav-item">
