@@ -1,9 +1,6 @@
 <?php
 
-<<<<<<< HEAD
 require_once './models/Payment.php';
-=======
->>>>>>> origin/dev/vinh
 require_once './core/RedisCache.php';
 require_once './models/Payment.php';
 
