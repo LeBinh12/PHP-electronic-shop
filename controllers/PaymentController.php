@@ -1,6 +1,6 @@
 <?php
 
-require_once './models/Product.php';
+require_once './models/Payment.php';
 require_once './core/RedisCache.php';
 
 class PaymentController

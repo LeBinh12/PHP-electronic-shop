@@ -95,7 +95,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </script>";
             exit;
         } else {
-            echo "<h1>Thanh toan onl chua xu ly</h1>";
+            $totalAmount = 0;
+            $items       = [];
+            foreach ($_POST['selected'] as $id) {
+                $p   = $product->getById($id);
+                $qty = $cart[$id]['quantity'];
+
+                $totalAmount += $p['price'] * $qty;
+                $items[] = ['name' => $p['name'], 'quantity' => $qty, 'price' => $p['price']];
+            }
+
+            $orderData = [
+                'total_amount' => $totalAmount,
+                'status'       => 'pending',
+                'user_id'      => $userData->id,
+            ];
+            $order = $orderController->add($orderData);
+
+            require_once 'PayOSHelper.php';
+            $payos   = new PayOSHelper();
+            $linkRes = $payos->createLink(
+                orderCode: (int) $order['order_id'],
+                amount: $totalAmount,
+                description: 'Thanh toán đơn #' . $order['order_id'],
+                items: $items
+            );
+            echo "<script>
+                            window.location.href = '{$linkRes['checkoutUrl']}';
+                        </script>";
+            exit;
         }
     }
 
