@@ -27,25 +27,43 @@
     }
 }
 
+.ecom-category-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.ecom-category-list::-webkit-scrollbar {
+    height: 6px;
+}
+
+.ecom-category-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
 .ecom-category-card {
+    min-width: 168.5px;
+    flex-shrink: 0;
     text-align: center;
     background: #fff;
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #eee;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
 }
 
 .ecom-category-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.ecom-category-card img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
+.ecom-category-card i {
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
@@ -54,6 +72,7 @@
     color: #333;
     font-weight: bold;
 }
+
 
 .ecom-product-card {
     position: relative;
@@ -73,8 +92,8 @@
 
 .ecom-product-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 5px;
+    left: 5px;
     background: red;
     color: #fff;
     padding: 4px 8px;
@@ -88,7 +107,7 @@
 }
 
 .ecom-product-badge.sale {
-    background: #fd7e14;
+    background: red;
 }
 
 .ecom-product-img {
@@ -133,11 +152,11 @@
 }
 
 .ecom-carousel .carousel-control-prev {
-    left: -55px;
+    left: -20px;
 }
 
 .ecom-carousel .carousel-control-next {
-    right: -55px;
+    right: -20px;
 }
 
 .carousel-control-prev.disabled,
@@ -155,11 +174,11 @@
     }
 
     .ecom-carousel .carousel-control-prev {
-        left: -40px;
+        left: -15px;
     }
 
     .ecom-carousel .carousel-control-next {
-        right: -40px;
+        right: -15px;
     }
 }
 

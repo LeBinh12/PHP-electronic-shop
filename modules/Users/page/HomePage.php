@@ -99,40 +99,38 @@ $saleProducts = [
 <!-- Danh mục tiêu biểu -->
 <div class="container ecom-section">
     <h3 class="ecom-title">Danh mục nổi bật</h3>
-    <div class="row g-3">
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="ecom-category-card h-100 text-center">
-                <i class="fa-solid fa-laptop fa-2x mb-2"></i>
-                <div class="ecom-category-title">Laptop</div>
-            </div>
+    <div class="ecom-category-list">
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-laptop"></i>
+            <div class="ecom-category-title">Laptop</div>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="ecom-category-card h-100 text-center">
-                <i class="fa-solid fa-tablet-screen-button fa-2x mb-2"></i>
-                <div class="ecom-category-title">Tablet</div>
-            </div>
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-tablet-screen-button"></i>
+            <div class="ecom-category-title">Tablet</div>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="ecom-category-card h-100 text-center">
-                <i class="fa-solid fa-mobile-screen-button fa-2x mb-2"></i>
-                <div class="ecom-category-title">Điện thoại</div>
-            </div>
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <div class="ecom-category-title">Điện thoại</div>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="ecom-category-card h-100 text-center">
-                <i class="fa-solid fa-gamepad fa-2x mb-2"></i>
-                <div class="ecom-category-title">Gaming</div>
-            </div>
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-tv"></i>
+            <div class="ecom-category-title">Tivi</div>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="ecom-category-card h-100 text-center">
-                <i class="fa-solid fa-headphones fa-2x mb-2"></i>
-                <div class="ecom-category-title">Phụ kiện</div>
-            </div>
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-gamepad"></i>
+            <div class="ecom-category-title">Gaming</div>
         </div>
-
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-clock"></i>
+            <div class="ecom-category-title">Đồng hồ</div>
+        </div>
+        <div class="ecom-category-card">
+            <i class="fa-solid fa-headphones"></i>
+            <div class="ecom-category-title">Phụ kiện</div>
+        </div>
     </div>
 </div>
+
 
 
 <!-- Sản phẩm nổi bật -->
@@ -146,7 +144,7 @@ $saleProducts = [
                         <?php foreach ($group as $item) { ?>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card h-100 shadow-sm">
-                                    <span class="ecom-product-badge new">New</span>
+                                    <span class="ecom-product-badge new">Mới</span>
                                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
@@ -226,7 +224,7 @@ $saleProducts = [
                         <?php foreach ($group as $item) { ?>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card">
-                                    <span class="ecom-product-badge sale">Sale</span>
+                                    <span class="ecom-product-badge sale">Giảm giá</span>
                                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
