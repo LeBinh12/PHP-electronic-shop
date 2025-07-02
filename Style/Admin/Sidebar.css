@@ -27,10 +27,11 @@
   border-radius: 5px;
 }
 
-.sidebar .nav-link.active {
-  color: #fff;
-  background-color: #6e5498;
-  border-radius: 5px;
+.sidebar .nav-link.active,
+.custom-sidebar .nav-link.active {
+  color: #fff !important;
+  background-color: #6e5498 !important; /* Màu tím */
+  border-radius: 5px !important;
 }
 
 .sidebar .nav-link i {

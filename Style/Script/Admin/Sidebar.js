@@ -20,3 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
         arrowIcon.classList.add('rotate');
     }
 });
+recycleToggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    const isOpen = collapseEl.classList.contains('show');
+    if (isOpen) {
+        arrowIcon.classList.remove('rotate');
+    } else {
+        arrowIcon.classList.add('rotate');
+    }
+});

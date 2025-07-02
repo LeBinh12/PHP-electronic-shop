@@ -70,8 +70,7 @@ $listItems = array_slice($listItems, $offset, $limit);
                 <?php foreach ($listItems as $item) { ?>
                     <tr>
                         <td class="text-center" style="color:black"><?= htmlspecialchars($item["id"]) ?></td>
-                        <td class="text-center"><?= htmlspecialchars($item['product_name'] ?? 'N/A') ?></a>
-                        </td>
+                        <td class="text-center"><?= htmlspecialchars($item['product_name'] ?? 'N/A') ?></td>
                         <td class="text-center"><?= number_format($item['stock_quantity'], 0) ?></td>
                         <td><?= htmlspecialchars($item['last_update'] ?? 'N/A') ?></td>
                         <td class="text-center">
@@ -79,7 +78,10 @@ $listItems = array_slice($listItems, $offset, $limit);
                                 <button type="button" class="btn btn-sm btn-success px-3 py-1" data-bs-toggle="modal" data-bs-target="#addItemModal">
                                     <i class="fas fa-plus-circle me-1"></i><small>Thêm</small>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-primary px-3 py-1" data-bs-toggle="modal" data-bs-target="#editItemModal">
+                                <button type="button" class="btn btn-sm btn-primary px-3 py-1" data-bs-toggle="modal" data-bs-target="#editItemModal"
+                                        data-id="<?= htmlspecialchars($item['id']) ?>"
+                                        data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
+                                        data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>">
                                     <i class="fas fa-edit me-1"></i><small>Sửa</small>
                                 </button>
                             </div>

@@ -33,21 +33,6 @@
     background-color: #fff;
     border-collapse: collapse;
 }
-/* 
-.custom-table th,
-.custom-table td {
-    padding: 6px 10px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-} */
-
-/* .custom-table th {
-    background-color: #343a40;
-    color: #fff;
-    font-weight: 500;
-    font-size: 13px;
-} */
 
 .custom-table tbody tr:nth-child(even) {
     background-color: #f8f9fa;
@@ -57,11 +42,6 @@
     background-color: #e2e6ea;
 }
 
-/* Tên sản phẩm bên trái để dễ nhìn */
-/* .custom-table td.text-start {
-    text-align: left !important;
-    padding-left: 16px;
-} */
 
 /* Link tên sản phẩm */
 .custom-table a {
