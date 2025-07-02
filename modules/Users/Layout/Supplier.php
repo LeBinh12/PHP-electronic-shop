@@ -8,7 +8,7 @@ $supplierGetAll = $supplier->getAll();
     <div class="row g-3 supplier-grid">
         <?php foreach ($supplierGetAll as $sp) { ?>
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="index.php?supplier=<?= $sp['id'] ?>" class="text-decoration-none">
+                <a href="index.php?subpage=modules/Users/Layout/Main.php&supplier=<?= $sp['id'] ?>" class="text-decoration-none">
                     <div class="supplier-card">
                         <div class="supplier-image-wrapper">
                             <img src="<?= htmlspecialchars($sp['image_url']) ?>"

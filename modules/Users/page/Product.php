@@ -66,7 +66,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
     <ul class="pagination justify-content-center">
         <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link" href="index.php?category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
+                <a class="page-link" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
                     <?= $i ?>
                 </a>
             </li>

@@ -97,14 +97,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="categoryDropdown">
                             <li>
                                 <a class="dropdown-item"
-                                    href="index.php?<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>">
+                                    href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>">
                                     <i class="bi bi-controller"></i> Tất cả
                                 </a>
                             </li>
                             <?php foreach ($categoryGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="index.php?category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
+                                        href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
                                         <i class="bi bi-controller"></i> <?= $item['name'] ?>
                                     </a>
                                 </li>
@@ -121,14 +121,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="supplierDropdown">
                             <li>
                                 <a class="dropdown-item"
-                                    href="index.php?page=modules/Users/page/Product?<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
+                                    href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
                                     <i class="bi bi-controller"></i> Tất cả
                                 </a>
                             </li>
                             <?php foreach ($supplierGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="index.php?supplier=<?= $item['id'] ?>&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
+                                        href="index.php?subpage=modules/Users/Layout/Main.php&supplier=<?= $item['id'] ?>&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
                                         <i class="bi bi-controller"></i> <?= $item['name'] ?>
                                     </a>
                                 </li>
@@ -136,7 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         </ul>
                     </div>
 
-                    <form action="index.php" method="get" class=" search-form d-flex align-items-center">
+                    <form action="index.php" method="get" class="search-form d-flex align-items-center">
+                        <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
+
                         <input type="hidden" name="category" value="<?= $_GET['category'] ?? '' ?>">
                         <input type="hidden" name="supplier" value="<?= $_GET['supplier'] ?? '' ?>">
                         <input type="search" name="search" class="form-control custom-search-input"

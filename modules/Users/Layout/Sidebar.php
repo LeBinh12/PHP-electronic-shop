@@ -6,6 +6,8 @@
     </h5>
 
     <form method="get" id="filterForm">
+        <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
+
         <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="price[]" value="1"
                 id="price1" <?= in_array(1, $_GET['price'] ?? []) ? 'checked' : '' ?>>
