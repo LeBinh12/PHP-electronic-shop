@@ -1,24 +1,26 @@
 <?php
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
-//     $id = $_POST['id'] ?? null;
-//     $stockQuantity = $_POST['stock_quantity'] ?? 0;
 
-//     $data = [
-//         'stock_quantity' => $stockQuantity,
-//         'last_update' => date('Y-m-d H:i:s')
-//     ];
 
-//     $result = $inventory->edit($id, $data);
-//     if ($result['success']) {
-//         echo "<script>
-//             alert('Cập nhật sản phẩm kho thành công!');
-//             window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-//         </script>";
-//         exit;
-//     } else {
-//         $errorMessageUpdate = $result['message'];
-//     }
-// }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
+    $id = $_POST['id'] ?? null;
+    $stockQuantity = $_POST['stock_quantity'] ?? 0;
+
+    $data = [
+        'stock_quantity' => $stockQuantity,
+        'last_update' => date('Y-m-d H:i:s')
+    ];
+
+    $result = $inventoryController->edit($id, $data);
+    if ($result['success']) {
+        echo "<script>
+            alert('Cập nhật sản phẩm kho thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
+        </script>";
+        exit;
+    } else {
+        $errorMessageUpdate = $result['message'];
+    }
+}
 ?>
 <div class="modal fade" id="editItemModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">

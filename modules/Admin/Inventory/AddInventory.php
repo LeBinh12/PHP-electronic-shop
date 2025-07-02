@@ -1,25 +1,25 @@
 <?php
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
-//     $productId = $_POST['product_id'] ?? '';
-//     $stockQuantity = $_POST['stock_quantity'] ?? 0;
-
-//     $data = [
-//         'product_id' => $productId,
-//         'stock_quantity' => $stockQuantity,
-//         'last_update' => date('Y-m-d H:i:s')
-//     ];
-
-//     $result = $inventory->add($data);
-//     if ($result['success']) {
-//         echo "<script>
-//             alert('Thêm sản phẩm kho thành công!');
-//             window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-//         </script>";
-//         exit;
-//     } else {
-//         $errorMessage = $result['message'];
-//     }
-// }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
+    // $id = $_POST['id'] ?? '';
+    $id = 22;
+    $stockQuantity = $_POST['stock_quantity'] ?? 0;
+    $quantityOld = $inventoryController->getById($id);
+    $totalQuantity = $quantityOld['stock_quantity'] + $stockQuantity;
+    $data = [
+        'stock_quantity' => $totalQuantity,
+        'last_update' => date('Y-m-d H:i:s')
+    ];
+    $result = $inventoryController->edit($id, $data);
+    if ($result['success']) {
+        echo "<script>
+            alert('Thêm sản phẩm kho thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
+        </script>";
+        exit;
+    } else {
+        $errorMessage = $result['message'];
+    }
+}
 ?>
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">

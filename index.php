@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';

@@ -23,8 +23,17 @@ class InventoryController
 
     public function getProductInventory($id)
     {
-        var_dump($id);
         return $this->InventoryController->getInventoryProduct($id);
+    }
+
+    public function countInventory($keyword)
+    {
+        return $this->InventoryController->countFiltered($keyword);
+    }
+
+    public function getProductPagination($keyword = '', $limit = 8, $offset = 0)
+    {
+        return $this->InventoryController->getFiltered($keyword, $limit, $offset);
     }
 
     public function add($data)

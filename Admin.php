@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
@@ -31,7 +32,7 @@ $inventoryController = new InventoryController();
     <link rel="stylesheet" href="./Style/Admin/Inventory.css">
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
 
-    
+
 
 </head>
 
@@ -71,7 +72,7 @@ $inventoryController = new InventoryController();
             el.classList.toggle('show');
         }
     </script>
-<!-- Chat -->
+    <!-- Chat -->
     <div id="chat-toggle">
         <i class="bi bi-chat-dots-fill fs-3"></i>
     </div>
