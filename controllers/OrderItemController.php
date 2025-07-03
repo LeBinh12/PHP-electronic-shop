@@ -19,4 +19,9 @@ class OrderItemController
             'category' => $orderItem
         ];
     }
+
+    public function getOrderItemById($orderId)
+    {
+        return $this->orderItemModel->getOrderItemByOrderId($orderId);
+    }
 }

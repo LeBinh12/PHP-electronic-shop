@@ -19,4 +19,14 @@ class OrderController
             'order_id' => $order
         ];
     }
+
+    public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset)
+    {
+        return $this->orderModel->findOrders($userId, $statusId, $limit, $offset);
+    }
+
+    public function total(int $userId, ?int $statusId): int
+    {
+        return $this->orderModel->countOrders($userId, $statusId);
+    }
 }

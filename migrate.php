@@ -13,8 +13,25 @@ require_once  './models/Review.php';
 require_once  './models/Admin.php';
 require_once './controllers/ProductController.php';
 require_once  './models/Banner.php';
+require_once  './models/Status.php';
+
 require_once  './models/Image.php';
 
+$status = new Status();
+$status->createTable();
+
+// $statusData = [
+//     ["name" => 'Chờ xử lý', "isDeleted" => 0],
+//     ["name" => 'Đã xác nhận', "isDeleted" => 0],
+//     ["name" => 'Đang chuyển hàng', "isDeleted" => 0],
+//     ["name" => 'Đang giao hàng', "isDeleted" => 0],
+//     ["name" => 'Đã hủy', "isDeleted" => 0],
+//     ["name" => 'Thành công', "isDeleted" => 0],
+// ];
+
+// foreach ($statusData as $item) {
+//     $status->insert($item);
+// }
 
 $banner = new Banner();
 $banner->createTable();

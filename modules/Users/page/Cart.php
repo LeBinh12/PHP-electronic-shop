@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $note = $_POST['note'] ?? '';
             $data = [
                 'total_amount' => $totalAmount,
-                'status' => "đang giao",
+                'status' => 1, // Chờ xử lý
                 'user_id' => $userData->id,
                 'note' => $note,
                 'payment_id' => $paymentId

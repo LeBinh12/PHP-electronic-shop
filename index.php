@@ -10,6 +10,7 @@ require_once './controllers/OrderController.php';
 require_once './controllers/OrderItemController.php';
 require_once './controllers/InventoryController.php';
 require_once './controllers/PaymentController.php';
+require_once './controllers/StatusController.php';
 
 
 require 'vendor/autoload.php';
@@ -23,6 +24,7 @@ $orderController = new OrderController();
 $orderItemController = new OrderItemController();
 $inventoryController = new InventoryController();
 $paymentController = new PaymentController();
+$statusController = new StatusController();
 
 $cart = $_SESSION['cart'] ?? [];
 $userData = $userController->getCurrentUser();
@@ -52,7 +54,7 @@ $userData = $userController->getCurrentUser();
 
 </head>
 
-<body>  
+<body>
     <div class="container">
         <?php
         require './modules/Users/Layout/Header.php';

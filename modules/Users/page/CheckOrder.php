@@ -1,3 +1,36 @@
+<?php
+$statusGetAll = $statusController->getAll();
+
+$statusId  = $_GET['status']  ?? '';
+$page      = max(1, (int)($_GET['page'] ?? 1));
+$limit     = 6;
+$offset    = ($page - 1) * $limit;
+
+
+$userId = $userData->id;
+
+$orders = $orderController->getOrderPagination(
+    $userId,
+    $statusId === '' ? null : (int)$statusId,
+    $limit,
+    $offset
+);
+$totalRows = $orderController->getCountOrder(
+    $userId,
+    $statusId === '' ? null : (int)$statusId,
+);
+$totalPages = max(1, ceil($totalRows / $limit));
+
+var_dump($statusGetAll);
+echo "<br>";
+var_dump($orders);
+
+foreach ($orders as $item) {
+    $order_item = $orderItemController->getOrderItemById($item["order_id"]);
+    var_dump($order_item);
+}
+?>
+
 <div class="order-page-container container my-4">
     <div class="order-layout">
         <div class="order-content">

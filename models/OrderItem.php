@@ -15,4 +15,19 @@ class OrderItem extends Model
         'product_id' => 'products(id)',
         'order_id' => 'orders(id)'
     ];
+
+    public function getOrderItemByOrderId($orderId)
+    {
+        $sql = "
+        SELECT 
+            *
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.id
+        WHERE oi.order_id = :order_id
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['order_id' => $orderId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
