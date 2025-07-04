@@ -67,10 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $note = $_POST['note'] ?? '';
             $data = [
                 'total_amount' => $totalAmount,
-                'status' => 1, // Chờ xử lý
+                'status_id' => 1, // Chờ xử lý
                 'user_id' => $userData->id,
                 'note' => $note,
-                'payment_id' => $paymentId
+                'payment_id' => $paymentId,
+                'isDeleted' => 0
             ];
             $order = $orderController->add($data);
             foreach ($_POST['selected'] as $id) {
