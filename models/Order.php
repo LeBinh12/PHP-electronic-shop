@@ -82,4 +82,5 @@ class Order extends Model
         $stmt->execute($params);
         return (int) $stmt->fetchColumn();
     }
+
 }

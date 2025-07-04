@@ -25,8 +25,12 @@ class OrderController
         return $this->orderModel->findOrders($userId, $statusId, $limit, $offset);
     }
 
-    public function total(int $userId, ?int $statusId): int
+    public function getCountOrder(int $userId, ?int $statusId): int
     {
         return $this->orderModel->countOrders($userId, $statusId);
     }
+
+    // public function getCountOrder($userId) {
+    //     return $this->orderModel->getCountOrderByUserId($userId);
+    // }
 }

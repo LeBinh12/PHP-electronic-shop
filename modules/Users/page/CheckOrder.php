@@ -1,7 +1,10 @@
 <?php
 $statusGetAll = $statusController->getAll();
 
-$statusId  = $_GET['status']  ?? '';
+$filterStatusId = $_POST['filter_status'] ?? '0';
+$searchCode = $_POST['order_code'] ?? '';
+
+$statusId  = $_GET['status_id']  ?? '';
 $page      = max(1, (int)($_GET['page'] ?? 1));
 $limit     = 6;
 $offset    = ($page - 1) * $limit;
@@ -9,26 +12,37 @@ $offset    = ($page - 1) * $limit;
 
 $userId = $userData->id;
 
-$orders = $orderController->getOrderPagination(
-    $userId,
-    $statusId === '' ? null : (int)$statusId,
-    $limit,
-    $offset
-);
+
+if ($filterStatusId == 0) {
+    $orders = $orderController->getOrderPagination(
+        $userId,
+        1,
+        $limit,
+        $offset
+    );
+} else {
+    $orders = $orderController->getOrderPagination(
+        $userId,
+        $filterStatusId,
+        $limit,
+        $offset
+    );
+}
 $totalRows = $orderController->getCountOrder(
     $userId,
-    $statusId === '' ? null : (int)$statusId,
+    $filterStatusId,
 );
 $totalPages = max(1, ceil($totalRows / $limit));
 
-var_dump($statusGetAll);
+// var_dump($statusGetAll);
 echo "<br>";
 var_dump($orders);
 
-foreach ($orders as $item) {
-    $order_item = $orderItemController->getOrderItemById($item["order_id"]);
-    var_dump($order_item);
-}
+
+// foreach ($orders as $item) {
+//     $order_item = $orderItemController->getOrderItemById($item["order_id"]);
+//     var_dump($order_item);
+// }
 ?>
 
 <div class="order-page-container container my-4">
@@ -39,135 +53,94 @@ foreach ($orders as $item) {
                 <div class="search-filter">
                     <form method="post" class="order-search-form">
                         <div class="search-box">
-                            <input type="text" name="order_code" placeholder="Nhập mã đơn hàng..." value="<?= $_POST['order_code'] ?? '' ?>">
+                            <input type="text" name="order_code" placeholder="Nhập mã đơn hàng..." value="<?= $_POST['order_id'] ?? '' ?>">
                             <button type="submit" class="btn btn-primary">Tra cứu</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- <form method="post" class="order-search-form mb-3 col-4">
-                <div class="search-box">
-                    <input type="text" name="order_code" placeholder="Nhập mã đơn hàng..." value="<?= $_POST['order_code'] ?? '' ?>">
-                    <button type="submit" class="btn btn-primary">Tra cứu</button>
-                </div>
-            </form> -->
             <!-- Bộ lọc trạng thái -->
             <form method="post" class="status-filter-form mb-3">
-                <input type="hidden" name="filter_status" id="filter_status" value="<?= $_POST['filter_status'] ?? 'Tất cả' ?>">
+                <input type="hidden" name="filter_status" id="filter_status" value="<?= htmlspecialchars($filterStatusId) ?>">
                 <div class="order-status-filter">
-                    <?php
-                    $statuses = ["Tất cả", "Chờ xử lý", "Đã xác nhận", "Đang chuyển hàng", "Đang giao hàng", "Đã hủy", "Thành công"];
-                    foreach ($statuses as $status):
-                        $active = (($_POST['filter_status'] ?? 'Tất cả') === $status);
-                    ?>
-                        <button type="button" class="status-btn <?= $active ? 'active' : '' ?>" onclick="filterStatus('<?= $status ?>')"><?= $status ?></button>
+                    <button type="button" class="status-btn <?= ($filterStatusId == 0) ? 'active' : '' ?>" onclick="filterStatus(0)">Tất cả</button>
+
+                    <?php foreach ($statusGetAll as $status): ?>
+                        <button type="button"
+                            class="status-btn <?= ($filterStatusId == $status['id']) ? 'active' : '' ?>"
+                            onclick="filterStatus(<?= $status['id'] ?>)">
+                            <?= htmlspecialchars($status['name']) ?>
+                        </button>
                     <?php endforeach; ?>
                 </div>
             </form>
+
             <?php
-            $orders = [
-                [
-                    'code' => 'DH001',
-                    'status' => 'Chờ xử lý',
-                    'total' => 5000000,
-                    'customer' => [
-                        'name' => 'Mai Chí Vĩnh',
-                        'phone' => '0987654321',
-                        'address' => '123 Nguyễn Văn A, TP. Cao Lãnh, Đồng Tháp',
-                        'email' => 'vinh@gamil.com'
-                    ],
-                    'products' => [
-                        [
-                            'img' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_8__4_54.png',
-                            'name' => 'Laptop Dell XPS 13',
-                            'quantity' => 1,
-                            'price' => 2500000
-                        ],
-                        [
-                            'img' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_11__5_169.png',
-                            'name' => 'Chuột Logitech',
-                            'quantity' => 2,
-                            'price' => 1250000
-                        ],
-                    ]
-                ],
-                [
-                    'code' => 'DH002',
-                    'status' => 'Đã xác nhận',
-                    'total' => 3000000,
-                    'customer' => [
-                        'name' => 'Nguyễn Văn B',
-                        'phone' => '0911222333',
-                        'address' => '456 ba tri bến tre',
-                        'email' => 'nguyenb@gmail.com'
-                    ],
-                    'products' => [
-                        ['img' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_11__5_169.png', 'name' => 'Bàn phím cơ AKKO', 'quantity' => 1, 'price' => 3000000],
-                    ]
-                ],
-            ];
             $filter = $_POST['filter_status'] ?? 'Tất cả';
-            $searchCode = $_POST['order_code'] ?? '';
+            $searchCode = $_POST['order_id'] ?? '';
             $filteredOrders = [];
 
             foreach ($orders as $order) {
-                if (($filter === 'Tất cả' || $order['status'] === $filter) &&
-                    ($searchCode === '' || stripos($order['code'], $searchCode) !== false)
+                if (($filter === 'Tất cả' || $order['status_id'] === $filter) &&
+                    ($searchCode === '' || stripos($order['order_id'], $searchCode) !== false)
                 ) {
                     $filteredOrders[] = $order;
                 }
             }
             ?>
-            <?php if (count($filteredOrders) > 0): ?>
-                <?php foreach ($filteredOrders as $order): ?>
+
+            <?php if (count($orders) > 0) {
+            ?>
+                <?php foreach ($orders as $order) { ?>
+                    <?php
+                    $orderItems = $orderItemController->getOrderItemById($order["order_id"]);
+                    ?>
                     <div class="order-item">
                         <div class="order-item-header">
-                            <h6>Mã đơn: <?= $order['code'] ?> | Trạng thái: <?= $order['status'] ?></h6>
-                            <strong>Tổng tiền: <?= number_format($order['total'], 0, ',', '.') ?>₫</strong>
+                            <h6>Mã đơn: <?= htmlspecialchars($order['order_id']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
+                            <strong>Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
                         </div>
 
                         <div class="order-item-info-row">
                             <div class="shipping-info">
                                 <h5>Thông tin nhận hàng:</h5>
-                                <p><strong>Họ tên:</strong> <?= $order['customer']['name'] ?></p>
-                                <p><strong>SĐT:</strong> <?= $order['customer']['phone'] ?></p>
-                                <p><strong>Địa chỉ:</strong> <?= $order['customer']['address'] ?></p>
-                                <p><strong>Email:</strong> <?= $order['customer']['email'] ?></p>
+                                <p><strong>Họ tên:</strong> <?= htmlspecialchars($order['FullName']) ?></p>
+                                <p><strong>SĐT:</strong> <?= htmlspecialchars($order['Phone']) ?></p>
+                                <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($order['Address']) ?></p>
+                                <p><strong>Email:</strong> <?= htmlspecialchars($order['Email']) ?></p>
                             </div>
 
                             <div class="order-product-list">
                                 <h5>Thông tin sản phẩm:</h5>
-                                <?php foreach ($order['products'] as $product): ?>
+                                <?php foreach ($orderItems as $product) { ?>
                                     <div class="order-product">
-                                        <img src="<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
+                                        <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
                                         <div class="order-product-info">
-                                            <h6><?= $product['name'] ?></h6>
+                                            <h6><?= htmlspecialchars($product['name']) ?></h6>
                                             <div class="order-product-price"><?= number_format($product['price'], 0, ',', '.') ?>₫</div>
                                             <p>Số lượng: <?= $product['quantity'] ?></p>
                                         </div>
                                     </div>
-
-                                <?php endforeach; ?>
+                                <?php }; ?>
                             </div>
                         </div>
 
-                        <?php if ($order['status'] === 'Chờ xử lý'): ?>
+                        <?php if ($order['status_name'] === 'Chờ xử lý') { ?>
                             <form method="post" onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn?')">
-                                <input type="hidden" name="cancel_order" value="<?= $order['code'] ?>">
+                                <input type="hidden" name="cancel_order" value="<?= htmlspecialchars($order['order_id']) ?>">
                                 <button type="submit" class="cancel-btn">Hủy đơn hàng</button>
                             </form>
-                        <?php endif; ?>
+                        <?php } ?>
                     </div>
-                <?php endforeach; ?>
-
-
-            <?php else: ?>
+                <?php }
+            } else { ?>
                 <div class="empty-order">
                     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="No order">
                     <h6>Rất tiếc, không tìm thấy đơn hàng nào phù hợp</h6>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
+
         </div>
     </div>
 </div>
