@@ -20,7 +20,10 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
     if ($product->delete($productId)) {
-        header("Location: Admin.php?page=modules/Admin/Products/Product.php");
+        echo "<script>
+            alert('Xóa sản phẩm thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+        </script>";
         exit;
     } else {
         $deleteError = "Xóa sản phẩm thất bại.";
