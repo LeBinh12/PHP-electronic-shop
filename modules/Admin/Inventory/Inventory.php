@@ -33,7 +33,7 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 
 <div class="container">
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover custom-table">
             <thead class="table-dark">
                 <tr>
                     <th style="width: 100px; text-align:center">Mã Kho</th>
@@ -52,17 +52,16 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                         <td><?= htmlspecialchars($item['last_update'] ?? 'N/A') ?></td>
                         <td class="text-center">
                             <div class="d-inline-flex gap-2">
-                        <!-- ✅ Nút THÊM dùng chung modal với SỬA -->
-<button
-  class="btn btn-success"
-  data-bs-toggle="modal"
-  data-bs-target="#addItemModal"
-  data-id="<?= htmlspecialchars($item['id']) ?>"
-  data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
-  data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
->
-  <i class="fas fa-plus-circle"></i> Thêm
-</button>
+                                <!-- ✅ Nút THÊM dùng chung modal với SỬA -->
+                                <button
+                                    class="btn btn-success"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addItemModal"
+                                    data-id="<?= htmlspecialchars($item['id']) ?>"
+                                    data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
+                                    data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>">
+                                    <i class="fas fa-plus-circle"></i> Thêm
+                                </button>
 
 
 

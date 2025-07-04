@@ -40,7 +40,6 @@ $inventoryController = new InventoryController();
 
     <div class="admin-container">
         <?php require  './modules/Admin/Sidebar/Sidebar.php'; ?>
-
         <div class="content">
             <?php
             if (isset($_GET['page'])) {

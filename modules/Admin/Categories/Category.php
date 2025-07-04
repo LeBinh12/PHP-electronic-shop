@@ -69,14 +69,14 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
                                 '<?= addslashes($item['icon']) ?>',
                                 <?= $item['status'] ?>
                             )">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit me-1"></i>
                                     Sửa
                                 </button>
 
                                 <!-- Nút xóa -->
                                 <button type="button" class="btn btn-sm btn-danger delete-category-btn"
                                     data-id="<?= $item['id'] ?>" data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
-                                    <i class="fas fa-trash-alt"></i> Xóa
+                                    <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </td>
                         </tr>
