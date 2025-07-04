@@ -35,8 +35,8 @@ $totalRows = $orderController->getCountOrder(
 $totalPages = max(1, ceil($totalRows / $limit));
 
 // var_dump($statusGetAll);
-echo "<br>";
-var_dump($orders);
+// echo "<br>";
+// var_dump($orders);
 
 
 // foreach ($orders as $item) {
