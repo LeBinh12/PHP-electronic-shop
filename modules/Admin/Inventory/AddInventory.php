@@ -1,7 +1,8 @@
 <?php
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
-    // $id = $_POST['id'] ?? '';
-    $id = 22;
+    $id = $_POST['id'] ?? '';
+    // $id = 22;
     $stockQuantity = $_POST['stock_quantity'] ?? 0;
     $quantityOld = $inventoryController->getById($id);
     $totalQuantity = $quantityOld['stock_quantity'] + $stockQuantity;
@@ -20,7 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
         $errorMessage = $result['message'];
     }
 }
+
 ?>
+
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
         <div class="modal-content rounded-4 shadow">
@@ -30,15 +33,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
             </div>
             <form method="POST">
                 <input type="hidden" name="add_item" value="1">
-                <input type="hidden" name="id" id="addItemWarehouseId">
                 <div class="modal-body pt-0">
                     <div class="mb-3">
-                        <label class="form-label">Tên sản phẩm</label>
-                        <input type="text" name="product_name" id="addItemProductName" class="form-control">
+                        <label class="form-label">Mã kho</label>
+                        <input type="text" name="id" id="addItemWarehouseId" class="form-control" readonly>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Số lượng</label>
-                        <input type="number" name="stock_quantity" class="form-control" required>
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" name="product_name" id="addItemProductName" class="form-control" readonly>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Số lượng hiện tại</label>
+                        <input type="number" id="quantity" name="stock_quantity" class="form-control"readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Số lượng thêm vào</label>
+                        <input type="number" name="stock_quantity" class="form-control" required min="1" placeholder="Nhập số lượng">
                     </div>
                     <button type="submit" class="btn btn-success w-100">
                         <i class="fas fa-plus-circle me-1"></i> Thêm vào kho

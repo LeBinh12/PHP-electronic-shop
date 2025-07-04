@@ -1,6 +1,4 @@
 <?php
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
     $id = $_POST['id'] ?? null;
     $stockQuantity = $_POST['stock_quantity'] ?? 0;
@@ -10,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
         'last_update' => date('Y-m-d H:i:s')
     ];
 
-    $result = $inventoryController->edit($id, $data);
+    $result = $inventory->edit($id, $data);
     if ($result['success']) {
         echo "<script>
             alert('Cập nhật sản phẩm kho thành công!');
