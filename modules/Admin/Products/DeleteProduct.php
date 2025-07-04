@@ -1,46 +1,49 @@
 <?php
-// Xử lý xóa mềm
-$id = $_GET['id'] ?? null;
-if (!$id) {
-    echo "<h3>Không tìm thấy sản phẩm!</h3>";
-    exit;
+// Nếu gọi từ trang Product.php thì không cần require lại model nếu đã có sẵn
+if (!isset($product)) {
+    require_once '../../../models/Product.php';
+    $product = new Product();
 }
+
+// Xử lý xóa mềm
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
+
     if ($product->delete($productId)) {
         echo "<script>
             alert('Xóa sản phẩm thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+            window.location.href = '../../Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         exit;
     } else {
-        $deleteError = "Xóa sản phẩm thất bại.";
+        echo "<script>
+            alert('Xóa sản phẩm thất bại!');
+            window.location.href = '../../Admin.php?page=modules/Admin/Products/Product.php';
+        </script>";
+        exit;
     }
 }
 ?>
 
-<!-- Modal xác nhận xóa -->
+<!-- Modal xác nhận xóa sản phẩm -->
 <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
-    aria-hidden="true">
+     aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
-            <form method="POST">
+            <form method="POST" action="modules/Admin/Products/DeleteProduct.php">
                 <input type="hidden" name="delete_product" value="1">
                 <input type="hidden" name="delete_product_id" id="deleteProductId">
 
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteProductModalLabel">
-                        <i class="fas fa-triangle-exclamation me-2"></i> Xác nhận xóa
+                        <i class="fas fa-triangle-exclamation me-2"></i> Xác nhận xóa sản phẩm
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Đóng"></button>
+                            aria-label="Đóng"></button>
                 </div>
 
                 <div class="modal-body">
                     <p>Bạn có chắc chắn muốn xóa sản phẩm <strong id="deleteProductName"></strong>?</p>
-                    <?php if (!empty($deleteError)): ?>
-                        <div class="alert alert-danger"><?= $deleteError ?></div>
-                    <?php endif; ?>
                 </div>
 
                 <div class="modal-footer">
@@ -54,16 +57,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     </div>
 </div>
 
-<!-- JS đổ dữ liệu vào modal -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const deleteButtons = document.querySelectorAll(".delete-btn");
-
-        deleteButtons.forEach(btn => {
-            btn.addEventListener("click", function() {
-                document.getElementById("deleteProductId").value = this.dataset.id;
-                document.getElementById("deleteProductName").textContent = this.dataset.name;
-            });
-        });
-    });
-</script>

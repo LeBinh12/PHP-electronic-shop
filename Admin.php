@@ -108,6 +108,7 @@ $inventoryController = new InventoryController();
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
     <script src="./Style/Script/Admin/AddInventory.js"></script>
+    <script src="./Style/Script/Admin/DeleteProduct.js"></script>
 
 </body>
 
