@@ -29,94 +29,101 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
 
 ?>
 
-<h1 class="h3">Danh sách sản phẩm</h1>
-<a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success mb-3">Thêm sản phẩm</a>
-<form class="d-flex justify-content-end mb-3 position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
-    <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
-    <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
-        <i class="bi bi-search text-muted"></i>
-    </button>
-    <input type="search"
-        name="search"
-        value="<?= htmlspecialchars($keyword) ?>"
-        class="form-control ps-5 rounded-pill"
-        placeholder="Tìm sản phẩm...">
-</form>
+<div class="product-container">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
+            <i class="bi bi-plus-circle me-2"></i> Thêm
+        </a>
 
-<div class="d-flex justify-content-center">
-    <div class="table-container">
-        <table class="table table-bordered table-hover table-lg custom-table">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Tên</th>
-                    <th>Giá</th>
-                    <th>Giảm giá</th>
-                    <th>Ảnh</th>
-                    <th>Loại</th>
-                    <th>Nhà cung cấp</th>
-                    <th>Chức năng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($listProduct as $item) {
-                ?>
-                    <tr>
-                        <td style="color:black"><?php echo $item["id"] ?></td>
-                        <td><?php echo htmlspecialchars($item['name']) ?></td>
-                        <td><?php echo number_format($item['price'], 0) ?></td>
-                        <td><?= $item['discount'] ?>%</td>
-                        <td>
-                            <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="Ảnh sản phẩm" width="80" height="80" style="object-fit:cover;">
-                        </td>
-                        <td>
-                            <?php
-                            $categoryItem = $category->getById($item["category_id"]);
-                            echo $categoryItem['name'];
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            $supplierItem = $supplier->getById($item["supplier_id"]);
-                            echo $supplierItem['name'];
-                            ?>
-                        </td>
-                        <td class="action-buttons">
-    <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
-       class="btn btn-sm btn-primary text-white">
-        <i class="fas fa-edit me-1"></i> Sửa
-    </a>
-    <button type="button"
-        class="btn btn-sm btn-danger delete-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteProductModal"
-        data-id="<?= $item['id'] ?>"
-        data-name="<?= htmlspecialchars($item['name']) ?>">
-        <i class="fas fa-trash-alt me-1"></i> Xóa
-    </button>
-</td>
-
-                    </tr>
-                <?php
-                }
-                ?>
-            </tbody>
-        </table>
+        <form class="search-form" method="GET" action="Admin.php">
+            <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
+            <button class="btn search-btn" type="submit">
+                <i class="bi bi-search text-muted"></i>
+            </button>
+            <input type="search"
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Nhập tên sản phẩm cần tìm ...">
+        </form>
     </div>
-</div>
 
-<nav class="mt-4">
-    <ul class="pagination justify-content-center">
-        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link" href="Admin.php?page=modules/Admin/Products/Product.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
-                    <?= $i ?>
-                </a>
-            </li>
-        <?php } ?>
-    </ul>
-</nav>
+    <div class="d-flex justify-content-center">
+        <div class="table-container">
+            <table class="table table-bordered table-hover custom-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 80px">Mã</th>
+                        <th style="width: 100px">Hình ảnh</th>
+                        <th style="width: 260px">Tên sản phẩm</th>
+                        <th style="width: 100px">Giá</th>
+                        <th style="width: 100px">Giảm giá</th>
+                        <th style="width: 160px">Loại sản phẩm</th>
+                        <th style="width: 160px">Nhà cung cấp</th>
+                        <th style="width: 160px">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($listProduct as $item) {
+                    ?>
+                        <tr>
+                            <td style="color:black"><?php echo $item["id"] ?></td>
+                            <td>
+                                <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="Ảnh sản phẩm" style="width: 100px; height: 80px;">
+                            </td>
+                            <td><?php echo htmlspecialchars($item['name']) ?></td>
+                            <td><?php echo number_format($item['price'], 0) ?></td>
+                            <td><?= $item['discount'] ?>%</td>
+                            <td>
+                                <?php
+                                $categoryItem = $category->getById($item["category_id"]);
+                                echo $categoryItem['name'];
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                $supplierItem = $supplier->getById($item["supplier_id"]);
+                                echo $supplierItem['name'];
+                                ?>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
+                                        class="btn btn-sm btn-primary text-white text-decoration-none">
+                                        <i class="fas fa-edit me-1"></i> Sửa
+                                    </a>
+                                    <button type="button"
+                                        class="btn btn-sm btn-danger delete-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteProductModal"
+                                        data-id="<?= $item['id'] ?>"
+                                        data-name="<?= htmlspecialchars($item['name']) ?>">
+                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link" href="Admin.php?page=modules/Admin/Products/Product.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
+    </nav>
+</div>
 
 
 

@@ -31,9 +31,7 @@ $inventoryController = new InventoryController();
     <link rel="stylesheet" href="./Style/Admin/Navbar.css">
     <link rel="stylesheet" href="./Style/Admin/Inventory.css">
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
-
-
-
+    <link rel="stylesheet" href="./Style/Admin/Product.css">
 </head>
 
 <body>

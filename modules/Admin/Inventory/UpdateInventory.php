@@ -1,6 +1,4 @@
 <?php
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
     $id = $_POST['id'] ?? null;
     $stockQuantity = $_POST['stock_quantity'] ?? 0;
