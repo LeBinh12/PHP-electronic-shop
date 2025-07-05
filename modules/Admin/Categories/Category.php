@@ -61,25 +61,27 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
                             <td><i class="<?= htmlspecialchars($item['icon']) ?>"></i> <?= $item['icon'] ?></td>
                             <td><?= $item['status'] ? 'Ẩn' : 'Hiển thị' ?></td>
 
-                            <td class="action-buttons">
-                                <button type="button" class="btn btn-sm btn-primary" onclick="openEditCategoryModal(
-                                <?= $item['id'] ?>,
-                                '<?= addslashes($item['name']) ?>',
-                                '<?= addslashes($item['icon']) ?>',
-                                <?= $item['status'] ?>
-                            )">
-                                    <i class="fas fa-edit me-1"></i>
-                                    Sửa
-                                </button>
+                            <td>
+                                <div class="action-buttons">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openEditCategoryModal(
+                                        <?= $item['id'] ?>,
+                                        '<?= addslashes($item['name']) ?>',
+                                        '<?= addslashes($item['icon']) ?>',
+                                        <?= $item['status'] ?>
+                                        )">
+                                        <i class="fas fa-edit me-1"></i>
+                                        Sửa
+                                    </button>
 
-                                <!-- Nút xóa -->
-                                <button type="button" class="btn btn-sm btn-danger delete-category-btn"
-                                    data-id="<?= $item['id'] ?>" data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
-                                    <i class="fas fa-trash-alt me-1"></i> Xóa
-                                </button>
+                                    <!-- Nút xóa -->
+                                    <button type="button" class="btn btn-sm btn-danger delete-category-btn"
+                                        data-id="<?= $item['id'] ?>" data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
+                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                    </button>
+                                </div>
                             </td>
 
-                            
+
                         </tr>
                     <?php endforeach ?>
                 </tbody>

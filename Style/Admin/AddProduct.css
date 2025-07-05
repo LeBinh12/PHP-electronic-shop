@@ -216,7 +216,6 @@ a.btn-secondary:hover {
     color: #333;
 }
 
-/* Modal hiển thị ảnh to */
 #imageModal {
     display: none;
     position: fixed;
@@ -251,7 +250,7 @@ a.btn-secondary:hover {
     }
 }
 
-/* Nút đóng */
+
 /* #imageModal .close-btn {
     position: absolute;
     top: 20px;
