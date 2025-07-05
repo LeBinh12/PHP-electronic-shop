@@ -4,8 +4,8 @@ $currentPage = $_GET['page'] ?? '';
 
 <div class="sidebar custom-sidebar" style="top: 0; margin-top: 0; padding-top: 0;">
     <div class="logo" style="margin-top: 0;">
-        <img src="https://idodesign.vn/wp-content/uploads/2023/03/logo-cong-nghe-2.jpg" alt="Logo"
-            style="width: 100%; height: auto;">
+        <img src="Style/Images/123.png" alt="Logo"
+            style="max-width: 170px; height: auto; object-fit: contain; border-radius: 20px;">
     </div>
 
     <ul class="nav flex-column p-3">

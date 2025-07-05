@@ -23,42 +23,43 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
 <?php require_once 'modules/Admin/Suppliers/UpdateSupplier.php'; ?>
 <?php require_once 'modules/Admin/Suppliers/DeleteSupplier.php'; ?>
 <div class="text-center mb-2">
-    <h1 class="h3">Danh sách nhà cung cấp</h1>
-</div>
-<div class="d-flex justify-content-end mb-3">
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
-        <i class="fas fa-plus-circle me-1"></i> Thêm nhà cung cấp
-    </button>
+    <h1 class="h3">Danh sách đối tác cung cấp</h1>
 </div>
  <!-- Tìm kiếm -->
-    <form class="d-flex position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
-        <input type="hidden" name="page" value="modules/Admin/Suppliers/Supplier.php">
-        <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
-            <i class="bi bi-search text-muted"></i>
+    <div class="product-container">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            <i class="bi bi-plus-circle me-2"></i> Thêm đối tác mới
         </button>
-        <input type="search"
-            name="search"
-            value="<?= htmlspecialchars($keyword) ?>"
-            class="form-control ps-5 rounded-pill"
-            placeholder="Tìm nhà cung cấp...">
-    </form>
+        <form class="search-form" method="GET" action="Admin.php">
+            <input type="hidden" name="page" value="modules/Admin/Suppliers/Supplier.php">
+            <button class="btn search-btn" type="submit">
+                <i class="bi bi-search text-muted"></i>
+            </button>
+            <input type="search"
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Tìm loại đối tác cung cấp...">
+        </form>
+    </div>
 
 
-
-<div class="container">
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-lg custom-table mx-auto" style="width: auto;">
+<div class="d-flex justify-content-center">
+        <div class="table-container">
+            <table class="table table-bordered table-hover custom-table">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Tên</th>
-                    <th>Người liên hệ</th>
-                    <th>Điện thoại</th>
-                    <th>Email</th>
-                    <th>Địa chỉ</th>
-                    <th>Chức năng</th>
+                    <th style="width: 50px">ID</th>
+                    <th style="width: 120px">Tên</th>
+                    <th style="width: 200px">Người liên hệ</th>
+                    <th style="width: 100px">Điện thoại</th>
+                    <th style="width: 150px">Email</th>
+                    <th style="width: 250px">Địa chỉ</th> 
+                    <th style="width: 150px">Ảnh</th>   
+                    <th style="width: 160px; text-align:center">Chức năng</th>
                 </tr>
-            </thead>
+            </thead>    
             <tbody>
                 <?php
                 $imageFail = 'https://res.cloudinary.com/diizgvtq9/image/upload/v1751033642/suppliers/xgzffwxlcyraw9ncvdch.jpg';
@@ -69,6 +70,7 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                         <td><?= htmlspecialchars($item["contact_person"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Phone"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Email"] ?? '') ?></td>
+                        <td><?= htmlspecialchars($item["Address"] ?? '') ?></td>
                         <td>
                             <img src="<?= htmlspecialchars($item['image_url'] ?? $imageFail) ?>" alt="Ảnh sản phẩm" width="80" height="80" style="object-fit:cover;">
                         </td>
