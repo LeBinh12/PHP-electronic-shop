@@ -90,76 +90,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         echo "<h4>{$result['message']}</h4>";
     }
 }
-
-
-
 ?>
 
+<div class="add-product-container">
+    <div class="header-add-product">
+        <h2>Cập Nhật Sản Phẩm</h2>
+    </div>
+    <div class="product-content">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Mã sản phẩm</label>
+                    <input type="text" name="idProduct" class="form-control" required value="<?= htmlspecialchars($oldProduct['id']) ?>">
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Tên sản phẩm</label>
+                    <input type="text" name="nameProduct" class="form-control" required value="<?= htmlspecialchars($oldProduct['name']) ?>">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Giá</label>
+                    <input type="number" name="priceProduct" class="form-control" required value="<?= $oldProduct['price'] ?>">
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Giảm giá (%)</label>
+                    <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= $oldProduct['discount'] ?>">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Hình ảnh</label>
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                    <p class="form-label mt-2">Hình ảnh hiện tại:</p>
+                    <div class="image-preview-container">
+                        <div class="image-wrapper">
+                            <img src="<?= $oldProduct['image_url'] ?>" alt="Ảnh hiện tại">
+                            <p>Ảnh chính</p>
+                        </div>
+                    </div>
 
-<form method="post" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label class="form-label">Tên sản phẩm</label>
-        <input type="text" name="nameProduct" class="form-control" required value="<?= htmlspecialchars($oldProduct['name']) ?>">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Giá</label>
-        <input type="number" name="priceProduct" class="form-control" required value="<?= $oldProduct['price'] ?>">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Giảm giá (%)</label>
-        <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= $oldProduct['discount'] ?>">
-    </div>
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Hình ảnh phụ (tối đa 4 ảnh)</label>
+                    <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple>
+                    <p class="form-label mt-2">Hình ảnh phụ hiện tại:</p>
+                    <div class="image-preview-container">
+                        <?php
+                        $images = $imageController->getImageById($id);
+                        foreach ($images as $index => $img) {
+                            echo "<div class='image-wrapper'>
+                                    <img src='{$img['image_url']}' alt='Ảnh phụ {$index}'>
+                                    <p>Ảnh phụ " . ($index + 1) . "</p>
+                                </div>";
+                        }
+                        ?>
+                    </div>
 
-    <div class="mb-3">
-        <label class="form-label">Upload ảnh mới (nếu có)</label>
-        <input type="file" name="image" class="form-control" accept="image/*">
-        <p>Ảnh hiện tại:</p>
-        <img src="<?= $oldProduct['image_url'] ?>" alt="Ảnh hiện tại" width="100">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Loại</label>
+                    <select name="category_id" class="form-select">
+                        <?php
+                        $categories = $category->getAll();
+                        foreach ($categories as $cat) {
+                            $selected = ($cat['id'] == $oldProduct['category_id']) ? 'selected' : '';
+                            echo "<option value='{$cat['id']}' $selected>{$cat['name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Nhà cung cấp</label>
+                    <select name="supplier_id" class="form-select">
+                        <?php
+                        $suppliers = $supplier->getAll();
+                        foreach ($suppliers as $sup) {
+                            $selected = ($sup['id'] == $oldProduct['supplier_id']) ? 'selected' : '';
+                            echo "<option value='{$sup['id']}' $selected>{$sup['name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="group mb-3">
+                <label class="form-label">Mô tả ngắn</label>
+                <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
+            </div>
+            <div class="group mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
+            </div>
+            <div class="button-group">
+                <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>
+                <a href="Admin.php?page=modules/Admin/Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Ảnh phụ (tối đa 4 ảnh)</label>
-        <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple>
-        <p>Ảnh phụ hiện tại:</p>
-        <?php
-        $images = $imageController->getImageById($id);
-        foreach ($images as $img) {
-            echo "<img src='{$img['image_url']}' width='80' style='margin-right:10px'>";
-        }
-        ?>
-    </div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">Loại</label>
-        <select name="category_id" class="form-select">
-            <?php
-            $categories = $category->getAll();
-            foreach ($categories as $cat) {
-                $selected = ($cat['id'] == $oldProduct['category_id']) ? 'selected' : '';
-                echo "<option value='{$cat['id']}' $selected>{$cat['name']}</option>";
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Nhà cung cấp</label>
-        <select name="supplier_id" class="form-select">
-            <?php
-            $suppliers = $supplier->getAll();
-            foreach ($suppliers as $sup) {
-                $selected = ($sup['id'] == $oldProduct['supplier_id']) ? 'selected' : '';
-                echo "<option value='{$sup['id']}' $selected>{$sup['name']}</option>";
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả ngắn</label>
-        <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả</label>
-        <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
-    </div>
-    <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>
-    <a href="Admin.php?page=modules/Admin/Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>
-</form>
+<div id="imageModal">
+    <span class="close-btn">&times;</span>
+    <img id="modalImage" src="" alt="Phóng to ảnh">
+</div>

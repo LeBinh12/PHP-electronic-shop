@@ -17,13 +17,10 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
 
 
 ?>
-<div class="text-center mb-2">
-    <h1 class="h3">Danh sách loại sản phẩm</h1>
-</div>
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-            <i class="bi bi-plus-circle me-2"></i> Thêm loại sản phẩm mới
+            <i class="bi bi-plus-circle me-2"></i> Thêm loại
         </button>
         <form class="search-form" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Categories/Category.php">
@@ -63,8 +60,8 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
                             <td><?= htmlspecialchars($item['name']) ?></td>
                             <td><i class="<?= htmlspecialchars($item['icon']) ?>"></i> <?= $item['icon'] ?></td>
                             <td><?= $item['status'] ? 'Ẩn' : 'Hiển thị' ?></td>
+
                             <td class="action-buttons">
-                                <!-- Nút sửa -->
                                 <button type="button" class="btn btn-sm btn-primary" onclick="openEditCategoryModal(
                                 <?= $item['id'] ?>,
                                 '<?= addslashes($item['name']) ?>',
@@ -81,6 +78,8 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
                                     <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </td>
+
+                            
                         </tr>
                     <?php endforeach ?>
                 </tbody>

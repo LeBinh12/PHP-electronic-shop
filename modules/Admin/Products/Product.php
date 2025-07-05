@@ -18,13 +18,11 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
 
 ?>
 <?php require_once 'modules/Admin/Products/DeleteProduct.php'; ?>
-<div class="text-center mb-2">
-    <h1 class="h3">Danh sách sản phẩm</h1>
-</div>
+
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
-            <i class="bi bi-plus-circle me-2"></i> Thêm sản phẩm mới
+            <i class="bi bi-plus-circle me-2"></i> Thêm
         </a>
 
         <form class="search-form" method="GET" action="Admin.php">
@@ -116,6 +114,3 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
         </ul>
     </nav>
 </div>
-
-
-
