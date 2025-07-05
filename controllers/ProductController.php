@@ -1,14 +1,17 @@
 <?php
 require_once './models/Product.php';
 require_once './core/RedisCache.php';
+require_once './controllers/BaseController.php';
 
+use Respect\Validation\Validator as v;
 
-class ProductController
+class ProductController extends BaseController
 {
     private $productModel;
 
     public function __construct()
     {
+        parent::__construct();
         $this->productModel = new Product();
     }
 
@@ -96,10 +99,30 @@ class ProductController
 
     public function add($data)
     {
+        $rules = [
+            'name'          => v::stringType()->length(3, 100)
+                ->setTemplate('Tên SP phải 3‑100 ký tự'),
+            'price'         => v::number()->positive()
+                ->setTemplate('Giá phải là số dương'),
+            'discount'      => v::intVal()->between(0, 100)
+                ->setTemplate('Giảm giá 0‑100%'),
+
+            'content' => v::stringType()->length(0, 500)
+                ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
+        ];
+
+        if (!$this->validator->validate($data, $rules)) {
+            return [
+                'success' => false,
+                'errors'  => $this->validator->error()
+            ];
+        }
+
+
         if ($this->productModel->existsByName($data['name'])) {
             return [
                 'success' => false,
-                'message' => 'Tên sản phẩm đã tồn tại!'
+                'message'  => 'Tên sản phẩm đã tồn tại'
             ];
         }
         $productId = $this->productModel->insert($data);
@@ -114,6 +137,26 @@ class ProductController
 
     public function edit($id, $data)
     {
+
+        $rules = [
+            'name'          => v::stringType()->length(3, 100)
+                ->setTemplate('Tên SP phải 3‑100 ký tự'),
+            'price'         => v::number()->positive()
+                ->setTemplate('Giá phải là số dương'),
+            'discount'      => v::intVal()->between(0, 100)
+                ->setTemplate('Giảm giá 0‑100%'),
+
+            'content' => v::stringType()->length(0, 500)
+                ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
+        ];
+
+        if (!$this->validator->validate($data, $rules)) {
+            return [
+                'success' => false,
+                'errors'  => $this->validator->error()
+            ];
+        }
+
         $existingProduct = $this->productModel->find($id);
         if ($existingProduct == null) {
             return [
@@ -144,7 +187,10 @@ class ProductController
     {
         $deleted = $this->productModel->updateDeleted($id);
         $this->clearCacheAfterChange($id);
-        return $deleted;
+        return [
+            'success' => true,
+            'message' => 'Xóa sản phẩm thành công!',
+        ];
     }
 
     private function clearCacheAfterChange($id)
