@@ -6,6 +6,9 @@ require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/ImageController.php';
 require_once './controllers/InventoryController.php';
+require_once './controllers/OrderController.php';
+require_once './controllers/OrderItemController.php';
+
 
 require 'vendor/autoload.php';
 
@@ -14,7 +17,8 @@ $supplier = new SupplierController();
 $category = new CategoryController();
 $imageController = new ImageController();
 $inventoryController = new InventoryController();
-
+$orderController = new OrderController();
+$orderItemController = new OrderItemController();
 ?>
 
 <!DOCTYPE html>
