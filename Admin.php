@@ -36,6 +36,7 @@ $orderItemController = new OrderItemController();
     <link rel="stylesheet" href="./Style/Admin/Inventory.css">
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
     <link rel="stylesheet" href="./Style/Admin/Product.css">
+    <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
 </head>
 
 <body>
@@ -113,6 +114,8 @@ $orderItemController = new OrderItemController();
     <script src="./Style/Script/User/Detail.js"></script>
     <script src="./Style/Script/Admin/AddInventory.js"></script>
     <script src="./Style/Script/Admin/DeleteProduct.js"></script>
+    <script src="./Style/Script/Admin/AddProduct.js"></script>
+    
 
 </body>
 
