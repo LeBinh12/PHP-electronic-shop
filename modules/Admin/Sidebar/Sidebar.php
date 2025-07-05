@@ -71,7 +71,7 @@ $currentPage = $_GET['page'] ?? '';
                role="button"
                aria-expanded="<?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'true' : 'false' ?>"
                aria-controls="recycleCollapse">
-                <i class="fas fa-trash me-1"></i> Recycle Bin
+                <i class="fas fa-trash me-3"></i> Recycle Bin
                 <i class="fas fa-chevron-right ms-auto arrow-icon <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'rotate' : '' ?>"></i>
             </a>
 
