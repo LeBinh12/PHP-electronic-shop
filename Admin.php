@@ -114,6 +114,7 @@ $orderItemController = new OrderItemController();
     <script src="./Style/Script/Admin/AddInventory.js"></script>
     <script src="./Style/Script/Admin/DeleteProduct.js"></script>
 
+
 </body>
 
 </html>
