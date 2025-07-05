@@ -22,9 +22,7 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
 <?php require_once 'modules/Admin/Suppliers/AddSupplier.php'; ?>
 <?php require_once 'modules/Admin/Suppliers/UpdateSupplier.php'; ?>
 <?php require_once 'modules/Admin/Suppliers/DeleteSupplier.php'; ?>
-<div class="text-center mb-2">
-    <h1 class="h3">Danh sách đối tác cung cấp</h1>
-</div>
+
  <!-- Tìm kiếm -->
     <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
@@ -74,9 +72,10 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                         <td>
                             <img src="<?= htmlspecialchars($item['image_url'] ?? $imageFail) ?>" alt="Ảnh sản phẩm" width="80" height="80" style="object-fit:cover;">
                         </td>
+
                         <td>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-primary" onclick="openEditSupplierModal(
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary text-white" onclick="openEditSupplierModal(
                                 <?= $item['id'] ?>,
                                '<?= addslashes($item['name']) ?>',
                                '<?= addslashes($item['contact_person'] ?? '') ?>',
@@ -85,12 +84,12 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                                '<?= addslashes(string: $item['Address'] ?? '') ?>',
                                '<?= addslashes(string: $item['image_url'] ?? '') ?>')">
 
-                                    <i class="fas fa-edit"></i> Sửa
+                                    <i class="fas fa-edit me-1"></i> Sửa
                                 </button>
 
                                 <button class="btn btn-sm btn-danger delete-supplier-btn" data-id="<?= $item['id'] ?>"
                                     data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
-                                    <i class="fas fa-trash-alt"></i> Xóa
+                                    <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </div>
                         </td>
