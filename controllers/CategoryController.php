@@ -105,7 +105,10 @@ class CategoryController
     {
         $categoryDelete = $this->categoryModel->updateDeleted($id);
         $this->invalidateCache($id);
-        return $categoryDelete;
+        return [
+            'success' => true,
+            'message' => 'Xóa thể loại thành công',
+        ];
     }
 
     private function invalidateCache($id = null)

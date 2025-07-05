@@ -17,7 +17,7 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
 
 
 ?>
-<?php require_once 'modules/Admin/Products/DeleteProduct.php'; ?>
+<?php require_once './modules/Admin/Products/DeleteProduct.php'; ?>
 <div class="text-center mb-2">
     <h1 class="h3">Danh sách sản phẩm</h1>
 </div>
@@ -116,6 +116,3 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
         </ul>
     </nav>
 </div>
-
-
-

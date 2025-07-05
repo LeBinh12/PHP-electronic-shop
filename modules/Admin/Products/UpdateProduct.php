@@ -87,7 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         </script>";
         exit;
     } else {
-        echo "<h4>{$result['message']}</h4>";
+        if ($result['errors']) {
+            foreach ($result['errors'] as $field => $rules) {
+                foreach ($rules as $rule => $msg) {
+                    echo "<div class='alert alert-danger'>$msg</div>";
+                }
+            }
+        } else {
+            echo "<div class='alert alert-danger'>{$result['message']}</div>";
+        }
     }
 }
 

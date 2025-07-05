@@ -10,10 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         'Address' => $_POST['address'],
         'password' => $_POST['password']
     ]);
-    if ($res['success'])
+    if ($res['success']) {
         echo "Đăng ký thành công!";
-    else
-        echo $res['message'];
+    } else {
+        foreach ($res['message'] as $field => $rules) {
+            foreach ($rules as $rule => $msg) {
+                echo "$msg<br>";
+            }
+        }
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
