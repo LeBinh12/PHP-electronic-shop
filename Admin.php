@@ -32,6 +32,7 @@ $inventoryController = new InventoryController();
     <link rel="stylesheet" href="./Style/Admin/Inventory.css">
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
     <link rel="stylesheet" href="./Style/Admin/Product.css">
+    <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
 </head>
 
 <body>
@@ -108,7 +109,6 @@ $inventoryController = new InventoryController();
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
     <script src="./Style/Script/Admin/AddInventory.js"></script>
-
+    <script src="./Style/Script/Admin/AddProduct.js"></script>
 </body>
-
 </html>

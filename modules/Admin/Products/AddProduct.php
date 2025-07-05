@@ -83,61 +83,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<h2>Thêm Sản Phẩm</h2>
-<form action="" method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label class="form-label">Tên</label>
-        <input type="text" name="name" class="form-control" required>
+
+<div class="add-product-container">
+    <div class="header-add-product">
+        <h2>Thêm Sản Phẩm</h2>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Giá</label>
-        <input type="number" name="price" class="form-control" required>
+    <div class="product-content">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Tên sản phẩm</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Giá</label>
+                    <input type="number" name="price" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Giảm giá (%)</label>
+                    <input type="number" name="discount" class="form-control" step="0.01" min="0" max="100">
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Số lượng hàng nhập</label>
+                    <input type="number" name="stockQuantity" class="form-control" step="0.01" min="0">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Ảnh sản phẩm</label>
+                    <input type="file" name="main_image" class="form-control" accept="image/*" id="mainImageInput">
+                    <div id="mainImagePreview" class="image-preview"></div>
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Ảnh phụ (tối đa 4 ảnh)</label>
+                    <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple id="extraImagesInput">
+                    <div id="extraImagesPreview" class="image-preview"></div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="group mb-3">
+                    <label class="form-label">Loại sản phẩm</label>
+                    <select name="category_id" class="form-select">
+                        <?php
+                        $categoriesItem = $category->getAll();
+                        foreach ($categoriesItem as $cat) {
+                            echo "<option value='{$cat['id']}'>{$cat['name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="group mb-3">
+                    <label class="form-label">Nhà cung cấp</label>
+                    <select name="supplier_id" class="form-select">
+                        <?php
+                        $suppliersItem = $supplier->getAll();
+                        foreach ($suppliersItem as $sup) {
+                            echo "<option value='{$sup['id']}'>{$sup['name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="group mb-3">
+                <label class="form-label">Mô tả ngắn</label>
+                <textarea name="content" class="form-control"></textarea>
+            </div>
+            <div class="group mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Thêm</button>
+                <a href="Admin.php?page=modules/Admin/Products/Product.php" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Giảm giá (%)</label>
-        <input type="number" name="discount" class="form-control" step="0.01" min="0" max="100">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Số lượng hàng nhập</label>
-        <input type="number" name="stockQuantity" class="form-control" step="0.01" min="0">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả ngắn</label>
-        <textarea name="content" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Mô tả</label>
-        <textarea name="description" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Ảnh chính (upload)</label>
-        <input type="file" name="main_image" class="form-control" accept="image/*">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Ảnh phụ (tối đa 4 ảnh)</label>
-        <input type="file" name="extra_images[]" class="form-control" accept="image/*" multiple>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Loại</label>
-        <select name="category_id" class="form-select">
-            <?php
-            $categoriesItem = $category->getAll();
-            foreach ($categoriesItem as $cat) {
-                echo "<option value='{$cat['id']}'>{$cat['name']}</option>";
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Nhà cung cấp</label>
-        <select name="supplier_id" class="form-select">
-            <?php
-            $suppliersItem = $supplier->getAll();
-            foreach ($suppliersItem as $sup) {
-                echo "<option value='{$sup['id']}'>{$sup['name']}</option>";
-            }
-            ?>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Thêm</button>
-</form>
+</div>
+
+
+<div id="lightbox" class="lightbox">
+    <img id="lightbox-img" src="" alt="Preview">
+</div>
