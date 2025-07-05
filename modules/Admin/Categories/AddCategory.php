@@ -29,7 +29,7 @@ $listCategory = $category->getAll();
 
 <!-- Modal thêm danh mục -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <form method="POST">
                 <input type="hidden" name="add_category" value="1">

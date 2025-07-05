@@ -14,8 +14,6 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 // var_dump($listItems); exit; 
 ?>
 
-
-
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <form class="search-form" method="GET" action="Admin.php">
@@ -41,8 +39,8 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                     <tr>
                         <th style="width: 100px; text-align:center">Mã Kho</th>
                         <th>Tên Sản Phẩm</th>
-                        <th style="width: 100px">Số Lượng</th>
-                        <th style="width: 200px">Lần Cập Nhật Gần Nhất</th>
+                        <th style="width: 150px">Số Lượng</th>
+                        <th style="width: 250px">Lần Cập Nhật Gần Nhất</th>
                         <th class="text-center" style="width: 200px">Chức Năng</th>
                     </tr>
                 </thead>
@@ -55,7 +53,6 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                             <td><?= htmlspecialchars($item['last_update'] ?? 'N/A') ?></td>
                             <td class="text-center">
                                 <div class="d-inline-flex gap-2">
-                                    <!-- ✅ Nút THÊM dùng chung modal với SỬA -->
                                     <button
                                         class="btn btn-success"
                                         data-bs-toggle="modal"
@@ -65,10 +62,6 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                                         data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>">
                                         <i class="fas fa-plus-circle"></i> Thêm
                                     </button>
-
-
-
-
                                     <button type="button" class="btn btn-sm btn-primary px-3 py-1"
                                         data-id="<?= htmlspecialchars($item['id']) ?>"
                                         data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
@@ -97,3 +90,4 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
             <?php endfor ?>
         </ul>
     </nav>
+</div>

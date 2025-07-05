@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_supplier'])) {
 <!-- Modal xác nhận xóa nhà cung cấp -->
 <div class="modal fade" id="deleteSupplierModal" tabindex="-1" aria-labelledby="deleteSupplierModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="POST">
                 <input type="hidden" name="delete_supplier" value="1">
@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_supplier'])) {
 </div>
 
 <script>
-    // Script để mở modal xóa nhà cung cấp
     document.addEventListener('DOMContentLoaded', function() {
         const deleteBtns = document.querySelectorAll('.delete-supplier-btn');
         deleteBtns.forEach(btn => {
