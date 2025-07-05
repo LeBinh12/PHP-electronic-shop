@@ -20,6 +20,7 @@ class OrderController
         ];
     }
 
+
     public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset)
     {
         return $this->orderModel->findOrders($userId, $statusId, $limit, $offset);
@@ -28,6 +29,16 @@ class OrderController
     public function getCountOrder(int $userId, ?int $statusId): int
     {
         return $this->orderModel->countOrders($userId, $statusId);
+    }
+
+    public function getAllOrdersPagination(string $keyword, int $limit, int $offset)
+    {
+        return $this->orderModel->findAllOrders($keyword, $limit, $offset);
+    }
+
+    public function getAllCountOrder(string $keyword)
+    {
+        return $this->orderModel->countAllOrders($keyword);
     }
 
     // public function getCountOrder($userId) {
