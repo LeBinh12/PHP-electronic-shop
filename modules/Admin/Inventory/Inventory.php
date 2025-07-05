@@ -16,17 +16,20 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 
 <h1 class="h3">Danh sách kho hàng</h1>
 
-<form class="d-flex justify-content-end mb-3 position-relative" method="GET" action="Admin.php" style="max-width: 350px; width: 100%;">
-    <input type="hidden" name="page" value="modules/Admin/Inventory/Inventory.php">
-    <button class="btn position-absolute top-50 start-0 translate-middle-y ms-2" type="submit" style="z-index: 10; border: none; background: transparent;">
-        <i class="bi bi-search text-muted"></i>
-    </button>
-    <input type="search"
-        name="search"
-        value="<?= htmlspecialchars($keyword) ?>"
-        class="form-control ps-5 rounded-pill"
-        placeholder="Tìm sản phẩm...">
-</form>
+<div class="product-container">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <form class="search-form" method="GET" action="Admin.php">
+            <input type="hidden" name="page" value="modules/Admin/Inventory/Inventory.php">
+            <button class="btn search-btn" type="submit">
+                <i class="bi bi-search text-muted"></i>
+            </button>
+            <input type="search"
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Tìm sản phẩm trong kho...">
+        </form>
+    </div>
 
 <?php require_once 'modules/Admin/Inventory/AddInventory.php'; ?>
 <?php require_once 'modules/Admin/Inventory/UpdateInventory.php'; ?>
