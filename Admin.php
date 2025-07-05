@@ -62,7 +62,7 @@ $orderItemController = new OrderItemController();
     <script src="./Style/Script/Admin/Sidebar.js"></script>
     <script src="./Style/Script/Admin/Inventory.js" defer></script>
     <script src="./Style/Script/Admin/Customer.js"></script>
-    <script src="./Style/Script/Admin/Order.js"></script>
+
 
 
 
@@ -117,6 +117,7 @@ $orderItemController = new OrderItemController();
     <script src="./Style/Script/Admin/DeleteProduct.js"></script>
     <script src="./Style/Script/Admin/AddProduct.js"></script>
     <script src="./Style/Script/Admin/UpdateProduct.js"></script>
+    <script src="./Style/Script/Admin/Order.js"></script>
 
 
 </body>

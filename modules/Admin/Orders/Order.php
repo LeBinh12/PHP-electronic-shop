@@ -31,6 +31,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
 <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
 <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
+<?php require_once 'modules/Admin/Orders/UpdateOrder.php'; ?>
 <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -61,10 +62,15 @@ $totalPages = max(1, ceil($totalRows / $limit));
                    class="btn btn-sm btn-info text-white btn-sm-fixed">
                     <i class="fas fa-eye me-1"></i> Xem
                 </a>
-                <a href="Admin.php?page=modules/Admin/Orders/UpdateOrder.php&id=<?= $item['id'] ?>"
-                    class="btn btn-sm btn-warning text-white btn-sm-fixed">
-                    <i class="fas fa-edit me-1"></i> Sửa
-                </a>
+<button type="button"
+    class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
+    data-id="<?= $item['id'] ?>"
+    data-status="<?= $item['status_id'] ?>"
+    data-bs-toggle="modal"
+    data-bs-target="#updateOrderModal">
+    <i class="fas fa-edit me-1"></i> Sửa
+</button>
+
                 <button type="button"
                     class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#changeStatusModal">
                     <i class="fas fa-sync-alt me-1"></i> Chuyển
