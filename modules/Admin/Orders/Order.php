@@ -32,16 +32,17 @@ $totalPages = max(1, ceil($totalRows / $limit));
 <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
 <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
 <!-- Bảng danh sách -->
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-lg">
+    <div class="d-flex justify-content-center">
+        <div class="table-container">
+            <table class="table table-bordered table-hover custom-table">
         <thead class="table-dark text-center">
             <tr>
-                <th>ID</th>
-                <th>Người đặt</th>
-                <th>Ngày đặt</th>
-                <th>Trạng thái</th>
-                <th>Tổng tiền</th>
-                <th>Chức năng</th>
+                <th style="width: 70px">ID</th>
+                <th style="width: 250px">Người đặt</th>
+                <th >Ngày đặt</th>
+                <th style="width: 250px">Trạng thái</th>
+                <th style="width: 250px">Tổng tiền</th>
+                <th style="width: 350px">Chức năng</th>
             </tr>
         </thead>
         <tbody class="text-center">
@@ -56,19 +57,23 @@ $totalPages = max(1, ceil($totalRows / $limit));
               <td><?= htmlspecialchars($item['status_name']) ?></td>
               <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
               <td>
-                  <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['id'] ?>" class="btn btn-sm btn-info text-white">
-                      <i class="fas fa-eye me-1"></i> Xem
-                  </a>
-                  <a href="Admin.php?page=modules/Admin/Orders/UpdateOrder.php&id=<?= $item['id'] ?>" class="btn btn-sm btn-warning text-white">
-                      <i class="fas fa-edit me-1"></i> Sửa
-                  </a>
-                  <button type="button" class="btn btn-sm btn-secondary change-status-btn" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#changeStatusModal">
-                     <i class="fas fa-sync-alt me-1"></i> Chuyển trạng thái
-                  </button>
-                  <button type="button" class="btn btn-sm btn-danger delete-order-btn" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
-                      <i class="fas fa-trash-alt me-1"></i> Xóa
-                  </button>
-              </td>
+                <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['id'] ?>"
+                   class="btn btn-sm btn-info text-white btn-sm-fixed">
+                    <i class="fas fa-eye me-1"></i> Xem
+                </a>
+                <a href="Admin.php?page=modules/Admin/Orders/UpdateOrder.php&id=<?= $item['id'] ?>"
+                    class="btn btn-sm btn-warning text-white btn-sm-fixed">
+                    <i class="fas fa-edit me-1"></i> Sửa
+                </a>
+                <button type="button"
+                    class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#changeStatusModal">
+                    <i class="fas fa-sync-alt me-1"></i> Chuyển
+                </button>
+                <button type="button"
+                    class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                    <i class="fas fa-trash-alt me-1"></i> Xóa
+                </button>
+            </td>
           </tr>
       <?php endforeach ?>
   <?php endif; ?>

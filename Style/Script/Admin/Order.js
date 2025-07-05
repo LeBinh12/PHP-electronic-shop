@@ -11,13 +11,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Xử lý chuyển trạng thái
-    const changeButtons = document.querySelectorAll(".change-status-btn");
-    const inputStatusId = document.getElementById("change-status-id");
 
-    changeButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const id = button.getAttribute("data-id");
-            inputStatusId.value = id;
+document.addEventListener("DOMContentLoaded", function () {
+    const changeStatusButtons = document.querySelectorAll('.change-status-btn');
+    const inputId = document.getElementById('change-status-id');
+
+    changeStatusButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            inputId.value = id;
         });
     });
+});
+
+
 });
