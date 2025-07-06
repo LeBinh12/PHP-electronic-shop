@@ -31,7 +31,9 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
     <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
     <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
-    <?php require_once 'modules/Admin/Orders/UpdateOrder.php'; ?>
+    <?php
+    //  require_once 'modules/Admin/Orders/UpdateOrder.php'; 
+    ?>
     <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -54,7 +56,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                     <?php else: ?>
                         <?php foreach ($listOrders as $item): ?>
                             <tr>
-                                <td><?= $item['id'] ?></td>
+                                <td><?= $item['order_id'] ?></td>
                                 <td><?= htmlspecialchars($item['FullName']) ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($item['create_at'])) ?></td>
                                 <td><?= htmlspecialchars($item['status_name']) ?></td>
@@ -89,25 +91,6 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
             </table>
         </div>
-
-        <!-- PHÂN TRANG -->
-        <?php if ($totalPages > 1): ?>
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                            <a class="page-link" href="Admin.php?page=modules/Admin/Orders/Order.php&search=<?= urlencode($keyword) ?>&page=<?= $i ?>">
-                                <?= $i ?>
-                            </a>
-                        </li>
-                    <?php endfor; ?>
-                </ul>
-            </nav>
-        <?php endif; ?>
-
-
-
-
         </table>
     </div>
 
