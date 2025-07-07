@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
         if ($result['success']) {
             echo "<script>
             alert('Xóa loại sản phẩm thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
+            window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
         </script>";
             exit;
         } else {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
 <!-- Modal xác nhận xóa danh mục -->
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="POST">
                 <input type="hidden" name="delete_category" value="1">

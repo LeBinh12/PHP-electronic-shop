@@ -75,7 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         } else {
-            echo "<h1>{$result['message']}</h1>";
+            if ($result['errors']) {
+                foreach ($result['errors'] as $field => $rules) {
+                    foreach ($rules as $rule => $msg) {
+                        echo "<div class='alert alert-danger'>$msg</div>";
+                    }
+                }
+            } else {
+                echo "<div class='alert alert-danger'>{$result['message']}</div>";
+            }
         }
     } catch (Exception $e) {
         echo "Lỗi: " . $e->getMessage();

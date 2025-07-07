@@ -98,7 +98,7 @@ class Order extends Model
         $params = [];
 
         if ($keyword !== '') {
-            $sql .= " AND o.code LIKE :kw";
+            $sql .= " AND o.id LIKE :kw";
             $params['kw'] = '%' . $keyword . '%';
         }
 

@@ -3,7 +3,8 @@
   padding: 80px 20px 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Căn trái và giữa theo chiều dọc */
+  align-items: flex-start;
+  /* Căn trái và giữa theo chiều dọc */
   width: calc(100% - 250px);
 }
 
@@ -19,6 +20,6 @@ body {
   min-height: 100vh;
 }
 
-.modal-dialog {
+/* .modal-dialog {
   max-width: 800px !important;
-}
+} */
