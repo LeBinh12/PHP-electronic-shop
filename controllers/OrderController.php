@@ -20,15 +20,19 @@ class OrderController
         ];
     }
 
-
-    public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset)
+    public function getById($id)
     {
-        return $this->orderModel->findOrders($userId, $statusId, $limit, $offset);
+        return $this->orderModel->find($id);
     }
 
-    public function getCountOrder(int $userId, ?int $statusId): int
+    public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset, $keyword)
     {
-        return $this->orderModel->countOrders($userId, $statusId);
+        return $this->orderModel->findOrders($userId, $statusId, $keyword, $limit, $offset);
+    }
+
+    public function getCountOrder(int $userId, ?int $statusId, $keyword): int
+    {
+        return $this->orderModel->countOrders($userId, $statusId, $keyword);
     }
 
     public function getAllOrdersPagination(string $keyword, int $limit, int $offset)
@@ -39,6 +43,16 @@ class OrderController
     public function getAllCountOrder(string $keyword)
     {
         return $this->orderModel->countAllOrders($keyword);
+    }
+
+    public function edit($id, $data)
+    {
+        $orderEdit = $this->orderModel->update($id, $data);
+        return [
+            "success" => true,
+            "message" => 'Cập nhật đơn hàng thành công',
+            'order' => $orderEdit
+        ];
     }
 
     // public function getCountOrder($userId) {

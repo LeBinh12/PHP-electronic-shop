@@ -6,6 +6,7 @@ class Order extends Model
     protected $table = "orders";
     protected $fields = [
         'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+        'code' => 'VARCHAR(50) NOT NULL',
         'total_amount' => 'DECIMAL(12,2)',
         'status_id' => 'INT',
         'payment_id' => 'INT',
@@ -26,7 +27,7 @@ class Order extends Model
     public function findOrders(
         int $userId,
         ?int $statusId = null,
-        // string $keyword    = '',
+        string $keyword    = '',
         int    $limit      = 10,
         int    $offset     = 0
     ) {
@@ -46,10 +47,10 @@ class Order extends Model
             $params['status_id'] = $statusId;
         }
 
-        // if ($keyword !== '') {
-        //     $sql .= " AND o.code LIKE :kw";
-        //     $params['kw'] = '%' . $keyword . '%';
-        // }
+        if ($keyword !== '') {
+            $sql .= " AND o.code LIKE :kw";
+            $params['kw'] = '%' . $keyword . '%';
+        }
 
         $sql .= " ORDER BY o.id DESC LIMIT :limit OFFSET :offset";
 
@@ -64,7 +65,7 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countOrders(int $userId, ?int $statusId = null): int
+    public function countOrders(int $userId, ?int $statusId = null, $keyword = ''): int
     {
         $sql = "SELECT COUNT(*) FROM orders WHERE user_id = :uid AND isDeleted = 0";
         $params = ['uid' => $userId];
@@ -73,10 +74,10 @@ class Order extends Model
             $sql .= " AND status_id = :sid";
             $params['sid'] = $statusId;
         }
-        // if ($keyword !== '') {
-        //     $sql .= " AND code LIKE :kw";
-        //     $params['kw'] = '%' . $keyword . '%';
-        // }
+        if ($keyword !== '') {
+            $sql .= " AND code LIKE :kw";
+            $params['kw'] = '%' . $keyword . '%';
+        }
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
@@ -98,7 +99,7 @@ class Order extends Model
         $params = [];
 
         if ($keyword !== '') {
-            $sql .= " AND o.id LIKE :kw";
+            $sql .= " AND o.code LIKE :kw";
             $params['kw'] = '%' . $keyword . '%';
         }
 
@@ -122,7 +123,7 @@ class Order extends Model
         $params = [];
 
         if ($keyword !== '') {
-            $sql .= " AND id LIKE :kw";
+            $sql .= " AND code LIKE :kw";
             $params['kw'] = '%' . $keyword . '%';
         }
         $stmt = $this->pdo->prepare($sql);

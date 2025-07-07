@@ -24,11 +24,12 @@ $totalPages = max(1, ceil($totalRows / $limit));
                 name="search"
                 value="<?= htmlspecialchars($keyword) ?>"
                 class="form-control search-input"
-                placeholder="Tìm đơn hàng...">
+                placeholder="Tìm mã đơn hàng...">
         </form>
     </div>
 
 
+<<<<<<< HEAD
 <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
 <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
 <?php require_once 'modules/Admin/Orders/UpdateOrder.php'; ?>
@@ -85,6 +86,90 @@ $totalPages = max(1, ceil($totalRows / $limit));
   <?php endif; ?>
 </tbody>
 <!-- PHÂN TRANG -->
+=======
+    <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
+    <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
+    <?php
+    //  require_once 'modules/Admin/Orders/UpdateOrder.php'; 
+    ?>
+    <!-- Bảng danh sách -->
+    <div class="d-flex justify-content-center">
+        <div class="table-container">
+            <table class="table table-bordered table-hover custom-table">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th style="width: 70px">ID</th>
+                        <th style="width: 250px">Người đặt</th>
+                        <th>Ngày đặt</th>
+                        <th style="width: 250px">Trạng thái</th>
+                        <th style="width: 250px">Tổng tiền</th>
+                        <th style="width: 350px">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <?php if (empty($listOrders)): ?>
+                        <tr>
+                            <td colspan="6" class="text-center">Không tìm thấy đơn hàng nào.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($listOrders as $item): ?>
+                            <tr>
+                                <td><?= $item['code'] ?></td>
+                                <td><?= htmlspecialchars($item['FullName']) ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($item['create_at'])) ?></td>
+                                <td><?= htmlspecialchars($item['status_name']) ?></td>
+                                <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
+                                <td>
+                                    <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['order_id'] ?>"
+                                        class="btn btn-sm btn-info text-white btn-sm-fixed">
+                                        <i class="fas fa-eye me-1"></i> Xem
+                                    </a>
+                                    <button type="button"
+                                        class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
+                                        data-id="<?= $item['order_id'] ?>"
+                                        data-status="<?= $item['status_id'] ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#updateOrderModal">
+                                        <i class="fas fa-edit me-1"></i> Sửa
+                                    </button>
+
+                                    <?php
+                                    if ($item['status_id'] <  4) {
+                                    ?>
+                                        <button type="button"
+                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#changeStatusModal">
+                                            <i class="fas fa-sync-alt me-1"></i> Chuyển
+                                        </button>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <button
+                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed">
+                                            <i class=" fas fa-sync-alt me-1"></i> Chuyển
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
+
+                                    <button type="button"
+                                        class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    <?php endif; ?>
+                </tbody>
+
+            </table>
+        </div>
+        </table>
+    </div>
+
+    <!-- PHÂN TRANG -->
+>>>>>>> origin/main
     <?php if ($totalPages > 1): ?>
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
