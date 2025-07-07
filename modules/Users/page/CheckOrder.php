@@ -18,17 +18,17 @@ if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
         $userId,
         1,
-        $keyword,
         $limit,
-        $offset
+        $offset,
+        $keyword,
     );
 } else {
     $orders = $orderController->getOrderPagination(
         $userId,
         $filterStatusId,
-        $keyword,
         $limit,
-        $offset
+        $offset,
+        $keyword,
     );
 }
 $totalRows = $orderController->getCountOrder(
