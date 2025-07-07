@@ -17,7 +17,7 @@ $userId = $userData->id;
 if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
         $userId,
-        1,
+        null,
         $limit,
         $offset,
         $keyword,
@@ -37,6 +37,25 @@ $totalRows = $orderController->getCountOrder(
     $keyword,
 );
 $totalPages = max(1, ceil($totalRows / $limit));
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
+    $id = $_POST['cancel_order'];
+
+    $result = $orderController->edit($id, ["status_id" => 5]);
+
+    if ($result['success']) {
+        echo "<script>
+            alert('Hủy đơn hàng thành công!');
+            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Hủy đơn hàng thất bại do hệ thông đang bảo trì!');
+            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php';
+        </script>";
+    }
+}
+
 
 // var_dump($statusGetAll);
 // echo "<br>";
@@ -102,7 +121,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                     ?>
                     <div class="order-item">
                         <div class="order-item-header">
-                            <h6>Mã đơn: <?= htmlspecialchars($order['order_id']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
+                            <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
                             <strong>Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
                         </div>
 
