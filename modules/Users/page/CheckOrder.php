@@ -1,4 +1,5 @@
 <?php
+$keyword = $_GET['search'] ?? '';
 $statusGetAll = $statusController->getAll();
 
 $filterStatusId = $_POST['filter_status'] ?? '0';
@@ -17,6 +18,7 @@ if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
         $userId,
         1,
+        $keyword,
         $limit,
         $offset
     );
@@ -24,6 +26,7 @@ if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
         $userId,
         $filterStatusId,
+        $keyword,
         $limit,
         $offset
     );
@@ -31,6 +34,7 @@ if ($filterStatusId == 0) {
 $totalRows = $orderController->getCountOrder(
     $userId,
     $filterStatusId,
+    $keyword,
 );
 $totalPages = max(1, ceil($totalRows / $limit));
 

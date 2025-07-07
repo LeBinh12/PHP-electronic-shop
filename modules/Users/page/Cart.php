@@ -6,7 +6,6 @@ if (isset($_POST['addCart'])) {
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
     $productInventory = $inventoryController->getProductInventory($id);
-
     if ($id && $price) {
         if (isset($cart[$id])) {
             $checkQuantity = $cart[$id]['quantity'];
@@ -22,7 +21,7 @@ if (isset($_POST['addCart'])) {
                 'name'     => $name,
                 'price'    => $price,
                 'image'    => $image,
-                'quantity' => $quantity
+                'quantity' => $quantity,
             ];
         }
     }
@@ -64,8 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $totalAmount += $priceProduct['price'] * $quantity;
             }
 
+            $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
             $note = $_POST['note'] ?? '';
             $data = [
+                'code' => $code,
                 'total_amount' => $totalAmount,
                 'status_id' => 1, // Chờ xử lý
                 'user_id' => $userData->id,

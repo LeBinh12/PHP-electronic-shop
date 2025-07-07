@@ -24,7 +24,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                 name="search"
                 value="<?= htmlspecialchars($keyword) ?>"
                 class="form-control search-input"
-                placeholder="Tìm đơn hàng...">
+                placeholder="Tìm mã đơn hàng...">
         </form>
     </div>
 
@@ -56,31 +56,47 @@ $totalPages = max(1, ceil($totalRows / $limit));
                     <?php else: ?>
                         <?php foreach ($listOrders as $item): ?>
                             <tr>
-                                <td><?= $item['order_id'] ?></td>
+                                <td><?= $item['code'] ?></td>
                                 <td><?= htmlspecialchars($item['FullName']) ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($item['create_at'])) ?></td>
                                 <td><?= htmlspecialchars($item['status_name']) ?></td>
                                 <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
                                 <td>
-                                    <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['id'] ?>"
+                                    <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['order_id'] ?>"
                                         class="btn btn-sm btn-info text-white btn-sm-fixed">
                                         <i class="fas fa-eye me-1"></i> Xem
                                     </a>
                                     <button type="button"
                                         class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
-                                        data-id="<?= $item['id'] ?>"
+                                        data-id="<?= $item['order_id'] ?>"
                                         data-status="<?= $item['status_id'] ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#updateOrderModal">
                                         <i class="fas fa-edit me-1"></i> Sửa
                                     </button>
 
+                                    <?php
+                                    if ($item['status_id'] <  4) {
+                                    ?>
+                                        <button type="button"
+                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#changeStatusModal">
+                                            <i class="fas fa-sync-alt me-1"></i> Chuyển
+                                        </button>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <button
+                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed">
+                                            <i class=" fas fa-sync-alt me-1"></i> Chuyển
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
+
                                     <button type="button"
-                                        class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#changeStatusModal">
-                                        <i class="fas fa-sync-alt me-1"></i> Chuyển
-                                    </button>
-                                    <button type="button"
-                                        class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                                        class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
                                         <i class="fas fa-trash-alt me-1"></i> Xóa
                                     </button>
                                 </td>
