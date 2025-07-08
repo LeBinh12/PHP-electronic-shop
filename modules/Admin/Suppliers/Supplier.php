@@ -53,8 +53,8 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                     <th style="width: 200px">Người liên hệ</th>
                     <th style="width: 100px">Điện thoại</th>
                     <th style="width: 150px">Email</th>
+                    <th style="width: 150px">Ảnh</th> 
                     <th style="width: 250px">Địa chỉ</th> 
-                    <th style="width: 150px">Ảnh</th>   
                     <th style="width: 160px; text-align:center">Chức năng</th>
                 </tr>
             </thead>    
@@ -68,10 +68,11 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                         <td><?= htmlspecialchars($item["contact_person"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Phone"] ?? '') ?></td>
                         <td><?= htmlspecialchars($item["Email"] ?? '') ?></td>
-                        <td><?= htmlspecialchars($item["Address"] ?? '') ?></td>
                         <td>
                             <img src="<?= htmlspecialchars($item['image_url'] ?? $imageFail) ?>" alt="Ảnh sản phẩm" width="80" height="80" style="object-fit:cover;">
                         </td>
+                        <td><?= htmlspecialchars($item["Address"] ?? '') ?></td>
+                        
 
                         <td>
                             <div class="action-buttons">
@@ -81,8 +82,9 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                                '<?= addslashes($item['contact_person'] ?? '') ?>',
                                '<?= addslashes($item['Phone'] ?? '') ?>',
                                '<?= addslashes($item['Email'] ?? '') ?>',
-                               '<?= addslashes(string: $item['Address'] ?? '') ?>',
-                               '<?= addslashes(string: $item['image_url'] ?? '') ?>')">
+                               '<?= addslashes(string: $item['image_url'] ?? '') ?>',
+                               '<?= addslashes(string: $item['Address'] ?? '') ?>'
+                               )">
 
                                     <i class="fas fa-edit me-1"></i> Sửa
                                 </button>
