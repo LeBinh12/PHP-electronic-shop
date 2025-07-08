@@ -19,28 +19,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
 <!-- Modal xác nhận xóa danh mục -->
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+<div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow">
             <form method="POST">
                 <input type="hidden" name="delete_category" value="1">
                 <input type="hidden" name="delete_category_id" id="deleteCategoryId">
 
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="deleteCategoryModalLabel">
-                        <i class="fas fa-trash-alt me-2"></i> Xác nhận xóa loại sản phẩm
-                    </h5>
+                    <h6 class="modal-title d-flex align-items-center" id="deleteCategoryModalLabel">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Xác nhận xóa loại sản phẩm
+                    </h6>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Đóng"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body text-center">
+                    <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
                     <p>Bạn có chắc chắn muốn xóa loại sản phẩm <strong id="deleteCategoryName"></strong>?</p>
                     <?php if (!empty($deleteError)): ?>
                         <div class="alert alert-danger"><?= $deleteError ?></div>
                     <?php endif; ?>
                 </div>
-
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash me-1"></i> Xóa
                     </button>
@@ -50,21 +50,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.delete-category-btn');
-
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const name = this.dataset.name;
-
-                document.getElementById('deleteCategoryId').value = id;
-                document.getElementById('deleteCategoryName').innerText = name;
-
-                const modal = new bootstrap.Modal(document.getElementById('deleteCategoryModal'));
-                modal.show();
-            });
-        });
-    });
-</script>

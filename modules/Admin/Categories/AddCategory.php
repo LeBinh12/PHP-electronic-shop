@@ -36,7 +36,7 @@ $listCategory = $category->getAll();
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addCategoryModalLabel">
-                        <i class="fas fa-layer-group me-2"></i> Thêm loại sản phẩm mới
+                         Thêm loại sản phẩm mới
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Đóng"></button>
@@ -68,7 +68,7 @@ $listCategory = $category->getAll();
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-plus-circle me-1"></i> Thêm
+                         Thêm
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>

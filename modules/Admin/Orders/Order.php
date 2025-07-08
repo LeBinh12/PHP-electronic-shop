@@ -15,7 +15,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <form class="search-form" method="GET" action="Admin.php">
+        <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>

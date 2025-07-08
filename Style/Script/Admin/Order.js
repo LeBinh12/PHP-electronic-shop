@@ -1,16 +1,33 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Nút XÓA
-    const deleteButtons = document.querySelectorAll(".delete-order-btn");
-    const inputDeleteId = document.getElementById("delete-order-id");
+// document.addEventListener("DOMContentLoaded", function () {
+//     // Nút XÓA
+//     const deleteButtons = document.querySelectorAll(".delete-order-btn");
+//     const inputDeleteId = document.getElementById("delete-order-id");
 
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const id = button.getAttribute("data-id");
-            if (inputDeleteId) {
-                inputDeleteId.value = id;
-            }
+//     deleteButtons.forEach(button => {
+//         button.addEventListener("click", () => {
+//             const id = button.getAttribute("data-id");
+//             if (inputDeleteId) {
+//                 inputDeleteId.value = id;
+//             }
+//         });
+//     });
+    
+document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-order-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+
+                document.getElementById('deleteOrderId').value = id;
+                document.getElementById('deleteOrderName').innerText = name;
+
+                const modal = new bootstrap.Modal(document.getElementById('deleteOrderModal'));
+                modal.show();
+            });
         });
-    });
+
 
     // Nút CHUYỂN TRẠNG THÁI
     const changeStatusButtons = document.querySelectorAll(".change-status-btn");

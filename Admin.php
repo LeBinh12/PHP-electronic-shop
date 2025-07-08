@@ -118,6 +118,8 @@ $orderItemController = new OrderItemController();
     <script src="./Style/Script/Admin/AddProduct.js"></script>
     <script src="./Style/Script/Admin/UpdateProduct.js"></script>
     <script src="./Style/Script/Admin/Order.js"></script>
+    <script src="./Style/Script/Admin/DeleteCategory.js"></script>
+    <script src="./Style/Script/Admin/Supplier.js"></script>
 
 
 </body>
