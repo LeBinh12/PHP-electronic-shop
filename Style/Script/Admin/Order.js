@@ -11,53 +11,54 @@
 //             }
 //         });
 //     });
-    
-document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.delete-order-btn');
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const name = this.dataset.name;
+document.addEventListener("DOMContentLoaded", function () {
+  const deleteButtons = document.querySelectorAll(".delete-order-btn");
 
-                document.getElementById('deleteOrderId').value = id;
-                document.getElementById('deleteOrderName').innerText = name;
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const id = this.dataset.id;
+      const name = this.dataset.name;
 
-                const modal = new bootstrap.Modal(document.getElementById('deleteOrderModal'));
-                modal.show();
-            });
-        });
+      document.getElementById("deleteOrderId").value = id;
+      document.getElementById("deleteOrderName").innerText = name;
 
-
-    // Nút CHUYỂN TRẠNG THÁI
-    const changeStatusButtons = document.querySelectorAll(".change-status-btn");
-    const inputChangeStatusId = document.getElementById("change-status-id");
-
-    changeStatusButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const id = button.getAttribute("data-id");
-            if (inputChangeStatusId) {
-                inputChangeStatusId.value = id;
-            }
-        });
+      const modal = new bootstrap.Modal(
+        document.getElementById("deleteOrderModal")
+      );
+      modal.show();
     });
+  });
 
-    // Nút SỬA
-    const updateButtons = document.querySelectorAll(".btn-update-order");
-    const inputId = document.getElementById("update-order-id");
-    const selectStatus = document.getElementById("order-status");
+  // Nút CHUYỂN TRẠNG THÁI
+  const changeStatusButtons = document.querySelectorAll(".change-status-btn");
+  const inputChangeStatusId = document.getElementById("change-status-id");
 
-    updateButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const id = button.getAttribute("data-id");
-            const status = button.getAttribute("data-status");
-
-            if (inputId && selectStatus) {
-                inputId.value = id;
-                selectStatus.value = status;
-            } else {
-                console.warn("Không tìm thấy inputId hoặc selectStatus");
-            }
-        });
+  changeStatusButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      if (inputChangeStatusId) {
+        inputChangeStatusId.value = id;
+      }
     });
+  });
+
+  // Nút SỬA
+  const updateButtons = document.querySelectorAll(".btn-update-order");
+  const inputId = document.getElementById("update-order-id");
+  const selectStatus = document.getElementById("order-status");
+
+  updateButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const status = button.getAttribute("data-status");
+
+      if (inputId && selectStatus) {
+        inputId.value = id;
+        selectStatus.value = status;
+      } else {
+        console.warn("Không tìm thấy inputId hoặc selectStatus");
+      }
+    });
+  });
 });

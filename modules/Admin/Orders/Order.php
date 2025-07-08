@@ -30,13 +30,11 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
     <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
     <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
+
     <?php
-     require_once 'modules/Admin/Orders/UpdateOrder.php'; 
+    require_once 'modules/Admin/Orders/ViewOrder.php';
     ?>
-        <?php
-     require_once 'modules/Admin/Orders/ViewOrder.php'; 
-    ?>
-    
+
     <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -66,11 +64,11 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                 <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
                                 <td>
                                     <button type="button"
-    class="btn btn-sm btn-info text-white btn-sm-fixed"
-    data-bs-toggle="modal"
-    data-bs-target="#viewOrderModal">
-    <i class="fas fa-eye me-1"></i> Xem
-</button>
+                                        class="btn btn-sm btn-info text-white btn-sm-fixed"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewOrderModal">
+                                        <i class="fas fa-eye me-1"></i> Xem
+                                    </button>
 
                                     <button type="button"
                                         class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
