@@ -28,15 +28,10 @@ $totalPages = max(1, ceil($totalRows / $limit));
         </form>
     </div>
 
-    <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
-    <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
     <?php
-/*
-require_once 'modules/Admin/Orders/UpdateOrder.php';
-*/
-?>
-
-    <?php
+    require_once 'modules/Admin/Orders/ChangeStatusOrder.php';
+    require_once 'modules/Admin/Orders/DeleteOrder.php';
+    require_once 'modules/Admin/Orders/UpdateOrder.php';
     require_once 'modules/Admin/Orders/ViewOrder.php';
     ?>
 
@@ -75,7 +70,7 @@ require_once 'modules/Admin/Orders/UpdateOrder.php';
                                     </a>
 
                                     <a href="Admin.php?page=modules/Admin/Orders/Order.php&orderid=<?= $item['order_id'] ?>"
-                                        class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed">
+                                        class="btn btn-sm btn-warning text-white btn-sm-fixed">
                                         <i class="fas fa-edit me-1"></i> Sửa
                                     </a>
 
