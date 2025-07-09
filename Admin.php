@@ -37,7 +37,6 @@ $orderItemController = new OrderItemController();
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
     <link rel="stylesheet" href="./Style/Admin/Product.css">
     <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
-    <link rel="stylesheet" href="./Style/Admin/Order.css">
 </head>
 
 <body>

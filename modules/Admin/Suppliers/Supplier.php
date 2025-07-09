@@ -82,8 +82,8 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
                                '<?= addslashes($item['contact_person'] ?? '') ?>',
                                '<?= addslashes($item['Phone'] ?? '') ?>',
                                '<?= addslashes($item['Email'] ?? '') ?>',
-                               '<?= addslashes(string: $item['image_url'] ?? '') ?>',
-                               '<?= addslashes(string: $item['Address'] ?? '') ?>'
+                               '<?= addslashes($item['Address'] ?? '') ?>',
+                               '<?= addslashes($item['image_url'] ?? '') ?>'
                                )">
 
                                     <i class="fas fa-edit me-1"></i> Sửa

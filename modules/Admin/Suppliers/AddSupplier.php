@@ -46,7 +46,7 @@ $listSupplier = $supplier->getAll();
 
 <!-- Modal thêm nhà cung cấp -->
 <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="add_supplier" value="1">
@@ -84,16 +84,16 @@ $listSupplier = $supplier->getAll();
                             <input type="text" name="phone" class="form-control">
                         </div>
 
-                        <div class=" mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Ảnh đại diện thương hiệu</label>
                             <input type="file" name="image_supplier" class="form-control" accept="image/*" id="supplierImageInput">
                             <div id="supplierImagePreview" class="mt-2"></div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Địa chỉ</label>
-                            <textarea name="address" class="form-control" rows="4"></textarea>
-                        </div>
+                        <div class="col-md-6 mb-3">
+                        <label class="form-label">Địa chỉ</label>
+                        <input type="text" name="address" id="editSupplierAddress" class="form-control">
+                    </div>
                     </div>
                 </div>
 
