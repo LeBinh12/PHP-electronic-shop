@@ -15,4 +15,9 @@ class StatusController
     {
         return $this->statusModel->all();
     }
+
+    public function getById($id)
+    {
+        return $this->statusModel->find($id);
+    }
 }

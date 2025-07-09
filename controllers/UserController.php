@@ -21,6 +21,11 @@ class UserController extends BaseController
         $this->jwtConfig = include   './config/jwt.php';
     }
 
+    public function getById($id)
+    {
+        return $this->userModel->find($id);
+    }
+
     public function register($data)
     {
 

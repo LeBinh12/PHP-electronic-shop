@@ -8,6 +8,9 @@ require_once './controllers/ImageController.php';
 require_once './controllers/InventoryController.php';
 require_once './controllers/OrderController.php';
 require_once './controllers/OrderItemController.php';
+require_once './controllers/UserController.php';
+require_once './controllers/StatusController.php';
+
 
 
 require 'vendor/autoload.php';
@@ -19,6 +22,8 @@ $imageController = new ImageController();
 $inventoryController = new InventoryController();
 $orderController = new OrderController();
 $orderItemController = new OrderItemController();
+$userController = new UserController();
+$statusController = new StatusController();
 ?>
 
 <!DOCTYPE html>

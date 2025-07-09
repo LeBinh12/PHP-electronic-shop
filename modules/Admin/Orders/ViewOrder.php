@@ -1,11 +1,25 @@
 <?php
-$orderId = $_GET['id'] ?? 101;
 
 if (isset($_GET['id'])) {
+  $orderId = $_GET['id'];
+
   $orderMap = $orderController->getById($orderId);
 
   $orderItems = $orderItemController->getOrderItemById($orderId);
+
+  $userData = $userController->getById($orderMap["user_id"]);
+
+  $statusData = $statusController->getById(id: $orderMap['status_id']);
+?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = new bootstrap.Modal(document.getElementById('viewOrderModal'));
+      modal.show();
+    });
+  </script>
+<?php
 }
+
 
 ?>
 
@@ -24,10 +38,10 @@ if (isset($_GET['id'])) {
           <div class="col-md-6">
             <h5>Thông tin khách hàng</h5>
             <ul class="list-unstyled">
-              <li><strong>Họ tên:</strong> <?= $orderMap['FullName'] ?></li>
-              <li><strong>Email:</strong> <?= $orderMap['email'] ?></li>
-              <li><strong>Số điện thoại:</strong> <?= $orderMap['phone'] ?></li>
-              <li><strong>Địa chỉ:</strong> <?= $orderMap['address'] ?></li>
+              <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
+              <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
+              <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
+              <li><strong>Địa chỉ:</strong> <?= $userData['Address'] ?></li>
             </ul>
           </div>
 
@@ -37,7 +51,7 @@ if (isset($_GET['id'])) {
             <ul class="list-unstyled">
               <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
               <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
-              <li><strong>Trạng thái:</strong> <?= $orderMap['status'] ?></li>
+              <li><strong>Trạng thái:</strong> <?= $statusData['name'] ?></li>
               <li><strong>Tổng tiền:</strong> <?= number_format($orderMap['total_amount'], 0) ?> đ</li>
             </ul>
           </div>

@@ -13,7 +13,8 @@ class User extends Model
         'Phone' => 'VARCHAR(20)',
         'Address' => 'TEXT',
         'PasswordHash' => 'VARCHAR(255)',
-        'CreatedAt' => 'DATETIME'
+        'CreatedAt' => 'DATETIME',
+        'isDeleted' => 'TINYINT(1)',
     ];
 
     public function findByEmail($email)
