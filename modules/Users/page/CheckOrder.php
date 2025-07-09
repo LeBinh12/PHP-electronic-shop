@@ -7,7 +7,7 @@ $searchCode = $_POST['order_code'] ?? '';
 
 $statusId  = $_GET['status_id']  ?? '';
 $page      = max(1, (int)($_GET['page'] ?? 1));
-$limit     = 6;
+$limit     = 2;
 $offset    = ($page - 1) * $limit;
 
 
@@ -162,6 +162,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="No order">
                     <h6>Rất tiếc, không tìm thấy đơn hàng nào phù hợp</h6>
                 </div>
+            <?php } ?>
+
+            <?php if (count($orders) > 0 && $totalPages > 1) { ?>
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                <a class="page-link" href="index.php?subpage=modules/Users/page/CheckOrder.php&search=<?= $keyword ?>&page=<?= $i ?>&filter_status=<?= $filterStatusId ?>&order_code=<?= urlencode($searchCode) ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </nav>
             <?php } ?>
 
         </div>
