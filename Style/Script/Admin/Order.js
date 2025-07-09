@@ -1,18 +1,5 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     // Nút XÓA
-//     const deleteButtons = document.querySelectorAll(".delete-order-btn");
-//     const inputDeleteId = document.getElementById("delete-order-id");
-
-//     deleteButtons.forEach(button => {
-//         button.addEventListener("click", () => {
-//             const id = button.getAttribute("data-id");
-//             if (inputDeleteId) {
-//                 inputDeleteId.value = id;
-//             }
-//         });
-//     });
-
 document.addEventListener("DOMContentLoaded", function () {
+  // Nút XÓA
   const deleteButtons = document.querySelectorAll(".delete-order-btn");
 
   deleteButtons.forEach((button) => {
@@ -23,9 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("deleteOrderId").value = id;
       document.getElementById("deleteOrderName").innerText = name;
 
-      const modal = new bootstrap.Modal(
-        document.getElementById("deleteOrderModal")
-      );
+      const modal = new bootstrap.Modal(document.getElementById("deleteOrderModal"));
       modal.show();
     });
   });
@@ -61,4 +46,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  // SHOW MODAL CHI TIẾT ĐƠN HÀNG NGAY KHI TẢI
+  const viewOrderModalEl = document.getElementById("viewOrderModal");
+  if (viewOrderModalEl) {
+    const viewOrderModal = new bootstrap.Modal(viewOrderModalEl);
+    viewOrderModal.show();
+  }
 });
+
+// TĂNG GIẢM SỐ LƯỢNG – đặt ngoài vì có thể được gọi từ các sự kiện onclick
+function changeQuantity(orderId, productId, delta) {
+  fetch(`?orderid=${orderId}&update_quantity=1&product_id=${productId}&delta=${delta}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById(`qty-${productId}`).textContent = data.newQuantity;
+      } else {
+        alert(data.message || "Không thể cập nhật số lượng");
+      }
+    });
+}

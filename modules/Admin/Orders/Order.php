@@ -30,10 +30,16 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
     <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
     <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
+    <?php
+/*
+require_once 'modules/Admin/Orders/UpdateOrder.php';
+*/
+?>
 
     <?php
     require_once 'modules/Admin/Orders/ViewOrder.php';
     ?>
+
 
     <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
@@ -68,14 +74,10 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                         <i class="fas fa-eye me-1"></i> Xem
                                     </a>
 
-                                    <button type="button"
-                                        class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
-                                        data-id="<?= $item['order_id'] ?>"
-                                        data-status="<?= $item['status_id'] ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#updateOrderModal">
+                                    <a href="Admin.php?page=modules/Admin/Orders/Order.php&orderid=<?= $item['order_id'] ?>"
+                                        class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed">
                                         <i class="fas fa-edit me-1"></i> Sửa
-                                    </button>
+                                    </a>
 
                                     <?php
                                     if ($item['status_id'] <  4) {
