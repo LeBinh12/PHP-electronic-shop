@@ -25,12 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
 ?>
 
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-        <div class="modal-content rounded-4 shadow">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title text-success fw-bold w-100 text-center">Thêm sản phẩm vào kho</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-            </div>
+     <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="addInventoryModalLabel">
+                         Thêm nhà kho hàng mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
             <form method="POST">
                 <input type="hidden" name="add_item" value="1">
                 <div class="modal-body pt-0">

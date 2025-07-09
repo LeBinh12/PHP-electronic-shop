@@ -25,6 +25,11 @@ class OrderController
         return $this->orderModel->find($id);
     }
 
+    public function getByCode($code)
+    {
+        return $this->orderModel->findByCode($code);
+    }
+
     public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset, $keyword)
     {
         return $this->orderModel->findOrders($userId, $statusId, $keyword, $limit, $offset);

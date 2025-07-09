@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i> Cập nhật
+                         Cập nhật
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>

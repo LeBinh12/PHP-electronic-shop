@@ -24,6 +24,22 @@ class Order extends Model
         'status_id' => 'status(id)'
     ];
 
+    public function findByCode($code)
+    {
+        $sql = "
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
+            FROM    orders o
+            JOIN    status s   ON o.status_id = s.id
+            JOIN    users u ON o.user_id = u.id
+            WHERE   o.code  = :code
+              AND   o.isDeleted = 0
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['code' => $code]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function findOrders(
         int $userId,
         ?int $statusId = null,

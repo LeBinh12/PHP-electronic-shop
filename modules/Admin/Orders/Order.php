@@ -10,12 +10,12 @@ $totalRows  = $orderController->getAllCountOrder($keyword);
 $totalPages = max(1, ceil($totalRows / $limit));
 ?>
 
-<h1 class="h3 mb-4">Danh sách đơn hàng</h1>
+<!-- <h1 class="h3 mb-4">Danh sách đơn hàng</h1> -->
 
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <form class="search-form" method="GET" action="Admin.php">
+        <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>
@@ -28,12 +28,13 @@ $totalPages = max(1, ceil($totalRows / $limit));
         </form>
     </div>
 
-
     <?php require_once 'modules/Admin/Orders/ChangeStatusOrder.php'; ?>
     <?php require_once 'modules/Admin/Orders/DeleteOrder.php'; ?>
+
     <?php
-    //  require_once 'modules/Admin/Orders/UpdateOrder.php'; 
+    require_once 'modules/Admin/Orders/ViewOrder.php';
     ?>
+
     <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -62,10 +63,13 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                 <td><?= htmlspecialchars($item['status_name']) ?></td>
                                 <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
                                 <td>
-                                    <a href="Admin.php?page=modules/Admin/Orders/ViewOrder.php&id=<?= $item['order_id'] ?>"
-                                        class="btn btn-sm btn-info text-white btn-sm-fixed">
+                                    <button type="button"
+                                        class="btn btn-sm btn-info text-white btn-sm-fixed"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewOrderModal">
                                         <i class="fas fa-eye me-1"></i> Xem
-                                    </a>
+                                    </button>
+
                                     <button type="button"
                                         class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
                                         data-id="<?= $item['order_id'] ?>"

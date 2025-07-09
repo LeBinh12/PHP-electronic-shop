@@ -19,30 +19,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_supplier'])) {
 <!-- Modal xác nhận xóa nhà cung cấp -->
 <div class="modal fade" id="deleteSupplierModal" tabindex="-1" aria-labelledby="deleteSupplierModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow">
             <form method="POST">
                 <input type="hidden" name="delete_supplier" value="1">
                 <input type="hidden" name="supplier_id" id="deleteSupplierId">
 
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="deleteSupplierModalLabel">
-                        <i class="fas fa-trash-alt me-2"></i> Xác nhận xóa nhà cung cấp
-                    </h5>
+                    <h6 class="modal-title" id="deleteSupplierModalLabel">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Xác nhận xóa nhà cung cấp
+                    </h6>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Đóng"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body text-center">
+                    <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
                     <p>Bạn có chắc chắn muốn xóa nhà cung cấp <strong id="deleteSupplierName"></strong> không?</p>
                     <?php if (!empty($errorMessageDelete)) : ?>
                         <div class="alert alert-danger"><?= $errorMessageDelete ?></div>
                     <?php endif; ?>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                        <i class="fas fa-trash me-1"></i> Xóa
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
