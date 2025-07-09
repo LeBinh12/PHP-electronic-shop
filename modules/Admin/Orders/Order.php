@@ -10,7 +10,7 @@ $totalRows  = $orderController->getAllCountOrder($keyword);
 $totalPages = max(1, ceil($totalRows / $limit));
 ?>
 
-<!-- <h1 class="h3 mb-4">Danh sách đơn hàng</h1> -->
+
 
 <!-- Form tìm kiếm -->
 <div class="product-container">
@@ -63,12 +63,10 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                 <td><?= htmlspecialchars($item['status_name']) ?></td>
                                 <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
                                 <td>
-                                    <button type="button"
-                                        class="btn btn-sm btn-info text-white btn-sm-fixed"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewOrderModal">
+                                    <a href="Admin.php?page=modules/Admin/Orders/Order.php&id=<?= $item['order_id'] ?>"
+                                        class="btn btn-sm btn-info text-white btn-sm-fixed">
                                         <i class="fas fa-eye me-1"></i> Xem
-                                    </button>
+                                    </a>
 
                                     <button type="button"
                                         class="btn btn-sm btn-warning text-white btn-update-order btn-sm-fixed"
