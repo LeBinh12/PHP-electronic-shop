@@ -61,17 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
         </script>";
     }
 }
-
-
-// var_dump($statusGetAll);
-// echo "<br>";
-// var_dump($orders);
-
-
-// foreach ($orders as $item) {
-//     $order_item = $orderItemController->getOrderItemById($item["order_id"]);
-//     var_dump($order_item);
-// }
 ?>
 
 <div class="order-page-container container my-4">
@@ -93,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
             <form method="post" class="status-filter-form mb-3">
                 <input type="hidden" name="filter_status" id="filter_status" value="<?= htmlspecialchars($filterStatusId) ?>">
                 <div class="order-status-filter">
-                    <a class="status-btn <?= ($filterStatusId == 0) ? 'active' : '' ?>" href="index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=0">Tất cả</a>
+                    <a class="status-btn text-decoration-none <?= ($filterStatusId == 0) ? 'active' : '' ?>" href="index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=0">Tất cả</a>
 
                     <?php foreach ($statusGetAll as $status): ?>
                         <a type="button"
-                            class="status-btn <?= ($filterStatusId == $status['id']) ? 'active' : '' ?>"
+                            class="status-btn text-decoration-none <?= ($filterStatusId == $status['id']) ? 'active' : '' ?>"
                             href="index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=<?= $status['id'] ?>">
                             <?= htmlspecialchars($status['name']) ?>
                         </a>
@@ -155,12 +144,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                             </div>
                         </div>
 
+
+
                         <?php if ($order['status_name'] === 'Chờ xử lý') { ?>
-                            <form method="post" onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn?')">
-                                <input type="hidden" name="cancel_order" value="<?= htmlspecialchars($order['order_id']) ?>">
-                                <button type="submit" class="cancel-btn">Hủy đơn hàng</button>
-                            </form>
+                            <button type="button" class="cancel-btn" data-bs-toggle="modal" data-bs-target="#cancelModal" data-order-id="<?= htmlspecialchars($order['order_id']) ?>">
+                                Hủy đơn hàng
+                            </button>
                         <?php } ?>
+
                     </div>
                 <?php }
             } else { ?>
@@ -187,3 +178,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
         </div>
     </div>
 </div>
+
+
+<?php
+$cancelReasons = [
+    "Muốn đổi sản phẩm",
+    "Đặt nhầm",
+    "Thời gian giao hàng lâu",
+    "Tìm được giá tốt hơn",
+    "Không còn nhu cầu",
+    "Khác"
+];
+?>
+
+<!-- Modal chọn lý do hủy -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="display: flex; align-items: center; justify-content: center;">
+        <form method="post" id="cancelForm">
+            <input type="hidden" name="cancel_order" id="cancel_order_id">
+            <div class="modal-content shadow-lg border-0 rounded-4">
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title fw-semibold text-primary">
+                        <i class="bi bi-x-circle-fill me-2 text-danger"></i>Chọn lý do hủy đơn
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    <p class="mb-3 text-muted">
+                        Trước khi hủy đơn, bạn vui lòng cho chúng tôi biết lý do. Điều này giúp chúng tôi cải thiện chất lượng dịch vụ tốt hơn.
+                    </p>
+                    <select class="form-select rounded-3 py-3 px-4" id="reasonSelect" name="cancel_reason" required>
+                        <option disabled selected>-- Chọn lý do --</option>
+                        <?php foreach ($cancelReasons as $reason): ?>
+                            <option value="<?= htmlspecialchars($reason) ?>"><?= htmlspecialchars($reason) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="modal-footer bg-light border-top">
+                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-3 fs-6">Xác nhận hủy</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal nhập lý do khác -->
+<div class="modal fade" id="customReasonModal" tabindex="-1" aria-labelledby="customReasonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="display: flex; align-items: center; justify-content: center;">
+        <form method="post">
+            <input type="hidden" name="cancel_order" id="custom_order_id">
+            <div class="modal-content shadow-lg border-0 rounded-4">
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title fw-semibold text-primary">
+                        Nhập lý do hủy đơn
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    <p class="mb-3 text-muted">
+                        Bạn đã chọn "Khác" là lý do hủy đơn. Hãy cho chúng tôi biết thêm chi tiết để có thể cải thiện dịch vụ trong tương lai.
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label fw-semibold mb-2">Lý do cụ thể</label>
+                        <textarea class="form-control rounded-3 py-2 px-3 fs-6" name="cancel_reason" rows="4" required placeholder="Ví dụ: Tôi cần thay đổi địa chỉ giao hàng, đơn bị lỗi thanh toán, v.v..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top">
+                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-3">Xác nhận hủy</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('reasonSelect').addEventListener('change', function() {
+        if (this.value === 'Khác') {
+            const orderId = document.getElementById('cancel_order_id').value;
+            const cancelModalInstance = bootstrap.Modal.getInstance(document.getElementById('cancelModal'));
+            cancelModalInstance.hide();
+
+            document.getElementById('custom_order_id').value = orderId;
+            const customModal = new bootstrap.Modal(document.getElementById('customReasonModal'));
+            customModal.show();
+        }
+    });
+</script>
