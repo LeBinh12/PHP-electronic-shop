@@ -43,37 +43,45 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
         </div>
 
         <div class="modal-body">
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <h5>Thông tin khách hàng</h5>
-              <ul class="list-unstyled">
-                <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
-                <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
-                <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
-                <li><strong>Địa chỉ:</strong> <?= $userData['Address'] ?></li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <h5>Thông tin đơn hàng</h5>
-              <ul class="list-unstyled">
-                <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
-                <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
-                <li class="d-flex align-items-center gap-2">
-                  <strong>Trạng thái:</strong>
-                  <select name="status" class="form-select form-select-sm w-auto pe-4">
-                    <?php
-                    $statusOptions = $statusController->getAll();
-                    foreach ($statusOptions as $status) {
-                      $selected = $orderMap['status_id'] === $status["id"] ? 'selected' : '';
-                      echo "<option value='{$status['id']}' $selected>{$status['name']}</option>";
-                    }
-                    ?>
-                  </select>
-                </li>
-                <li><strong>Tổng tiền:</strong> <?= number_format($orderMap['total_amount'], 0) ?> đ</li>
-              </ul>
-            </div>
-          </div>
+  <div class="row mb-4">
+    <!-- Box khách hàng -->
+    <div class="col-md-6">
+      <div class="border border-warning rounded p-3" style="background-color: #fffbea;">
+        <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin khách hàng:</h6>
+        <ul class="list-unstyled mb-0">
+          <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
+          <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
+          <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
+          <li><strong>Địa chỉ:</strong> <?= $userData['Address'] ?></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Box đơn hàng -->
+    <div class="col-md-6">
+      <div class="border border-warning rounded p-3" style="background-color: #fffbea;">
+        <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin đơn hàng:</h6>
+        <ul class="list-unstyled mb-0">
+          <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
+          <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
+          <li class="d-flex align-items-center gap-2">
+            <strong>Trạng thái:</strong>
+            <select name="status" class="form-select form-select-sm w-auto pe-4">
+              <?php
+              $statusOptions = $statusController->getAll();
+              foreach ($statusOptions as $status) {
+                $selected = $orderMap['status_id'] === $status["id"] ? 'selected' : '';
+                echo "<option value='{$status['id']}' $selected>{$status['name']}</option>";
+              }
+              ?>
+            </select>
+          </li>
+          <li><strong>Tổng tiền:</strong> <?= number_format($orderMap['total_amount'], 0) ?> đ</li>
+        </ul>
+      </div>
+    </div>
+</div>
+
 
           <h5>Sản phẩm</h5>
           <table class="table table-bordered text-center">
