@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <div class="modal-body">
-  <div class="row mb-4">
+     <div class="modal-body">
+  <div class="row mb-4 d-flex">
     <!-- Box khách hàng -->
     <div class="col-md-6">
-      <div class="border border-warning rounded p-3" style="background-color: #fffbea;">
+      <div class="border border-warning rounded p-3 h-100 d-flex flex-column" style="background-color: #fffbea;">
         <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin khách hàng:</h6>
-        <ul class="list-unstyled mb-0">
+        <ul class="list-unstyled mb-0 flex-grow-1">
           <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
           <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
           <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
@@ -59,14 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
 
     <!-- Box đơn hàng -->
     <div class="col-md-6">
-      <div class="border border-warning rounded p-3" style="background-color: #fffbea;">
+      <div class="border border-warning rounded p-3 h-100 d-flex flex-column" style="background-color: #fffbea;">
         <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin đơn hàng:</h6>
-        <ul class="list-unstyled mb-0">
+        <ul class="list-unstyled mb-0 flex-grow-1">
           <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
           <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
           <li class="d-flex align-items-center gap-2">
             <strong>Trạng thái:</strong>
-            <select name="status" class="form-select form-select-sm w-auto pe-4">
+            <select name="status" class="form-select form-select-sm w-auto pe-4" style="padding: 2px 8px;">
               <?php
               $statusOptions = $statusController->getAll();
               foreach ($statusOptions as $status) {
@@ -80,7 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
         </ul>
       </div>
     </div>
-</div>
+  </div>
+
+
 
 
           <h5>Sản phẩm</h5>
