@@ -13,6 +13,9 @@ class Order extends Model
         'shipping_id' => 'INT',
         'user_id' => 'INT',
         'note' => 'TEXT',
+        'cancel_reason' => 'TEXT',
+        'cancel_at' => 'DATETIME',
+        'cancel_by' => 'NVARCHAR(255)',
         'create_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
         'isDeleted' => 'TINYINT(1)',
     ];

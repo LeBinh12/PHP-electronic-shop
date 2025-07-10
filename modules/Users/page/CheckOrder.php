@@ -45,19 +45,27 @@ if ($filterStatusId == 0) {
 $totalPages = max(1, ceil($totalRows / $limit));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
+    $node_cancel = $_POST['cancel_reason'] ?? "";
+    $cancel_by = "user." . $userData->id;
     $id = $_POST['cancel_order'];
-
-    $result = $orderController->edit($id, ["status_id" => 5]);
+    var_dump($id);
+    $data = [
+        "status_id" => 5,
+        "cancel_reason" => $node_cancel,
+        "cancel_at" => date("Y-m-d H:i:s"),
+        "cancel_by" => $cancel_by
+    ];
+    $result = $orderController->edit($id, $data);
 
     if ($result['success']) {
         echo "<script>
             alert('Hủy đơn hàng thành công!');
-            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php';
+            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
         </script>";
     } else {
         echo "<script>
             alert('Hủy đơn hàng thất bại do hệ thông đang bảo trì!');
-            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php';
+            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
         </script>";
     }
 }
@@ -69,9 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
             <div class="order-header">
                 <h5>Đơn hàng đã mua</h5>
                 <div class="search-filter">
-                    <form method="post" class="order-search-form">
+                    <form method="get" class="order-search-form">
+                        <input type="hidden" name="subpage" value="modules/Users/page/CheckOrder.php">
+                        <input type="hidden" name="filter_status" value="<?= $filterStatusId ?>">
                         <div class="search-box">
-                            <input type="text" name="order_code" placeholder="Nhập mã đơn hàng..." value="<?= $_POST['order_id'] ?? '' ?>">
+                            <input type="text" name="search" placeholder="Nhập mã đơn hàng..." value="<?= $keyword ?>">
                             <button type="submit" class="btn btn-primary">Tra cứu</button>
                         </div>
                     </form>
@@ -253,15 +263,26 @@ $cancelReasons = [
 </div>
 
 <script>
-    document.getElementById('reasonSelect').addEventListener('change', function() {
-        if (this.value === 'Khác') {
-            const orderId = document.getElementById('cancel_order_id').value;
-            const cancelModalInstance = bootstrap.Modal.getInstance(document.getElementById('cancelModal'));
-            cancelModalInstance.hide();
+    document.addEventListener("DOMContentLoaded", function() {
+        const cancelButtons = document.querySelectorAll(".cancel-btn");
+        const cancelInput = document.getElementById("cancel_order_id");
 
-            document.getElementById('custom_order_id').value = orderId;
-            const customModal = new bootstrap.Modal(document.getElementById('customReasonModal'));
-            customModal.show();
-        }
-    });
+        cancelButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const orderId = this.getAttribute("data-order-id");
+                cancelInput.value = orderId;
+            })
+        })
+        document.getElementById('reasonSelect').addEventListener('change', function() {
+            if (this.value === 'Khác') {
+                const orderId = document.getElementById('cancel_order_id').value;
+                const cancelModalInstance = bootstrap.Modal.getInstance(document.getElementById('cancelModal'));
+                cancelModalInstance.hide();
+
+                document.getElementById('custom_order_id').value = orderId;
+                const customModal = new bootstrap.Modal(document.getElementById('customReasonModal'));
+                customModal.show();
+            }
+        });
+    })
 </script>
