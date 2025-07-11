@@ -33,33 +33,33 @@ if (isset($_GET['id'])) {
       </div>
 
       <div class="modal-body">
-  <div class="row mb-4 d-flex align-items-stretch">
-    <!-- Box khách hàng -->
-    <div class="col-md-6">
-      <div class="border border-warning rounded p-3 h-100" style="background-color:rgb(236, 240, 242);">
-        <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin khách hàng:</h6>
-        <ul class="list-unstyled mb-0">
-          <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
-          <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
-          <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
-          <li><strong>Địa chỉ:</strong> <?= $userData['Address'] ?></li>
-        </ul>
-      </div>
-    </div>
+        <div class="row mb-4 d-flex align-items-stretch">
+          <!-- Box khách hàng -->
+          <div class="col-md-6">
+            <div class="border border-warning rounded p-3 h-100" style="background-color:rgb(236, 240, 242);">
+              <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin khách hàng:</h6>
+              <ul class="list-unstyled mb-0">
+                <li><strong>Họ tên:</strong> <?= $userData['FullName'] ?></li>
+                <li><strong>Email:</strong> <?= $userData['Email'] ?></li>
+                <li><strong>Số điện thoại:</strong> <?= $userData['Phone'] ?></li>
+                <li><strong>Địa chỉ:</strong> <?= $userData['Address'] ?></li>
+              </ul>
+            </div>
+          </div>
 
-    <!-- Box đơn hàng -->
-    <div class="col-md-6">
-      <div class="border border-warning rounded p-3" style="background-color: rgb(236, 240, 242);">
-      <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin đơn hàng:</h6>
-      <ul class="list-unstyled mb-0">
-        <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
-        <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
-        <li><strong>Trạng thái:</strong> <?= $statusData['name'] ?></li>
-        <li><strong>Tổng tiền:</strong> <?= number_format($orderMap['total_amount'], 0) ?> đ</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          <!-- Box đơn hàng -->
+          <div class="col-md-6">
+            <div class="border border-warning rounded p-3" style="background-color: rgb(236, 240, 242);">
+              <h6 class="fw-bold border-bottom pb-1 mb-2">Thông tin đơn hàng:</h6>
+              <ul class="list-unstyled mb-0">
+                <li><strong>Mã đơn hàng:</strong> <?= $orderMap['code'] ?></li>
+                <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
+                <li><strong>Trạng thái:</strong> <?= $statusData['name'] ?></li>
+                <li><strong>Tổng tiền:</strong> <?= number_format($orderMap['total_amount'], 0) ?> đ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
 
         <!-- Sản phẩm -->
