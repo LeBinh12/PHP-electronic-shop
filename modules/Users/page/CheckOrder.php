@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
                                         <div class="order-product-info">
                                             <h6><?= htmlspecialchars($product['name']) ?></h6>
-                                            <div class="order-product-price"><?= number_format($product['price'], 0, ',', '.') ?>₫</div>
+                                            <div class="order-product-price"><?= number_format($product['unit_price'], 0, ',', '.') ?>₫</div>
                                             <p>Số lượng: <?= $product['quantity'] ?></p>
                                         </div>
                                     </div>

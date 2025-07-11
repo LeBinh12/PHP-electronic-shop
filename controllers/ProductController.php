@@ -30,6 +30,34 @@ class ProductController extends BaseController
         // return $this->productModel->all();
     }
 
+    public function getLatestProducts($limit = 20)
+    {
+        $cacheKey = "products:latest:$limit";
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $products = $this->productModel->getLatestProducts($limit);
+        RedisCache::set($cacheKey, json_encode($products));
+
+        return $products;
+    }
+
+    public function getLatestSaleProducts($limit = 20)
+    {
+        $cacheKey = "products:latest_sale:$limit";
+        if (RedisCache::exists($cacheKey)) {
+            return json_decode(RedisCache::get($cacheKey), true);
+        }
+
+        $products = $this->productModel->getLatestSaleProducts($limit);
+        RedisCache::set($cacheKey, json_encode($products));
+
+        return $products;
+    }
+
+
+
     public function getById($id)
     {
         $cacheKey = "products:{$id}";
@@ -182,6 +210,8 @@ class ProductController extends BaseController
             'product' => $productEdit
         ];
     }
+
+
 
     public function delete($id)
     {

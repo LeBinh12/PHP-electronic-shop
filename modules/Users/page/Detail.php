@@ -33,12 +33,32 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
         <div class="col-lg-7 col-md-6 col-12">
             <h2><?= $productById['name'] ?></h2>
             <?= $productById['content'] ?>
-            <h4 class="text-danger">Giá: <?= $productById['price'] ?>đ</h4>
+            <?php
+            $originalPrice = $productById['price'];
+            $discount = $productById['discount'];
+            $finalPrice = $originalPrice * (1 - $discount / 100);
+            ?>
+
+            <?php if ($discount > 0) { ?>
+                <h4 class="text-danger">
+                    <span class="text-muted text-decoration-line-through me-2">
+                        <?= number_format($originalPrice, 0, ',', '.') ?>₫
+                    </span>
+                    <span class="fw-bold">
+                        <?= number_format($finalPrice, 0, ',', '.') ?>₫
+                    </span>
+                </h4>
+            <?php } else { ?>
+                <h4 class="text-danger">
+                    <?= number_format($originalPrice, 0, ',', '.') ?>₫
+                </h4>
+            <?php } ?>
+
             <p>Hàng tồn kho: <?= $inventoryProduct['stock_quantity'] ?> sản phẩm</p>
             <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
-                <input type="hidden" name="price" value="<?= $productById['price'] ?>">
+                <input type="hidden" name="price" value="<?= $finalPrice ?>">
                 <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
                 <?php
                 if ($inventoryProduct['stock_quantity'] > 0) {

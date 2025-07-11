@@ -56,15 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_category'])) {
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select name="status" id="editCategoryStatus" class="form-select">
-                            <option value="1">Hiển thị</option>
-                            <option value="0">Ẩn</option>
+                            <option value="0">Hiển thị</option>
+                            <option value="1">Ẩn</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                         Cập nhật
+                        Cập nhật
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>

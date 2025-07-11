@@ -165,4 +165,41 @@
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['total'] ?? 0;
         }
+
+
+        public function getLatestProducts($limit = 20)
+        {
+            $sql = "
+                SELECT p.*, c.name AS category_name, s.name AS supplier_name
+                FROM products p
+                JOIN categories c ON p.category_id = c.id
+                JOIN suppliers s ON p.supplier_id = s.id
+                WHERE p.isDeleted = 0
+                ORDER BY p.created_at DESC
+                LIMIT :limit
+            ";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getLatestSaleProducts($limit = 20)
+        {
+            $sql = "
+                SELECT p.*, c.name AS category_name, s.name AS supplier_name
+                FROM products p
+                JOIN categories c ON p.category_id = c.id
+                JOIN suppliers s ON p.supplier_id = s.id
+                WHERE p.isDeleted = 0 AND p.discount > 0
+                ORDER BY p.created_at DESC
+                LIMIT :limit
+            ";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }

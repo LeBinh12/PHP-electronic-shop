@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
     $imageUrl = $_POST['image_url'] ?? '';
-        if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-            $uploadResult = (new UploadApi())->upload($_FILES['main_image']['tmp_name'], [
-                'folder' => 'products/main'
-            ]);
+    if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadResult = (new UploadApi())->upload($_FILES['main_image']['tmp_name'], [
+            'folder' => 'products/main'
+        ]);
 
-            $imageUrl = $uploadResult['secure_url'];
-        }
+        $imageUrl = $uploadResult['secure_url'];
+    }
 
     $data = [
         'name' => $name,
@@ -53,7 +53,7 @@ $listSupplier = $supplier->getAll();
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addSupplierModalLabel">
-                         Thêm nhà cung cấp mới
+                        Thêm nhà cung cấp mới
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
@@ -91,15 +91,15 @@ $listSupplier = $supplier->getAll();
                         </div>
 
                         <div class="col-md-6 mb-3">
-                        <label class="form-label">Địa chỉ</label>
-                        <input type="text" name="address" id="editSupplierAddress" class="form-control">
-                    </div>
+                            <label class="form-label">Địa chỉ</label>
+                            <input type="text" name="address" id="editSupplierAddress" class="form-control">
+                        </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                         Thêm
+                        Thêm
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
