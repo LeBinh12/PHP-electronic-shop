@@ -60,6 +60,15 @@ class OrderController
         ];
     }
 
+    public function delete($id)
+    {
+        $orderDelete = $this->orderModel->updateDeleted($id);
+        return [
+            "success" => true,
+            "message" => 'Xóa đơn hàng thành công',
+        ];
+    }
+
     // public function getCountOrder($userId) {
     //     return $this->orderModel->getCountOrderByUserId($userId);
     // }
