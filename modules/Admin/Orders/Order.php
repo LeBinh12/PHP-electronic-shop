@@ -111,7 +111,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
     <!-- PHÂN TRANG -->
     <?php if ($totalPages > 1): ?>
-        <nav aria-label="Page navigation">
+        <nav aria-label="Page navigation" class="mt-4">
             <ul class="pagination justify-content-center">
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                     <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">

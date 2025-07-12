@@ -124,6 +124,7 @@ $statusController = new StatusController();
     <script src="./Style/Script/Admin/Order.js"></script>
     <script src="./Style/Script/Admin/DeleteCategory.js"></script>
     <script src="./Style/Script/Admin/Supplier.js"></script>
+    <script src="./Style/Script/Admin/Profile.js"></script>
 
 
 </body>
