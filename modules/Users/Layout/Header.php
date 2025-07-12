@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                                 <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($userData->name) ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#accountModal">Tài khoản của tôi</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -234,6 +234,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </div>
 </div>
 
+
+<?php
+$userInfo = [
+    'Họ tên' => $userData->name ?? '',
+    'Email' => $userData->email ?? '',
+    'Số điện thoại' => $userData->phone ?? '',
+    'Địa chỉ' => $userData->address ?? '',
+];
+
+// echo '<pre>';
+// var_dump($userData);
+// echo '</pre>';
+?>
+
+<!-- Modal Tài khoản -->
+<div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal modal-dialog-centered">
+        <form method="post" id="accountForm" class="w-100">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin tài khoản</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <?php foreach ($userInfo as $label => $value): ?>
+                            <div class="mb-3">
+                                <label class="form-label"><?= $label ?></label>
+                                <input type="text" class="form-control user-field"
+                                    name="<?= strtolower(str_replace(' ', '_', $label)) ?>"
+                                    value="<?= htmlspecialchars($value) ?>" disabled>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" id="editBtn" class="btn btn-warning">Chỉnh sửa thông tin tài khoản</button>
+                    <button type="submit" id="saveBtn" name="update_account" class="btn btn-success d-none">Lưu thay đổi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- Modal Đăng ký -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
@@ -324,3 +370,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const editBtn = document.getElementById("editBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const fields = document.querySelectorAll(".user-field");
+
+        editBtn.addEventListener("click", function() {
+            fields.forEach(field => field.disabled = false);
+            saveBtn.classList.remove("d-none");
+            editBtn.classList.add("d-none");
+        });
+    });
+</script>
