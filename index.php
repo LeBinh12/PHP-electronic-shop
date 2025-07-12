@@ -57,7 +57,7 @@ $userData = $userController->getCurrentUser();
             position: fixed;
             bottom: 80px;
             right: 20px;
-            width: 350px;
+            width: 400px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             background: white;
@@ -67,13 +67,27 @@ $userData = $userController->getCurrentUser();
         .hidden {
             display: none !important;
         }
-
         .chat-toggle-btn {
-            background: white;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            padding: 8px;
+            background-color: #e0f0ff;
+            /* Màu nền mặc định - cho Admin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, background-color 0.3s;
+        }
+
+        #chat-toggle-ai {
+            background-color: #e6f9ec;
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -114,7 +128,7 @@ $userData = $userController->getCurrentUser();
             <p class="m-0">Hỗ trợ trực tuyến</p>
             <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
         </div>
-        <div id="chat-content" class="p-2" style="background: #f8f9fa; max-height: 300px; overflow-y: auto;">
+        <div id="chat-content" class="p-2" style="background: #f8f9fa; max-height: 500px; overflow-y: auto;">
             <div class="d-flex align-items-start mb-2">
                 <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220" class="rounded-circle me-2" style="width: 30px; height: 30px;">
                 <div>
