@@ -6,22 +6,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
     $id = $_POST['id'] ?? null;
     if ($id) {
         $order = $orderController->getById($id);
+        $currentStatus = (int)$order['status_id'];
+        if ($currentStatus == 1) {
+            $orderDetail = $orderItemController->getOrderItemById($id);
+            foreach ($orderDetail as $item) {
+                $productId = $item['product_id'];
+                $inventoryByProductId = $inventoryController->getProductInventory($productId);
+                if ($item['quantity'] >= $inventoryByProductId['stock_quantity']) {
+                    echo "<script>
+                            alert('trong kho hàng không còn đủ sản phẩm cho đơn hàng này!');
+                            window.location.href = 'Admin.php?page=modules/Admin/Orders/Order.php';
+                        </script>";
+                    exit;
+                }
+
+                $totalQuantity = $inventoryByProductId['stock_quantity'] - $item['quantity'];
+                $inventoryController->edit($inventoryByProductId['id'], ['stock_quantity' => $totalQuantity]);
+            }
+        }
 
         if ($order) {
-            $currentStatus = (int)$order['status_id'];
             $maxStatus = 5;
 
             $nextStatus = ($currentStatus < $maxStatus) ? $currentStatus + 1 : 1;
 
             $orderController->edit($id, ["status_id" => $nextStatus]);
         }
-    }
-
-    echo "<script>
+        echo "<script>
             alert('Chuyển đổi trạng thái thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Orders/Order.php';
         </script>";
-    exit;
+        exit;
+    }
 }
 
 

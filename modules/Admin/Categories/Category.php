@@ -58,7 +58,9 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
                         <tr>
                             <td style="color:black"><?= $item["id"] ?></td>
                             <td><?= htmlspecialchars($item['name']) ?></td>
-                            <td><i class="<?= htmlspecialchars($item['icon']) ?>"></i> <?= $item['icon'] ?></td>
+                            <td>
+                                <img src="<?= htmlspecialchars($item['icon']) ?>" width="100">
+                            </td>
                             <td><?= $item['status'] ? 'Ẩn' : 'Hiển thị' ?></td>
 
                             <td>

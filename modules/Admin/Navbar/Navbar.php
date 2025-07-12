@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg fixed-top shadow-sm" 
-     style="background: linear-gradient(90deg, rgb(15, 112, 209) 0%, rgb(25, 122, 219) 100%); width: calc(100% - 250px); margin-left: 250px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);"
-     data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg fixed-top shadow-sm"
+    style="background: linear-gradient(90deg, rgb(15, 112, 209) 0%, rgb(25, 122, 219) 100%); width: calc(100% - 250px); margin-left: 250px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);"
+    data-bs-theme="dark">
     <div class="container-fluid">
         <span class="navbar-brand" style="font-weight: 600; font-size: 1.5rem;"></span>
         <!-- <form class="d-flex ms-auto" role="search">
@@ -22,7 +22,7 @@
             <a class="nav-link text-white mx-2" href="#" style="transition: color 0.3s, transform 0.2s;">
                 <i class="bi bi-chat" style="font-size: 1.2rem;"></i>
             </a>
-            <a class="nav-link text-white mx-2" href="#" style="transition: color 0.3s, transform 0.2s;">
+            <a class="nav-link text-white mx-2" href="Admin.php?page=modules/Admin/Profile/index.php" style="transition: color 0.3s, transform 0.2s;">
                 <i class="bi bi-person" style="font-size: 1.2rem;"></i>
             </a>
         </div>

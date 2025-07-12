@@ -1,97 +1,12 @@
 <?php
 // Sản phẩm nổi bật
-$featuredProducts = [
-    [
-        'id' => 1,
-        'name' => 'Laptop Dell Inspiron 15',
-        'price' => 15990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 2,
-        'name' => 'MacBook Air M2',
-        'price' => 27990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 3,
-        'name' => 'ASUS ROG Gaming',
-        'price' => 32990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 4,
-        'name' => 'HP Pavilion 14',
-        'price' => 12990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 5,
-        'name' => 'Lenovo IdeaPad 3',
-        'price' => 10990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 6,
-        'name' => 'Acer Aspire 5',
-        'price' => 11990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 7,
-        'name' => 'Microsoft Surface Pro 7',
-        'price' => 19990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-
-];
+$featuredProducts = $product->getLatestProducts();
 
 // Sản phẩm giảm giá
-$saleProducts = [
-    [
-        'id' => 101,
-        'name' => 'Laptop Dell Inspiron 14 ưer rgfhj ưerthf ẻty ưerth ',
-        'price' => 12990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 102,
-        'name' => 'MacBook Air M1',
-        'price' => 19990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 103,
-        'name' => 'ASUS VivoBook X',
-        'price' => 10990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 104,
-        'name' => 'HP Pavilion 15',
-        'price' => 11990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 105,
-        'name' => 'Lenovo IdeaPad Flex',
-        'price' => 9990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 106,
-        'name' => 'Acer Aspire 7',
-        'price' => 13990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
-    [
-        'id' => 107,
-        'name' => 'Microsoft Surface Go',
-        'price' => 8990000,
-        'image_url' => 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-tinh-bang-lenovo-idea-tab-pro-kem-but-ban-phim_1_.png'
-    ],
+$saleProducts = $product->getLatestSaleProducts();
 
-];
+
+$getCategory = $category->getAll();
 
 ?>
 
@@ -100,33 +15,21 @@ $saleProducts = [
 <div class="container ecom-section">
     <h3 class="ecom-title">Danh mục nổi bật</h3>
     <div class="ecom-category-list">
+        <?php
+
+        foreach ($getCategory as $item) {
+        ?>
+            <a href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?>" class="ecom-category-card text-decoration-none">
+                <i class="fa-solid fa-laptop"></i>
+                <div class="ecom-category-title"><?= $item['name'] ?></div>
+            </a>
+        <?php
+        }
+
+        ?>
         <div class="ecom-category-card">
             <i class="fa-solid fa-laptop"></i>
             <div class="ecom-category-title">Laptop</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-tablet-screen-button"></i>
-            <div class="ecom-category-title">Tablet</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-mobile-screen-button"></i>
-            <div class="ecom-category-title">Điện thoại</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-tv"></i>
-            <div class="ecom-category-title">Tivi</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-gamepad"></i>
-            <div class="ecom-category-title">Gaming</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-clock"></i>
-            <div class="ecom-category-title">Đồng hồ</div>
-        </div>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-headphones"></i>
-            <div class="ecom-category-title">Phụ kiện</div>
         </div>
     </div>
 </div>
@@ -221,18 +124,24 @@ $saleProducts = [
             <?php foreach (array_chunk($saleProducts, 6) as $i => $group) { ?>
                 <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
                     <div class="row g-3">
-                        <?php foreach ($group as $item) { ?>
+                        <?php foreach ($group as $item) {
+                            $originalPrice = $item['price'];
+                            $discount = $item['discount'];
+                            $finalPrice = $originalPrice * (1 - $discount / 100);
+                        ?>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card">
-                                    <span class="ecom-product-badge sale">Giảm giá</span>
+                                    <span class="ecom-product-badge sale">Giảm giá <?= $discount ?>%</span>
                                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
                                             <?= htmlspecialchars($item['name']) ?>
                                         </a>
                                     </h6>
-                                    <div class="ecom-price mb-1"><?= number_format($item['price'], 0, ',', '.') ?>₫</div>
-
+                                    <div class="ecom-price mb-1">
+                                        <span class="text-muted text-decoration-line-through me-2"><?= number_format($originalPrice, 0, ',', '.') ?>₫</span>
+                                        <span class="text-danger fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</span>
+                                    </div>
                                 </div>
                             </div>
                         <?php } ?>

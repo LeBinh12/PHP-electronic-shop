@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
     $id = $_POST['delete_order_id'] ?? null;
 
     if ($id) {
-        $result = $order->delete($id); // Xóa mềm: cập nhật isDeleted = 1
+        $result = $orderController->delete($id);
         if ($result['success']) {
             echo "<script>
             alert('Xóa đơn hàng thành công!');
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
 <!-- Modal xác nhận xóa danh mục -->
 <div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-labelledby="deleteOrderModalLabel"
     aria-hidden="true">
-<div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
             <form method="POST">
                 <input type="hidden" name="delete_order" value="1">

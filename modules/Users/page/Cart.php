@@ -56,11 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             $paymentId = $paymentController->add($dataPayment);
             foreach ($_POST['selected'] as $id) {
-                $priceProduct = $product->getById(id: $id);
-
+                $productById = $product->getById($id);
+                $priceProduct = $productById['price'];
+                if ($productById['discount'] > 0) {
+                    $priceProduct *= (1 - $productById['discount'] / 100);
+                }
                 $quantity = $cart[$id]['quantity'];
 
-                $totalAmount += $priceProduct['price'] * $quantity;
+                $totalAmount += $priceProduct * $quantity;
             }
 
             $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
@@ -76,13 +79,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             $order = $orderController->add($data);
             foreach ($_POST['selected'] as $id) {
-                $priceProduct = $product->getById(id: $id);
-
+                $productById = $product->getById($id);
+                $priceProduct = $productById['price'];
+                if ($productById['discount'] > 0) {
+                    $priceProduct *= (1 - $productById['discount'] / 100);
+                }
                 $quantity = $cart[$id]['quantity'];
 
                 $dataOrderItem = [
                     'quantity' => $quantity,
-                    'unit_price' => $priceProduct['price'],
+                    'unit_price' => $priceProduct,
                     'product_id' => $id,
                     'order_id' => $order['order_id'],
                 ];
