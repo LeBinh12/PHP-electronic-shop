@@ -11,7 +11,7 @@ require_once './controllers/OrderItemController.php';
 require_once './controllers/InventoryController.php';
 require_once './controllers/PaymentController.php';
 require_once './controllers/StatusController.php';
-
+require_once './controllers/ChatController.php';
 
 require 'vendor/autoload.php';
 
@@ -25,6 +25,7 @@ $orderItemController = new OrderItemController();
 $inventoryController = new InventoryController();
 $paymentController = new PaymentController();
 $statusController = new StatusController();
+$chatController = new ChatController();
 
 $cart = $_SESSION['cart'] ?? [];
 $userData = $userController->getCurrentUser();
@@ -80,6 +81,11 @@ $userData = $userController->getCurrentUser();
 <body>
     <div class="container">
         <?php
+        // $chatController->sendMessage(13, 'user', 'Em muốn hỏi về laptop');
+        // $history = $chatController->getChatHistory(13);
+        // foreach ($history as $entry) {
+        //     echo "[{$entry->time}] {$entry->from}: {$entry->message} <br>";
+        // }
         require './modules/Users/Layout/Header.php';
         if (isset($_GET['subpage'])) {
             require $_GET['subpage'];

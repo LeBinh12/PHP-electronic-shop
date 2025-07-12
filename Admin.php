@@ -10,6 +10,7 @@ require_once './controllers/OrderController.php';
 require_once './controllers/OrderItemController.php';
 require_once './controllers/UserController.php';
 require_once './controllers/StatusController.php';
+require_once './controllers/ChatController.php';
 
 
 
@@ -24,6 +25,8 @@ $orderController = new OrderController();
 $orderItemController = new OrderItemController();
 $userController = new UserController();
 $statusController = new StatusController();
+$chatController = new ChatController();
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +48,14 @@ $statusController = new StatusController();
 </head>
 
 <body>
-    <?php require  './modules/Admin/Navbar/Navbar.php'; ?>
+    <?php
+    // $chatController->sendMessage(13, 'admin', 'Bạn cần laptop gaming hay học tập?');
+    // $history = $chatController->getChatHistory(13);
+    // foreach ($history as $entry) {
+    //     echo "[{$entry->time}] {$entry->from}: {$entry->message} <br>";
+    // }
+    require  './modules/Admin/Navbar/Navbar.php';
+    ?>
     <!-- Navbar nên đặt ngoài admin-container -->
 
     <div class="admin-container">
