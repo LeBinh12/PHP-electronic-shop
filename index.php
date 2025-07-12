@@ -51,7 +51,30 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/Product.css">
     <link rel="stylesheet" href="./Style/Users/CheckOrder.css">
     <link rel="stylesheet" href="./Style/Users/HomePage.css">
+    <style>
+        .chat-box {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            z-index: 9998;
+        }
 
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-toggle-btn {
+            background: white;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -69,29 +92,30 @@ $userData = $userController->getCurrentUser();
         ?>
     </div>
 
+    <!-- Chat Toggle Buttons -->
+    <div id="chat-toggle-wrapper" style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999;">
+        <div id="chat-toggle-admin" class="chat-toggle-btn" title="Chat với Admin">
+            <i class="bi bi-chat-dots-fill fs-3 text-primary"></i>
+        </div>
+        <div id="chat-toggle-ai" class="chat-toggle-btn" title="Chat với AI">
+            <i class="bi bi-robot fs-3 text-success"></i>
+        </div>
+    </div>
 
     <!-- Chat -->
-    <div id="chat-toggle">
-        <i class="bi bi-chat-dots-fill fs-3"></i>
-    </div>
-    <div id="chat-form" class="hidden">
+    <div id="chat-form" class="chat-box hidden">
         <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center">
             <p class="m-0">Hỗ trợ trực tuyến</p>
             <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
         </div>
-        <div id="chat-content" class="flex-grow-1 overflow-auto p-2" style="background: #f8f9fa;">
+        <div id="chat-content" class="p-2" style="background: #f8f9fa; max-height: 300px; overflow-y: auto;">
             <div class="d-flex align-items-start mb-2">
                 <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220" class="rounded-circle me-2" style="width: 30px; height: 30px;">
                 <div>
                     <strong>Admin</strong>
-                    <div class="p-2 bg-light border rounded" style="max-width: 70%; word-break: break-word;">
+                    <div class="p-2 bg-light border rounded">
                         Xin chào, bạn cần hỗ trợ gì không?
                     </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end mb-2">
-                <div class="p-2 bg-primary text-white border rounded" style="max-width: 70%; word-break: break-word;">
-                    Mình muốn hỏi thông tin sản phẩm.
                 </div>
             </div>
         </div>
@@ -102,6 +126,34 @@ $userData = $userController->getCurrentUser();
             </button>
         </div>
     </div>
+
+    <?php
+    require_once './chatBox.php';
+    ?>
+
+    <script>
+        const chatForm = document.getElementById("chat-form");
+        const aiChatForm = document.getElementById("ai-chat-form");
+
+        document.getElementById("chat-toggle-admin").addEventListener("click", () => {
+            chatForm.classList.toggle("hidden");
+            aiChatForm.classList.add("hidden");
+        });
+
+        document.getElementById("chat-toggle-ai").addEventListener("click", () => {
+            aiChatForm.classList.toggle("hidden");
+            chatForm.classList.add("hidden");
+        });
+
+        document.getElementById("chat-close").addEventListener("click", () => {
+            chatForm.classList.add("hidden");
+        });
+
+        document.getElementById("ai-chat-close").addEventListener("click", () => {
+            aiChatForm.classList.add("hidden");
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
