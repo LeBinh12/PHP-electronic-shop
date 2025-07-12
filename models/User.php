@@ -14,6 +14,7 @@ class User extends Model
         'Address' => 'TEXT',
         'PasswordHash' => 'VARCHAR(255)',
         'CreatedAt' => 'DATETIME',
+        'UpdateAt' => 'DATETIME',
         'isDeleted' => 'TINYINT(1)',
     ];
 

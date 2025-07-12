@@ -30,6 +30,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     } else
         echo $res['message'];
 }
+
+
+if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
+    $fullName = $_POST['FullName'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+
+    $data = [
+        'FullName' => $fullName,
+        'Email' => $email,
+        'Phone' => $phone,
+        'Address' => $address
+    ];
+
+    $res = $userController->updateProfile($userData->id, $data);
+
+    if ($res['success']) {
+        $_SESSION['jwt'] = $res['token'];
+        $userData = $userController->getCurrentUser();
+        echo "<script>
+            alert('Cập nhật tài khoản thành công!');
+            window.location.href = 'index.php';
+        </script>";
+    }
+}
 ?>
 
 <div id="multiBannerCarousel" class="carousel slide mb-2 mt-1" data-bs-ride="carousel">
@@ -235,18 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </div>
 
 
-<?php
-$userInfo = [
-    'Họ tên' => $userData->name ?? '',
-    'Email' => $userData->email ?? '',
-    'Số điện thoại' => $userData->phone ?? '',
-    'Địa chỉ' => $userData->address ?? '',
-];
-
-// echo '<pre>';
-// var_dump($userData);
-// echo '</pre>';
-?>
 
 <!-- Modal Tài khoản -->
 <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
@@ -260,14 +274,30 @@ $userInfo = [
 
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <?php foreach ($userInfo as $label => $value): ?>
-                            <div class="mb-3">
-                                <label class="form-label"><?= $label ?></label>
-                                <input type="text" class="form-control user-field"
-                                    name="<?= strtolower(str_replace(' ', '_', $label)) ?>"
-                                    value="<?= htmlspecialchars($value) ?>" disabled>
-                            </div>
-                        <?php endforeach; ?>
+                        <div class="mb-3">
+                            <label class="form-label">Họ và Tên</label>
+                            <input type="text" class="form-control user-field"
+                                name="FullName"
+                                value="<?= htmlspecialchars($userData->name) ?>" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control user-field"
+                                name="email"
+                                value="<?= htmlspecialchars($userData->email) ?>" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control user-field"
+                                name="phone"
+                                value="<?= htmlspecialchars($userData->phone) ?>" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control user-field"
+                                name="address"
+                                value="<?= htmlspecialchars($userData->address) ?>" disabled>
+                        </div>
                     </div>
                 </div>
 
