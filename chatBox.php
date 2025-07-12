@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
 ?>
 
 <div id="ai-chat-form" class="chat-box hidden">
-    <div class="p-2 bg-success text-white d-flex justify-content-between align-items-center">
+    <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center">
         <p class="m-0">Hỗ trợ AI</p>
-        <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
+        <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
     </div>
-    <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; max-height: 300px; overflow-y: auto;">
+    <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; min-height: 415px; max-height: 500px; overflow-y: auto;">
         <?php foreach ($_SESSION['chat_history'] as $chat) { ?>
             <div class="d-flex justify-content-end mb-2">
                 <div class="p-2 bg-primary text-white border rounded"><?= htmlspecialchars($chat['user_message']) ?></div>
@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
         </button>
     </form>
 </div>
+
 
 <script>
     document.getElementById('ai-chat-toggle').addEventListener('click', function() {
