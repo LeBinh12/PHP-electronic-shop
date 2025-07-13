@@ -52,6 +52,8 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/Product.css">
     <link rel="stylesheet" href="./Style/Users/CheckOrder.css">
     <link rel="stylesheet" href="./Style/Users/HomePage.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         .chat-box {
             position: fixed;
@@ -67,6 +69,7 @@ $userData = $userController->getCurrentUser();
         .hidden {
             display: none !important;
         }
+
         .chat-toggle-btn {
             width: 60px;
             height: 60px;
@@ -181,7 +184,6 @@ $userData = $userController->getCurrentUser();
     <script src="./Style/Script/User/HomePage.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
 </body>
 
 </html>
