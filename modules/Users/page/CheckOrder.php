@@ -14,6 +14,8 @@ $offset    = ($page - 1) * $limit;
 $userId = $userData->id;
 
 
+$address = "Trường Đại Học Đồng Tháp";
+
 if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
         $userId,
@@ -209,6 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
     </div>
 </div>
 
+<!-- Xử lý Map -->
+<h1>Vị trí đơn hàng của bạn</h1>
+
+<div id="map" style="width:100%;height:400px;"></div>
 
 <?php
 $cancelReasons = [
@@ -305,4 +311,30 @@ $cancelReasons = [
             }
         });
     })
+
+    const address = <?= json_encode($address) ?>;
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const lat = parseFloat(data[0].lat);
+                const lon = parseFloat(data[0].lon);
+
+                // Hiển thị bản đồ
+                const map = L.map('map').setView([lat, lon], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup(address)
+                    .openPopup();
+            } else {
+                alert("Không tìm thấy vị trí cho địa chỉ: " + address);
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi khi gọi API Nominatim:", error);
+        });
 </script>
