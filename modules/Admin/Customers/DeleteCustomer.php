@@ -1,0 +1,50 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
+    $id = $_POST['delete_customer_id'] ?? null;
+
+    if ($id) {
+        $result = $customer->delete($id); // Xóa mềm: cập nhật isDeleted = 1
+        if ($result['success']) {
+            echo "<script>
+                alert('Xóa khách hàng thành công!');
+                window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
+            </script>";
+            exit;
+        } else {
+            $deleteError = $result['message'];
+        }
+    }
+}
+?>
+<!-- Modal xác nhận xóa khách hàng -->
+<div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow">
+      <form method="POST">
+        <input type="hidden" name="delete_customer" value="1">
+        <input type="hidden" name="delete_customer_id" id="deleteCustomerId">
+
+        <div class="modal-header bg-danger text-white">
+          <h6 class="modal-title d-flex align-items-center" id="deleteCustomerModalLabel">
+            <i class="fas fa-exclamation-triangle me-2"></i> Xác nhận xóa khách hàng
+          </h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+
+        <div class="modal-body text-center">
+          <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
+          <p>Bạn có chắc chắn muốn xóa khách hàng <strong id="deleteCustomerName"></strong>?</p>
+          <?php if (!empty($deleteError)): ?>
+            <div class="alert alert-danger"><?= $deleteError ?></div>
+          <?php endif; ?>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash me-1"></i> Xóa
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

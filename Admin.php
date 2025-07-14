@@ -45,6 +45,7 @@ $chatController = new ChatController();
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
     <link rel="stylesheet" href="./Style/Admin/Product.css">
     <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
+    <link rel="stylesheet" href="./Style/Admin/Customer.css">
 </head>
 
 <body>
