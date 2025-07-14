@@ -14,7 +14,7 @@ $offset    = ($page - 1) * $limit;
 $userId = $userData->id;
 
 
-$address = "Trường Đại Học Đồng Tháp";
+// $address = "Trường Đại Học Đồng Tháp";
 
 if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
@@ -131,9 +131,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                     $orderItems = $orderItemController->getOrderItemById($order["order_id"]);
                     ?>
                     <div class="order-item">
-                        <div class="order-item-header">
-                            <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
-                            <strong>Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
+                        <div class="order-item-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <div>
+                                <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <?php if ($order['status_name'] === 'Đang giao hàng') { ?>
+                                    <a href="index.php?subpage=modules/Users/page/OrderTracking.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
+                                        class="btn btn-outline-primary btn-sm" 
+                                        style=" background-color: #007bff; 
+                                                color: #fff; 
+                                                border: none;
+                                                padding: 6px 14px;
+                                                border-radius: 20px;
+                                                font-size: 0.9rem;
+                                                transition: background-color 0.3s ease;
+                                                box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+                                                text-decoration: none;
+                                                display: inline-block;"
+                                        onmouseover="this.style.backgroundColor='#0056b3'"
+                                        onmouseout="this.style.backgroundColor='#007bff'">
+                                        Xem vị trí đơn hàng
+                                    </a>
+                                <?php } ?>
+                                <strong class="mb-0">Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
+                            </div>
                         </div>
 
                         <div class="order-item-info-row">
@@ -159,9 +181,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <?php }; ?>
                             </div>
                         </div>
-
-
-
                         <?php if ($order['status_name'] === 'Chờ xử lý') { ?>
                             <button type="button" class="cancel-btn" data-bs-toggle="modal" data-bs-target="#cancelModal" data-order-id="<?= htmlspecialchars($order['order_id']) ?>">
                                 Hủy đơn hàng
@@ -212,9 +231,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
 </div>
 
 <!-- Xử lý Map -->
-<h1>Vị trí đơn hàng của bạn</h1>
-
-<div id="map" style="width:100%;height:400px;"></div>
+<!-- <h1>Vị trí đơn hàng của bạn</h1>
+<div id="map" style="width:100%;height:400px;"></div> -->
 
 <?php
 $cancelReasons = [
@@ -312,29 +330,30 @@ $cancelReasons = [
         });
     })
 
-    const address = <?= json_encode($address) ?>;
+    //const address = <? //= json_encode($address) 
+                        ?>;
 
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.length > 0) {
-                const lat = parseFloat(data[0].lat);
-                const lon = parseFloat(data[0].lon);
+    // fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (data && data.length > 0) {
+    //             const lat = parseFloat(data[0].lat);
+    //             const lon = parseFloat(data[0].lon);
 
-                // Hiển thị bản đồ
-                const map = L.map('map').setView([lat, lon], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
+    //             // Hiển thị bản đồ
+    //             const map = L.map('map').setView([lat, lon], 15);
+    //             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //                 attribution: '© OpenStreetMap contributors'
+    //             }).addTo(map);
 
-                L.marker([lat, lon]).addTo(map)
-                    .bindPopup(address)
-                    .openPopup();
-            } else {
-                alert("Không tìm thấy vị trí cho địa chỉ: " + address);
-            }
-        })
-        .catch(error => {
-            console.error("Lỗi khi gọi API Nominatim:", error);
-        });
+    //             L.marker([lat, lon]).addTo(map)
+    //                 .bindPopup(address)
+    //                 .openPopup();
+    //         } else {
+    //             alert("Không tìm thấy vị trí cho địa chỉ: " + address);
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Lỗi khi gọi API Nominatim:", error);
+    //     });
 </script>
