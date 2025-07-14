@@ -22,7 +22,7 @@
     padding: 10px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 15px;
 }
 
@@ -41,7 +41,6 @@
     overflow: hidden;
     margin-bottom: 10px;
 }
-
 
 .card-price {
     text-align: center;
@@ -66,7 +65,7 @@
 }
 
 .related-product:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
 }
 

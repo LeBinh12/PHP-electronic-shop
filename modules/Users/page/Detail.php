@@ -41,9 +41,10 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
 
             <?php if ($discount > 0) { ?>
                 <h4 class="text-danger">
-                    <span class="text-muted text-decoration-line-through me-2">
+                    <span class="text-muted text-decoration-line-through me-2 fs-5">
                         <?= number_format($originalPrice, 0, ',', '.') ?>₫
                     </span>
+                    </br>
                     <span class="fw-bold">
                         <?= number_format($finalPrice, 0, ',', '.') ?>₫
                     </span>
@@ -100,8 +101,8 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
                 <div class="col">
                     <div class="card related-product">
                         <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="Sản phẩm 3">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $item['name'] ?></h5>
+                        <div class="card-body text-center">
+                            <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>" class="card-title text-decoration-none fs-6"><?= $item['name'] ?></a>
                             <p class="card-price">Giá: <?= $item['price'] ?>đ</p>
                         </div>
                     </div>
