@@ -11,6 +11,8 @@ $page = max(1, min($page, $totalPages));
 
 $offset = ($page - 1) * $limit;
 $customers = $userController->getPagination($limit, $offset, $keyword);
+
+
 ?>
 
 <h1 class="h3">Danh sách khách hàng</h1>
@@ -31,8 +33,12 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
         </form>
     </div>
 
-    <?php require_once 'modules/Admin/Customers/UpdateCustomer.php'; ?>
-    <?php require_once 'modules/Admin/Customers/DeleteCustomer.php'; ?>
+    <?php
+    require_once 'modules/Admin/Customers/UpdateCustomer.php';
+    require_once 'modules/Admin/Customers/DeleteCustomer.php';
+    require_once 'modules/Admin/Customers/ReportCustomer.php';
+
+    ?>
 
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -44,6 +50,7 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                             <th style="width: 100px">Họ tên</th>
                             <th style="width: 50px">Điện thoại</th>
                             <th style="width: 150px">Email</th>
+                            <th style="width: 150px">Trạng thái</th>
                             <th class="text-center" style="width: 130px">Chức năng</th>
                         </tr>
                     </thead>
@@ -54,7 +61,18 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                             <td><?= htmlspecialchars($cus['FullName']) ?></td>
                             <td><?= htmlspecialchars($cus['Phone']) ?></td>
                             <td><?= htmlspecialchars($cus['Email']) ?></td>
+                            <td>
+                                <?php
+                                $reportByUserId = $userReportController->getByUserId($cus['id']);
 
+                                if ($reportByUserId && strtotime($reportByUserId['banned_until']) > time()) {
+                                    echo "<span class='text-danger'>Bị cấm đến " . date('d/m/Y', strtotime($reportByUserId['banned_until'])) . "</span>";
+                                } else {
+                                    echo "<span class='text-success'>Đang hoạt động</span>";
+                                }
+
+                                ?>
+                            </td>
                             <td class="text-center">
                                 <div class="d-flex flex-wrap gap-1 justify-content-center">
 
@@ -70,10 +88,13 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                     </button>
 
                                     <!-- Báo cáo -->
-                                    <button class="btn btn-sm btn-warning text-dark d-inline-flex align-items-center gap-1 px-2 py-1"
-                                        onclick="alert('Chức năng báo cáo sẽ được cập nhật sau!')">
+                                    <button class="btn btn-sm btn-warning text-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-report-customer"
+                                        data-id="<?= $cus['id'] ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reportCustomerModal">
                                         <i class="fas fa-chart-bar"></i> Báo cáo
                                     </button>
+
 
                                     <!-- Sửa -->
                                     <button type="button" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 px-2 py-1"

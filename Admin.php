@@ -11,6 +11,10 @@ require_once './controllers/OrderItemController.php';
 require_once './controllers/UserController.php';
 require_once './controllers/StatusController.php';
 require_once './controllers/ChatController.php';
+require_once './controllers/ReportController.php';
+require_once './controllers/ReportController.php';
+require_once './controllers/UserReportController.php';
+
 
 
 
@@ -26,6 +30,8 @@ $orderItemController = new OrderItemController();
 $userController = new UserController();
 $statusController = new StatusController();
 $chatController = new ChatController();
+$reportController = new ReportController();
+$userReportController = new UserReportController();
 
 ?>
 

@@ -56,4 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (valid) form.submit();
   });
+
+  // Xử lý report
+  const reportButtons = document.querySelectorAll(".btn-report-customer");
+  const inputReportUserId = document.getElementById("report-user-id");
+
+  reportButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      inputReportUserId.value = btn.dataset.id;
+    });
+  });
 });

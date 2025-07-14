@@ -14,8 +14,27 @@ require_once  './models/Admin.php';
 require_once './controllers/ProductController.php';
 require_once  './models/Banner.php';
 require_once  './models/Status.php';
+require_once  './models/ReportReasons.php';
+require_once  './models/UserReports.php';
 
 require_once  './models/Image.php';
+
+$report = new ReportReasons();
+$report->createTable();
+// $reportData = [
+//     ['reason_text' => 'Spam', 'ban_days' => 1, "isDeleted" => 0],
+//     ['reason_text' => 'Hành vi thù địch', 'ban_days' => 7, "isDeleted" => 0],
+//     ['reason_text' => 'Lạm dụng tính năng', 'ban_days' => 3, "isDeleted" => 0],
+//     ['reason_text' => 'Vi phạm nội quy nghiêm trọng', 'ban_days' => 30, "isDeleted" => 0],
+// ];
+
+// foreach ($reportData as $item) {
+//     $report->insert($item);
+// }
+
+$userReport = new UserReports();
+$userReport->createTable();
+
 
 $status = new Status();
 $status->createTable();
