@@ -8,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         'Email' => $_POST['email'],
         'Phone' => $_POST['phone'],
         'Address' => $_POST['address'],
-        'password' => $_POST['password']
+        'password' => $_POST['password'],
+        'isDeleted' => 0
     ]);
     if ($res['success']) {
         echo "Đăng ký thành công!";
@@ -45,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
         'Address' => $address
     ];
 
-    $res = $userController->updateProfile($userData->id, $data);
+    $res = $userController->updateProfile($userData->id, $data, true);
 
     if ($res['success']) {
         $_SESSION['jwt'] = $res['token'];

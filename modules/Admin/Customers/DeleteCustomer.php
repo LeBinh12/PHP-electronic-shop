@@ -1,25 +1,32 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
-    $id = $_POST['delete_customer_id'] ?? null;
-
-    if ($id) {
-        $result = $customer->delete($id); // Xóa mềm: cập nhật isDeleted = 1
-        if ($result['success']) {
-            echo "<script>
+  $id = $_POST['delete_customer_id'] ?? null;
+  $reason = $_POST['reason'] ?? '';
+  $data = [
+    'deleted_by_id' => 1,
+    'deleted_by_type' => 'admin',
+    'deleted_at' => date("Y-m-d H:i:s"),
+    'reason' => $reason,
+    'isDeleted' => 0
+  ];
+  if ($id) {
+    $result = $userController->updateProfile($id, $data, false); // Xóa mềm: cập nhật isDeleted = 1
+    if ($result['success']) {
+      echo "<script>
                 alert('Xóa khách hàng thành công!');
                 window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
             </script>";
-            exit;
-        } else {
-            $deleteError = $result['message'];
-        }
+      exit;
+    } else {
+      $deleteError = $result['message'];
     }
+  }
 }
 ?>
 <!-- Modal xác nhận xóa khách hàng -->
 <div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content shadow">
+    <div class="modal-content shadow">
       <form method="POST">
         <input type="hidden" name="delete_customer" value="1">
         <input type="hidden" name="delete_customer_id" id="deleteCustomerId">

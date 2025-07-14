@@ -1,27 +1,34 @@
 <?php
 // Xử lý khi submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_customer_id'])) {
-    $id = $_POST['edit_customer_id'];
-    $name = $_POST['edit_fullname'];
-    $phone = $_POST['edit_phone'];
-    $email = $_POST['edit_email'];
+  $id = $_POST['edit_customer_id'];
+  $name = $_POST['edit_fullname'];
+  $phone = $_POST['edit_phone'];
+  $email = $_POST['edit_email'];
+  $address = $_POST['edit_address'];
 
-    // Giả lập kết quả cập nhật
-    $result = ['success' => true];
+  $data = [
+    'FullName' => $name,
+    'Phone' => $phone,
+    'email' => $email,
+    'address' => $address
+  ];
 
-    if ($result['success']) {
-        echo "<script>
+  // Giả lập kết quả cập nhật
+  $result = $userController->updateProfile($id, $data, false);
+
+  if ($result['success']) {
+    echo "<script>
             alert('Cập nhật khách hàng thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
         </script>";
-        exit;
-    } else {
-        echo "<script>alert('Cập nhật thất bại.');</script>";
-    }
+    exit;
+  } else {
+    echo "<script>alert('Cập nhật thất bại.');</script>";
+  }
 }
 ?>
 <!-- Modal Sửa Khách Hàng -->
-<!-- Modal Sửa -->
 <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -46,6 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_customer_id'])) 
             <input type="email" name="edit_email" id="edit-email" class="form-control" required>
             <div id="emailError" class="text-danger small mt-1"></div>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Địa chỉ</label>
+            <input type="text" name="edit_address" id="edit-address" class="form-control" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -55,4 +66,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_customer_id'])) 
     </div>
   </div>
 </div>
-
