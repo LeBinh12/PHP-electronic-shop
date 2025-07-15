@@ -10,10 +10,7 @@ $page      = max(1, (int)($_GET['page'] ?? 1));
 $limit     = 2;
 $offset    = ($page - 1) * $limit;
 
-
 $userId = $userData->id;
-
-
 // $address = "Trường Đại Học Đồng Tháp";
 
 if ($filterStatusId == 0) {
@@ -138,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                             <div class="d-flex align-items-center gap-2">
                                 <?php if ($order['status_name'] === 'Đang giao hàng') { ?>
                                     <a href="index.php?subpage=modules/Users/page/OrderTracking.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
-                                        class="btn btn-outline-primary btn-sm" 
+                                        class="btn btn-outline-primary btn-sm"
                                         style=" background-color: #007bff; 
                                                 color: #fff; 
                                                 border: none;
@@ -305,7 +302,6 @@ $cancelReasons = [
         </form>
     </div>
 </div>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const cancelButtons = document.querySelectorAll(".cancel-btn");
@@ -329,31 +325,4 @@ $cancelReasons = [
             }
         });
     })
-
-    //const address = <? //= json_encode($address) 
-                        ?>;
-
-    // fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data && data.length > 0) {
-    //             const lat = parseFloat(data[0].lat);
-    //             const lon = parseFloat(data[0].lon);
-
-    //             // Hiển thị bản đồ
-    //             const map = L.map('map').setView([lat, lon], 15);
-    //             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //                 attribution: '© OpenStreetMap contributors'
-    //             }).addTo(map);
-
-    //             L.marker([lat, lon]).addTo(map)
-    //                 .bindPopup(address)
-    //                 .openPopup();
-    //         } else {
-    //             alert("Không tìm thấy vị trí cho địa chỉ: " + address);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error("Lỗi khi gọi API Nominatim:", error);
-    //     });
 </script>
