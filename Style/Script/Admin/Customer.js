@@ -66,4 +66,15 @@ document.addEventListener("DOMContentLoaded", function () {
       inputReportUserId.value = btn.dataset.id;
     });
   });
+  // Xử lý xóa khách hàng
+     const deleteCustomerModal = document.getElementById('deleteCustomerModal');
+  deleteCustomerModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const customerId = button.getAttribute('data-id');
+    const customerName = button.getAttribute('data-name');
+
+    deleteCustomerModal.querySelector('#deleteCustomerId').value = customerId;
+    deleteCustomerModal.querySelector('#deleteCustomerName').textContent = customerName;
+    deleteCustomerModal.querySelector('#deleteCustomerReason').value = '';
+  });
 });
