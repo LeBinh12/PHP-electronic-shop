@@ -2,6 +2,11 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
   $id = $_POST['delete_customer_id'] ?? null;
   $reason = $_POST['reason'] ?? '';
+  if (!$id) {
+    echo "<script>alert('Thiếu ID khách hàng cần xóa.');</script>";
+    return;
+  }
+
   $data = [
     'deleted_by_id' => 1,
     'deleted_by_type' => 'admin',
@@ -9,19 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     'reason' => $reason,
     'isDeleted' => 1 
   ];
-  if ($id) {
-    $result = $userController->updateProfile($id, $data, false);
-    if ($result['success']) {
-      echo "<script>
-              alert('Xóa khách hàng thành công!');
-              window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
-            </script>";
-      exit;
-    } else {
-      $deleteError = $result['message'];
-    }
+
+  $result = $userController->updateProfile($id, $data, false);
+
+  if ($result['success']) {
+    echo "<script>
+            alert('Xóa khách hàng thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
+          </script>";
+    exit;
+  } else {
+    echo "<script>alert('Lỗi khi xóa: " . $result['message'] . "');</script>";
   }
 }
+
 ?>
 
 <!-- Modal xác nhận xóa khách hàng -->
@@ -47,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
 
           <div class="mb-3">
             <label for="reason" class="form-label">Lý do xóa</label>
-            <textarea class="form-control" name="reason" id="deleteCustomerReason" rows="3" placeholder="Nhập lý do xóa..." required></textarea>
+            <textarea class="form-control" name="reason" id="deleteCustomerReason" rows="3" placeholder="Nhập lý do xóa..."></textarea>
           </div>
 
           <?php if (!empty($deleteError)): ?>

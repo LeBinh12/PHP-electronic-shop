@@ -66,15 +66,59 @@ document.addEventListener("DOMContentLoaded", function () {
       inputReportUserId.value = btn.dataset.id;
     });
   });
-  // Xử lý xóa khách hàng
-     const deleteCustomerModal = document.getElementById('deleteCustomerModal');
-  deleteCustomerModal.addEventListener('show.bs.modal', function (event) {
-    const button = event.relatedTarget;
-    const customerId = button.getAttribute('data-id');
-    const customerName = button.getAttribute('data-name');
+  const deleteButtons = document.querySelectorAll('[data-bs-target="#deleteCustomerModal"]');
+  const deleteCustomerId = document.getElementById("deleteCustomerId");
+  const deleteCustomerName = document.getElementById("deleteCustomerName");
+  const deleteCustomerReason = document.getElementById("deleteCustomerReason");
 
-    deleteCustomerModal.querySelector('#deleteCustomerId').value = customerId;
-    deleteCustomerModal.querySelector('#deleteCustomerName').textContent = customerName;
-    deleteCustomerModal.querySelector('#deleteCustomerReason').value = '';
+  deleteButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const customerId = btn.getAttribute("data-id");
+      const customerName = btn.getAttribute("data-name");
+
+      deleteCustomerId.value = customerId;
+      deleteCustomerName.textContent = customerName;
+      deleteCustomerReason.value = "";
+    });
   });
+  if (deleteForm) {
+  deleteForm.addEventListener("submit", function (e) {
+    if (typeof tinymce !== "undefined") {
+      tinymce.triggerSave();
+    }
+
+    const content = deleteCustomerReason.value.trim();
+    if (content === '') {
+      e.preventDefault(); // Ngăn submit
+      alert("Vui lòng nhập lý do xóa khách hàng.");
+    }
+  });
+}
+
+
+  // Bắt TinyMCE ghi nội dung textarea lại khi form submit
+  const deleteForm = document.querySelector('#deleteCustomerModal form');
+
+  if (deleteForm) {
+    deleteForm.addEventListener("submit", function () {
+      if (typeof tinymce !== "undefined") {
+        tinymce.triggerSave();
+      }
+    });
+  }
+// Xử lý nút "Chi tiết khách hàng"
+const detailButtons = document.querySelectorAll(".btn-detail-customer");
+
+detailButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById("detail-fullname").textContent = btn.dataset.fullname;
+    document.getElementById("detail-email").textContent = btn.dataset.email;
+    document.getElementById("detail-phone").textContent = btn.dataset.phone;
+    document.getElementById("detail-address").textContent = btn.dataset.address || "Chưa cập nhật";
+    document.getElementById("detail-created").textContent = btn.dataset.created || "Không rõ";
+    document.getElementById("detail-status").textContent = btn.dataset.status || "Không rõ";
+  });
+});
+
+
 });
