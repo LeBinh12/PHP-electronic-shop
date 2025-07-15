@@ -37,6 +37,7 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
     require_once 'modules/Admin/Customers/UpdateCustomer.php';
     require_once 'modules/Admin/Customers/DeleteCustomer.php';
     require_once 'modules/Admin/Customers/ReportCustomer.php';
+    require_once 'modules/Admin/Customers/DetailCustomer.php';
 
     ?>
 
@@ -109,20 +110,17 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                     </button>
 
 
-                                    <!-- Nút Xóa -->
-                                    <button class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
+                                    <!-- Nút Xóa -->                                    
+                                    <button
+                                        class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
                                         data-id="<?= $cus['id'] ?>"
                                         data-name="<?= htmlspecialchars($cus['FullName']) ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteCustomerModal">
                                         <i class="fas fa-trash-alt"></i> Xóa
                                     </button>
-
                                 </div>
                             </td>
-
-
-
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -143,3 +141,4 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
             <?php endfor ?>
         </ul>
     </nav>
+    

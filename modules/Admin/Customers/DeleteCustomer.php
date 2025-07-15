@@ -2,6 +2,11 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
   $id = $_POST['delete_customer_id'] ?? null;
   $reason = $_POST['reason'] ?? '';
+  if (!$id) {
+    echo "<script>alert('Thiếu ID khách hàng cần xóa.');</script>";
+    return;
+  }
+
   $data = [
     'deleted_by_id' => 1,
     'deleted_by_type' => 'admin',
@@ -9,19 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     'reason' => $reason,
     'isDeleted' => 0
   ];
-  if ($id) {
-    $result = $userController->updateProfile($id, $data, false); // Xóa mềm: cập nhật isDeleted = 1
-    if ($result['success']) {
-      echo "<script>
-                alert('Xóa khách hàng thành công!');
-                window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
-            </script>";
-      exit;
-    } else {
-      $deleteError = $result['message'];
-    }
+
+  $result = $userController->updateProfile($id, $data, false);
+
+  if ($result['success']) {
+    echo "<script>
+            alert('Xóa khách hàng thành công!');
+            window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
+          </script>";
+    exit;
+  } else {
+    echo "<script>alert('Lỗi khi xóa: " . $result['message'] . "');</script>";
   }
 }
+
 ?>
 <!-- Modal xác nhận xóa khách hàng -->
 <div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
@@ -38,9 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
         </div>
 
-        <div class="modal-body text-center">
-          <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
-          <p>Bạn có chắc chắn muốn xóa khách hàng <strong id="deleteCustomerName"></strong>?</p>
+        <div class="modal-body">
+          <div class="text-center">
+            <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
+            <p>Bạn có chắc chắn muốn xóa khách hàng <strong id="deleteCustomerName"></strong>?</p>
+          </div>
+
+          <div class="mb-3">
+            <label for="reason" class="form-label">Lý do xóa</label>
+            <textarea class="form-control" name="reason" id="deleteCustomerReason" rows="3" placeholder="Nhập lý do xóa..."></textarea>
+          </div>
+
           <?php if (!empty($deleteError)): ?>
             <div class="alert alert-danger"><?= $deleteError ?></div>
           <?php endif; ?>

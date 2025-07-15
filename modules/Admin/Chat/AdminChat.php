@@ -27,7 +27,7 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
         <a href="Admin.php" class="text-decoration-none">Đóng</a>
     </div>
 <?php } ?>
-<!-- Sidebar chọn người dùng -->
+<!-- List chọn người dùng -->
 <div style="position: fixed; bottom: 80px; left: 20px; width: 200px; height: 400px; overflow-y: auto; background: #f1f1f1; border-radius: 10px;" class="p-2">
     <h6>Khách hàng</h6>
     <ul class="list-unstyled">
@@ -40,6 +40,9 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
         <?php } ?>
     </ul>
 </div>
+
+
+<!-- Form tin nhắn khi đã chọn người dùng -->
 
 <?php if ($userId) { ?>
     <div id="chat-form" class="chat-box-admin">
@@ -87,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'], $_POST['us
     if ($msg !== '') {
         $chatController->sendMessage($toUser, ['sender_id' => 1, 'sender_role' => 'admin'], $msg);
         echo "<script>
-                alert('trả lời khách hàng thành công!');
                 window.location.href = '?chat_user_id=$toUser';
             </script>";
     }
