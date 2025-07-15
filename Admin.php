@@ -104,34 +104,9 @@ $userReportController = new UserReportController();
     <div id="chat-toggle">
         <i class="bi bi-chat-dots-fill fs-3"></i>
     </div>
-    <div id="chat-form" class="hidden">
-        <div class="p-2 bg-success text-white d-flex justify-content-between align-items-center">
-            <p class="m-0">Hỗ trợ trực tuyến</p>
-            <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
-        </div>
-        <div id="chat-content" class="flex-grow-1 overflow-auto p-2" style="background: #f8f9fa;">
-            <div class="d-flex align-items-start mb-2">
-                <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220" class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                <div>
-                    <strong>User</strong>
-                    <div class="p-2 bg-light border rounded" style="max-width: 70%; word-break: break-word;">
-                        Mình muốn hỏi thông tin sản phẩm.
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end mb-2">
-                <div class="p-2 bg-success text-white border rounded" style="max-width: 70%; word-break: break-word;">
-                    Xin chào, bạn cần hỗ trợ gì không?
-                </div>
-            </div>
-        </div>
-        <div class="p-2 border-top d-flex align-items-center">
-            <input type="text" class="form-control me-2" placeholder="Nhập tin nhắn..." id="chat-input">
-            <button id="send-message" class="btn btn-success">
-                <i class="bi bi-send-fill"></i>
-            </button>
-        </div>
-    </div>
+    <?php
+    require_once './modules/Admin/Chat/AdminChat.php';
+    ?>
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
     <script src="./Style/Script/Admin/AddInventory.js"></script>

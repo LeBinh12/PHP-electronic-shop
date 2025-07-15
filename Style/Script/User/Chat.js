@@ -1,60 +1,39 @@
-const chatToggle = document.getElementById("chat-toggle");
-const chatForm = document.getElementById("chat-form");
-const chatClose = document.getElementById("chat-close");
-const sendMessage = document.getElementById("send-message");
-const chatInput = document.getElementById("chat-input");
-const chatContent = document.getElementById("chat-content");
+// document.addEventListener("DOMContentLoaded", function () {
+//   const input = document.getElementById("chat-input");
+//   const sendBtn = document.getElementById("send-message");
+//   const content = document.getElementById("chat-content");
 
-chatToggle.addEventListener("click", () => {
-  chatForm.classList.toggle("hidden");
-});
+//   if (!input || !sendBtn || !content) return;
 
-chatClose.addEventListener("click", () => {
-  chatForm.classList.add("hidden");
-});
+//   sendBtn.addEventListener("click", sendMessage);
+//   input.addEventListener("keydown", function (e) {
+//     if (e.key === "Enter") sendMessage();
+//   });
 
-function addMessage(message, isMine = true) {
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("d-flex", "mb-2");
-  msgDiv.style.wordBreak = "break-word";
+//   async function sendMessage() {
+//     const msg = input.value.trim();
+//     if (!msg) return;
 
-  if (isMine) {
-    msgDiv.classList.add("justify-content-end");
-    msgDiv.innerHTML = `
-                <div class="p-2 bg-primary text-white border rounded" style="max-width: 70%;">
-                    ${message}
-                </div>
-            `;
-  } else {
-    msgDiv.classList.add("align-items-start");
-    msgDiv.innerHTML = `
-                <img src="https://tse4.mm.bing.net/th?id=OIP.8xHZ13-7xIo-wSNdPYmeXgAAAA&pid=Api&P=0&h=220" class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                <div>
-                    <strong>Hỗ trợ viên</strong>
-                    <div class="p-2 bg-light border rounded" style="max-width: 70%;">
-                        ${message}
-                    </div>
-                </div>
-            `;
-  }
+//     const res = await fetch("modules/chat/sendMessage.php", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ message: msg }),
+//     });
 
-  chatContent.appendChild(msgDiv);
-  chatContent.scrollTop = chatContent.scrollHeight;
-}
-sendMessage.addEventListener("click", () => {
-  const message = chatInput.value.trim();
-  if (message) {
-    addMessage(message, true);
-    chatInput.value = "";
-  
-    setTimeout(() => {
-      addMessage("Cảm ơn bạn, chúng tôi sẽ phản hồi sớm!", false);
-    }, 1000);
-  }
-});
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    sendMessage.click();
-    e.preventDefault();
-  }
-});
+//     if (res.ok) {
+//       const now = new Date();
+//       const timeStr = now.toLocaleTimeString() + " " + now.toLocaleDateString();
+
+//       const bubble = document.createElement("div");
+//       bubble.className = "mb-2 text-end";
+//       bubble.innerHTML = `
+//                 <div class="d-inline-block p-2 rounded bg-primary text-white">${msg}</div>
+//                 <div class="small text-muted">${timeStr}</div>
+//             `;
+//       content.appendChild(bubble);
+//       content.scrollTop = content.scrollHeight;
+
+//       input.value = "";
+//     }
+//   }
+// });

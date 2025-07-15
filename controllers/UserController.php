@@ -1,6 +1,7 @@
 <?php
 
 require_once './models/User.php';
+require_once './models/UserReports.php';
 require_once './controllers/BaseController.php';
 
 
@@ -12,12 +13,14 @@ use Respect\Validation\Validator as v;
 class UserController extends BaseController
 {
     private $userModel;
+    private $userReportModel;
     private $jwtConfig;
 
     public function __construct()
     {
         parent::__construct();
         $this->userModel = new User();
+        $this->userReportModel = new UserReports();
         $this->jwtConfig = include   './config/jwt.php';
     }
 
@@ -70,6 +73,18 @@ class UserController extends BaseController
         if (!$user || !password_verify($password, $user['PasswordHash'])) {
             return ['success' => false, 'message' => 'Email hoặc mật khẩu không đúng'];
         }
+
+        $checkReportUser = $this->userReportModel->getLatestByUserId($user['id']);
+        if ($checkReportUser) {
+            if ($checkReportUser['banned_until'] > date('Y-m-d H:i:s')) {
+                return [
+                    'success' => false,
+                    'message' => 'Tài khoản của bạn đã bị khóa',
+                    'report' => $checkReportUser
+                ];
+            }
+        }
+
         $now = time();
         $token = [
             'iss' => $this->jwtConfig['issuer'],

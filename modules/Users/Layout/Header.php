@@ -28,8 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $_SESSION['jwt'] = $res['token'];
         $userData = $userController->getCurrentUser();
         echo "{$_SESSION['jwt']}";
-    } else
-        echo $res['message'];
+    } else {
+        echo "<script>
+                alert('Tài khoản của bạn đã bị khóa đến {$res['report']['banned_until']}!');
+                window.location.href = 'index.php';
+            </script>";
+        exit;
+    }
 }
 
 

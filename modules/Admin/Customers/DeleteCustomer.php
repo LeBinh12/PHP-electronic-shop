@@ -7,14 +7,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     'deleted_by_type' => 'admin',
     'deleted_at' => date("Y-m-d H:i:s"),
     'reason' => $reason,
-    'isDeleted' => 1 
+    'isDeleted' => 0
   ];
   if ($id) {
-    $result = $userController->updateProfile($id, $data, false);
+    $result = $userController->updateProfile($id, $data, false); // Xóa mềm: cập nhật isDeleted = 1
     if ($result['success']) {
       echo "<script>
-              alert('Xóa khách hàng thành công!');
-              window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
+                alert('Xóa khách hàng thành công!');
+                window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
             </script>";
       exit;
     } else {
@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
   }
 }
 ?>
-
 <!-- Modal xác nhận xóa khách hàng -->
 <div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md modal-dialog-centered">
@@ -39,22 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
         </div>
 
-        <div class="modal-body">
-          <div class="text-center">
-            <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
-            <p>Bạn có chắc chắn muốn xóa khách hàng <strong id="deleteCustomerName"></strong>?</p>
-          </div>
-
-          <div class="mb-3">
-            <label for="reason" class="form-label">Lý do xóa</label>
-            <textarea class="form-control" name="reason" id="deleteCustomerReason" rows="3" placeholder="Nhập lý do xóa..." required></textarea>
-          </div>
-
+        <div class="modal-body text-center">
+          <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
+          <p>Bạn có chắc chắn muốn xóa khách hàng <strong id="deleteCustomerName"></strong>?</p>
           <?php if (!empty($deleteError)): ?>
-            <div class="alert alert-danger text-center"><?= $deleteError ?></div>
+            <div class="alert alert-danger"><?= $deleteError ?></div>
           <?php endif; ?>
         </div>
-
         <div class="modal-footer justify-content-center">
           <button type="submit" class="btn btn-danger">
             <i class="fas fa-trash me-1"></i> Xóa

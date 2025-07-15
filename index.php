@@ -12,7 +12,6 @@ require_once './controllers/InventoryController.php';
 require_once './controllers/PaymentController.php';
 require_once './controllers/StatusController.php';
 require_once './controllers/ChatController.php';
-
 require 'vendor/autoload.php';
 
 $product = new ProductController();
@@ -127,31 +126,8 @@ $userData = $userController->getCurrentUser();
     </div>
 
     <!-- Chat -->
-    <div id="chat-form" class="chat-box hidden">
-        <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center">
-            <p class="m-0">Hỗ trợ trực tuyến</p>
-            <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
-        </div>
-        <div id="chat-content" class="p-2" style="background: #f8f9fa; max-height: 500px; overflow-y: auto;">
-            <div class="d-flex align-items-start mb-2">
-                <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220" class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                <div>
-                    <strong>Admin</strong>
-                    <div class="p-2 bg-light border rounded">
-                        Xin chào, bạn cần hỗ trợ gì không?
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="p-2 border-top d-flex align-items-center">
-            <input type="text" class="form-control me-2" placeholder="Nhập tin nhắn..." id="chat-input">
-            <button id="send-message" class="btn btn-primary">
-                <i class="bi bi-send-fill"></i>
-            </button>
-        </div>
-    </div>
-
     <?php
+    require_once './chatUser.php';
     require_once './chatBox.php';
     ?>
 
@@ -169,9 +145,9 @@ $userData = $userController->getCurrentUser();
             chatForm.classList.add("hidden");
         });
 
-        document.getElementById("chat-close").addEventListener("click", () => {
-            chatForm.classList.add("hidden");
-        });
+        // document.getElementById("chat-close").addEventListener("click", () => {
+        //     chatForm.classList.add("hidden");
+        // });
 
         document.getElementById("ai-chat-close").addEventListener("click", () => {
             aiChatForm.classList.add("hidden");

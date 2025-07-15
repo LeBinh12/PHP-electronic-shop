@@ -16,8 +16,13 @@ require_once  './models/Banner.php';
 require_once  './models/Status.php';
 require_once  './models/ReportReasons.php';
 require_once  './models/UserReports.php';
+require_once  './models/ChatMessage.php';
 
 require_once  './models/Image.php';
+
+$chatMessage = new ChatMessage();
+$chatMessage->createTable();
+
 
 $report = new ReportReasons();
 $report->createTable();

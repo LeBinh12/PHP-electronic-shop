@@ -21,7 +21,7 @@
             </a>
             <a class="nav-link text-white mx-2" href="#" style="transition: color 0.3s, transform 0.2s;">
                 <i class="bi bi-chat" style="font-size: 1.2rem;"></i>
-            </a>
+            </a>z
             <a class="nav-link text-white mx-2" href="Admin.php?page=modules/Admin/Profile/index.php" style="transition: color 0.3s, transform 0.2s;">
                 <i class="bi bi-person" style="font-size: 1.2rem;"></i>
             </a>
