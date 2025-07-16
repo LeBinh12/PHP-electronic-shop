@@ -63,6 +63,12 @@ $currentPage = $_GET['page'] ?? '';
                 <i class="fas fa-shopping-cart"></i> Quản lý chức năng
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Roles/Role.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin//Roles/Role.php">
+                <i class="fas fa-shopping-cart"></i> Quản lý quyền
+            </a>
+        </li>
         <!--       <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a>
         </li>
