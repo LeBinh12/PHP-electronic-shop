@@ -17,8 +17,35 @@ require_once  './models/Status.php';
 require_once  './models/ReportReasons.php';
 require_once  './models/UserReports.php';
 require_once  './models/ChatMessage.php';
+require_once  './models/Role.php';
+require_once  './models/Menu.php';
+require_once  './models/Employee.php';
+require_once  './models/EmployeeMenu.php';
+require_once  './models/RoleMenu.php';
+require_once  './models/RoleEmployee.php';
 
 require_once  './models/Image.php';
+
+$employee = new Employee();
+$employee->createTable();
+
+$role = new Role();
+$role->createTable();
+
+$menu = new Menu();
+$menu->createTable();
+
+$roleMenu = new RoleMenu();
+$roleMenu->createTable();
+
+$employeeMenu = new EmployeeMenu();
+$employeeMenu->createTable();
+
+$roleEmployee = new RoleEmployee();
+$roleEmployee->createTable();
+
+
+
 
 $chatMessage = new ChatMessage();
 $chatMessage->createTable();

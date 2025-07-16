@@ -1,45 +1,13 @@
 <?php
 if (!isset($chatController) || !isset($userController)) return;
 
-$userList = $chatController->getAllChatUserIdsFromRedis();
-$userId = $_GET['chat_user_id'] ?? null;
-$showChatList = isset($_GET['show_chat_list']);
+
 
 
 $messages = $userId ? $chatController->getChatHistory($userId) : [];
 ?>
 
-<div style="position: fixed; bottom: 30px; right: 10%;">
-    <a href="?show_chat_list=1" class="btn btn-primary">Danh sách tin nhắn đến</a>
-</div>
-<?php if ($showChatList) { ?>
-    <div style="position: fixed; bottom: 90px; right: 10%; width: 200px; height: 400px; overflow-y: auto; background: #f1f1f1; border-radius: 10px;" class="p-2">
-        <h6>Khách hàng</h6>
-        <ul class="list-unstyled">
-            <?php foreach ($userList as $user) { ?>
-                <li>
-                    <a href="?chat_user_id=<?= $user ?>" class="text-decoration-none">
-                        <?= htmlspecialchars($user) ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-        <a href="Admin.php" class="text-decoration-none">Đóng</a>
-    </div>
-<?php } ?>
-<!-- List chọn người dùng -->
-<div style="position: fixed; bottom: 80px; left: 20px; width: 200px; height: 400px; overflow-y: auto; background: #f1f1f1; border-radius: 10px;" class="p-2">
-    <h6>Khách hàng</h6>
-    <ul class="list-unstyled">
-        <?php foreach ($userList as $user) { ?>
-            <li>
-                <a href="?chat_user_id=<?= $user ?>" class="text-decoration-none">
-                    <?= htmlspecialchars($user) ?>
-                </a>
-            </li>
-        <?php } ?>
-    </ul>
-</div>
+
 
 
 <!-- Form tin nhắn khi đã chọn người dùng -->
