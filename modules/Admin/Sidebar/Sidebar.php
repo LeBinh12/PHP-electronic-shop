@@ -17,60 +17,66 @@ $currentPage = $_GET['page'] ?? '';
 
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Products/Product.php') ? 'active' : '' ?>"
-               href="Admin.php?page=modules/Admin/Products/Product.php">
+                href="Admin.php?page=modules/Admin/Products/Product.php">
                 <i class="fas fa-box"></i> Sản Phẩm
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>"
-               href="Admin.php?page=modules/Admin/Categories/Category.php">
+                href="Admin.php?page=modules/Admin/Categories/Category.php">
                 <i class="fas fa-table"></i> Loại Sản Phẩm
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>"
-               href="Admin.php?page=modules/Admin/Suppliers/Supplier.php">
+                href="Admin.php?page=modules/Admin/Suppliers/Supplier.php">
                 <i class="fas fa-truck"></i> Đối Tác Cung Cấp
             </a>
         </li>
 
         <li class="nav-item">
-    <a class="nav-link <?= ($currentPage === 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>"
-        href="Admin.php?page=modules/Admin/Inventory/Inventory.php">
-        <i class="fas fa-warehouse"></i> Kho Hàng
-    </a>
-</li>
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin/Inventory/Inventory.php">
+                <i class="fas fa-warehouse"></i> Kho Hàng
+            </a>
+        </li>
 
 
         <li class="nav-item">
-    <a class="nav-link <?= ($currentPage === 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>"
-       href="Admin.php?page=modules/Admin/Customers/Customer.php">
-        <i class="fas fa-users"></i> Khách hàng
-    </a>
-</li>
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin/Customers/Customer.php">
+                <i class="fas fa-users"></i> Khách hàng
+            </a>
+        </li>
 
-         <li class="nav-item">
-    <a class="nav-link <?= ($currentPage === 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>"
-       href="Admin.php?page=modules/Admin/Orders/Order.php">
-        <i class="fas fa-shopping-cart"></i> Đơn hàng
-    </a>
-</li>
-  <!--       <li class="nav-item">
+        <li class="nav-item">
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin/Orders/Order.php">
+                <i class="fas fa-shopping-cart"></i> Đơn hàng
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin/Menus/Menu.php">
+                <i class="fas fa-shopping-cart"></i> Quản lý chức năng
+            </a>
+        </li>
+        <!--       <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-history"></i> History</a>
         </li> -->
-          <!-- Recycle Bin -->
+        <!-- Recycle Bin -->
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'active' : '' ?>"
-               data-bs-toggle="collapse"
-               href="#recycleCollapse"
-               role="button"
-               aria-expanded="<?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'true' : 'false' ?>"
-               aria-controls="recycleCollapse">
+                data-bs-toggle="collapse"
+                href="#recycleCollapse"
+                role="button"
+                aria-expanded="<?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'true' : 'false' ?>"
+                aria-controls="recycleCollapse">
                 <i class="fas fa-trash me-3"></i> Recycle Bin
                 <i class="fas fa-chevron-right ms-auto arrow-icon <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'rotate' : '' ?>"></i>
             </a>
@@ -79,19 +85,19 @@ $currentPage = $_GET['page'] ?? '';
                 <ul class="nav flex-column ms-4">
                     <li>
                         <a class="nav-link <?= ($currentPage === 'modules/Admin/RecycleBin/Product/Product.php') ? 'active' : '' ?>"
-                           href="Admin.php?page=modules/Admin/RecycleBin/Product/Product.php">
+                            href="Admin.php?page=modules/Admin/RecycleBin/Product/Product.php">
                             <i class="fas fa-box-open me-1"></i> Product
                         </a>
                     </li>
                     <li>
                         <a class="nav-link <?= ($currentPage === 'modules/Admin/RecycleBin/Category/Category.php') ? 'active' : '' ?>"
-                           href="Admin.php?page=modules/Admin/RecycleBin/Category/Category.php">
+                            href="Admin.php?page=modules/Admin/RecycleBin/Category/Category.php">
                             <i class="fas fa-table me-1"></i> Category
                         </a>
                     </li>
                     <li>
                         <a class="nav-link <?= ($currentPage === 'modules/Admin/RecycleBin/Supplier/Supplier.php') ? 'active' : '' ?>"
-                           href="Admin.php?page=modules/Admin/RecycleBin/Supplier/Supplier.php">
+                            href="Admin.php?page=modules/Admin/RecycleBin/Supplier/Supplier.php">
                             <i class="fas fa-truck me-1"></i> Supplier
                         </a>
                     </li>
