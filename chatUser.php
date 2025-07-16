@@ -56,9 +56,25 @@ $messages = $chatController->getChatHistory($userId);
 
 
 <script>
-    document.getElementById("chat-close").addEventListener("click", () => {
+    document.addEventListener("DOMContentLoaded", function () {
         const chatForm = document.getElementById("chat-form");
-        chatForm.classList.add("hidden");
-        fetch("?closeChat=1");
+        const chatToggle = document.getElementById("chat-toggle");
+
+        chatToggle.addEventListener("click", () => {
+            chatForm.classList.toggle("hidden");
+            fetch("?openChat=1");
+        });
+
+        document.getElementById("chat-close").addEventListener("click", () => {
+            chatForm.classList.add("hidden");
+            fetch("?closeChat=1");
+        });
     });
+
+        // Đóng chat khi click vào nút đóng
+    // document.getElementById("chat-close").addEventListener("click", () => {
+    //     const chatForm = document.getElementById("chat-form");
+    //     chatForm.classList.add("hidden");
+    //     fetch("?closeChat=1");
+    // });
 </script>

@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-danger shadow-sm sticky-top" style="z-index: 1031;">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-white" href="index.php">GEARVN</a>
+        <a class="navbar-brand fw-bold text-white" href="index.php">GARENA</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
             <span class="navbar-toggler-icon"></span>

@@ -37,7 +37,7 @@ $userData = $userController->getCurrentUser();
 
 <head>
     <meta charset="UTF-8">
-    <title>GEARVN Layout</title>
+    <title>GARENA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -132,35 +132,39 @@ $userData = $userController->getCurrentUser();
     ?>
 
     <script>
-        const chatForm = document.getElementById("chat-form");
-        const aiChatForm = document.getElementById("ai-chat-form");
+            document.addEventListener("DOMContentLoaded", function() {
+                const chatForm = document.getElementById("chat-form");
+                const aiChatForm = document.getElementById("ai-chat-form");
 
-        document.getElementById("chat-toggle-admin").addEventListener("click", () => {
-            chatForm.classList.toggle("hidden");
-            aiChatForm.classList.add("hidden");
-        });
+                document.getElementById("chat-toggle-admin").addEventListener("click", () => {
+                    chatForm?.classList.toggle("hidden");
+                    aiChatForm?.classList.add("hidden");
+                });
 
-        document.getElementById("chat-toggle-ai").addEventListener("click", () => {
-            aiChatForm.classList.toggle("hidden");
-            chatForm.classList.add("hidden");
-        });
+                document.getElementById("chat-toggle-ai").addEventListener("click", () => {
+                    aiChatForm?.classList.toggle("hidden");
+                    chatForm?.classList.add("hidden");
+                });
 
-        // document.getElementById("chat-close").addEventListener("click", () => {
-        //     chatForm.classList.add("hidden");
-        // });
+                document.getElementById("chat-close").addEventListener("click", () => {
+                    chatForm?.classList.add("hidden");
+                    fetch("?closeChat=1");
+                });
 
-        document.getElementById("ai-chat-close").addEventListener("click", () => {
-            aiChatForm.classList.add("hidden");
-        });
+                document.getElementById("ai-chat-close").addEventListener("click", () => {
+                    aiChatForm?.classList.add("hidden");
+                });
+            });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
     <script src="./Style/Script/User/CheckOrder.js"></script>
     <script src="./Style/Script/User/HomePage.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 </body>
 
 </html>

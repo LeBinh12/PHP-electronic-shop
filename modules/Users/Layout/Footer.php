@@ -2,9 +2,9 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
-                <h5 class="mb-3 fw-bold">SHOP BVC</h5>
+                <h5 class="mb-3 fw-bold">SHOP GARENA</h5>
                 <p class="text-muted" style="text-align: justify;">
-                    BVC - Nền tảng mua sắm laptop chính hãng với giá tốt nhất. Đa dạng mẫu mã, hiệu suất vượt trội. Hỗ trợ bảo hành, đổi trả minh bạch – uy tín.
+                    GARENA - Nền tảng mua sắm laptop chính hãng với giá tốt nhất. Đa dạng mẫu mã, hiệu suất vượt trội. Hỗ trợ bảo hành, đổi trả minh bạch – uy tín.
                 </p>
             </div>
             <div class="col">
@@ -36,7 +36,7 @@
         <hr class="mt-4" />
 
         <div class="text-center text-muted small">
-            © 2025 <strong>Mai Chí Vĩnh</strong>. All rights reserved.
+            © 2025 <strong>Mai Chí Vĩnh - Lê Phước Bình - Nguyễn Lê Quốc Cường</strong>. All rights reserved.
         </div>
     </div>
 </footer>
