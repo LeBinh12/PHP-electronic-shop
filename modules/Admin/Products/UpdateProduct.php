@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         'category_id' => $category_id,
         'supplier_id' => $supplier_id,
         'image_url' => $imageUrl,
+        'content' => $content,
         'isDeleted' => 0
     ];
     $result = $product->edit($id, $updateData);
@@ -109,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             <div class="form-grid">
                 <div class="group mb-3">
                     <label class="form-label">Mã sản phẩm</label>
-                    <input type="text" name="idProduct" class="form-control" required value="<?= htmlspecialchars($oldProduct['id']) ?>">
+                    <input type="text" name="idProduct" class="form-control" readonly="readonly" required re value="<?= htmlspecialchars($oldProduct['id']) ?>">
                 </div>
                 <div class="group mb-3">
                     <label class="form-label">Tên sản phẩm</label>
