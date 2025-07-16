@@ -49,6 +49,11 @@ class RoleController
         return $this->roleMenuModel->getMenuIdsByRole($id);
     }
 
+    public function getRoleWithMenu()
+    {
+        return $this->roleModel->getAllRolesWithMenus();
+    }
+
     public function createRoleWithMenus($roleName, $menuIds)
     {
         if ($roleName === '' || empty($menuIds)) {
