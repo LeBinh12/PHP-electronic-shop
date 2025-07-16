@@ -33,6 +33,10 @@ $chatController = new ChatController();
 $reportController = new ReportController();
 $userReportController = new UserReportController();
 
+$userList = $chatController->getAllChatUserIdsFromRedis();
+$userId = $_GET['chat_user_id'] ?? null;
+$showChatList = isset($_GET['show_chat_list']);
+
 ?>
 
 <!DOCTYPE html>
