@@ -17,4 +17,19 @@ class RoleEmployee extends Model
         'employee_id' => 'employees(id)',
         'role_id' => 'roles(id)'
     ];
+
+    public function getByEmployeeId($employeeId)
+    {
+        $sql = "SELECT role_id FROM role_employee WHERE employee_id = :employee_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['employee_id' => $employeeId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteByEmployee($employeeId)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE employee_id = :employee_id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(['employee_id' => $employeeId]);
+    }
 }

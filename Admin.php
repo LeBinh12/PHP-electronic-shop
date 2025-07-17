@@ -15,6 +15,9 @@ require_once './controllers/ReportController.php';
 require_once './controllers/ReportController.php';
 require_once './controllers/UserReportController.php';
 require_once './controllers/MenuController.php';
+require_once './controllers/RoleController.php';
+require_once './controllers/EmployeeController.php';
+
 
 
 
@@ -33,7 +36,8 @@ $chatController = new ChatController();
 $reportController = new ReportController();
 $userReportController = new UserReportController();
 $menuController = new MenuController();
-
+$roleController = new RoleController();
+$employeeController = new EmployeeController();
 
 $userList = $chatController->getAllChatUserIdsFromRedis();
 $userId = $_GET['chat_user_id'] ?? null;
@@ -124,6 +128,8 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="./Style/Script/Admin/Supplier.js"></script>
     <script src="./Style/Script/Admin/Profile.js"></script>
     <script src="./Style/Script/Admin/Menu.js"></script>
+    <script src="./Style/Script/Admin/Role.js"></script>
+    <script src="./Style/Script/Admin/Employee.js"></script>
 
 
 

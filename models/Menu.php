@@ -20,7 +20,7 @@ class Menu extends Model
         $params = [];
 
         if (!empty($keyword)) {
-            $sql .= "AND menu_name LIKE :keyword";
+            $sql .= " AND menu_name LIKE :keyword";
             $params['keyword'] = "%" . $keyword . "%";
         }
 
@@ -44,7 +44,7 @@ class Menu extends Model
         $sql = "SELECT COUNT(*) as total FROM menus WHERE isDeleted = 0";
         $params = [];
         if (!empty($keyword)) {
-            $sql .= "AND menu_name LIKE :keyword";
+            $sql .= " AND menu_name LIKE :keyword";
             $params['keyword'] = "%" . $keyword . "%";
         }
 

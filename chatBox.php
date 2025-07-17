@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
 <div id="ai-chat-form" class="chat-box hidden">
     <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center">
         <p class="m-0">Hỗ trợ AI</p>
-        <i id="chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
+        <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
     </div>
     <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; min-height: 405px; max-height: 500px; overflow-y: auto;">
         <?php foreach ($_SESSION['chat_history'] as $chat) { ?>

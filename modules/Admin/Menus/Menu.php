@@ -82,7 +82,7 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
         <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                 <a class="page-link"
-                    href="Admin.php?page=modules/Admin/Menu/Menu.php&search=<?= urlencode($keyword) ?>&number=<?= $i ?>">
+                    href="Admin.php?page=modules/Admin/Menus/Menu.php&search=<?= urlencode($keyword) ?>&number=<?= $i ?>">
                     <?= $i ?>
                 </a>
             </li>
