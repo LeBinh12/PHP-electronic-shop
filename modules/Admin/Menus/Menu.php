@@ -15,26 +15,24 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
 ?>
 
 
-<!-- xử lý tìm kiếm  -->
-<form class="search-form ms-auto mb-3" method="GET" action="Admin.php">
-    <input type="hidden" name="page" value="modules/Admin/Menu/Menu.php">
-    <div class="input-group search-input-group">
-        <button class="btn" type="submit">
-            <i class="bi bi-search text-muted"></i>
-        </button>
-        <input type="search"
-            name="search"
-            value="<?= htmlspecialchars($keyword) ?>"
-            class="form-control search-input"
-            placeholder="Tìm chức năng (menu)...">
-    </div>
-</form>
 
-<div class="mb-3 d-flex justify-content-end">
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMenuModal">
-        <i class="fas fa-plus-circle me-1"></i> Thêm chức năng
-    </button>
-</div>
+<div class="product-container">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMenuModal">
+            <i class="bi bi-plus-circle me-2"></i> Thêm loại
+        </button>
+        <form class="search-form" method="GET" action="Admin.php">
+            <input type="hidden" name="page" value="modules/Admin/Menus/Menu.php">
+            <button class="btn search-btn" type="submit">
+                <i class="bi bi-search text-muted"></i>
+            </button>
+            <input type="search"
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Tìm chức năng (menu)...">
+        </form>
+    </div>
 
 
 <div class="table-container">

@@ -60,7 +60,7 @@ $currentPage = $_GET['page'] ?? '';
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin/Menus/Menu.php">
-                <i class="fas fa-shopping-cart"></i> Quản lý chức năng
+                <i class="fas fa-screwdriver-wrench"></i></i> Quản lý chức năng
             </a>
         </li>
         <li class="nav-item">
