@@ -10,9 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     $email = $_POST['email'] ?? '';
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
-    $imageUrl = $_POST['image_url'] ?? '';
-    if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-        $uploadResult = (new UploadApi())->upload($_FILES['main_image']['tmp_name'], [
+    $imageUrl = $_POST['image_supplier'] ?? '';
+    if (isset($_FILES['image_supplier']) && $_FILES['image_supplier']['error'] === UPLOAD_ERR_OK) {
+        $uploadResult = (new UploadApi())->upload($_FILES['image_supplier']['tmp_name'], [
             'folder' => 'products/main'
         ]);
 
