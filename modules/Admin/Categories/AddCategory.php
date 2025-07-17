@@ -18,10 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     }
     $data = [
         'name' => $name,
-        'status' => !$status,
+        'status' => $status,
         'icon' => $imageUrl,
         'isDeleted' => 0
     ];
+
 
     $result = $category->add($data);
     if ($result['success']) {
