@@ -75,6 +75,12 @@ $currentPage = $_GET['page'] ?? '';
                 <i class="fas fa-shopping-cart"></i> Quản lý nhân viên
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link <?= ($currentPage === 'modules/Admin/Shipping/Shipping.php') ? 'active' : '' ?>"
+                href="Admin.php?page=modules/Admin//Shipping/Shipping.php">
+                <i class="fas fa-shopping-cart"></i> Quản lý giao hàng
+            </a>
+        </li>
         <!--       <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoice</a>
         </li>
