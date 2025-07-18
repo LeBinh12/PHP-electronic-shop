@@ -12,6 +12,7 @@ class Order extends Model
         'payment_id' => 'INT',
         'shipping_id' => 'INT',
         'user_id' => 'INT',
+        'branch_id' => 'INT',
         'note' => 'TEXT',
         'cancel_reason' => 'TEXT',
         'cancel_at' => 'DATETIME',
@@ -24,7 +25,8 @@ class Order extends Model
         'user_id' => 'users(id)',
         'shipping_id' => 'shipping(id)',
         'payment_id' => 'payments(id)',
-        'status_id' => 'status(id)'
+        'status_id' => 'status(id)',
+        'branch_id' => 'branches(id)'
     ];
 
     public function findByCode($code)

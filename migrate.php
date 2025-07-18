@@ -91,8 +91,8 @@ $status->createTable();
 $banner = new Banner();
 $banner->createTable();
 
-$user = new User();
-$user->createTable();
+// $user = new User();
+// $user->createTable();
 
 $category = new Category();
 $category->createTable();

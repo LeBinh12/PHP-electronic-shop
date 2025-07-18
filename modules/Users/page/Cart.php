@@ -41,12 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //đặt hàng 
     if ($action === 'checkout' && !empty($_POST['selected'])) {
-
-        // foreach ($_POST['selected'] as $id) {
-        //     unset($cart[$id]);
-        // }
+        $branch = $_POST['branch_id'];
         $method = $_POST['payment_method'] ?? 'cod';
 
+        //Xử lý thanh toán khi nhận hàng
         if ($method === 'cod') {
             $totalAmount;
             $dataPayment = [
@@ -55,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "paid_at" => date("Y-m-d H:i:s")
             ];
             $paymentId = $paymentController->add($dataPayment);
+
+            // Xử lý đơn hàng giảm giá
             foreach ($_POST['selected'] as $id) {
                 $productById = $product->getById($id);
                 $priceProduct = $productById['price'];
@@ -66,6 +66,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $totalAmount += $priceProduct * $quantity;
             }
 
+            // Xử lý đưa dữ liệu và Shipping
+
+            $branchById = $branchController->getById($branch);
+            $dataShipping = [
+                'address' => $branchById['address'],
+                'method' => 'Chưa có',
+                'status' => 'Chờ giao',
+                'isDeleted' => 0
+            ];
+
+            $resultShipping = $shippingController->add($dataShipping);
+            if (!$resultShipping['success']) {
+                echo "<script>
+                            alert('{$resultShipping['message']}');
+                            window.location.href = 'index.php';
+                        </script>";
+                exit;
+            }
             $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
             $note = $_POST['note'] ?? '';
             $data = [
@@ -75,6 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'user_id' => $userData->id,
                 'note' => $note,
                 'payment_id' => $paymentId,
+                'branch_id' => $branch,
+                'shipping_id' => $resultShipping['shipping'],
                 'isDeleted' => 0
             ];
             $order = $orderController->add($data);
@@ -96,6 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $orderItemController->add($dataOrderItem);
                 unset($cart[$id]);
             }
+
+
             $_SESSION['cart'] = $cart;
             echo "<script>
                             alert('Mua hàng thành công!');
@@ -160,24 +182,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $_SESSION['cart'] = $cart;
-// $cart = $_SESSION['cart'] ?? [
-//     [
-//         'id' => 1,
-//         'name' => 'Acer Aspire 3 A315 58 529V i5',
-//         'price' => 9990000,
-//         'image' => 'https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/msi_g24c4_e2_4_928b4e190d.png',
-//         'quantity' => 1,
-//     ],
-//     [
-//         'id' => 2,
-//         'name' => 'Macbook Air M3 15 2024',
-//         'price' => 31990000,
-//         'image' => 'https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/msi_g24c4_e2_4_928b4e190d.png',
-//         'quantity' => 1,
-//     ],
-// ];
-?>
-<?php
+
+$branchList = $branchController->getAll();
+
 $total = 0;
 ?>
 <form method="post" action="">
@@ -248,6 +255,17 @@ $total = 0;
                 <input type="hidden" name="totalAmount" value="<?= $total ?>">
                 <h5 class="text-primary">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>₫</h5>
                 <hr>
+                <div class="mb-3">
+                    <label for="branch_id" class="fw-bold">Chọn chi nhánh nhận hàng:</label>
+                    <select name="branch_id" id="branch_id" class="form-select" required>
+                        <option value="">-- Chọn chi nhánh --</option>
+                        <?php foreach ($branchList as $b): ?>
+                            <option value="<?= $b['id'] ?>">
+                                <?= htmlspecialchars($b['name']) ?> - <?= htmlspecialchars($b['address']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <p class="fw-bold mb-2">Phương thức thanh toán:</p>
                     <div class="form-check">

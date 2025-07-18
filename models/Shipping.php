@@ -10,6 +10,8 @@ class Shipping extends Model
         'address' => 'TEXT',
         'method' => 'VARCHAR(50)',
         'status' => 'VARCHAR(50)',
-        'shipping_at' => 'DATETIME'
+        'isDeleted' => 'TINYINT(1)',
+        'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+        'updated_at' => 'DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
     ];
 }
