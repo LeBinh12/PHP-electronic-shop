@@ -40,8 +40,8 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
 if ($keyword) {
     $orders = array_filter($orders, function ($order) use ($keyword) {
         return stripos($order['id'], $keyword) !== false ||
-               stripos($order['name'], $keyword) !== false ||
-               stripos($order['senderAddress'], $keyword) !== false;
+            stripos($order['name'], $keyword) !== false ||
+            stripos($order['senderAddress'], $keyword) !== false;
     });
 }
 ?>
@@ -56,10 +56,10 @@ if ($keyword) {
                 <i class="bi bi-search text-muted"></i>
             </button>
             <input type="search"
-                   name="search"
-                   value="<?= htmlspecialchars($keyword) ?>"
-                   class="form-control search-input"
-                   placeholder="Tìm hàng đang giao...">
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Tìm hàng đang giao...">
         </form>
     </div>
 
@@ -84,43 +84,43 @@ if ($keyword) {
                             <td><?= $order['senderAddress'] ?></td>
                             <td><?= $order['current'] ?></td>
                             <td>
-                               <button class="btn btn-sm btn-info text-white"
-    onclick='showSenderInfo(<?= json_encode([
-        "id" => $order["id"],
-        "name" => $order["name"],
-        "senderName" => $order["senderName"],
-        "senderPhone" => $order["senderPhone"],
-        "senderAddress" => $order["senderAddress"]
-    ]) ?>)'>
-    <i class="bi bi-geo-alt-fill me-1"></i> Xem vị trí người gửi
-</button>
+                                <button class="btn btn-sm btn-info text-white"
+                                    onclick='showSenderInfo(<?= json_encode([
+                                                                "id" => $order["id"],
+                                                                "name" => $order["name"],
+                                                                "senderName" => $order["senderName"],
+                                                                "senderPhone" => $order["senderPhone"],
+                                                                "senderAddress" => "237, xã Mỹ An Hưng ,Huyện Lấp Vò, Tỉnh Đồng Tháp" // Vị trí người gửi
+                                                            ]) ?>)'>
+                                    <i class="bi bi-geo-alt-fill me-1"></i> Xem vị trí người gửi
+                                </button>
 
-<!-- Nút xem vị trí hiện tại của đơn hàng -->
-<button class="btn btn-sm btn-success text-white"
-  onclick='showCurrentLocation(<?= json_encode([
-    "id" => $order["id"],
-    "shipperName" => $order["shipperName"],
-    "shipperPhone" => $order["shipperPhone"],
-    "status" => $order["status"],
-    "currentAddress" => $order["current"]
-  ]) ?>)'>
-  <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
-</button>
+                                <!-- Nút xem vị trí hiện tại của đơn hàng -->
+                                <button class="btn btn-sm btn-success text-white"
+                                    onclick='showCurrentLocation(<?= json_encode([
+                                                                        "id" => $order["id"],
+                                                                        "shipperName" => $order["shipperName"],
+                                                                        "shipperPhone" => $order["shipperPhone"],
+                                                                        "status" => $order["status"],
+                                                                        "currentAddress" => "Trường Đại học Đồng Tháp" // vị trí đơn hàng hiện tại
+                                                                    ]) ?>)'>
+                                    <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
+                                </button>
 
 
-<button
-  class="btn btn-warning btn-sm text-white"
-  data-bs-toggle="modal"
-  data-bs-target="#transferModal"
-  onclick="loadTransferForm('<?= $order['id'] ?>', '<?= $order['current'] ?>')">
-  Chuyển đơn
-</button>
+                                <button
+                                    class="btn btn-warning btn-sm text-white"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#transferModal"
+                                    onclick="loadTransferForm('<?= $order['id'] ?>', '<?= $order['current'] ?>')">
+                                    Chuyển đơn
+                                </button>
 
- 
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-    </div>  
+    </div>

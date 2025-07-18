@@ -17,12 +17,10 @@ if (isset($_GET['closeChat'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message']) && $userId) {
     $message = trim($_POST['message']);
     if ($message !== '') {
-        $chatController->sendMessage($userId, 'user', $message);
-        $_SESSION['chat_open'] = true;
-        echo "<script>
-                alert('Đã gửi tin nhắn thành công!');
-                window.location.href = 'Index.php';
-            </script>";
+        $result = $chatController->sendMessage($userId, ['sender_role' => 'user'], $message);
+        if ($result['success']) {
+            $_SESSION['chat_open'] = true;
+        }
     }
 }
 
@@ -56,7 +54,7 @@ $messages = $chatController->getChatHistory($userId);
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const chatForm = document.getElementById("chat-form");
         const chatToggle = document.getElementById("chat-toggle");
 
@@ -71,7 +69,7 @@ $messages = $chatController->getChatHistory($userId);
         });
     });
 
-        // Đóng chat khi click vào nút đóng
+    // Đóng chat khi click vào nút đóng
     // document.getElementById("chat-close").addEventListener("click", () => {
     //     const chatForm = document.getElementById("chat-form");
     //     chatForm.classList.add("hidden");

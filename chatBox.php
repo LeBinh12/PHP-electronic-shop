@@ -3,6 +3,15 @@ require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 
+$isChatOpenAi = $_SESSION['chat_open_ai'] ?? false;
+
+if (isset($_GET['closeChatAi'])) {
+    unset($_SESSION['chat_open_ai']);
+    exit;
+}
+
+
+
 if (!isset($_SESSION['chat_history'])) {
     $_SESSION['chat_history'] = [];
 }
@@ -46,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
             'ai_response' => $aiChatResponse,
             'timestamp' => $timestamp
         ];
+        $_SESSION['chat_open_ai'] = true;
     } catch (Exception $e) {
         $aiChatResponse = "Lỗi gọi API: " . $e->getMessage();
     }
@@ -54,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
 }
 ?>
 
-<div id="ai-chat-form" class="chat-box hidden">
+<div id="ai-chat-form" class="chat-box <?= $isChatOpenAi ? '' : 'hidden' ?>">
     <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center">
         <p class="m-0">Hỗ trợ AI</p>
         <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
@@ -81,13 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
     </form>
 </div>
 
-
 <script>
-    document.getElementById('ai-chat-toggle').addEventListener('click', function() {
-        const aiChatForm = document.getElementById('ai-chat-form');
-        aiChatForm.classList.toggle('hidden');
-    });
-    document.getElementById('ai-chat-close').addEventListener('click', function() {
-        document.getElementById('ai-chat-form').classList.add('hidden');
+    document.addEventListener("DOMContentLoaded", function() {
+        const chatForm = document.getElementById("ai-chat-form");
+
+        chatToggle.addEventListener("click", () => {
+            chatForm.classList.toggle("hidden");
+            fetch("?openChat=1");
+        });
+
     });
 </script>

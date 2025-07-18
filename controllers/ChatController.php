@@ -31,17 +31,17 @@
         public function sendMessage($userId, $from, $message)
         {
             $chatKey = "chat:user:$userId";
+            $senderRole = $from['sender_role'];
 
             $entry = json_encode([
-                'from' => $from,
+                'from' => $senderRole,
                 'message' => $message,
                 'time' => date('H:i d/m/Y'),
             ]);
 
             RedisCache::getClient()->rpush($chatKey, [$entry]);
 
-            $senderId = $from['sender_id'];
-            $senderRole = $from['sender_role'];
+            $senderId = $from['sender_id'] ?? null;
 
             $this->chatMessageModel->insert([
                 'user_id' => $userId,
@@ -50,6 +50,9 @@
                 'message' => $message,
                 'isDeleted' => 0
             ]);
+            return [
+                'success' => true
+            ];
         }
 
         public function getChatHistory($userId)

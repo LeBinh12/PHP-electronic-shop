@@ -8,8 +8,8 @@ class ChatMessage extends Model
 
     protected $fields = [
         'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
-        'user_id' => 'INT NOT NULL',
-        'sender_id' => 'INT NOT NULL',
+        'user_id' => 'INT',
+        'sender_id' => 'INT',
         'sender_role' => 'VARCHAR(50) NOT NULL',
         'message' => 'TEXT',
         'created_at' => 'DATETIME DEFAULT CURRENT_TIMESTAMP',
