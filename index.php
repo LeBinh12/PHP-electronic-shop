@@ -12,6 +12,9 @@ require_once './controllers/InventoryController.php';
 require_once './controllers/PaymentController.php';
 require_once './controllers/StatusController.php';
 require_once './controllers/ChatController.php';
+require_once './controllers/BranchController.php';
+
+
 require 'vendor/autoload.php';
 
 $product = new ProductController();
@@ -25,6 +28,7 @@ $inventoryController = new InventoryController();
 $paymentController = new PaymentController();
 $statusController = new StatusController();
 $chatController = new ChatController();
+$branchController = new BranchController();
 
 $cart = $_SESSION['cart'] ?? [];
 $userData = $userController->getCurrentUser();

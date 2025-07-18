@@ -13,6 +13,8 @@ class Menu extends Model
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
+    
+
     public function getFilterMenus($keyword = null, $limit = 8, $offset = 0)
     {
         $sql = "SELECT * FROM menus WHERE isDeleted = 0";

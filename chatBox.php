@@ -78,7 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
             <div class="d-flex align-items-start mb-2">
                 <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220"
                     class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                <div class="p-2 bg-light border rounded"><?= htmlspecialchars($chat['ai_response']) ?></div>
+                <div class="p-2 bg-light border rounded">
+                    <?= htmlspecialchars($chat['ai_response']) ?>
+                </div>
                 <small class="text-muted ms-2"><?= $chat['timestamp'] ?></small>
             </div>
         <?php } ?>

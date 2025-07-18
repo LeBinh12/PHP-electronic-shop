@@ -23,8 +23,12 @@ require_once  './models/Employee.php';
 require_once  './models/EmployeeMenu.php';
 require_once  './models/RoleMenu.php';
 require_once  './models/RoleEmployee.php';
+require_once  './models/Branch.php';
 
 require_once  './models/Image.php';
+
+$branch = new Branch();
+$branch->createTable();
 
 $employee = new Employee();
 $employee->createTable();
