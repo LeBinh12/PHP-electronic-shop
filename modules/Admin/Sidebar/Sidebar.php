@@ -66,19 +66,19 @@ $currentPage = $_GET['page'] ?? '';
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Roles/Role.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin//Roles/Role.php">
-                <i class="fas fa-shopping-cart"></i> Quản lý quyền
+                <i class="fas fa-sitemap"></i> Quản lý quyền
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Employees/Employee.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin//Employees/Employee.php">
-                <i class="fas fa-shopping-cart"></i> Quản lý nhân viên
+                <i class="fas fa-clipboard-user"></i> Quản lý nhân viên
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= ($currentPage === 'modules/Admin/Shipping/Shipping.php') ? 'active' : '' ?>"
                 href="Admin.php?page=modules/Admin//Shipping/Shipping.php">
-                <i class="fas fa-shopping-cart"></i> Quản lý giao hàng
+                <i class="fas fa-truck"></i> Quản lý giao hàng
             </a>
         </li>
         <!--       <li class="nav-item">

@@ -14,19 +14,25 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
 
 <div class="product-container">
 
-    <div class="d-flex justify-content-between mb-3">
-        <form method="GET" action="Admin.php" class="search-form ms-auto">
+     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <!-- Nút thêm quyền -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoleModal">
+            <i class="bi bi-plus-circle me-2"></i> Thêm quyền
+        </button>
+
+        <!-- Form tìm kiếm quyền -->
+        <form class="search-form" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Roles/Role.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>
             </button>
-            <input type="search" name="search" value="<?= htmlspecialchars($keyword) ?>" class="form-control search-input" placeholder="Tìm quyền...">
+            <input type="search"
+                name="search"
+                value="<?= htmlspecialchars($keyword) ?>"
+                class="form-control search-input"
+                placeholder="Tìm kiếm quyền...">
         </form>
     </div>
-
-    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addRoleModal">
-        <i class="fas fa-plus-circle me-1"></i> Thêm quyền
-    </button>
 
     <table class="table table-bordered custom-table">
         <thead class="table-dark">
