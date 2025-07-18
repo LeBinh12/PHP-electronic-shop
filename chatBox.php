@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
             'timestamp' => $timestamp
         ];
         $_SESSION['chat_open_ai'] = true;
+        exit;
     } catch (Exception $e) {
         $aiChatResponse = "Lỗi gọi API: " . $e->getMessage();
     }

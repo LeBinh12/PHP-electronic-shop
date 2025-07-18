@@ -17,6 +17,7 @@ class ProductController extends BaseController
 
     public function getAll()
     {
+
         $cacheKey = 'products:all';
         if (RedisCache::exists($cacheKey)) {
             return json_decode(RedisCache::get($cacheKey), true);

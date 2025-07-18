@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $category_id = $_POST['category_id'] ?? 1;
         $supplier_id = $_POST['supplier_id'] ?? 1;
         $content = $_POST['content'] ?? '';
-        $stockQuantity = $_POST['stockQuantity'];
 
         // Xử lý ảnh chính
         $imageUrl = $_POST['image_url'] ?? '';
@@ -62,14 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            $dataInventory = [
-                "stock_quantity" => $stockQuantity,
-                "product_id" => $productId,
-                "isDeleted" => 0,
-                "last_update" => date("Y-m-d H:i:s")
-            ];
-            $inventoryController->add($dataInventory);
-
             echo "<script>
             alert('Tạo mới sản phẩm thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
@@ -111,11 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-grid">
                 <div class="group mb-3">
                     <label class="form-label">Giảm giá (%)</label>
-                    <input type="number" name="discount" class="form-control" step="0.01" min="0" max="100">
-                </div>
-                <div class="group mb-3">
-                    <label class="form-label">Số lượng hàng nhập</label>
-                    <input type="number" name="stockQuantity" class="form-control" step="0.01" min="0">
+                    <input type="number" name="discount" class="form-control" step="0" min="0" max="100">
                 </div>
             </div>
             <div class="form-grid">

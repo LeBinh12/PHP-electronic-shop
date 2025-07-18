@@ -9,19 +9,22 @@
             'stock_quantity' => 'INT',
             'last_update' => 'DATETIME',
             'product_id' => 'INT',
+            'branch_id' => 'INT',
             'isDeleted' => 'TINYINT(1)',
         ];
 
         protected $foreignKeys = [
+            'branch_id' => 'branches(id)',
             'product_id' => 'products(id)'
         ];
 
         public function getFiltered($keyword = '', int $limit = 8, int $offset = 0)
         {
             $sql = "
-        SELECT inv.*, p.name AS product_name
+        SELECT inv.*, p.name AS product_name, p.id AS product_id ,b.name AS branch_name, b.id AS branch_id
         FROM {$this->table} inv
         JOIN products p ON p.id = inv.product_id
+        JOIN branches b ON b.id = inv.branch_id
         WHERE inv.isDeleted = 0
     ";
 
@@ -65,12 +68,24 @@
             return $result['total'] ?? 0;
         }
 
-        public function getInventoryProduct($id)
+        public function getInventory($product_id = null, $branch_id = null)
         {
-            $stmt = $this->pdo->prepare("
-        SELECT * FROM inventory WHERE product_id = :id AND isDeleted = 0
-    ");
-            $stmt->execute(['id' => $id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM inventory WHERE isDeleted = 0";
+            $params = [];
+
+            if ($product_id !== null) {
+                $sql .= " AND product_id = :product_id";
+                $params['product_id'] = $product_id;
+            }
+
+            if ($branch_id !== null) {
+                $sql .= " AND branch_id = :branch_id";
+                $params['branch_id'] = $branch_id;
+            }
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }

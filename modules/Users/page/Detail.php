@@ -13,6 +13,7 @@ $productByCategoryId = $product->getFilterProducts($productById['category_id'], 
 $imageByProductId = $imageController->getImageById($id_product);
 
 $inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
+var_dump($inventoryProduct);
 ?>
 
 

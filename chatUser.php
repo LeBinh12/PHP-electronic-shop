@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message']) && $userId
         $result = $chatController->sendMessage($userId, ['sender_role' => 'user'], $message);
         if ($result['success']) {
             $_SESSION['chat_open'] = true;
+            exit;
         }
     }
 }

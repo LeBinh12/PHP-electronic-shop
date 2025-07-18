@@ -1,14 +1,35 @@
 <?php
+$allBranches = $branchController->getAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
     $id = $_POST['id'] ?? null;
+    $product_id = $_POST['product_id'];
+
+    $branch_id  = $_POST['branch_id'];
     $stockQuantity = $_POST['stock_quantity'] ?? 0;
+    $isLoading = true;
 
-    $data = [
-        'stock_quantity' => $stockQuantity,
-        'last_update' => date('Y-m-d H:i:s')
-    ];
+    $existing = $inventoryController->getProductInventory($product_id, $branch_id);
 
-    $result = $inventory->edit($id, $data);
+    if ($existing) {
+        foreach ($existing as $item) {
+            $newQty = $item['stock_quantity'] + $stockQuantity;
+            $result = $inventoryController->edit($item['id'], [
+                'stock_quantity' => $newQty,
+                'last_update' => date('Y-m-d H:i:s')
+            ]);
+            $inventoryController->delete($id);
+        }
+        $isLoading = $result['success'];
+    } else {
+        $data = [
+            'stock_quantity' => $stockQuantity,
+            'last_update' => date('Y-m-d H:i:s')
+        ];
+
+        $result = $inventoryController->edit($id, $data);
+        $isLoading = $result['success'];
+    }
     if ($result['success']) {
         echo "<script>
             alert('Cập nhật sản phẩm kho thành công!');
@@ -33,6 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
                 <form method="POST">
                     <input type="hidden" name="update_item" value="1">
                     <input type="hidden" name="id" id="editItemWarehouseId">
+                    <input type="hidden" name="product_id" id="editIdProduct">
+
                     <div class="modal-body pt-0">
                         <div class="mb-3">
                             <label class="form-label">Tên sản phẩm</label>
@@ -41,6 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
                         <div class="mb-3">
                             <label class="form-label">Số lượng</label>
                             <input type="number" name="stock_quantity" id="editItemQuantity" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chi nhánh</label>
+                            <select name="branch_id" id="editItemBranch" class="form-select" required>
+                                <?php foreach ($allBranches as $branch): ?>
+                                    <option value="<?= $branch['id'] ?>"><?= htmlspecialchars($branch['name']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="fas fa-save me-1"></i> Lưu thay đổi
