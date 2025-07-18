@@ -130,6 +130,7 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="./Style/Script/Admin/Menu.js"></script>
     <script src="./Style/Script/Admin/Role.js"></script>
     <script src="./Style/Script/Admin/Employee.js"></script>
+    <script src="./Style/Script/Admin/Shipping.js"></script>
 
 
 
