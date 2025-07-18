@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
             $orderDetail = $orderItemController->getOrderItemById($id);
             foreach ($orderDetail as $item) {
                 $productId = $item['product_id'];
-                $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id']);
+                $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id'], true);
+
                 if ($item['quantity'] >= $inventoryByProductId['stock_quantity']) {
                     echo "<script>
                             alert('trong kho hàng không còn đủ sản phẩm cho đơn hàng này!');
@@ -19,9 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
                         </script>";
                     exit;
                 }
-
                 $totalQuantity = $inventoryByProductId['stock_quantity'] - $item['quantity'];
-                $inventoryController->edit($inventoryByProductId['id'], ['stock_quantity' => $totalQuantity]);
+                $inventoryController->edit($inventoryByProductId['inventory_id'], ['stock_quantity' => $totalQuantity]);
             }
         }
 

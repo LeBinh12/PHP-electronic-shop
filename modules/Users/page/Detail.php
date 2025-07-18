@@ -12,8 +12,7 @@ $productByCategoryId = $product->getFilterProducts($productById['category_id'], 
 
 $imageByProductId = $imageController->getImageById($id_product);
 
-$inventoryProduct = $inventoryController->getProductInventory($id_product) ?? 0;
-var_dump($inventoryProduct);
+$inventoryProduct = $inventoryController->getProductInventory($id_product, null) ?? 0;
 ?>
 
 
@@ -56,24 +55,28 @@ var_dump($inventoryProduct);
                 </h4>
             <?php } ?>
 
-            <p>Hàng tồn kho: <?= $inventoryProduct['stock_quantity'] ?> sản phẩm</p>
             <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
                 <input type="hidden" name="price" value="<?= $finalPrice ?>">
                 <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
-                <?php
-                if ($inventoryProduct['stock_quantity'] > 0) {
-                ?>
-                    <input type="number" name="quantity" value="1" min="1" max="<?= $inventoryProduct['stock_quantity'] ?>" class="form-control w-25">
-                    <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
-                <?php
-                } else {
-                ?>
-                    <p class="btn btn-primary">Hết hàng</p>
-                <?php
-                }
-                ?>
+                <?php if (!empty($inventoryProduct)) { ?>
+                    <div class="mt-3">
+                        <h6>📍 Có tại các cửa hàng:</h6>
+                        <ul class="list-unstyled ms-2">
+                            <?php foreach ($inventoryProduct as $inv) { ?>
+                                <li>
+                                    <span><?= $inv['address'] ?> - </span>
+                                    <span class="text-danger fw-semibold"><?= $inv['stock_quantity'] ?> sản phẩm</span>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                <?php } else { ?>
+                    <p class="text-muted">⛔ Sản phẩm hiện không có ở bất kỳ cửa hàng nào.</p>
+                <?php } ?>
+
+                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
             </form>
         </div>
     </div>

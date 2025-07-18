@@ -68,9 +68,11 @@
             return $result['total'] ?? 0;
         }
 
-        public function getInventory($product_id = null, $branch_id = null)
+        public function getInventory($product_id = null, $branch_id = null, $isFind = false)
         {
-            $sql = "SELECT * FROM inventory WHERE isDeleted = 0";
+            $sql = "SELECT *,inv.id AS inventory_id   FROM inventory inv
+                    JOIN branches b ON inv.branch_id = b.id
+                    WHERE inv.isDeleted = 0";
             $params = [];
 
             if ($product_id !== null) {
@@ -86,6 +88,6 @@
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $isFind ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }

@@ -1,34 +1,9 @@
 <?php
-if (isset($_POST['addCart'])) {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $image = $_POST['image'];
-    $quantity = $_POST['quantity'];
-    $productInventory = $inventoryController->getProductInventory($id);
-    if ($id && $price) {
-        if (isset($cart[$id])) {
-            $checkQuantity = $cart[$id]['quantity'];
-            $sumQuantity = $cart[$id]['quantity'] += $quantity;
-            if ($sumQuantity < $productInventory['stock_quantity']) {
-                $cart[$id]['quantity'] += $quantity;
-            } else {
-                $cart[$id]['quantity'] = $productInventory['stock_quantity'];
-            }
-        } else {
-            $cart[$id] = [
-                'id'       => $id,
-                'name'     => $name,
-                'price'    => $price,
-                'image'    => $image,
-                'quantity' => $quantity,
-            ];
-        }
-    }
-    echo '<meta http-equiv="refresh" content="0">';
+$cart = $_SESSION['cart'] ?? [];
 
-    $_SESSION['cart'] = $cart;
-}
+//logic thêm giỏ hàng nằm ở đây
+require './modules/Users/logic/add_cart.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
@@ -46,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //Xử lý thanh toán khi nhận hàng
         if ($method === 'cod') {
-            $totalAmount;
+            $totalAmount = 0;
             $dataPayment = [
                 "method" => 'Thanh toán khi nhận hàng',
                 "status" => 'Chưa thanh toán',
@@ -54,69 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             $paymentId = $paymentController->add($dataPayment);
 
-            // Xử lý đơn hàng giảm giá
-            foreach ($_POST['selected'] as $id) {
-                $productById = $product->getById($id);
-                $priceProduct = $productById['price'];
-                if ($productById['discount'] > 0) {
-                    $priceProduct *= (1 - $productById['discount'] / 100);
-                }
-                $quantity = $cart[$id]['quantity'];
-
-                $totalAmount += $priceProduct * $quantity;
-            }
-
-            // Xử lý đưa dữ liệu và Shipping
-
-            $branchById = $branchController->getById($branch);
-            $dataShipping = [
-                'address' => $branchById['address'],
-                'method' => 'Chưa có',
-                'status' => 'Chờ giao',
-                'isDeleted' => 0
-            ];
-
-            $resultShipping = $shippingController->add($dataShipping);
-            if (!$resultShipping['success']) {
-                echo "<script>
-                            alert('{$resultShipping['message']}');
-                            window.location.href = 'index.php';
-                        </script>";
-                exit;
-            }
-            $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
-            $note = $_POST['note'] ?? '';
-            $data = [
-                'code' => $code,
-                'total_amount' => $totalAmount,
-                'status_id' => 1, // Chờ xử lý
-                'user_id' => $userData->id,
-                'note' => $note,
-                'payment_id' => $paymentId,
-                'branch_id' => $branch,
-                'shipping_id' => $resultShipping['shipping'],
-                'isDeleted' => 0
-            ];
-            $order = $orderController->add($data);
-            foreach ($_POST['selected'] as $id) {
-                $productById = $product->getById($id);
-                $priceProduct = $productById['price'];
-                if ($productById['discount'] > 0) {
-                    $priceProduct *= (1 - $productById['discount'] / 100);
-                }
-                $quantity = $cart[$id]['quantity'];
-
-                $dataOrderItem = [
-                    'quantity' => $quantity,
-                    'unit_price' => $priceProduct,
-                    'product_id' => $id,
-                    'order_id' => $order['order_id'],
-                ];
-
-                $orderItemController->add($dataOrderItem);
-                unset($cart[$id]);
-            }
-
+            // logic xử lý đơn hàng thanh toán
+            require './modules/Users/logic/checkout.php';
 
             $_SESSION['cart'] = $cart;
             echo "<script>
@@ -125,33 +39,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </script>";
             exit;
         } else {
-            $totalAmount = 0;
-            $items       = [];
-            foreach ($_POST['selected'] as $id) {
-                $p   = $product->getById($id);
-                $qty = $cart[$id]['quantity'];
+            // $totalAmount = 0;
+            // $items       = [];
+            // foreach ($_POST['selected'] as $id) {
+            //     $p   = $product->getById($id);
+            //     $qty = $cart[$id]['quantity'];
 
-                $totalAmount += $p['price'] * $qty;
-                $items[] = ['name' => $p['name'], 'quantity' => $qty, 'price' => $p['price']];
-            }
+            //     $totalAmount += $p['price'] * $qty;
+            //     $items[] = ['name' => $p['name'], 'quantity' => $qty, 'price' => $p['price']];
+            // }
 
-            $orderData = [
-                'total_amount' => $totalAmount,
-                'status'       => 'pending',
-                'user_id'      => $userData->id,
-            ];
-            $order = $orderController->add($orderData);
+            // $orderData = [
+            //     'total_amount' => $totalAmount,
+            //     'status'       => 'pending',
+            //     'user_id'      => $userData->id,
+            // ];
+            // $order = $orderController->add($orderData);
 
-            require_once 'PayOSHelper.php';
-            $payos   = new PayOSHelper();
-            $linkRes = $payos->createLink(
-                orderCode: (int) $order['order_id'],
-                amount: $totalAmount,
-                description: 'Thanh toán đơn #' . $order['order_id'],
-                items: $items
-            );
+            // require_once 'PayOSHelper.php';
+            // $payos   = new PayOSHelper();
+            // $linkRes = $payos->createLink(
+            //     orderCode: (int) $order['order_id'],
+            //     amount: $totalAmount,
+            //     description: 'Thanh toán đơn #' . $order['order_id'],
+            //     items: $items
+            // );
             echo "<script>
-                            window.location.href = '{$linkRes['checkoutUrl']}';
+                            alert('Thanh toán onl chưa xử lý');
                         </script>";
             exit;
         }
@@ -164,10 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($cart[$id])) {
             switch ($cmd) {
                 case 'inc':
-                    $productInventory = $inventoryController->getProductInventory($id);
-                    if ($cart[$id]['quantity'] < $productInventory['stock_quantity']) {
-                        $cart[$id]['quantity']++;
+                    $branch = $_POST['branch_id'];
+                    $productInventory = $inventoryController->getProductInventory($id, $branch, true);
+                    if (!$_SESSION['branch_select']) {
+                        $_SESSION['branch_select'] = $branch;
                     }
+                    if ($cart[$id]['quantity'] >= $productInventory['stock_quantity']) {
+                        echo "<script>
+                            alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
+                        </script>";
+                        break;
+                    }
+                    $cart[$id]['quantity']++;
                     break;
                 case 'dec':
                     if ($cart[$id]['quantity'] > 1) $cart[$id]['quantity']--;
@@ -260,12 +182,14 @@ $total = 0;
                     <select name="branch_id" id="branch_id" class="form-select" required>
                         <option value="">-- Chọn chi nhánh --</option>
                         <?php foreach ($branchList as $b): ?>
-                            <option value="<?= $b['id'] ?>">
+                            <option value="<?= $b['id'] ?>"
+                                <?= (isset($_SESSION['branch_select']) && $_SESSION['branch_select'] == $b['id']) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($b['name']) ?> - <?= htmlspecialchars($b['address']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
+
                 <div class="mb-3">
                     <p class="fw-bold mb-2">Phương thức thanh toán:</p>
                     <div class="form-check">
@@ -309,39 +233,6 @@ $total = 0;
         </div>
     </div>
 </form>
-
-
-
-<!-- <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form id="checkoutForm">
-                <div class="modal-header">
-                    <h5 class="modal-title text-white" id="checkoutModalLabel">Thông tin mua hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label>Họ và tên</label>
-                        <input type="text" name="fullname" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Số điện thoại</label>
-                        <input type="tel" name="phone" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Địa chỉ nhận hàng</label>
-                        <textarea name="address" class="form-control" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                    <button type="submit" class="btn btn-primary">Xác nhận mua</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 
 <script>
     document.getElementById('checkAll').addEventListener('change', function() {

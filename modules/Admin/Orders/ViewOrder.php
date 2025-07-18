@@ -10,6 +10,8 @@ if (isset($_GET['id'])) {
   $userData = $userController->getById($orderMap["user_id"]);
 
   $statusData = $statusController->getById(id: $orderMap['status_id']);
+
+  $branchData = $branchController->getById($orderMap['branch_id']);
 ?>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -63,7 +65,7 @@ if (isset($_GET['id'])) {
 
 
         <!-- Sản phẩm -->
-        <h5>Sản phẩm</h5>
+        <h5>Sản phẩm thuộc cửa hàng <?= $branchData['name'] ?></h5>
         <table class="table table-bordered table-hover custom-table">
           <thead class="table-secondary">
             <tr>

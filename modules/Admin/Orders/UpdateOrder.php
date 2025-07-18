@@ -23,15 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
   $statusId = $_POST['status'];
   $orderId = $_GET['orderid'];
   $order = $orderController->getById($orderId);
-  if ($statusId == "1") {
+  if ($statusId == 1) {
 
     $orderDetail = $orderItemController->getOrderItemById($orderId);
     foreach ($orderDetail as $item) {
       $productId = $item['product_id'];
-      $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id']);
+      $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id'], true);
 
       $totalQuantity = $inventoryByProductId['stock_quantity'] + $item['quantity'];
-      $inventoryController->edit($inventoryByProductId['id'], ['stock_quantity' => $totalQuantity]);
+      $inventoryController->edit($inventoryByProductId['inventory_id'], ['stock_quantity' => $totalQuantity]);
     }
   }
   $orderController->edit($orderId, ['status_id' => $statusId]);
