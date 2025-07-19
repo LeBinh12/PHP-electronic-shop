@@ -54,23 +54,32 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
                     <td><?= htmlspecialchars($item['menu_url']) ?></td>
                     <td><?= htmlspecialchars($item['created_at']) ?></td>
                     <td class="text-center">
-                        <div class="d-inline-flex gap-2">
-                            <button class="btn btn-sm btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editMenuModal"
-                                data-id="<?= $item['id'] ?>"
-                                data-name="<?= htmlspecialchars($item['menu_name']) ?>"
-                                data-url="<?= htmlspecialchars($item['menu_url']) ?>">
-                                <i class="fas fa-edit me-1"></i> Sửa
-                            </button>
-                            <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa menu này?');">
-                                <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt me-1"></i> Xóa
-                                </button>
-                            </form>
-                        </div>
-                    </td>
+    <div class="d-inline-flex gap-2">
+        <!-- Nút Sửa -->
+        <button
+            class="btn btn-sm btn-primary d-flex align-items-center justify-content-center px-2"
+            style="min-width: 65px; height: 30px;"
+            data-bs-toggle="modal"
+            data-bs-target="#editMenuModal"
+            data-id="<?= $item['id'] ?>"
+            data-name="<?= htmlspecialchars($item['menu_name']) ?>"
+            data-url="<?= htmlspecialchars($item['menu_url']) ?>">
+            <i class="fas fa-edit me-1"></i><span>Sửa</span>
+        </button>
+
+        <!-- Nút Xóa -->
+        <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa menu này?');">
+            <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
+            <button
+                type="submit"
+                class="btn btn-sm btn-danger d-flex align-items-center justify-content-center px-2"
+                style="min-width: 65px; height: 30px;">
+                <i class="fas fa-trash-alt me-1"></i><span>Xóa</span>
+            </button>
+        </form>
+    </div>
+</td>
+
                 </tr>
             <?php } ?>
         </tbody>

@@ -37,7 +37,7 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
             <table class="table table-bordered table-hover custom-table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="width: 100px; text-align:center">Mã Kho</th>
+                        <th style="width: 100px; text-align:center">ID</th>
                         <th>Tên Sản Phẩm</th>
                         <th style="width: 150px">Số Lượng</th>
                         <th style="width: 250px">Lần Cập Nhật Gần Nhất</th>
