@@ -33,31 +33,72 @@ class MenuController
 
     public function add($data)
     {
-        $menu = $this->menuModel->insert($data);
-        return [
-            'success' => true,
-            'message' => 'Thêm chức năng thành công',
-            'menu' => $menu
-        ];
+        try {
+            if ($this->menuModel->existsByNameMenu($data['name'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên chức năng đã tồn tại!'
+                ];
+            }
+            $menu = $this->menuModel->insert($data);
+            return [
+                'success' => true,
+                'message' => 'Thêm chức năng thành công',
+                'menu' => $menu
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function update($id, $data)
     {
-        $menuEdit = $this->menuModel->update($id, $data);
-        return [
-            'success' => true,
-            'message' => 'Cập chức năng thành công',
-            'menu' => $menuEdit
-        ];
+        try {
+            $existingById = $this->menuModel->find($id);
+            if ($existingById == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chức năng không tồn tại!'
+                ];
+            }
+
+            $existingByName = $this->menuModel->existsByNameExceptIdMenu($id, $data['name']);
+            if ($existingByName) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên chức năng này đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+
+            $menuEdit = $this->menuModel->update($id, $data);
+            return [
+                'success' => true,
+                'message' => 'Cập chức năng thành công',
+                'menu' => $menuEdit
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function delete($id)
     {
-        $delete = $this->menuModel->updateDeleted($id);
-        return [
-            'success' => true,
-            'message' => 'Xóa chức năng thành công',
-            'menu' => $delete
-        ];
+        try {
+            $existingById = $this->menuModel->find($id);
+            if ($existingById == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chức năng không tồn tại!'
+                ];
+            }
+            $delete = $this->menuModel->updateDeleted($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa chức năng thành công',
+                'menu' => $delete
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 }

@@ -83,6 +83,22 @@ abstract class Model
         return $stmt->fetchColumn() > 0;
     }
 
+    public function existsByNameExceptId($id, $name): bool
+    {
+        $name = trim(mb_strtolower($name));
+
+        $sql = "SELECT COUNT(*) FROM {$this->table} 
+            WHERE LOWER(TRIM(name)) = :name AND id != :id AND isDeleted = 0";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+
+
     public function insert($data): mixed
     {
         $columns = implode(",", array_keys($data));

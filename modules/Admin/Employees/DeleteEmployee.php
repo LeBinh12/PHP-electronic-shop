@@ -1,12 +1,15 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_employee'])) {
     $id = $_POST['delete_employee_id'];
-    $employeeController->delete($id);
+    $result = $employeeController->delete($id);
 
-    echo "<script>
-        alert('Đã xóa nhân viên thành công!');
-        window.location.href = 'Admin.php?page=modules/Admin/Employees/Employee.php';
-    </script>";
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Employees/Employee.php';</script>";
     exit;
 }
 ?>

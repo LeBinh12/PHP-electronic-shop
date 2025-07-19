@@ -14,14 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_category'])) {
 
     $result = $category->edit($id, $data);
     if ($result['success']) {
-        echo "<script>
-            alert('Cập nhật nhà cung cấp thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessageUpdate = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';</script>";
+    exit;
 }
 ?>
 

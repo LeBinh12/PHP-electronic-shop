@@ -28,13 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_role_id'])) {
         $roleController->updateRoleMenus($id, $menuIds);
     }
 
-    if ($result["success"]) {
-        echo "<script>
-            alert('Cập nhật quyền thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Roles/Role.php';
-        </script>";
-        exit;
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Roles/Role.php';</script>";
+    exit;
 }
 
 ?>

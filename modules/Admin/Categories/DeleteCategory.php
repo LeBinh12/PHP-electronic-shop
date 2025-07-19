@@ -5,21 +5,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
     if ($id) {
         $result = $category->delete($id); // Xóa mềm: cập nhật isDeleted = 1
         if ($result['success']) {
-            echo "<script>
-            alert('Xóa loại sản phẩm thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
-        </script>";
-            exit;
+            $_SESSION['success'] = $result['message'];
         } else {
-            $deleteError = $result['message'];
+            $_SESSION['error'] = $result['message'];
         }
+
+        echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';</script>";
+        exit;
     }
 }
 ?>
 <!-- Modal xác nhận xóa danh mục -->
 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel"
     aria-hidden="true">
-<div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
             <form method="POST">
                 <input type="hidden" name="delete_category" value="1">

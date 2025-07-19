@@ -58,59 +58,70 @@ class SupplierController
 
     public function add($data)
     {
-        if ($this->supplierModel->existsByName($data['name'])) {
-            return [
-                'success' => false,
-                'message' => 'Tên nhà cung cấp đã tồn tại!'
-            ];
-        }
-        $supplier = $this->supplierModel->insert($data);
-        $this->invalidateCache($supplier);
-        return [
-            'success' => true,
-            'message' => 'Thêm nhà cung cấp thành công',
-            'supplier' => $supplier
-        ];
-    }
-
-    public function edit($id, $data)
-    {
-        $existingSupplier = $this->supplierModel->find($id);
-        if ($existingSupplier == null) {
-            return [
-                'success' => false,
-                'message' => 'nhà cung cấp không tồn tại!'
-            ];
-        }
-
-        if ($data['name'] != $existingSupplier['name']) {
+        try {
             if ($this->supplierModel->existsByName($data['name'])) {
                 return [
                     'success' => false,
                     'message' => 'Tên nhà cung cấp đã tồn tại!'
                 ];
             }
+            $supplier = $this->supplierModel->insert($data);
+            $this->invalidateCache($supplier);
+            return [
+                'success' => true,
+                'message' => 'Thêm nhà cung cấp thành công',
+                'supplier' => $supplier
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
+    }
 
-        $supplierEdit = $this->supplierModel->update($id, $data);
-        $this->invalidateCache($id);
+    public function edit($id, $data)
+    {
+        try {
+            $existingSupplier = $this->supplierModel->find($id);
+            if ($existingSupplier == null) {
+                return [
+                    'success' => false,
+                    'message' => 'nhà cung cấp không tồn tại!'
+                ];
+            }
 
-        return [
-            'success' => true,
-            'message' => 'Cập nhật nhà cung cấp thành công!',
-            'supplier' => $supplierEdit
-        ];
+            $existingByName = $this->supplierModel->existsByNameExceptId($id, $data['name']);
+            if ($existingByName) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên sản phẩm này đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+
+            $supplierEdit = $this->supplierModel->update($id, $data);
+            $this->invalidateCache($id);
+
+            return [
+                'success' => true,
+                'message' => 'Cập nhật nhà cung cấp thành công!',
+                'supplier' => $supplierEdit
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function delete($id)
     {
-        $supplierDelete = $this->supplierModel->updateDeleted($id);
-        $this->invalidateCache($id);
+        try {
+            $supplierDelete = $this->supplierModel->updateDeleted($id);
+            $this->invalidateCache($id);
 
-        return [
-            'success' => true,
-            'message' => 'Xóa nhà cung cấp thành công!',
-        ];
+            return [
+                'success' => true,
+                'message' => 'Xóa nhà cung cấp thành công!',
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     private function invalidateCache($id = null)

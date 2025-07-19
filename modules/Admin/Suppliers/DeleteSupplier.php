@@ -5,14 +5,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_supplier'])) {
 
     $result = $supplier->delete($id); // Giả sử là xóa mềm (cập nhật isDeleted = 1)
     if ($result['success']) {
-        echo "<script>
-            alert('Xóa nhà cung cấp thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessageDelete = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';</script>";
+    exit;
 }
 ?>
 

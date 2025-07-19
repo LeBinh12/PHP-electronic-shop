@@ -128,112 +128,133 @@ class ProductController extends BaseController
 
     public function add($data)
     {
-        $rules = [
-            'name'          => v::stringType()->length(3, 100)
-                ->setTemplate('Tên SP phải 3‑100 ký tự'),
-            'price'         => v::number()->positive()
-                ->setTemplate('Giá phải là số dương'),
-            'discount'      => v::intVal()->between(0, 100)
-                ->setTemplate('Giảm giá 0‑100%'),
+        try {
+            $rules = [
+                'name' => v::stringType()->length(3, 100)
+                    ->setTemplate('Tên SP phải 3‑100 ký tự'),
+                'price' => v::number()->positive()
+                    ->setTemplate('Giá phải là số dương'),
+                'discount' => v::intVal()->between(0, 100)
+                    ->setTemplate('Giảm giá 0‑100%'),
 
-            'content' => v::stringType()->length(0, 500)
-                ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
-        ];
-
-        if (!$this->validator->validate($data, $rules)) {
-            return [
-                'success' => false,
-                'errors'  => $this->validator->error()
+                'content' => v::stringType()->length(0, 500)
+                    ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
             ];
-        }
+
+            if (!$this->validator->validate($data, $rules)) {
+                return [
+                    'success' => false,
+                    'errors' => $this->validator->error()
+                ];
+            }
 
 
-        if ($this->productModel->existsByName($data['name'])) {
+            if ($this->productModel->existsByName($data['name'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên sản phẩm đã tồn tại'
+                ];
+            }
+            $productId = $this->productModel->insert($data);
+            $this->clearCacheAfterChange($productId);
             return [
-                'success' => false,
-                'message'  => 'Tên sản phẩm đã tồn tại'
+                'success' => true,
+                'message' => 'Thêm sản phẩm thành công',
+                'product' => $productId
             ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
-        $productId = $this->productModel->insert($data);
-        $this->clearCacheAfterChange($productId);
-        return [
-            'success' => true,
-            'message' => 'Thêm sản phẩm thành công',
-            'product' => $productId
-        ];
     }
 
 
     public function edit($id, $data)
     {
+        try {
+            $rules = [
+                'name'          => v::stringType()->length(3, 100)
+                    ->setTemplate('Tên SP phải 3‑100 ký tự'),
+                'price'         => v::number()->positive()
+                    ->setTemplate('Giá phải là số dương'),
+                'discount'      => v::intVal()->between(0, 100)
+                    ->setTemplate('Giảm giá 0‑100%'),
 
-        $rules = [
-            'name'          => v::stringType()->length(3, 100)
-                ->setTemplate('Tên SP phải 3‑100 ký tự'),
-            'price'         => v::number()->positive()
-                ->setTemplate('Giá phải là số dương'),
-            'discount'      => v::intVal()->between(0, 100)
-                ->setTemplate('Giảm giá 0‑100%'),
-
-            'content' => v::stringType()->length(0, 500)
-                ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
-        ];
-
-        if (!$this->validator->validate($data, $rules)) {
-            return [
-                'success' => false,
-                'errors'  => $this->validator->error()
+                'content' => v::stringType()->length(0, 500)
+                    ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
             ];
-        }
 
-        $existingProduct = $this->productModel->find($id);
-        if ($existingProduct == null) {
-            return [
-                'success' => false,
-                'message' => 'Sản phẩm không tồn tại!'
-            ];
-        }
-
-        if ($data['name'] != $existingProduct['name']) {
-            if ($this->productModel->existsByName($data['name'])) {
+            if (!$this->validator->validate($data, $rules)) {
                 return [
                     'success' => false,
-                    'message' => 'Tên sản phẩm đã tồn tại!'
+                    'errors'  => $this->validator->error()
                 ];
             }
-        }
 
-        $productEdit = $this->productModel->update($id, $data);
-        $this->clearCacheAfterChange($id);
-        return [
-            'success' => true,
-            'message' => 'Cập nhật sản phẩm thành công!',
-            'product' => $productEdit
-        ];
+            $existingProduct = $this->productModel->find($id);
+            if ($existingProduct == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $existingByName = $this->productModel->existsByNameExceptId($id, $data['name']);
+            if ($existingByName) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên sản phẩm này đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+
+            $productEdit = $this->productModel->update($id, $data);
+            $this->clearCacheAfterChange($id);
+            return [
+                'success' => true,
+                'message' => 'Cập nhật sản phẩm thành công!',
+                'product' => $productEdit
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
 
 
     public function delete($id)
     {
-        $deleted = $this->productModel->updateDeleted($id);
-        $this->clearCacheAfterChange($id);
-        return [
-            'success' => true,
-            'message' => 'Xóa sản phẩm thành công!',
-        ];
+        try {
+            $existingProduct = $this->productModel->find($id);
+            if ($existingProduct == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+            $deleted = $this->productModel->updateDeleted($id);
+            $this->clearCacheAfterChange($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa sản phẩm thành công!',
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     private function clearCacheAfterChange($id)
     {
-        RedisCache::delete("products:all");
-        $filterKeys = RedisCache::keys('products:filter:*');
-        $countKeys = RedisCache::keys('products:count:*');
+        try {
+            RedisCache::delete("products:all");
+            $filterKeys = RedisCache::keys('products:filter:*');
+            $countKeys = RedisCache::keys('products:count:*');
 
-        foreach (array_merge($filterKeys, $countKeys) as $key) {
-            RedisCache::delete($key);
+            foreach (array_merge($filterKeys, $countKeys) as $key) {
+                RedisCache::delete($key);
+            }
+            if ($id !== null)
+                RedisCache::delete("product:$id");
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
-        if ($id !== null)
-            RedisCache::delete("product:$id");
     }
 }

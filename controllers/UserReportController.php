@@ -23,11 +23,15 @@ class UserReportController
 
     public function add($data)
     {
-        $report = $this->userReportModel->insert($data);
-        return [
-            'success' => true,
-            'message' => 'Báo cáo người dùng thành công!',
-            'report' => $report
-        ];
+        try {
+            $report = $this->userReportModel->insert($data);
+            return [
+                'success' => true,
+                'message' => 'Báo cáo người dùng thành công!',
+                'report' => $report
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 }

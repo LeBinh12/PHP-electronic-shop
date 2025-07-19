@@ -3,19 +3,15 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
     $result = $product->delete($productId);
+
     if ($result['success']) {
-        echo "<script>
-            alert('Xóa sản phẩm thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        echo "<script>
-            alert('Xóa sản phẩm thất bại!');
-            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
-        </script>";
-        exit;
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php'</script>";
+    exit;
 }
 ?>
 

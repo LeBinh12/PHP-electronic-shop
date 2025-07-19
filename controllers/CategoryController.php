@@ -76,39 +76,60 @@ class CategoryController
 
     public function edit($id, $data)
     {
-        $existingcategory = $this->categoryModel->find($id);
-        if ($existingcategory == null) {
-            return [
-                'success' => false,
-                'message' => 'thể loại không tồn tại!'
-            ];
-        }
-
-        if ($data['name'] != $existingcategory['name']) {
-            if ($this->categoryModel->existsByName($data['name'])) {
+        try {
+            $existingcategory = $this->categoryModel->find($id);
+            if ($existingcategory == null) {
                 return [
                     'success' => false,
-                    'message' => 'Tên thể loại đã tồn tại!'
+                    'message' => 'thể loại không tồn tại!'
                 ];
             }
+
+            $existingByName = $this->categoryModel->existsByNameExceptId($id, $data['name']);
+            if ($existingByName) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên loại sản phẩm này đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+            $categoryEdit = $this->categoryModel->update($id, $data);
+            $this->invalidateCache($id);
+            return [
+                'success' => true,
+                'message' => 'Cập nhật thể loại thành công!',
+                'category' => $categoryEdit
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
         }
-        $categoryEdit = $this->categoryModel->update($id, $data);
-        $this->invalidateCache($id);
-        return [
-            'success' => true,
-            'message' => 'Cập nhật thể loại thành công!',
-            'category' => $categoryEdit
-        ];
     }
 
     public function delete($id)
     {
-        $categoryDelete = $this->categoryModel->updateDeleted($id);
-        $this->invalidateCache($id);
-        return [
-            'success' => true,
-            'message' => 'Xóa thể loại thành công',
-        ];
+        try {
+            $existingcategory = $this->categoryModel->find($id);
+            if ($existingcategory == null) {
+                return [
+                    'success' => false,
+                    'message' => 'thể loại không tồn tại!'
+                ];
+            }
+
+            $categoryDelete = $this->categoryModel->updateDeleted($id);
+            $this->invalidateCache($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa thể loại thành công',
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
+        }
     }
 
     private function invalidateCache($id = null)

@@ -56,6 +56,7 @@ $showChatList = isset($_GET['show_chat_list']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./Style/Admin/style.css">
     <link rel="stylesheet" href="./Style/Admin/Sidebar.css">
     <link rel="stylesheet" href="./Style/Admin/Navbar.css">
@@ -92,6 +93,9 @@ $showChatList = isset($_GET['show_chat_list']);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="./Style/Script/Admin/Sidebar.js"></script>
     <script src="./Style/Script/Admin/Inventory.js" defer></script>
     <script src="./Style/Script/Admin/Customer.js"></script>
@@ -135,6 +139,19 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="./Style/Script/Admin/Shipping.js"></script>
     <script src="./Style/Script/Admin/Branch.js"></script>
 
+
+
+    <script>
+        <?php if (isset($_SESSION['success'])): ?>
+            toastr.success("<?= $_SESSION['success'] ?>");
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            toastr.error("<?= $_SESSION['error'] ?>");
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    </script>
 
 
 </body>

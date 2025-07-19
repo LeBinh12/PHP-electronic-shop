@@ -31,18 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_inventory'])) {
         $isLoading = $result['success'];
     }
     if ($isLoading) {
-        echo "<script>
-            alert('Thêm sản phẩm kho thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        echo "<script>
-            alert('Lỗi hệ thống');
-            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-        </script>";
-        exit;
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';</script>";
+    exit;
 }
 ?>
 

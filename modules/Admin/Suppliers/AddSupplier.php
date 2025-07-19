@@ -31,14 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     ];
     $result = $supplier->add($data);
     if ($result['success']) {
-        echo "<script>
-            alert('Tạo mới nhà cung cấp thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessage = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';</script>";
+    exit;
 }
 
 $listSupplier = $supplier->getAll();

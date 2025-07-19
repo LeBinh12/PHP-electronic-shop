@@ -11,15 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
         'last_update' => date('Y-m-d H:i:s')
     ];
     $result = $inventoryController->edit($id, $data);
-    if ($result['success']) {
-        echo "<script>
-            alert('Thêm sản phẩm kho thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-        </script>";
-        exit;
+    if ($isLoading) {
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessage = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';</script>";
+    exit;
 }
 
 ?>
@@ -47,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Số lượng hiện tại</label>
-                            <input type="number" id="quantity" name="stock_quantity" class="form-control" readonly>
+                            <input type="number" id="quantity_add" name="stock_quantity" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Chi nhánh</label>

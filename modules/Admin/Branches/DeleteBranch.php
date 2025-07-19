@@ -5,16 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['delete_id'])) {
 
     $result = $branchController->delete($id);
     if ($result['success']) {
-        echo "<script>
-            alert('Xóa chi nhánh thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        echo "<script>
-            alert('{$result['message']}');
-            window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-        </script>";
-        exit;
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';</script>";
+    exit;
 }

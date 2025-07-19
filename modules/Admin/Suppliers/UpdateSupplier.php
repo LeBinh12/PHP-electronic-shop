@@ -34,14 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 
     $result = $supplier->edit($id, $data);
     if ($result['success']) {
-        echo "<script>
-            alert('Cập nhật nhà cung cấp thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessageUpdate = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Suppliers/Supplier.php';</script>";
+    exit;
 }
 ?>
 
@@ -101,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                         Cập nhật
+                        Cập nhật
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>

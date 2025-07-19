@@ -26,14 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
 
     $result = $category->add($data);
     if ($result['success']) {
-        echo "<script>
-            alert('Thêm loại sản phẩm thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessage = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';</script>";
+    exit;
 }
 
 

@@ -30,15 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
         $result = $inventoryController->edit($id, $data);
         $isLoading = $result['success'];
     }
-    if ($result['success']) {
-        echo "<script>
-            alert('Cập nhật sản phẩm kho thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-        </script>";
-        exit;
+    if ($isLoading) {
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessageUpdate = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';</script>";
+    exit;
 }
 ?>
 <div class="modal fade" id="editItemModal" tabindex="-1" aria-hidden="true">

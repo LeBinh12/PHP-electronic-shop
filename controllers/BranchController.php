@@ -33,6 +33,13 @@ class BranchController
     public function add($data)
     {
         try {
+            $existingBranch = $this->branchController->existsByName($data['name']);
+            if ($existingBranch) {
+                return [
+                    'success' => false,
+                    'message' => 'Chi nhánh này đã tồn tại!'
+                ];
+            }
             $branch = $this->branchController->insert($data);
             return [
                 'success' => true,
@@ -50,6 +57,21 @@ class BranchController
     public function update($id, $data)
     {
         try {
+            $existingById = $this->branchController->find($id);
+            if ($existingById == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chi nhánh này không tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+            $existingBranch = $this->branchController->existsByNameExceptId($id, $data['name']);
+
+            if ($existingBranch) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên chi nhánh đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
             $editBranch = $this->branchController->update($id, $data);
             return [
                 'success' => true,
@@ -67,6 +89,13 @@ class BranchController
     public function delete($id)
     {
         try {
+            $existingById = $this->branchController->find($id);
+            if ($existingById == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chi nhánh này không tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
             $editBranch = $this->branchController->updateDeleted($id);
             return [
                 'success' => true,

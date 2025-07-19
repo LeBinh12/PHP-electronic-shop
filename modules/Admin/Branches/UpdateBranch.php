@@ -17,18 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['edit_Branch'])) {
 
     $result = $branchController->update($id, $data);
     if ($result['success']) {
-        echo "<script>
-            alert('Cập nhật chi nhánh thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
     } else {
-        echo "<script>
-            alert('{$result['message']}');
-            window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-        </script>";
-        exit;
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';</script>";
+    exit;
 }
 
 ?>
