@@ -14,7 +14,7 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
 
 <?php if ($userId) { ?>
     <div id="chat-form" class="chat-box-admin">
-        <div class="p-2 bg-success text-white d-flex justify-content-between align-items-center">
+        <div class="p-2 bg-success text-white d-flex justify-content-between align-items-center" style="border-radius: 8px 8px 0 0;">
             <p class="m-0">Chat với User #<?= $userId ?></p>
             <a href="Admin.php" class="text-white"><i class="bi bi-x-lg"></i></a>
         </div>
@@ -44,8 +44,10 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
 
         <form method="POST" class="p-2 border-top d-flex align-items-center">
             <input type="hidden" name="userId" value="<?= $userId ?>">
-            <input type="text" name="message" class="form-control me-2" placeholder="Nhập tin nhắn..." required>
-            <button type="submit" class="btn btn-success"><i class="bi bi-send-fill"></i></button>
+            <input type="text" name="message" class="form-control me-2" style="border: none; box-shadow: none; outline: none;" placeholder="Nhập tin nhắn..." required>
+            <button type="submit" class="btn">
+                <i class="bi bi-send-fill text-success fs-4"></i>
+            </button>
         </form>
     </div>
 <?php } ?>
@@ -63,3 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'], $_POST['us
     }
 }
 ?>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const chatContent = document.getElementById('chat-content');
+        if (chatContent) {
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
+    });
+</script>
