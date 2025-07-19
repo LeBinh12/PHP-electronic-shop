@@ -49,7 +49,7 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
                     <td><?= htmlspecialchars($item['role_name']) ?></td>
                     <td class="text-center">
                         <div class="d-flex gap-2 justify-content-center">
-                            <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-dark">
+                            <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-white">
                                 <i class="fas fa-edit me-1"></i>Sửa
                             </a>
 

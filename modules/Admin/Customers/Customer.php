@@ -52,7 +52,7 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                             <th style="width: 30px">Điện thoại</th>
                             <th style="width: 120px">Email</th>
                             <th style="width: 120px">Trạng thái</th>
-                            <th class="text-center" style="width: 200px">Chức năng</th>
+                            <th class="text-center" style="width: 250px">Chức năng</th>
                         </tr>
                     </thead>
                 <tbody>

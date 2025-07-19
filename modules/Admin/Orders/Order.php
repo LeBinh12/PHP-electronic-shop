@@ -42,7 +42,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
             <table class="table table-bordered table-hover custom-table">
                 <thead class="table-dark text-center">
                     <tr>
-                        <th style="width: 70px">Mã</th>
+                        <th style="width: 70px">ID</th>
                         <th style="width: 250px">Người đặt</th>
                         <th>Ngày đặt</th>
                         <th style="width: 250px">Trạng thái</th>

@@ -135,14 +135,14 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                             <li>
                                 <a class="dropdown-item"
                                     href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>">
-                                    <i class="bi bi-controller"></i> Tất cả
+                                    Tất cả
                                 </a>
                             </li>
                             <?php foreach ($categoryGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
                                         href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
-                                        <i class="bi bi-controller"></i> <?= $item['name'] ?>
+                                        <?= $item['name'] ?>
                                     </a>
                                 </li>
                             <?php } ?>
@@ -159,14 +159,14 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                             <li>
                                 <a class="dropdown-item"
                                     href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
-                                    <i class="bi bi-controller"></i> Tất cả
+                                    Tất cả
                                 </a>
                             </li>
                             <?php foreach ($supplierGetAll as $item) { ?>
                                 <li>
                                     <a class="dropdown-item"
                                         href="index.php?subpage=modules/Users/Layout/Main.php&supplier=<?= $item['id'] ?>&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
-                                        <i class="bi bi-controller"></i> <?= $item['name'] ?>
+                                        <?= $item['name'] ?>
                                     </a>
                                 </li>
                             <?php } ?>

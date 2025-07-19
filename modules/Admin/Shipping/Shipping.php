@@ -69,11 +69,11 @@ if ($keyword) {
             <table class="table table-bordered table-hover custom-table">
                 <thead class="table-dark">
                     <tr>
-                        <th>Mã đơn hàng</th>
-                        <th>Tên khách hàng</th>
-                        <th>Địa chỉ người gửi</th>
-                        <th>Địa chỉ hiện tại</th>
-                        <th>Chức năng</th>
+                        <th style="width: 50px">ID</th>
+                        <th style="width: 200px">Tên khách hàng</th>
+                        <th style="width: 200px">Địa chỉ người gửi</th>
+                        <th style="width: 200px">Địa chỉ hiện tại</th>
+                        <th style="width: 340px">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
