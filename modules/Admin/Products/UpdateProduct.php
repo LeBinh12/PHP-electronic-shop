@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             </div>
             <div class="button-group">
                 <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>
-                <a href="Admin.php?page=modules/Admin/Products/ListProduct.php" class="btn btn-secondary">Quay lại</a>
+                <a href="Admin.php?page=modules/Admin/Products/Product.php" class="btn btn-secondary">Quay lại</a>
             </div>
         </form>
     </div>

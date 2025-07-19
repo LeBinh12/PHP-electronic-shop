@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_inventory'])) {
         foreach ($existing as $item) {
             $newQty = $item['stock_quantity'] + $quantity;
 
-            $result = $inventoryController->edit($item['id'], [
+            $result = $inventoryController->edit($item['inventory_id'], [
                 'stock_quantity' => $newQty,
                 'last_update' => date('Y-m-d H:i:s')
             ]);

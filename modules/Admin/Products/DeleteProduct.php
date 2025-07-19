@@ -6,13 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     if ($result['success']) {
         echo "<script>
             alert('Xóa sản phẩm thành công!');
-            window.location.href = '../../Admin.php?page=modules/Admin/Products/Product.php';
+            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         exit;
     } else {
         echo "<script>
             alert('Xóa sản phẩm thất bại!');
-            window.location.href = '../../Admin.php?page=modules/Admin/Products/Product.php';
+            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         exit;
     }

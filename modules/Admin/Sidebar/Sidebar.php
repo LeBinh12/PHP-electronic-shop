@@ -21,6 +21,12 @@ $currentPage = $_GET['page'] ?? '';
     </li>
 
     <li class="nav-item">
+      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Branches/Branch.php">
+        <i class="fas fa-table"></i><span>Quản lý chi nhánh</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Categories/Category.php">
         <i class="fas fa-table"></i><span>Quản lý Loại Sản Phẩm</span>
       </a>
