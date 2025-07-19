@@ -136,20 +136,20 @@ $userData = $userController->getCurrentUser();
             const chatForm = document.getElementById("chat-form");
             const aiChatForm = document.getElementById("ai-chat-form");
 
-            document.getElementById("chat-toggle-admin").addEventListener("click", () => {
-                chatForm?.classList.toggle("hidden");
-                aiChatForm?.classList.add("hidden");
-            });
+            // document.getElementById("chat-toggle-admin").addEventListener("click", () => {
+            //     chatForm?.classList.toggle("hidden");
+            //     aiChatForm?.classList.add("hidden");
+            // });
 
             document.getElementById("chat-toggle-ai").addEventListener("click", () => {
                 aiChatForm?.classList.toggle("hidden");
                 chatForm?.classList.add("hidden");
             });
 
-            document.getElementById("chat-close").addEventListener("click", () => {
-                chatForm?.classList.add("hidden");
-                fetch("?closeChat=1");
-            });
+            // document.getElementById("chat-close").addEventListener("click", () => {
+            //     chatForm?.classList.add("hidden");
+            //     fetch("?closeChat=1");
+            // });
 
             document.getElementById("ai-chat-close").addEventListener("click", () => {
                 aiChatForm?.classList.add("hidden");
