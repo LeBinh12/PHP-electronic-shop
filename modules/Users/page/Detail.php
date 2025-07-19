@@ -69,14 +69,13 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                                     <span><?= $inv['address'] ?> - </span>
                                     <span class="text-danger fw-semibold"><?= $inv['stock_quantity'] ?> sản phẩm</span>
                                 </li>
+                                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
                             <?php } ?>
                         </ul>
                     </div>
                 <?php } else { ?>
                     <p class="text-muted">⛔ Sản phẩm hiện không có ở bất kỳ cửa hàng nào.</p>
                 <?php } ?>
-
-                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
             </form>
         </div>
     </div>
