@@ -13,7 +13,7 @@ class Menu extends Model
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
-    
+
 
     public function getFilterMenus($keyword = null, $limit = 8, $offset = 0)
     {
@@ -59,5 +59,27 @@ class Menu extends Model
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'] ?? 0;
+    }
+
+    public function existsByNameMenu($name): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} WHERE name_menu = :name AND isDeleted = 0");
+        $stmt->execute(['name' => $name]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function existsByNameExceptIdMenu($id, $name): bool
+    {
+        $name = trim(mb_strtolower($name));
+
+        $sql = "SELECT COUNT(*) FROM {$this->table} 
+            WHERE LOWER(TRIM(name_menu)) = :name AND id != :id AND isDeleted = 0";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
     }
 }

@@ -18,12 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
     ];
     $result = $employeeController->add($data, $roleIds, $menuIds);
     if ($result['success']) {
-        echo "<script>
-            alert('Thêm nhân viên mới thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Employees/Employee.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Employees/Employee.php';</script>";
+    exit;
 }
 ?>
 

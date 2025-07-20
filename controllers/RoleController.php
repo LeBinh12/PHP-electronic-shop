@@ -36,12 +36,22 @@ class RoleController
 
     public function add($data)
     {
-        $Role = $this->roleModel->insert($data);
-        return [
-            'success' => true,
-            'message' => 'Thêm quyền thành công',
-            'Role' => $Role
-        ];
+        try {
+            if ($this->roleModel->existsByNameRole($data['name'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên quyền đã tồn tại'
+                ];
+            }
+            $Role = $this->roleModel->insert($data);
+            return [
+                'success' => true,
+                'message' => 'Thêm quyền thành công',
+                'Role' => $Role
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function getMenuByRole($id)
@@ -101,21 +111,46 @@ class RoleController
 
     public function update($id, $data)
     {
-        $RoleEdit = $this->roleModel->update($id, $data);
-        return [
-            'success' => true,
-            'message' => 'Cập quyền thành công',
-            'Role' => $RoleEdit
-        ];
+        try {
+
+            $existingById = $this->roleModel->find($id);
+            if ($existingById == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Quyền không tồn tại!'
+                ];
+            }
+
+            $existingByName = $this->roleModel->existsByNameExceptIdRole($id, $data['name']);
+            if ($existingByName) {
+                return [
+                    'success' => false,
+                    'message' => 'Tên quyền này đã tồn tại, vui lòng chọn tên khác.'
+                ];
+            }
+
+            $RoleEdit = $this->roleModel->update($id, $data);
+            return [
+                'success' => true,
+                'message' => 'Cập nhật quyền thành công',
+                'Role' => $RoleEdit
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function delete($id)
     {
-        $delete = $this->roleModel->updateDeleted($id);
-        return [
-            'success' => true,
-            'message' => 'Xóa quyền thành công',
-            'Role' => $delete
-        ];
+        try {
+            $delete = $this->roleModel->updateDeleted($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa quyền thành công',
+                'Role' => $delete
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 }

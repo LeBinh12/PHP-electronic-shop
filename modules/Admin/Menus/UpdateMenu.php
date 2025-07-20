@@ -11,12 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_menu'])) {
 
     $result = $menuController->update($id, $data);
     if ($result['success']) {
-        echo "<script>
-            alert('Cập nhật chức năng mới thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';</script>";
+    exit;
 }
 
 ?>

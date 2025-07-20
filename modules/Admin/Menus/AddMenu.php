@@ -10,13 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_menu'])) {
     ];
 
     $result = $menuController->add($data);
-    if ($result['success']) {
-        echo "<script>
-            alert('Thêm chức năng mới thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';
-        </script>";
-        exit;
+    if ($isLoading) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';</script>";
+    exit;
 }
 ?>
 

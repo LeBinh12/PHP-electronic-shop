@@ -13,16 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
     ];
 
     $result = $inventoryController->edit($id, $data);
-
-    if ($result['success']) {
-        echo "<script>
-            alert('Thêm sản phẩm kho thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';
-        </script>";
-        exit;
+    if ($isLoading) {
+        $_SESSION['success'] = $result['message'];
     } else {
-        $errorMessage = $result['message'];
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Inventory/Inventory.php';</script>";
+    exit;
 }
 ?>
 
@@ -66,15 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
     </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const addButtons = document.querySelectorAll('button[data-bs-target="#addItemModal"]');
-    addButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            document.getElementById("addItemWarehouseId").value = button.getAttribute("data-id") || "";
-            document.getElementById("addItemProductName").value = button.getAttribute("data-product-name") || "";
-            document.getElementById("addItemCurrentQuantity").value = button.getAttribute("data-stock-quantity") || "0";
-            document.getElementById("addItemBranch").value = button.getAttribute("data-stock-branch") || "";
+    document.addEventListener("DOMContentLoaded", function() {
+        const addButtons = document.querySelectorAll('button[data-bs-target="#addItemModal"]');
+        addButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                document.getElementById("addItemWarehouseId").value = button.getAttribute("data-id") || "";
+                document.getElementById("addItemProductName").value = button.getAttribute("data-product-name") || "";
+                document.getElementById("addItemCurrentQuantity").value = button.getAttribute("data-stock-quantity") || "0";
+                document.getElementById("addItemBranch").value = button.getAttribute("data-stock-branch") || "";
+            });
         });
     });
-});
 </script>

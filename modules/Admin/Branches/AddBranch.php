@@ -15,18 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
 
     $result = $branchController->add($data);
     if ($result['success']) {
-        echo "<script>
-            alert('Thêm chi nhánh mới thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = 'Thêm chi nhánh mới thành công!';
     } else {
-        echo "<script>
-            alert('{$result['message']}');
-            window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';
-        </script>";
-        exit;
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';</script>";
+    exit;
 }
 ?>
 

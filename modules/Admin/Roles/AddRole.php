@@ -4,13 +4,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_role'])) {
     $name = $_POST['role_name'];
     $menuIds  = $_POST['menu_ids'] ?? [];
     $result = $roleController->createRoleWithMenus($name, $menuIds);
-    if ($result["success"]) {
-        echo "<script>
-            alert('Thêm quyền mới thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Roles/Role.php';
-        </script>";
-        exit;
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Roles/Role.php';</script>";
+    exit;
 }
 
 ?>

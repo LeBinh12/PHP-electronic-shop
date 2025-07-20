@@ -60,13 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-
+            $_SESSION['success'] = $result['message'];
             echo "<script>
-            alert('Tạo mới sản phẩm thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         } else {
             if ($result['errors']) {
+                $_SESSION['error'] = $result['message'];
+
                 foreach ($result['errors'] as $field => $rules) {
                     foreach ($rules as $rule => $msg) {
                         echo "<div class='alert alert-danger'>$msg</div>";

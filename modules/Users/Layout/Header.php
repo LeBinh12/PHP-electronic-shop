@@ -12,11 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         'isDeleted' => 0
     ]);
     if ($res['success']) {
-        echo "Đăng ký thành công!";
+        // echo "Đăng ký thành công!";
+        swal_alert('success', 'Đăng ký thành công!');
     } else {
         foreach ($res['message'] as $field => $rules) {
             foreach ($rules as $rule => $msg) {
-                echo "$msg<br>";
+                // echo "$msg<br>";
+                swal_alert('error', $msg);
             }
         }
     }
@@ -29,10 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $userData = $userController->getCurrentUser();
         echo "{$_SESSION['jwt']}";
     } else {
-        echo "<script>
-                alert('Tài khoản của bạn đã bị khóa đến {$res['report']['banned_until']}!');
-                window.location.href = 'index.php';
-            </script>";
+        // echo "<script>
+        //         alert('Tài khoản của bạn đã bị khóa đến {$res['report']['banned_until']}!');
+        //         window.location.href = 'index.php';
+        //     </script>";
+        swal_alert(
+            'error',
+            'Tài khoản bị khóa',
+            'Tài khoản của bạn đã bị khóa đến ' . $res['report']['banned_until'] . '!',
+            'index.php'
+        );
         exit;
     }
 }
@@ -56,10 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
     if ($res['success']) {
         $_SESSION['jwt'] = $res['token'];
         $userData = $userController->getCurrentUser();
-        echo "<script>
-            alert('Cập nhật tài khoản thành công!');
-            window.location.href = 'index.php';
-        </script>";
+        // echo "<script>
+        //     alert('Cập nhật tài khoản thành công!');
+        //     window.location.href = 'index.php';
+        // </script>";
+        swal_alert('success', 'Cập nhật tài khoản thành công!', '', 'index.php');
     }
 }
 ?>

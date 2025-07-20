@@ -6,10 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $result = $menuController->delete($id);
 
     if ($result['success']) {
-        echo "<script>
-            alert('Xóa chức năng thành công!');
-            window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';
-        </script>";
-        exit;
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Menus/Menu.php';</script>";
+    exit;
 }

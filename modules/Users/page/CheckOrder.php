@@ -60,16 +60,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
     ];
     $result = $orderController->edit($id, $data);
 
+    // if ($result['success']) {
+    //     echo "<script>
+    //         alert('Hủy đơn hàng thành công!');
+    //         window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
+    //     </script>";
+    // } else {
+    //     echo "<script>
+    //         alert('Hủy đơn hàng thất bại do hệ thông đang bảo trì!');
+    //         window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
+    //     </script>";
+    // }
+
     if ($result['success']) {
-        echo "<script>
-            alert('Hủy đơn hàng thành công!');
-            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
-        </script>";
+        swal_alert('success', 'Hủy đơn hàng thành công!', '', "Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId");
     } else {
-        echo "<script>
-            alert('Hủy đơn hàng thất bại do hệ thông đang bảo trì!');
-            window.location.href = 'Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId';
-        </script>";
+        swal_alert('error', 'Hủy đơn hàng thất bại!', 'Hệ thống đang bảo trì!', "Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId");
     }
 }
 ?>

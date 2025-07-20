@@ -15,6 +15,7 @@ require_once './controllers/ChatController.php';
 require_once './controllers/BranchController.php';
 require_once './controllers/ShippingController.php';
 
+require_once __DIR__ . '/modules/Users/Notification/alertHelper.php';
 
 require 'vendor/autoload.php';
 

@@ -38,26 +38,38 @@ class InventoryController
 
     public function add($data)
     {
-        $supplier = $this->InventoryController->insert($data);
-        return [
-            'success' => true,
-            'message' => 'Thêm kho hàng thành công',
-            'supplier' => $supplier
-        ];
+        try {
+            $supplier = $this->InventoryController->insert($data);
+            return [
+                'success' => true,
+                'message' => 'Thêm kho hàng thành công',
+                'supplier' => $supplier
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function edit($id, $data)
     {
-        $supplierEdit = $this->InventoryController->update($id, $data);
-        return [
-            'success' => true,
-            'message' => 'Cập nhật kho hàng thành công!',
-            'supplier' => $supplierEdit
-        ];
+        try {
+            $supplierEdit = $this->InventoryController->update($id, $data);
+            return [
+                'success' => true,
+                'message' => 'Cập nhật kho hàng thành công!',
+                'supplier' => $supplierEdit
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 
     public function delete($id)
     {
-        return $this->InventoryController->updateDeleted($id);
+        try {
+            return $this->InventoryController->updateDeleted($id);
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
 }
