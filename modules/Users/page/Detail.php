@@ -56,12 +56,13 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                     </h4>
                 <?php } ?>
             </div>
-            <?php if (!empty($inventoryProduct)) { ?>
-                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
-            <?php } ?>
+
 
 
             <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
+                <?php if (!empty($inventoryProduct)) { ?>
+                    <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
+                <?php } ?>
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
                 <input type="hidden" name="price" value="<?= $finalPrice ?>">

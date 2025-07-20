@@ -1,18 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Xử lý modal chỉnh sửa nhà cung cấp
-    const editModal = document.getElementById('editSupplierModal');
-    if (editModal) {
-        editModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            document.getElementById('editSupplierId').value = button.getAttribute('data-id');
-            document.getElementById('editSupplierName').value = button.getAttribute('data-name');
-            document.getElementById('editSupplierContact').value = button.getAttribute('data-contact');
-            document.getElementById('editSupplierPhone').value = button.getAttribute('data-phone');
-            document.getElementById('editSupplierEmail').value = button.getAttribute('data-email');
-            document.getElementById('editSupplierAddress').value = button.getAttribute('data-address');
-            document.getElementById('editSupplierPreview').src = button.getAttribute('data-image') || 'path/to/no-image.png';
-        });
-    }
+  const editModal = document.getElementById('editSupplierModal');
+  if (editModal) {
+    editModal.addEventListener('show.bs.modal', event => {
+      const button = event.relatedTarget;
+
+      document.getElementById('editSupplierId').value = button.getAttribute('data-id');
+      document.getElementById('editSupplierName').value = button.getAttribute('data-name');
+      document.getElementById('editSupplierContact').value = button.getAttribute('data-contact');
+      document.getElementById('editSupplierPhone').value = button.getAttribute('data-phone');
+      document.getElementById('editSupplierEmail').value = button.getAttribute('data-email');
+      document.getElementById('editSupplierAddress').value = button.getAttribute('data-address');
+
+      const imageUrl = button.getAttribute('data-image');
+      document.getElementById('editSupplierPreview').src = imageUrl && imageUrl !== '' ? imageUrl : 'path/to/no-image.png';
+    });
+  }
 
     // Xử lý modal xóa nhà cung cấp
     const deleteModal = document.getElementById('deleteSupplierModal');

@@ -46,7 +46,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                         <th style="width: 250px">Người đặt</th>
                         <th>Ngày đặt</th>
                         <th style="width: 250px">Trạng thái</th>
-                        <th style="width: 250px">Tổng tiền</th>
+                        <th style="width: 220px">Tổng tiền</th>
                         <th style="width: 350px">Chức năng</th>
                     </tr>
                 </thead>
@@ -78,7 +78,8 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     if ($item['status_id'] <  4) {
                                     ?>
                                         <button type="button"
-                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
+                                        style="padding:4px; font-size: 16px;"
+                                            class="btn btn-sm btn-primary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
                                             data-bs-toggle="modal"
                                             data-bs-target="#changeStatusModal">
                                             <i class="fas fa-sync-alt me-1"></i> Chuyển
@@ -87,7 +88,8 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     } else {
                                     ?>
                                         <button
-                                            class="btn btn-sm btn-secondary change-status-btn btn-sm-fixed">
+                                        style="padding:4px; font-size: 16px;"
+                                            class="btn btn-sm btn-primary change-status-btn btn-sm-fixed">
                                             <i class=" fas fa-sync-alt me-1"></i> Chuyển
                                         </button>
                                     <?php

@@ -253,11 +253,11 @@ $total = 0;
 </form>
 
 <script>
-    document.getElementById('checkAll').addEventListener('change', function () {
+    document.getElementById('checkAll').addEventListener('change', function() {
         document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = this.checked);
     });
 
-    document.querySelector('form').addEventListener('submit', function (e) {
+    document.querySelector('form').addEventListener('submit', function(e) {
         const branchSelect = document.getElementById('branch_id');
         const branchError = document.getElementById('branch-error');
         const selectedBranch = branchSelect.value.trim();

@@ -97,7 +97,7 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="./Style/Script/Admin/Sidebar.js"></script>
-    <script src="./Style/Script/Admin/Inventory.js" defer></script>
+    <script src="./Style/Script/Admin/Inventory.js"></script>
     <script src="./Style/Script/Admin/Customer.js"></script>
 
 
@@ -138,6 +138,8 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="./Style/Script/Admin/Employee.js"></script>
     <script src="./Style/Script/Admin/Shipping.js"></script>
     <script src="./Style/Script/Admin/Branch.js"></script>
+    <script src="./Style/Script/Admin/Category.js"></script>
+    <script src="./Style/Script/Admin/Inventory.js"></script>
 
 
 
