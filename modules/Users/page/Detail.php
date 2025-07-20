@@ -18,8 +18,8 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 
 <div class="container py-5">
     <!-- Sản phẩm -->
-    <div class="row align-items-start">
-        <div class="col-lg-5 col-md-6 col-12 product-image-col">
+    <div class="row align-items-start" style="margin: 0 30px;">
+        <div class="col-lg-6 col-md-6 col-12 product-image-col">
             <img src="<?= $productById['image_url'] ?>" class="img-fluid border rounded mb-3" id="mainImage" alt="Ảnh sản phẩm" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal">
 
             <div class="d-flex gap-2 flex-wrap">
@@ -30,7 +30,7 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
         </div>
 
 
-        <div class="col-lg-7 col-md-6 col-12">
+        <div class="col-lg-6 col-md-6 col-12">
             <h2><?= $productById['name'] ?></h2>
             <?= $productById['content'] ?>
             <?php
@@ -39,21 +39,27 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
             $finalPrice = $originalPrice * (1 - $discount / 100);
             ?>
 
-            <?php if ($discount > 0) { ?>
-                <h4 class="text-danger">
-                    <span class="text-muted text-decoration-line-through me-2 fs-5">
+            <div class="mt-3">
+                <label class="fw-medium fs-5 mb-1">Giá sản phẩm:</label>
+                <?php if ($discount > 0) { ?>
+                    <h4 class="text-danger">
+                        <span class="fw-bold">
+                            <?= number_format($finalPrice, 0, ',', '.') ?>₫
+                        </span>
+                        <span class="text-muted text-decoration-line-through me-2 fs-5">
+                            <?= number_format($originalPrice, 0, ',', '.') ?>₫
+                        </span>
+                    </h4>
+                <?php } else { ?>
+                    <h4 class="text-danger">
                         <?= number_format($originalPrice, 0, ',', '.') ?>₫
-                    </span>
-                    </br>
-                    <span class="fw-bold">
-                        <?= number_format($finalPrice, 0, ',', '.') ?>₫
-                    </span>
-                </h4>
-            <?php } else { ?>
-                <h4 class="text-danger">
-                    <?= number_format($originalPrice, 0, ',', '.') ?>₫
-                </h4>
+                    </h4>
+                <?php } ?>
+            </div>
+            <?php if (!empty($inventoryProduct)) { ?>
+                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
             <?php } ?>
+
 
             <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
@@ -63,13 +69,12 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                 <?php if (!empty($inventoryProduct)) { ?>
                     <div class="mt-3">
                         <h6>📍 Có tại các cửa hàng:</h6>
-                        <ul class="list-unstyled ms-2">
+                        <ul class="ms-2">
                             <?php foreach ($inventoryProduct as $inv) { ?>
                                 <li>
                                     <span><?= $inv['address'] ?> - </span>
                                     <span class="text-danger fw-semibold"><?= $inv['stock_quantity'] ?> sản phẩm</span>
                                 </li>
-                                <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
                             <?php } ?>
                         </ul>
                     </div>
