@@ -104,7 +104,7 @@ require_once './modules/Admin/Inventory/Warehouse.php';
 require_once 'modules/Admin/Inventory/AddInventory.php';
 require_once 'modules/Admin/Inventory/UpdateInventory.php'; ?>
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         const editButtons = document.querySelectorAll(
             'button.btn-primary[data-bs-toggle="modal"][data-bs-target="#editItemModal"]'
@@ -157,4 +157,4 @@ require_once 'modules/Admin/Inventory/UpdateInventory.php'; ?>
             });
         });
     });
-</script>
+</script> -->

@@ -58,6 +58,7 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                         <td class="text-center">
                             <div class="d-inline-flex gap-2">
                                 <button class="btn btn-sm btn-primary"
+                                style="padding: 2px 8px; font-size: 16px;"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editBranchModal"
                                     data-id="<?= $item['id'] ?>"

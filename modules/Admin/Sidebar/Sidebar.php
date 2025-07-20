@@ -22,7 +22,7 @@ $currentPage = $_GET['page'] ?? '';
 
     <li class="nav-item">
       <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Branches/Branch.php">
-        <i class="fas fa-table"></i><span>Quản lý chi nhánh</span>
+        <i class="fas fa-store"></i><span>Quản lý chi nhánh</span>
       </a>
     </li>
 

@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+  
 
   // Cleanup modal backdrop
   const modals = document.querySelectorAll(".modal");

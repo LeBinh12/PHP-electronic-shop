@@ -76,19 +76,18 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
 
                         <td>
                             <div class="action-buttons">
-                                <button class="btn btn-sm btn-primary text-white" onclick="openEditSupplierModal(
-                                <?= $item['id'] ?>,
-                               '<?= addslashes($item['name']) ?>',
-                               '<?= addslashes($item['contact_person'] ?? '') ?>',
-                               '<?= addslashes($item['Phone'] ?? '') ?>',
-                               '<?= addslashes($item['Email'] ?? '') ?>',
-                               '<?= addslashes($item['Address'] ?? '') ?>',
-                               '<?= addslashes($item['image_url'] ?? '') ?>'
-                               )">
-
-                                    <i class="fas fa-edit me-1"></i> Sửa
-                                </button>
-
+                                <button class="btn btn-sm btn-primary text-white"
+    data-bs-toggle="modal"
+    data-bs-target="#editSupplierModal"
+    data-id="<?= $item['id'] ?>"
+    data-name="<?= htmlspecialchars($item['name']) ?>"
+    data-contact="<?= htmlspecialchars($item['contact_person'] ?? '') ?>"
+    data-phone="<?= htmlspecialchars($item['Phone'] ?? '') ?>"
+    data-email="<?= htmlspecialchars($item['Email'] ?? '') ?>"
+    data-address="<?= htmlspecialchars($item['Address'] ?? '') ?>"
+    data-image="<?= htmlspecialchars($item['image_url'] ?? '') ?>">
+    <i class="fas fa-edit me-1"></i> Sửa
+</button>
                                 <button class="btn btn-sm btn-danger delete-supplier-btn" data-id="<?= $item['id'] ?>"
                                     data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
                                     <i class="fas fa-trash-alt me-1"></i> Xóa

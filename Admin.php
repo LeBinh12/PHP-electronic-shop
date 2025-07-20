@@ -93,7 +93,7 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="./Style/Script/Admin/Sidebar.js"></script>
-    <script src="./Style/Script/Admin/Inventory.js" defer></script>
+    <script src="./Style/Script/Admin/Inventory.js"></script>
     <script src="./Style/Script/Admin/Customer.js"></script>
 
 
@@ -134,6 +134,8 @@ $showChatList = isset($_GET['show_chat_list']);
     <script src="./Style/Script/Admin/Employee.js"></script>
     <script src="./Style/Script/Admin/Shipping.js"></script>
     <script src="./Style/Script/Admin/Branch.js"></script>
+    <script src="./Style/Script/Admin/Category.js"></script>
+    <script src="./Style/Script/Admin/Inventory.js"></script>
 
 
 

@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 </div>
 
 <!-- Script mở modal sửa -->
-<script>
+<!-- <script>
     function openEditSupplierModal(id, name, contact, phone, email, address, imageUrl) {
         document.getElementById('editSupplierId').value = id;
         document.getElementById('editSupplierName').value = name;
@@ -124,4 +124,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
         const modal = new bootstrap.Modal(document.getElementById('editSupplierModal'));
         modal.show();
     }
-</script>
+</script> -->
