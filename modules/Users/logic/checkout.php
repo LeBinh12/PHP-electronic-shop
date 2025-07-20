@@ -24,25 +24,36 @@ $dataShipping = [
 ];
 
 $resultShipping = $shippingController->add($dataShipping);
+// if (!$resultShipping['success']) {
+//     echo "<script>
+//                             alert('{$resultShipping['message']}');
+//                             window.location.href = 'index.php';
+//                         </script>";
+//     exit;
+// }
+
 if (!$resultShipping['success']) {
-    echo "<script>
-                            alert('{$resultShipping['message']}');
-                            window.location.href = 'index.php';
-                        </script>";
+    swal_alert('Thất bại', $resultShipping['message'], 'error', 'index.php');
     exit;
 }
+
 
 // kiểm tra đơn hàng xem đủ số lượng tồn tại cửa hàng đó không
 foreach ($_POST['selected'] as $id) {
     $productInventory = $inventoryController->getProductInventory($id, $branch, true);
     $quantity = $cart[$id]['quantity'];
+    // if ($quantity >= $productInventory) {
+    //     echo "<script>
+    //                         alert('Hiện cửa hàng này không đủ số lượng sản phẩm bạn mua!');
+    //                         window.location.href = 'index.php?subpage=modules/Users/page/Cart.php';
+    //                     </script>";
+    //     exit;
+    // }
     if ($quantity >= $productInventory) {
-        echo "<script>
-                            alert('Hiện cửa hàng này không đủ số lượng sản phẩm bạn mua!');
-                            window.location.href = 'index.php?subpage=modules/Users/page/Cart.php';
-                        </script>";
-        exit;
-    }
+    swal_alert('warning','Không đủ hàng', 'Hiện cửa hàng này không đủ số lượng sản phẩm bạn mua!', 'index.php?subpage=modules/Users/page/Cart.php');
+    exit;
+}
+
 }
 $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
 $note = $_POST['note'] ?? '';

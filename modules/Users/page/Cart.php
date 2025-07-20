@@ -4,6 +4,8 @@ $cart = $_SESSION['cart'] ?? [];
 //logic thêm giỏ hàng nằm ở đây
 require './modules/Users/logic/add_cart.php';
 
+// require_once __DIR__ . '/../Notification/alertHelper.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
@@ -19,6 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $branch = $_POST['branch_id'];
         $method = $_POST['payment_method'] ?? 'cod';
 
+        // Kiểm tra chi nhánh đã chọn chưa
+        if (empty($branch)) {
+            swal_alert('warning', 'Chưa chọn chi nhánh', 'Vui lòng chọn chi nhánh nhận hàng để tiếp tục.', 'index.php?subpage=modules/Users/page/Cart.php');
+            exit;
+        }
+
+        $_SESSION['branch_select'] = $branch; // Lưu lại chi nhánh đã chọn
+
+
         //Xử lý thanh toán khi nhận hàng
         if ($method === 'cod') {
             $totalAmount = 0;
@@ -33,10 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require './modules/Users/logic/checkout.php';
 
             $_SESSION['cart'] = $cart;
-            echo "<script>
-                            alert('Mua hàng thành công!');
-                            window.location.href = 'index.php';
-                        </script>";
+            // echo "<script>
+            //                 alert('Mua hàng thành công!');
+            //                 window.location.href = 'index.php';
+            //             </script>";
+            swal_alert('success', 'Mua hàng thành công!', '', 'index.php');
             exit;
         } else {
             // $totalAmount = 0;
@@ -64,9 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //     description: 'Thanh toán đơn #' . $order['order_id'],
             //     items: $items
             // );
-            echo "<script>
-                            alert('Thanh toán onl chưa xử lý');
-                        </script>";
+            // echo "<script>
+            //                 alert('Thanh toán onl chưa xử lý');
+            //             </script>";
+            swal_alert('warning', 'Thông báo', 'Thanh toán online chưa được xử lý', 'index.php');
+
             exit;
         }
     }
@@ -84,9 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['branch_select'] = $branch;
                     }
                     if ($cart[$id]['quantity'] >= $productInventory['stock_quantity']) {
-                        echo "<script>
-                            alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
-                        </script>";
+                        // echo "<script>
+                        //     alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
+                        // </script>";
+                        swal_alert('warning', 'Không đủ hàng', 'Cửa hàng hiện tại không đủ số lượng bạn mua!');
+
                         break;
                     }
                     $cart[$id]['quantity']++;
@@ -179,7 +195,7 @@ $total = 0;
                 <hr>
                 <div class="mb-3">
                     <label for="branch_id" class="fw-bold">Chọn chi nhánh nhận hàng:</label>
-                    <select name="branch_id" id="branch_id" class="form-select" required>
+                    <select name="branch_id" id="branch_id" class="form-select">
                         <option value="">-- Chọn chi nhánh --</option>
                         <?php foreach ($branchList as $b): ?>
                             <option value="<?= $b['id'] ?>"
@@ -188,6 +204,8 @@ $total = 0;
                             </option>
                         <?php endforeach; ?>
                     </select>
+                    <div id="branch-error" class="text-danger small mt-1" style="display: none;"></div>
+
                 </div>
 
                 <div class="mb-3">
@@ -235,7 +253,25 @@ $total = 0;
 </form>
 
 <script>
-    document.getElementById('checkAll').addEventListener('change', function() {
+    document.getElementById('checkAll').addEventListener('change', function () {
         document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = this.checked);
+    });
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const branchSelect = document.getElementById('branch_id');
+        const branchError = document.getElementById('branch-error');
+        const selectedBranch = branchSelect.value.trim();
+
+        if (!selectedBranch) {
+            e.preventDefault(); // chặn form submit
+            branchError.textContent = 'Vui lòng chọn chi nhánh nhận hàng';
+            branchError.style.display = 'block';
+            branchSelect.classList.add('is-invalid');
+            branchSelect.focus();
+        } else {
+            branchError.textContent = '';
+            branchError.style.display = 'none';
+            branchSelect.classList.remove('is-invalid');
+        }
     });
 </script>
