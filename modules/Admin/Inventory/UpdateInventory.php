@@ -9,28 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
     $stockQuantity = $_POST['stock_quantity'] ?? 0;
     $isLoading = true;
 
-    $existing = $inventoryController->getProductInventory($product_id, $branch_id);
+    $result = $inventoryController->edit($id, [
+        'stock_quantity' => $stockQuantity,
 
-    if ($existing) {
-        foreach ($existing as $item) {
-            $newQty = $item['stock_quantity'] + $stockQuantity;
-            $result = $inventoryController->edit($item['inventory_id'], [
-                'stock_quantity' => $newQty,
-                'last_update' => date('Y-m-d H:i:s')
-            ]);
-            $inventoryController->delete($id);
-        }
-        $isLoading = $result['success'];
-    } else {
-        $data = [
-            'stock_quantity' => $stockQuantity,
-            'last_update' => date('Y-m-d H:i:s')
-        ];
+        'last_update' => date('Y-m-d H:i:s')
+    ]);
 
-        $result = $inventoryController->edit($id, $data);
-        $isLoading = $result['success'];
-    }
-    if ($isLoading) {
+    if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {
         $_SESSION['error'] = $result['message'];
@@ -66,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Chi nhánh</label>
-                            <select name="branch_id" id="editItemBranch" class="form-select" required>
-                                <?php foreach ($allBranches as $branch): ?>
+                            <select disabled name="branch_id" id="editItemBranch" class="form-select" required>
+                                <?php foreach ($allBranches as $branch) { ?>
                                     <option value="<?= $branch['id'] ?>"><?= htmlspecialchars($branch['name']) ?></option>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">
