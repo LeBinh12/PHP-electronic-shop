@@ -282,9 +282,9 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
     <div class="modal-dialog custom-modal modal-dialog-centered">
         <form method="post" id="accountForm" class="w-100">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Thông tin tài khoản</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
@@ -316,11 +316,13 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" id="editBtn" class="btn btn-warning">Chỉnh sửa thông tin tài khoản</button>
-                    <button type="submit" id="saveBtn" name="update_account" class="btn btn-success d-none">Lưu thay đổi</button>
+                <div class="modal-footer d-flex justify-content-center align-items-center flex-column">
+                    <div class="d-flex gap-3">
+                        <button type="button" id="editBtn" class="btn btn-primary" style = "padding: 6px 65px;">Chỉnh sửa thông tin tài khoản</button>
+                        <button type="submit" id="saveBtn" name="update_account" class="btn btn-primary d-none" style = "padding: 6px 125px;">Lưu thay đổi</button>
+                    </div>
                 </div>
+
             </div>
         </form>
     </div>
