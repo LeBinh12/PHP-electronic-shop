@@ -61,6 +61,7 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/OrderTracking.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         .chat-box {
             position: fixed;
@@ -162,6 +163,21 @@ $userData = $userController->getCurrentUser();
                 aiChatForm?.classList.add("hidden");
             });
         });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#comment',
+            height: 300,
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+        function toggleDropdown(id, event) {
+            event.preventDefault(); // ❗ Chặn hành vi mặc định của thẻ <a>
+            const el = document.getElementById(id);
+            el.classList.toggle('show');
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

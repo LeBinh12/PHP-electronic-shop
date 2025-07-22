@@ -80,6 +80,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
 }
 ?>
 
+<style>
+    .star {
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.2s;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+</style>
+
+
 <div class="order-page-container container my-4">
     <div class="order-layout">
         <div class="order-content">
@@ -145,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         style=" background-color: #007bff; 
                                                 color: #fff; 
                                                 border: none;
-                                                padding: 6px 14px;
+                                                padding: 5px 14px;
                                                 border-radius: 20px;
                                                 font-size: 0.9rem;
                                                 transition: background-color 0.3s ease;
@@ -157,6 +170,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         Xem vị trí đơn hàng
                                     </a>
                                 <?php } ?>
+                                <?php if ($order['status_name'] === 'Giao hàng thành công') { ?>
+                                    <button type="button"
+                                        class="btn btn-outline-success btn-sm open-review-modal"
+                                        data-order-id="<?= htmlspecialchars($order['order_id']) ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        style=" background-color: #28a745; 
+                color: #fff; 
+                border: none;
+                padding: 5px 14px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+                box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
+                text-decoration: none;
+                display: inline-block;"
+                                        onmouseover="this.style.backgroundColor='#218838'"
+                                        onmouseout="this.style.backgroundColor='#28a745'">
+                                        Đánh giá ngay
+                                    </button>
+                                <?php } ?>
+
                                 <strong class="mb-0">Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
                             </div>
                         </div>
@@ -308,17 +343,89 @@ $cancelReasons = [
         </form>
     </div>
 </div>
+
+
+<!-- Modal đánh giá -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <form method="post" action="index.php?subpage=modules/Users/page/SubmitReview.php">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Đánh giá sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="review_order_id">
+                    <p class="mb-3 text-muted">
+                        Cảm ơn bạn đã mua hàng! Hãy để lại đánh giá về chất lượng sản phẩm và trải nghiệm của bạn để chúng tôi phục vụ tốt hơn.
+                    </p>
+
+                    <div class="mb-3">
+                        <label class="form-label">Đánh giá sản phẩm:</label>
+                        <div class="star-rating d-flex gap-1 fs-4">
+                            <i class="bi bi-star star" data-value="1"></i>
+                            <i class="bi bi-star star" data-value="2"></i>
+                            <i class="bi bi-star star" data-value="3"></i>
+                            <i class="bi bi-star star" data-value="4"></i>
+                            <i class="bi bi-star star" data-value="5"></i>
+                        </div>
+                        <input type="hidden" name="rating" id="rating" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Nhận xét:</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Gửi đánh giá</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const cancelButtons = document.querySelectorAll(".cancel-btn");
         const cancelInput = document.getElementById("cancel_order_id");
+        const reviewButtons = document.querySelectorAll(".open-review-modal");
+        const orderIdInput = document.getElementById("review_order_id");
+        const stars = document.querySelectorAll(".star-rating .star");
+        const ratingInput = document.getElementById("rating");
 
         cancelButtons.forEach(button => {
             button.addEventListener("click", function() {
                 const orderId = this.getAttribute("data-order-id");
                 cancelInput.value = orderId;
             })
-        })
+        });
+
+        reviewButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const orderId = this.getAttribute("data-order-id");
+                orderIdInput.value = orderId;
+            });
+        });
+
+        stars.forEach(star => {
+            star.addEventListener("click", function() {
+                const value = parseInt(this.getAttribute("data-value"));
+                ratingInput.value = value;
+
+                stars.forEach((s, i) => {
+                    if (i < value) {
+                        s.classList.add("selected");
+                        s.classList.replace('bi-star', 'bi-star-fill');
+                    } else {
+                        s.classList.remove("selected");
+                        s.classList.replace('bi-star-fill', 'bi-star');
+                    }
+                });
+            });
+        });
+
         document.getElementById('reasonSelect').addEventListener('change', function() {
             if (this.value === 'Khác') {
                 const orderId = document.getElementById('cancel_order_id').value;
