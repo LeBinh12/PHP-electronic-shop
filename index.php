@@ -61,7 +61,6 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/OrderTracking.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdn.tiny.cloud/1/oeu3yhycyrj0lqa722zpeyqh5xj7r8imoh31ctunafgvtgmz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         .chat-box {
             position: fixed;
@@ -138,6 +137,9 @@ $userData = $userController->getCurrentUser();
     require_once './chatUser.php';
     require_once './chatBox.php';
     ?>
+
+    <script src="https://cdn.tiny.cloud/1/qfa0385ogmclp69zgu32jxhpps8qymdvxv9iehmdlbikl7lp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         Xem vị trí đơn hàng
                                     </a>
                                 <?php } ?>
-                                <?php if ($order['status_name'] === 'Giao hàng thành công') { ?>
+                                <?php if ($order['status_id'] === 6) { ?>
                                     <button type="button"
                                         class="btn btn-outline-success btn-sm open-review-modal"
                                         data-order-id="<?= htmlspecialchars($order['order_id']) ?>"
