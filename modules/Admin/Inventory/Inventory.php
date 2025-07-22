@@ -39,12 +39,12 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
             <table class="table table-bordered table-hover custom-table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="width: 100px; text-align:center">ID</th>
+                        <th style="width: 50px; text-align:center">ID</th>
                         <th>Tên Sản Phẩm</th>
-                        <th style="width: 150px">Số Lượng</th>
+                        <th style="width: 120px">Số Lượng</th>
                         <th style="width: 200px">Chi nhánh</th>
                         <th style="width: 200px">Lần Cập Nhật Gần Nhất</th>
-                        <th class="text-center" style="width: 200px">Chức Năng</th>
+                        <th class="text-center" style="width: 380px">Chức Năng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,8 +74,20 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                                         data-branch-id="<?= htmlspecialchars($item['branch_id']) ?>"
                                         data-product-id="<?= htmlspecialchars($item['product_id']) ?>"
                                         data-bs-toggle="modal" data-bs-target="#editItemModal">
-                                        <i class="fas fa-edit me-1"></i><small>Sửa</small>
+                                        <i class="fas fa-edit me-1"></i><small>Sửa số lượng</small>
                                     </button>
+                                    <button type="button" class="btn btn-sm btn-warning px-3 py-1"
+                                        data-id="<?= $item['id'] ?>"
+                                        data-product-name="<?= $item['product_name'] ?>"
+                                        data-stock-quantity="<?= $item['stock_quantity'] ?>"
+                                        data-branch-name="<?= $item['branch_name'] ?>"
+                                        data-branch-id="<?= $item['branch_id'] ?>"
+                                        data-product-id="<?= $item['product_id'] ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#transferWarehouseModal">
+                                        <i class="fas fa-random me-1"></i><small>Chuyển kho</small>
+                                    </button>
+
                                 </div>
                             </td>
                         </tr>
@@ -102,7 +114,10 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 <?php
 require_once './modules/Admin/Inventory/Warehouse.php';
 require_once 'modules/Admin/Inventory/AddInventory.php';
-require_once 'modules/Admin/Inventory/UpdateInventory.php'; ?>
+require_once 'modules/Admin/Inventory/UpdateInventory.php';
+require_once 'modules/Admin/Inventory/TransferWarehouse.php';
+
+?>
 
 <!-- <script>
     document.addEventListener("DOMContentLoaded", function() {

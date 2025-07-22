@@ -68,12 +68,17 @@
             return $result['total'] ?? 0;
         }
 
-        public function getInventory($product_id = null, $branch_id = null, $isFind = false)
+        public function getInventory($product_id = null, $branch_id = null, $isFind = false, $id = null)
         {
             $sql = "SELECT *,inv.id AS inventory_id   FROM inventory inv
                     JOIN branches b ON inv.branch_id = b.id
                     WHERE inv.isDeleted = 0";
             $params = [];
+
+            if ($id !== null) {
+                $sql .= " AND inv.id != :id";
+                $params['id'] = $branch_id;
+            }
 
             if ($product_id !== null) {
                 $sql .= " AND product_id = :product_id";

@@ -27,10 +27,6 @@ $getCategory = $category->getAll();
         }
 
         ?>
-        <div class="ecom-category-card">
-            <i class="fa-solid fa-laptop"></i>
-            <div class="ecom-category-title">Laptop</div>
-        </div>
     </div>
 </div>
 
@@ -131,7 +127,7 @@ $getCategory = $category->getAll();
                         ?>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card">
-                                    <span class="ecom-product-badge sale">Giảm giá <?= $discount ?>%</span>
+                                    <span class="ecom-product-badge sale">Giảm <?= $discount ?>%</span>
                                     <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">

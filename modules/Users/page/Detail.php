@@ -15,6 +15,35 @@ $imageByProductId = $imageController->getImageById($id_product);
 $inventoryProduct = $inventoryController->getProductInventory($id_product, null) ?? 0;
 ?>
 
+<style>
+    .store-box {
+        width: 100%;
+        background-color: #fffbe6;
+        border: 1px solid #ffe58f;
+        padding: 16px;
+        border-radius: 8px;
+        margin-top: 16px;
+    }
+
+    .store-box h6 {
+        font-size: 18px;;
+        font-weight: bold;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #ffe58f;
+    }
+
+
+    .store-box ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+    }
+
+    .store-box li {
+        margin-bottom: 4px;
+    }
+</style>
+
 
 <div class="container py-5">
     <!-- Sản phẩm -->
@@ -39,7 +68,7 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
             $finalPrice = $originalPrice * (1 - $discount / 100);
             ?>
 
-            <div class="mt-3">
+            <div class="mt-2">
                 <label class="fw-medium fs-5 mb-1">Giá sản phẩm:</label>
                 <?php if ($discount > 0) { ?>
                     <h4 class="text-danger">
@@ -57,31 +86,31 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                 <?php } ?>
             </div>
 
-
-
-            <form class="product-form mt-4" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
+            <form class="product-form mt-2" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <?php if (!empty($inventoryProduct)) { ?>
                     <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
                 <?php } ?>
+                <br>
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
                 <input type="hidden" name="name" value="<?= $productById['name'] ?>">
                 <input type="hidden" name="price" value="<?= $finalPrice ?>">
                 <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
-                <?php if (!empty($inventoryProduct)) { ?>
-                    <div class="mt-3">
-                        <h6>📍 Có tại các cửa hàng:</h6>
-                        <ul class="ms-2">
+                <div class="store-box">
+                    <h6><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Sản phẩm có tại các cửa hàng</h6>
+                    <?php if (!empty($inventoryProduct)) { ?>
+                        <ul>
                             <?php foreach ($inventoryProduct as $inv) { ?>
                                 <li>
+                                    <span><?= $inv['name'] ?> - </span>
                                     <span><?= $inv['address'] ?> - </span>
                                     <span class="text-danger fw-semibold"><?= $inv['stock_quantity'] ?> sản phẩm</span>
                                 </li>
                             <?php } ?>
                         </ul>
-                    </div>
-                <?php } else { ?>
-                    <p class="text-muted">⛔ Sản phẩm hiện không có ở bất kỳ cửa hàng nào.</p>
-                <?php } ?>
+                    <?php } else { ?>
+                        <p class="text-muted mb-0 text-center">Sản phẩm hiện không có ở bất kỳ cửa hàng nào.</p>
+                    <?php } ?>
+                </div>
             </form>
         </div>
     </div>
