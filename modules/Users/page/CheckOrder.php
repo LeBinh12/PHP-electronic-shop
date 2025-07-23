@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <?php if ($order['status_name'] === 'Đang giao hàng') { ?>
+                                <?php if ($order['status_id'] === 4 ) { ?>
                                     <a href="index.php?subpage=modules/Users/page/OrderTracking.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
                                         class="btn btn-outline-primary btn-sm"
                                         style=" background-color: #007bff; 
@@ -177,15 +177,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         data-bs-toggle="modal"
                                         data-bs-target="#reviewModal"
                                         style=" background-color: #28a745; 
-                color: #fff; 
-                border: none;
-                padding: 5px 14px;
-                border-radius: 20px;
-                font-size: 0.9rem;
-                transition: background-color 0.3s ease;
-                box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
-                text-decoration: none;
-                display: inline-block;"
+                                                color: #fff; 
+                                                border: none;
+                                                padding: 5px 14px;
+                                                border-radius: 20px;
+                                                font-size: 0.9rem;
+                                                transition: background-color 0.3s ease;
+                                                box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
+                                                text-decoration: none;
+                                                display: inline-block;"
                                         onmouseover="this.style.backgroundColor='#218838'"
                                         onmouseout="this.style.backgroundColor='#28a745'">
                                         Đánh giá ngay
