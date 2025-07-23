@@ -17,7 +17,7 @@ $employeeList = $employeeController->getPagination($keyword, $limit, $offset);
 
 <div class="product-container">
 
-     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <!-- Nút thêm nhân viên -->
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
             <i class="bi bi-plus-circle me-2"></i> Thêm nhân viên
@@ -59,35 +59,36 @@ $employeeList = $employeeController->getPagination($keyword, $limit, $offset);
                     <td><?= htmlspecialchars($emp['position']) ?></td>
                     <td><?= htmlspecialchars($emp['address']) ?></td>
                     <td class="text-center">
-    <div class="d-flex gap-2 justify-content-center">
-        <!-- Nút sửa -->
-        <button class="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
-            style="padding: 2px 8px; font-size: 16px;"
-            data-bs-toggle="modal"
-            data-bs-target="#editEmployeeModal"
-            data-id="<?= $emp['id'] ?>"
-            data-name="<?= htmlspecialchars($emp['name']) ?>"
-            data-email="<?= htmlspecialchars($emp['email']) ?>"
-            data-phone="<?= htmlspecialchars($emp['phone']) ?>"
-            data-position="<?= htmlspecialchars($emp['position']) ?>"
-            data-address="<?= htmlspecialchars($emp['address']) ?>"
-            data-roles='<?= json_encode($employeeController->getRoleIds($emp['id'])) ?>'
-            data-menus='<?= json_encode($employeeController->getMenuIds($emp['id'])) ?>'>
-            <i class="fas fa-edit me-1"></i>Sửa
-        </button>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <!-- Nút sửa -->
+                            <button class="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
+                                style="padding: 2px 8px; font-size: 16px;"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editEmployeeModal"
+                                data-id="<?= $emp['id'] ?>"
+                                data-name="<?= htmlspecialchars($emp['name']) ?>"
+                                data-email="<?= htmlspecialchars($emp['email']) ?>"
+                                data-phone="<?= htmlspecialchars($emp['phone']) ?>"
+                                data-position="<?= htmlspecialchars($emp['position']) ?>"
+                                data-address="<?= htmlspecialchars($emp['address']) ?>"
+                                data-roles='<?= json_encode($employeeController->getRoleIds($emp['id'])) ?>'
+                                data-menus='<?= json_encode($employeeController->getMenuIds($emp['id'])) ?>'
+                                data-branch='<?= htmlspecialchars($emp['branch_id']) ?>'>
+                                <i class="fas fa-edit me-1"></i>Sửa
+                            </button>
 
-        <!-- Nút xóa -->
-        <button type="button"
-            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
-            style="padding: 2px 8px; font-size: 16px; "
-            data-bs-toggle="modal"
-            data-bs-target="#deleteEmployeeModal"
-            data-id="<?= $emp['id'] ?>"
-            data-name="<?= htmlspecialchars($emp['name']) ?>">
-            <i class="fas fa-trash-alt me-1"></i>Xóa
-        </button>
-    </div>
-</td>
+                            <!-- Nút xóa -->
+                            <button type="button"
+                                class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
+                                style="padding: 2px 8px; font-size: 16px; "
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteEmployeeModal"
+                                data-id="<?= $emp['id'] ?>"
+                                data-name="<?= htmlspecialchars($emp['name']) ?>">
+                                <i class="fas fa-trash-alt me-1"></i>Xóa
+                            </button>
+                        </div>
+                    </td>
 
                 </tr>
             <?php } ?>

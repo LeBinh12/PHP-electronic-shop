@@ -27,4 +27,21 @@ class ShippingController
             ];
         }
     }
+
+    public function update($id, $data)
+    {
+        try {
+            $newShipping = $this->shippingModel->update($id, $data);
+            return [
+                'success' => true,
+                'message' => 'Cập nhật địa chỉ thành công',
+                'shipping' => $newShipping
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi: ' . $e->getMessage()
+            ];
+        }
+    }
 }

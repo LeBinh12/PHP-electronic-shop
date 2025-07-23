@@ -1,6 +1,6 @@
 <?php
 $roleWithMenu = $roleController->getRoleWithMenu();
-
+$allBranches = $branchController->getAll();
 if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
     $id = $_POST['edit_employee_id'];
     $name = $_POST['edit_name'];
@@ -10,12 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
     $address = $_POST['edit_address'];
     $roleIds = $_POST['edit_role_ids'] ?? [];
     $menuIds = $_POST['edit_menu_ids'] ?? [];
+    $branchId = $_POST['branch_id'];
     $data = [
         'name' => $name,
         'email' => $email,
         'phone' => $phone,
         'position' => $position,
         'address' => $address,
+        'branch_id' => $branchId,
         'isDeleted' => 0
     ];
     $result = $employeeController->update($id, $data, $roleIds, $menuIds);
@@ -24,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
     } else {
         $_SESSION['error'] = $result['message'];
     }
-
     echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Employees/Employee.php';</script>";
     exit;
 }
@@ -96,6 +97,20 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
                         }
                         ?>
                     </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Chi nhánh</label>
+                        <select name="branch_id" id="edit_branch_id" class="form-select" required>
+                            <?php foreach ($allBranches as $branch) { ?>
+                                <option value="<?= $branch['id'] ?>">
+                                    <?= htmlspecialchars($branch['name']) ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+
+                    </div>
+
+
                 </div>
 
                 <div class="modal-footer">

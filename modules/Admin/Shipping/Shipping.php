@@ -1,33 +1,19 @@
 <?php
 $keyword = $_GET['search'] ?? '';
 
-// Dữ liệu mẫu (chi tiết)
-$orders = [
-    [
-        'id' => 'DH001',
-        'name' => 'Đơn hàng A',
-        'senderName' => 'Nguyễn Văn A',
-        'senderPhone' => '0123456789',
-        'senderAddress' => '123 Đường Lê Lợi, Quận 1, TP.HCM',
-        'senderLocation' => '10.762622,106.660172',
-        'current' => '123 Đường Lê Lợi, Quận 1, TP.HCM',
-        'shipperName' => 'Nguyễn Giao Hàng',
-        'shipperPhone' => '0901122334',
-        'status' => 'Đang giao'
-    ],
-    [
-        'id' => 'DH002',
-        'name' => 'Đơn hàng B',
-        'senderName' => 'Trần Thị B',
-        'senderPhone' => '0987654321',
-        'senderAddress' => '456 Đường Nguyễn Huệ, Quận 1, TP.HCM',
-        'senderLocation' => '10.774329,106.700806',
-        'current' => '456 Đường Nguyễn Huệ, Quận 1, TP.HCM',
-        'shipperName' => 'Trần Giao Nhanh',
-        'shipperPhone' => '0909988776',
-        'status' => 'Đang lấy hàng'
-    ]
-];
+
+$keyword = $_GET["search"] ?? "";
+$page    = max(1, ($_GET['pageNumber'] ?? 1));
+$limit   = 6;
+$offset  = ($page - 1) * $limit;
+
+// Lấy dữ liệu từ controller
+$listOrders = $orderController->getAllOrdersPagination($keyword, $limit, $offset);
+$totalRows  = $orderController->getAllCountOrder($keyword);
+$totalPages = max(1, ceil($totalRows / $limit));
+
+
+
 
 
 
@@ -35,15 +21,6 @@ $orders = [
 require_once 'modules/Admin/Shipping/OrderTransfer.php';
 require_once 'modules/Admin/Shipping/ViewSenderLocation.php';
 require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
-
-// Nếu có từ khóa, lọc danh sách
-if ($keyword) {
-    $orders = array_filter($orders, function ($order) use ($keyword) {
-        return stripos($order['id'], $keyword) !== false ||
-            stripos($order['name'], $keyword) !== false ||
-            stripos($order['senderAddress'], $keyword) !== false;
-    });
-}
 ?>
 
 
@@ -77,20 +54,20 @@ if ($keyword) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($orders as $order): ?>
+                    <?php foreach ($listOrders as $order): ?>
                         <tr>
-                            <td><?= $order['id'] ?></td>
-                            <td><?= $order['name'] ?></td>
-                            <td><?= $order['senderAddress'] ?></td>
-                            <td><?= $order['current'] ?></td>
+                            <td><?= $order['code'] ?></td>
+                            <td><?= $order['FullName'] ?></td>
+                            <td><?= $order['Address'] ?></td>
+                            <td><?= $order['shipping_address'] ?></td>
                             <td>
                                 <button class="btn btn-sm btn-info text-white"
                                     onclick='showSenderInfo(<?= json_encode([
-                                                                "id" => $order["id"],
-                                                                "name" => $order["name"],
-                                                                "senderName" => $order["senderName"],
-                                                                "senderPhone" => $order["senderPhone"],
-                                                                "senderAddress" => "237, xã Mỹ An Hưng ,Huyện Lấp Vò, Tỉnh Đồng Tháp" // Vị trí người gửi
+                                                                "id" => $order["code"],
+                                                                "name" => $order["FullName"],
+                                                                "senderName" => $order["FullName"],
+                                                                "senderPhone" => $order["Phone"],
+                                                                "senderAddress" => $order["Address"]
                                                             ]) ?>)'>
                                     <i class="bi bi-geo-alt-fill me-1"></i> Xem vị trí người gửi
                                 </button>
@@ -98,11 +75,11 @@ if ($keyword) {
                                 <!-- Nút xem vị trí hiện tại của đơn hàng -->
                                 <button class="btn btn-sm btn-success text-white"
                                     onclick='showCurrentLocation(<?= json_encode([
-                                                                        "id" => $order["id"],
-                                                                        "shipperName" => $order["shipperName"],
-                                                                        "shipperPhone" => $order["shipperPhone"],
-                                                                        "status" => $order["status"],
-                                                                        "currentAddress" => "Trường Đại học Đồng Tháp" // vị trí đơn hàng hiện tại
+                                                                        "id" => $order["code"],
+                                                                        "shipperName" => $order["FullName"],
+                                                                        "shipperPhone" => $order["Phone"],
+                                                                        "status" => $order["shipping_status"],
+                                                                        "currentAddress" => $order["shipping_address"] // vị trí đơn hàng hiện tại
                                                                     ]) ?>)'>
                                     <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
                                 </button>
@@ -112,9 +89,10 @@ if ($keyword) {
                                     class="btn btn-warning btn-sm text-white"
                                     data-bs-toggle="modal"
                                     data-bs-target="#transferModal"
-                                    onclick="loadTransferForm('<?= $order['id'] ?>', '<?= $order['current'] ?>')">
+                                    onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
                                     Chuyển đơn
                                 </button>
+                                <h1><?= $order['shipping_id'] ?></h1>
 
 
                             </td>

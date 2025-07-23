@@ -18,6 +18,7 @@ require_once './controllers/MenuController.php';
 require_once './controllers/RoleController.php';
 require_once './controllers/EmployeeController.php';
 require_once './controllers/BranchController.php';
+require_once './controllers/ShippingController.php';
 
 
 
@@ -40,6 +41,7 @@ $menuController = new MenuController();
 $roleController = new RoleController();
 $employeeController = new EmployeeController();
 $branchController = new BranchController();
+$shippingController = new ShippingController();
 
 $userList = $chatController->getAllChatUserIdsFromRedis();
 $userId = $_GET['chat_user_id'] ?? null;

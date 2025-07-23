@@ -12,6 +12,8 @@ if (isset($_GET['id'])) {
   $statusData = $statusController->getById(id: $orderMap['status_id']);
 
   $branchData = $branchController->getById($orderMap['branch_id']);
+
+  $employeeData = $employeeController->getById($orderMap['employee_id']);
 ?>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -30,7 +32,7 @@ if (isset($_GET['id'])) {
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-info text-white">
-        <h5 class="modal-title">Chi tiết đơn hàng #<?= $orderMap['code'] ?></h5>
+        <h5 class="modal-title">Chi tiết đơn hàng #<?= $orderMap['code'] ?> Nhân viên phụ trách: <?= $employeeData ? $employeeData['name'] : "Chưa có" ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 

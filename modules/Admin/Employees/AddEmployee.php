@@ -1,5 +1,6 @@
 <?php
 $roleWithMenu = $roleController->getRoleWithMenu();
+$branchGetAll = $branchController->getAll();
 if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -8,12 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
     $address = $_POST['address'];
     $roleIds = $_POST['role_ids'] ?? [];
     $menuIds = $_POST['menu_ids'] ?? [];
+    $branchId = $_POST['branch_id'];
     $data = [
         'name' => $name,
         'email' => $email,
         'phone' => $phone,
         'position' => $position,
         'address' => $address,
+        'branch_id' => $branchId,
         'isDeleted' => 0
     ];
     $result = $employeeController->add($data, $roleIds, $menuIds);
@@ -92,6 +95,18 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                         }
                         ?>
                     </div>
+
+                    <label class="form-label">Thuộc chi nhánh:</label>
+                    <select class="form-select" name="branch_id" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <?php
+                        foreach ($branchGetAll as $item) {
+                        ?>
+                            <option value="<?= htmlentities($item['id']) ?>"><?= htmlentities($item['name']) ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="modal-footer">

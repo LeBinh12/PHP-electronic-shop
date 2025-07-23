@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("edit_phone").value = button.dataset.phone;
     document.getElementById("edit_position").value = button.dataset.position;
     document.getElementById("edit_address").value = button.dataset.address;
+    document.getElementById("edit_branch_id").value = button.dataset.branch;
 
     // Lấy role và menu đã có
     const selectedRoles = JSON.parse(button.dataset.roles || "[]");

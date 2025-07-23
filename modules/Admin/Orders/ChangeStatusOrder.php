@@ -29,8 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
             $maxStatus = 5;
 
             $nextStatus = ($currentStatus < $maxStatus) ? $currentStatus + 1 : 1;
+            $data = [
+                'status_id' => $nextStatus,
+                'employee_id' => 1
+            ];
 
-            $orderController->edit($id, ["status_id" => $nextStatus]);
+            $orderController->edit($id, $data);
         }
         echo "<script>
             alert('Chuyển đổi trạng thái thành công!');

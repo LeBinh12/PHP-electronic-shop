@@ -13,8 +13,13 @@ class Employee extends Model
         'email' => 'VARCHAR(255) UNIQUE NOT NULL',
         'position' => 'VARCHAR(255)',
         'address' => 'VARCHAR(255)',
+        'branch_id' => 'INT NOT NULL',
         'isDeleted' => 'TINYINT(1)',
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+    ];
+
+    protected $foreignKeys = [
+        'branch_id' => 'branches(id)'
     ];
 
     public function getFilterEmployees($keyword = null, $limit = 8, $offset = 0)

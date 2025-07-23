@@ -128,7 +128,7 @@ class EmployeeController
                 ]);
             }
 
-            return ['success' => true];
+            return ['success' => true, 'message' => 'Cập nhật nhân viên thành công!'];
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

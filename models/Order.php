@@ -13,6 +13,7 @@ class Order extends Model
         'shipping_id' => 'INT',
         'user_id' => 'INT',
         'branch_id' => 'INT',
+        'employee_id' => 'INT',
         'note' => 'TEXT',
         'cancel_reason' => 'TEXT',
         'cancel_at' => 'DATETIME',
@@ -26,16 +27,18 @@ class Order extends Model
         'shipping_id' => 'shipping(id)',
         'payment_id' => 'payments(id)',
         'status_id' => 'status(id)',
-        'branch_id' => 'branches(id)'
+        'branch_id' => 'branches(id)',
+        'employee_id' => 'employees(id)',
     ];
 
     public function findByCode($code)
     {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, e.name AS employee_name
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
             JOIN    users u ON o.user_id = u.id
+            JOIN    employees e ON e.id = o.employee_id 
             WHERE   o.code  = :code
               AND   o.isDeleted = 0
         ";
@@ -53,10 +56,11 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, e.name AS employee_name
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
             JOIN    users u ON o.user_id = u.id
+            JOIN    employees e ON e.id = o.employee_id 
             WHERE   o.user_id  = :user_id
               AND   o.isDeleted = 0
         ";
@@ -111,10 +115,11 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sp.address AS shipping_address, sp.status AS shipping_status
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
             JOIN    users u ON o.user_id = u.id
+            JOIN    shipping sp ON sp.id = o.shipping_id
             WHERE   o.isDeleted = 0
         ";
         $params = [];

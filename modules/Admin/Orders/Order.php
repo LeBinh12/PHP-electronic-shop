@@ -45,8 +45,9 @@ $totalPages = max(1, ceil($totalRows / $limit));
                         <th style="width: 70px">ID</th>
                         <th style="width: 250px">Người đặt</th>
                         <th>Ngày đặt</th>
-                        <th style="width: 250px">Trạng thái</th>
-                        <th style="width: 220px">Tổng tiền</th>
+                        <th style="width: 200px">Trạng thái</th>
+                        <th style="width: 210px">Tổng tiền</th>
+                        <th style="width: 100px">Nhân viên phụ trách</th>
                         <th style="width: 350px">Chức năng</th>
                     </tr>
                 </thead>
@@ -62,7 +63,10 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                 <td><?= htmlspecialchars($item['FullName']) ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($item['create_at'])) ?></td>
                                 <td><?= htmlspecialchars($item['status_name']) ?></td>
-                                <td><?= number_format((float)$item['total_amount'], 0) ?> đ</td>
+                                <td><?= number_format((float)$item['total_amount'], decimals: 0) ?> đ</td>
+                                <td>
+                                    <?= $item['employee_id'] ? "Đã có người nhận" : 'không có nhân viên phụ trách' ?>
+                                </td>
                                 <td>
                                     <a href="Admin.php?page=modules/Admin/Orders/Order.php&id=<?= $item['order_id'] ?>"
                                         class="btn btn-sm btn-info text-white btn-sm-fixed">
@@ -78,7 +82,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     if ($item['status_id'] <  4) {
                                     ?>
                                         <button type="button"
-                                        style="padding:4px; font-size: 16px;"
+                                            style="padding:4px; font-size: 16px;"
                                             class="btn btn-sm btn-primary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
                                             data-bs-toggle="modal"
                                             data-bs-target="#changeStatusModal">
@@ -88,7 +92,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     } else {
                                     ?>
                                         <button
-                                        style="padding:4px; font-size: 16px;"
+                                            style="padding:4px; font-size: 16px;"
                                             class="btn btn-sm btn-primary change-status-btn btn-sm-fixed">
                                             <i class=" fas fa-sync-alt me-1"></i> Chuyển
                                         </button>

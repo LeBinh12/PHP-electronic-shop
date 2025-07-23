@@ -21,9 +21,9 @@ class InventoryController
         return $this->InventoryController->find($id);
     }
 
-    public function getProductInventory($product_id, $branch_id, $isFind = false)
+    public function getProductInventory($product_id, $branch_id, $isFind = false, $id = null)
     {
-        return $this->InventoryController->getInventory($product_id, $branch_id, $isFind);
+        return $this->InventoryController->getInventory($product_id, $branch_id, $isFind, $id);
     }
 
     public function countInventory($keyword)
