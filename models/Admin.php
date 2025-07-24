@@ -12,4 +12,14 @@ class Admin extends Model
         'role' => 'VARCHAR(255)',
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
+
+    public function ExistsLogin($email, $password)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE email = :email AND password_hash = :password";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["email" => $email, "password" => $password]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -19,6 +19,7 @@ require_once './controllers/RoleController.php';
 require_once './controllers/EmployeeController.php';
 require_once './controllers/BranchController.php';
 require_once './controllers/ShippingController.php';
+require_once './controllers/AdminController.php';
 
 
 
@@ -42,6 +43,7 @@ $roleController = new RoleController();
 $employeeController = new EmployeeController();
 $branchController = new BranchController();
 $shippingController = new ShippingController();
+$adminController = new AdminController();
 
 $userList = $chatController->getAllChatUserIdsFromRedis();
 $userId = $_GET['chat_user_id'] ?? null;
@@ -78,7 +80,7 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
     //     echo "[{$entry->time}] {$entry->from}: {$entry->message} <br>";
     // }
     require_once './Auth/LoginLogic.php';
-    if ($employeeData != null) {
+    if ($_SESSION['user_type']) {
         require './modules/Admin/Navbar/Navbar.php';
     ?>
         <!-- Navbar nên đặt ngoài admin-container -->
@@ -87,7 +89,7 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
             <?php require './modules/Admin/Sidebar/Sidebar.php'; ?>
             <div class="content">
                 <?php
-                if (isset($_GET['page'])) {
+                if (isset($_GET['page']) && file_exists($_GET['page'])) {
                     require $_GET['page'];
                 } else {
                     require './modules/Admin/Dashboard/index.php';
