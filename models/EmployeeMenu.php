@@ -22,9 +22,9 @@ class EmployeeMenu extends Model
     {
         $sql = 'SELECT * FROM employees e JOIN  employee_menu em ON e.id = em.employee_id
                                             JOIN menus m ON em.menu_id = m.id
-                                            WHERE e.Deleted = 0
-                                            AND  em.Deleted = 0
-                                            AND  m.Deleted = 0
+                                            WHERE e.isDeleted = 0
+                                            AND  em.isDeleted = 0
+                                            AND  m.isDeleted = 0
                                             AND e.id = :employee_id';
 
         $stmt = $this->pdo->prepare($sql);

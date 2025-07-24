@@ -17,9 +17,16 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <button class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#importGeneralModal">
-            <i class="fas fa-truck-loading me-1"></i> Nhập hàng
-        </button>
+        <?php
+        if (hasPermission('modules/Admin/Inventory/Warehouse.php')) {
+
+        ?>
+            <button class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#importGeneralModal">
+                <i class="fas fa-truck-loading me-1"></i> Nhập hàng
+            </button>
+        <?php
+        }
+        ?>
         <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Inventory/Inventory.php">
             <button class="btn search-btn" type="submit">
@@ -57,37 +64,54 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                             <td><?= htmlspecialchars($item['last_update'] ?? 'N/A') ?></td>
                             <td class="text-center">
                                 <div class="d-inline-flex gap-2">
-                                    <button
-                                        class="btn btn-success"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#addItemModal"
-                                        data-id="<?= htmlspecialchars($item['id']) ?>"
-                                        data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
-                                        data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
-                                        data-stock-branch="<?= htmlspecialchars($item['branch_name']) ?>">
-                                        <i class="fas fa-plus-circle"></i> Thêm
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-primary px-3 py-1"
-                                        data-id="<?= htmlspecialchars($item['id']) ?>"
-                                        data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
-                                        data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
-                                        data-branch-id="<?= htmlspecialchars($item['branch_id']) ?>"
-                                        data-product-id="<?= htmlspecialchars($item['product_id']) ?>"
-                                        data-bs-toggle="modal" data-bs-target="#editItemModal">
-                                        <i class="fas fa-edit me-1"></i><small>Sửa số lượng</small>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-warning px-3 py-1"
-                                        data-id="<?= $item['id'] ?>"
-                                        data-product-name="<?= $item['product_name'] ?>"
-                                        data-stock-quantity="<?= $item['stock_quantity'] ?>"
-                                        data-branch-name="<?= $item['branch_name'] ?>"
-                                        data-branch-id="<?= $item['branch_id'] ?>"
-                                        data-product-id="<?= $item['product_id'] ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#transferWarehouseModal">
-                                        <i class="fas fa-random me-1"></i><small>Chuyển kho</small>
-                                    </button>
+                                    <?php
+                                    if (hasPermission('modules/Admin/Inventory/AddInventory.php')) {
 
+                                    ?>
+                                        <button
+                                            class="btn btn-success"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addItemModal"
+                                            data-id="<?= htmlspecialchars($item['id']) ?>"
+                                            data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
+                                            data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
+                                            data-stock-branch="<?= htmlspecialchars($item['branch_name']) ?>">
+                                            <i class="fas fa-plus-circle"></i> Thêm
+                                        </button>
+                                    <?php
+                                    }
+
+                                    if (hasPermission('modules/Admin/Inventory/UpdateInventory.php')) {
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-primary px-3 py-1"
+                                            data-id="<?= htmlspecialchars($item['id']) ?>"
+                                            data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
+                                            data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
+                                            data-branch-id="<?= htmlspecialchars($item['branch_id']) ?>"
+                                            data-product-id="<?= htmlspecialchars($item['product_id']) ?>"
+                                            data-bs-toggle="modal" data-bs-target="#editItemModal">
+                                            <i class="fas fa-edit me-1"></i><small>Sửa số lượng</small>
+                                        </button>
+                                    <?php
+                                    }
+
+                                    if (hasPermission('modules/Admin/Inventory/TransferWarehouse.php')) {
+
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-warning px-3 py-1"
+                                            data-id="<?= $item['id'] ?>"
+                                            data-product-name="<?= $item['product_name'] ?>"
+                                            data-stock-quantity="<?= $item['stock_quantity'] ?>"
+                                            data-branch-name="<?= $item['branch_name'] ?>"
+                                            data-branch-id="<?= $item['branch_id'] ?>"
+                                            data-product-id="<?= $item['product_id'] ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#transferWarehouseModal">
+                                            <i class="fas fa-random me-1"></i><small>Chuyển kho</small>
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>

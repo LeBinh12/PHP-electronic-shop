@@ -46,6 +46,7 @@ $shippingController = new ShippingController();
 $userList = $chatController->getAllChatUserIdsFromRedis();
 $userId = $_GET['chat_user_id'] ?? null;
 $showChatList = isset($_GET['show_chat_list']);
+$employeeData = $employeeController->getCurrentEmployee() ?? null;
 
 ?>
 
@@ -76,22 +77,29 @@ $showChatList = isset($_GET['show_chat_list']);
     // foreach ($history as $entry) {
     //     echo "[{$entry->time}] {$entry->from}: {$entry->message} <br>";
     // }
-    require  './modules/Admin/Navbar/Navbar.php';
+    require_once './Auth/LoginLogic.php';
+    if ($employeeData != null) {
+        require './modules/Admin/Navbar/Navbar.php';
     ?>
-    <!-- Navbar nên đặt ngoài admin-container -->
+        <!-- Navbar nên đặt ngoài admin-container -->
 
-    <div class="admin-container">
-        <?php require  './modules/Admin/Sidebar/Sidebar.php'; ?>
-        <div class="content">
-            <?php
-            if (isset($_GET['page'])) {
-                require $_GET['page'];
-            } else {
-                require './modules/Admin/Dashboard/index.php';
-            }
-            ?>
+        <div class="admin-container">
+            <?php require './modules/Admin/Sidebar/Sidebar.php'; ?>
+            <div class="content">
+                <?php
+                if (isset($_GET['page'])) {
+                    require $_GET['page'];
+                } else {
+                    require './modules/Admin/Dashboard/index.php';
+                }
+                ?>
+            </div>
         </div>
-    </div>
+    <?php
+    } else {
+        echo "<h1>Bạn cần phải đăng nhập</h1>";
+    }
+    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/qfa0385ogmclp69zgu32jxhpps8qymdvxv9iehmdlbikl7lp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>

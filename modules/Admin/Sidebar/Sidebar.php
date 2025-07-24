@@ -110,7 +110,7 @@ $currentPage = $_GET['page'] ?? '';
     </li>
 
     <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="#"><i class="fas fa-language"></i><span>Language</span></a></li>
-    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="#"><i class="fas fa-sign-in-alt"></i><span>Login</span></a></li>
+    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="/Auth/logout.php"><i class="fas fa-sign-in-alt"></i><span>Login</span></a></li>
     <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="#"><i class="fas fa-cogs"></i><span>Settings</span></a></li>
   </ul>
 </div>

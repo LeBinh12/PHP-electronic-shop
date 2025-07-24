@@ -4,18 +4,23 @@ require_once './models/Employee.php';
 require_once './models/EmployeeMenu.php';
 require_once './models/RoleEmployee.php';
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class EmployeeController
 {
     private $employeeModel;
     private $employeeMenuModel;
     private $roleEmployeeModel;
+    private $jwtConfig;
+
 
     public function __construct()
     {
         $this->employeeModel = new Employee();
         $this->employeeMenuModel = new EmployeeMenu();
         $this->roleEmployeeModel = new RoleEmployee();
+        $this->jwtConfig = include   './config/jwt.php';
     }
 
     public function getAll()
@@ -65,7 +70,12 @@ class EmployeeController
                     'message' => 'Tên nhân viên đã tồn tại!'
                 ];
             }
+
+            $data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
+            unset($data['password']);
+
             $employeeId = $this->employeeModel->insert($data);
+
             foreach ($roleIds as $rid) {
                 $this->roleEmployeeModel->insert([
                     'employee_id' => $employeeId,
@@ -82,7 +92,7 @@ class EmployeeController
                 ]);
             }
 
-            return ['success' => true];
+            return ['success' => true, 'message' => 'Tạo nhân viên mới thành công'];
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -148,5 +158,45 @@ class EmployeeController
         $this->employeeMenuModel->deleteByEmployee($id);
 
         return ['success' => true];
+    }
+
+    public function login($data)
+    {
+        $employee = $this->employeeModel->findByEmail($data['email']);
+
+        if (!$employee || !password_verify($data['password'], $employee['password_hash'])) {
+            return ['success' => false, 'message' => 'Email hoặc mật khẩu không đúng'];
+        }
+
+        $now = time();
+        $token = [
+            'iss' => $this->jwtConfig['issuer'],
+            'aud' => $this->jwtConfig['audience'],
+            'iat' => $now,
+            'nbf' => $now,
+            'exp' => $now + 3600,
+            'data' => [
+                'id' => $employee['id'],
+                'email' => $employee['email'],
+                'name' => $employee['name'],
+                'phone' => $employee['phone'],
+                'address' => $employee['address']
+            ]
+        ];
+        $jwt = JWT::encode($token, $this->jwtConfig['secret_key'], 'HS256');
+        return ['success' => true, 'token' => $jwt];
+    }
+
+    public function getCurrentEmployee()
+    {
+        if (!isset($_SESSION['jwt_employee'])) {
+            return null;
+        }
+        try {
+            $decoded = JWT::decode($_SESSION['jwt_employee'], new Key($this->jwtConfig['secret_key'], 'HS256'));
+            return $decoded->data;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

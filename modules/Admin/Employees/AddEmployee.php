@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
     $roleIds = $_POST['role_ids'] ?? [];
     $menuIds = $_POST['menu_ids'] ?? [];
     $branchId = $_POST['branch_id'];
+    $password = $_POST['password'];
     $data = [
         'name' => $name,
         'email' => $email,
@@ -17,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
         'position' => $position,
         'address' => $address,
         'branch_id' => $branchId,
+        'password' => $password,
         'isDeleted' => 0
     ];
     $result = $employeeController->add($data, $roleIds, $menuIds);
@@ -64,6 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                         <div class="col-md-12">
                             <label class="form-label">Địa chỉ</label>
                             <input type="text" name="address" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Mật khẩu cơ bản</label>
+                            <input type="password" name="password" class="form-control">
                         </div>
                     </div>
 

@@ -92,55 +92,79 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                         data-bs-target="#detailCustomerModal">
                                         <i class="fas fa-info-circle"></i> Chi tiết
                                     </button>
+                                    <?php
+                                    if (hasPermission('modules/Admin/Customers/ReportCustomer.php')) {
+
+                                    ?>
+
+                                        <!-- Báo cáo -->
+                                        <button class="btn btn-sm btn-warning text-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-report-customer"
+                                            data-id="<?= $cus['id'] ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#reportCustomerModal">
+                                            <i class="fas fa-chart-bar"></i> Báo cáo
+                                        </button>
+                                    <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Customers/UpdateCustomer.php')) {
+
+                                    ?>
 
 
-                                    <!-- Báo cáo -->
-                                    <button class="btn btn-sm btn-warning text-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-report-customer"
-                                        data-id="<?= $cus['id'] ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#reportCustomerModal">
-                                        <i class="fas fa-chart-bar"></i> Báo cáo
-                                    </button>
+                                        <!-- Sửa -->
+                                        <button type="button" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 px-2 py-1"
+                                            data-id="<?= $cus['id'] ?>"
+                                            data-fullname="<?= htmlspecialchars($cus['FullName']) ?>"
+                                            data-phone="<?= htmlspecialchars($cus['Phone']) ?>"
+                                            data-email="<?= htmlspecialchars($cus['Email']) ?>"
+                                            data-address="<?= htmlspecialchars($cus['Address']) ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editCustomerModal">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </button>
+                                    <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Customers/DeleteCustomer.php')) {
+
+                                    ?>
 
 
-                                    <!-- Sửa -->
-                                    <button type="button" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 px-2 py-1"
-                                        data-id="<?= $cus['id'] ?>"
-                                        data-fullname="<?= htmlspecialchars($cus['FullName']) ?>"
-                                        data-phone="<?= htmlspecialchars($cus['Phone']) ?>"
-                                        data-email="<?= htmlspecialchars($cus['Email']) ?>"
-                                        data-address="<?= htmlspecialchars($cus['Address']) ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editCustomerModal">
-                                        <i class="fas fa-edit"></i> Sửa
-                                    </button>
+                                        <!-- Nút Xóa -->
+                                        <button
+                                            class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
+                                            data-id="<?= $cus['id'] ?>"
+                                            data-name="<?= htmlspecialchars($cus['FullName']) ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteCustomerModal">
+                                            <i class="fas fa-trash-alt"></i> Xóa
+                                        </button>
+                                    <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Customers/DeleteCustomerReport.php')) {
 
+                                    ?>
 
-                                    <!-- Nút Xóa -->
-                                    <button
-                                        class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
-                                        data-id="<?= $cus['id'] ?>"
-                                        data-name="<?= htmlspecialchars($cus['FullName']) ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteCustomerModal">
-                                        <i class="fas fa-trash-alt"></i> Xóa
-                                    </button>
+                                        <button
+                                            class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
+                                            data-id="<?= $cus['id'] ?>"
+                                            data-name="<?= htmlspecialchars($cus['FullName']) ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteCustomerReportModal">
+                                            <i class="fas fa-trash-alt"></i> Gỡ báo cáo
+                                        </button>
+                                    <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Customers/UpdatePassword.php')) {
 
-                                    <button
-                                        class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
-                                        data-id="<?= $cus['id'] ?>"
-                                        data-name="<?= htmlspecialchars($cus['FullName']) ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteCustomerReportModal">
-                                        <i class="fas fa-trash-alt"></i> Gỡ báo cáo
-                                    </button>
-
-                                    <!-- Đổi mật khẩu -->
-                                    <button class="btn btn-sm btn-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-update-password"
-                                        data-id="<?= $cus['id'] ?>" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
-                                        <i class="fas fa-key"></i> Đổi mật khẩu
-                                    </button>
-
+                                    ?>
+                                        <!-- Đổi mật khẩu -->
+                                        <button class="btn btn-sm btn-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-update-password"
+                                            data-id="<?= $cus['id'] ?>" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+                                            <i class="fas fa-key"></i> Đổi mật khẩu
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>

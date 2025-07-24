@@ -21,9 +21,15 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
 
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
-            <i class="bi bi-plus-circle me-2"></i> Thêm
-        </a>
+        <?php
+        if (hasPermission('modules/Admin/Products/Product.php')) {
+        ?>
+            <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i> Thêm
+            </a>
+        <?php
+        }
+        ?>
 
         <form class="search-form" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
@@ -79,18 +85,31 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
-                                        class="btn btn-sm btn-primary text-white text-decoration-none">
-                                        <i class="fas fa-edit me-1"></i> Sửa
-                                    </a>
-                                    <button type="button"
-                                        class="btn btn-sm btn-danger delete-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteProductModal"
-                                        data-id="<?= $item['id'] ?>"
-                                        data-name="<?= htmlspecialchars($item['name']) ?>">
-                                        <i class="fas fa-trash-alt me-1"></i> Xóa
-                                    </button>
+                                    <?php
+                                    if (hasPermission('modules/Admin/Products/UpdateProduct.php')) {
+
+                                    ?>
+                                        <a href="Admin.php?page=modules/Admin/Products/UpdateProduct.php&id=<?= $item['id'] ?>"
+                                            class="btn btn-sm btn-primary text-white text-decoration-none">
+                                            <i class="fas fa-edit me-1"></i> Sửa
+                                        </a>
+                                    <?php
+                                    }
+
+                                    if (hasPermission('modules/Admin/Products/DeleteProduct.php')) {
+
+                                    ?>
+                                        <button type="button"
+                                            class="btn btn-sm btn-danger delete-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteProductModal"
+                                            data-id="<?= $item['id'] ?>"
+                                            data-name="<?= htmlspecialchars($item['name']) ?>">
+                                            <i class="fas fa-trash-alt me-1"></i> Xóa
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>

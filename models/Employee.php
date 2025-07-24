@@ -13,9 +13,11 @@ class Employee extends Model
         'email' => 'VARCHAR(255) UNIQUE NOT NULL',
         'position' => 'VARCHAR(255)',
         'address' => 'VARCHAR(255)',
+        'password_hash' => 'VARCHAR(255)',
         'branch_id' => 'INT NOT NULL',
         'isDeleted' => 'TINYINT(1)',
-        'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+        'is_first_login' => 'TINYINT(1) DEFAULT 1',
+        'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
     ];
 
     protected $foreignKeys = [
@@ -66,5 +68,12 @@ class Employee extends Model
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'] ?? 0;
+    }
+
+    public function findByEmail($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

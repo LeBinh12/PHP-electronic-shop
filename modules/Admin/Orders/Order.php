@@ -28,12 +28,6 @@ $totalPages = max(1, ceil($totalRows / $limit));
         </form>
     </div>
 
-    <?php
-    require_once 'modules/Admin/Orders/ChangeStatusOrder.php';
-    require_once 'modules/Admin/Orders/DeleteOrder.php';
-    require_once 'modules/Admin/Orders/UpdateOrder.php';
-    require_once 'modules/Admin/Orders/ViewOrder.php';
-    ?>
 
 
     <!-- Bảng danh sách -->
@@ -72,38 +66,50 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                         class="btn btn-sm btn-info text-white btn-sm-fixed">
                                         <i class="fas fa-eye me-1"></i> Xem
                                     </a>
-
-                                    <a href="Admin.php?page=modules/Admin/Orders/Order.php&orderid=<?= $item['order_id'] ?>"
-                                        class="btn btn-sm btn-warning text-white btn-sm-fixed">
-                                        <i class="fas fa-edit me-1"></i> Sửa
-                                    </a>
-
                                     <?php
-                                    if ($item['status_id'] <  4) {
+                                    if (hasPermission('modules/Admin/Orders/UpdateOrder.php')) {
+
                                     ?>
+                                        <a href="Admin.php?page=modules/Admin/Orders/Order.php&orderid=<?= $item['order_id'] ?>"
+                                            class="btn btn-sm btn-warning text-white btn-sm-fixed">
+                                            <i class="fas fa-edit me-1"></i> Sửa
+                                        </a>
+
+                                        <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Orders/ChangeStatusOrder.php')) {
+
+                                        if ($item['status_id'] < 4) {
+                                        ?>
+                                            <button type="button"
+                                                style="padding:4px; font-size: 16px;"
+                                                class="btn btn-sm btn-primary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#changeStatusModal">
+                                                <i class="fas fa-sync-alt me-1"></i> Chuyển
+                                            </button>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <button
+                                                style="padding:4px; font-size: 16px;"
+                                                class="btn btn-sm btn-primary change-status-btn btn-sm-fixed">
+                                                <i class=" fas fa-sync-alt me-1"></i> Chuyển
+                                            </button>
+                                        <?php
+                                        }
+                                    }
+                                    if (hasPermission('modules/Admin/Inventory/DeleteOrder.php')) {
+
+                                        ?>
+
                                         <button type="button"
-                                            style="padding:4px; font-size: 16px;"
-                                            class="btn btn-sm btn-primary change-status-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#changeStatusModal">
-                                            <i class="fas fa-sync-alt me-1"></i> Chuyển
-                                        </button>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <button
-                                            style="padding:4px; font-size: 16px;"
-                                            class="btn btn-sm btn-primary change-status-btn btn-sm-fixed">
-                                            <i class=" fas fa-sync-alt me-1"></i> Chuyển
+                                            class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                                            <i class="fas fa-trash-alt me-1"></i> Xóa
                                         </button>
                                     <?php
                                     }
                                     ?>
-
-                                    <button type="button"
-                                        class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
-                                        <i class="fas fa-trash-alt me-1"></i> Xóa
-                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -129,3 +135,11 @@ $totalPages = max(1, ceil($totalRows / $limit));
             </ul>
         </nav>
     <?php endif; ?>
+
+
+    <?php
+    require_once 'modules/Admin/Orders/ChangeStatusOrder.php';
+    require_once 'modules/Admin/Orders/DeleteOrder.php';
+    require_once 'modules/Admin/Orders/UpdateOrder.php';
+    require_once 'modules/Admin/Orders/ViewOrder.php';
+    ?>

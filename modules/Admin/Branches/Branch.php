@@ -16,9 +16,15 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
 
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBranchModal">
-            <i class="bi bi-plus-circle me-2"></i> Thêm chi nhánh
-        </button>
+        <?php
+        if (hasPermission('modules/Admin/Branches/AddBranch.php')) {
+        ?>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBranchModal">
+                <i class="bi bi-plus-circle me-2"></i> Thêm chi nhánh
+            </button>
+        <?php
+        }
+        ?>
         <form class="search-form" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Branches/Branch.php">
             <button class="btn search-btn" type="submit">
@@ -57,23 +63,34 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                         <td><?= htmlspecialchars($item['created_at']) ?></td>
                         <td class="text-center">
                             <div class="d-inline-flex gap-2">
-                                <button class="btn btn-sm btn-primary"
-                                style="padding: 2px 8px; font-size: 16px;"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editBranchModal"
-                                    data-id="<?= $item['id'] ?>"
-                                    data-name="<?= htmlspecialchars($item['name']) ?>"
-                                    data-address="<?= htmlspecialchars($item['address']) ?>"
-                                    data-phone="<?= htmlspecialchars($item['phone']) ?>"
-                                    data-email="<?= htmlspecialchars($item['email']) ?>">
-                                    <i class="fas fa-edit me-1"></i> Sửa
-                                </button>
-                                <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa chi nhánh <?= $item['name'] ?> ?');">
-                                    <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                <?php
+                                if (hasPermission('modules/Admin/Branches/UpdateBranch.php')) {
+                                ?>
+                                    <button class="btn btn-sm btn-primary"
+                                        style="padding: 2px 8px; font-size: 16px;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editBranchModal"
+                                        data-id="<?= $item['id'] ?>"
+                                        data-name="<?= htmlspecialchars($item['name']) ?>"
+                                        data-address="<?= htmlspecialchars($item['address']) ?>"
+                                        data-phone="<?= htmlspecialchars($item['phone']) ?>"
+                                        data-email="<?= htmlspecialchars($item['email']) ?>">
+                                        <i class="fas fa-edit me-1"></i> Sửa
                                     </button>
-                                </form>
+                                <?php
+                                }
+                                if (hasPermission('modules/Admin/Branches/DeleteBranch.php')) {
+
+                                ?>
+                                    <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa chi nhánh <?= $item['name'] ?> ?');">
+                                        <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash-alt me-1"></i> Xóa
+                                        </button>
+                                    </form>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </td>
                     </tr>

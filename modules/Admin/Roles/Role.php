@@ -14,11 +14,17 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
 
 <div class="product-container">
 
-     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <!-- Nút thêm quyền -->
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoleModal">
-            <i class="bi bi-plus-circle me-2"></i> Thêm quyền
-        </button>
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <?php
+        if (hasPermission('modules/Admin/Roles/AddRole.php')) {
+        ?>
+            <!-- Nút thêm quyền -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoleModal">
+                <i class="bi bi-plus-circle me-2"></i> Thêm quyền
+            </button>
+        <?php
+        }
+        ?>
 
         <!-- Form tìm kiếm quyền -->
         <form class="search-form" method="GET" action="Admin.php">
@@ -49,14 +55,25 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
                     <td><?= htmlspecialchars($item['role_name']) ?></td>
                     <td class="text-center">
                         <div class="d-flex gap-2 justify-content-center">
-                            <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-white">
-                                <i class="fas fa-edit me-1"></i>Sửa
-                            </a>
+                            <?php
+                            if (hasPermission('modules/Admin/Roles/UpdateRole.php')) {
 
-                            <form method="POST" onsubmit="return confirm('Xác nhận xóa?')">
-                                <input type="hidden" name="delete_role_id" value="<?= $item['id'] ?>">
-                                <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt me-1"></i>Xóa</button>
-                            </form>
+                            ?>
+                                <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-white">
+                                    <i class="fas fa-edit me-1"></i>Sửa
+                                </a>
+                            <?php
+                            }
+                            if (hasPermission('modules/Admin/Role/DeleteRole.php')) {
+                            ?>
+
+                                <form method="POST" onsubmit="return confirm('Xác nhận xóa?')">
+                                    <input type="hidden" name="delete_role_id" value="<?= $item['id'] ?>">
+                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt me-1"></i>Xóa</button>
+                                </form>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </td>
                 </tr>

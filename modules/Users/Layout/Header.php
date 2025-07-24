@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     if ($res['success']) {
         $_SESSION['jwt'] = $res['token'];
         $userData = $userController->getCurrentUser();
-        echo "{$_SESSION['jwt']}";
+        // echo "{$_SESSION['jwt']}";
     } else {
         // echo "<script>
         //         alert('Tài khoản của bạn đã bị khóa đến {$res['report']['banned_until']}!');
@@ -318,8 +318,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
 
                 <div class="modal-footer d-flex justify-content-center align-items-center flex-column">
                     <div class="d-flex gap-3">
-                        <button type="button" id="editBtn" class="btn btn-primary" style = "padding: 6px 65px;">Chỉnh sửa thông tin tài khoản</button>
-                        <button type="submit" id="saveBtn" name="update_account" class="btn btn-primary d-none" style = "padding: 6px 125px;">Lưu thay đổi</button>
+                        <button type="button" id="editBtn" class="btn btn-primary" style="padding: 6px 65px;">Chỉnh sửa thông tin tài khoản</button>
+                        <button type="submit" id="saveBtn" name="update_account" class="btn btn-primary d-none" style="padding: 6px 125px;">Lưu thay đổi</button>
                     </div>
                 </div>
 

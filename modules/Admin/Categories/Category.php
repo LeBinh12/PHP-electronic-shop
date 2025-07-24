@@ -19,9 +19,16 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
 ?>
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-            <i class="bi bi-plus-circle me-2"></i> Thêm loại
-        </button>
+        <?php
+        if (hasPermission('modules/Admin/Categories/AddCategory.php')) {
+
+        ?>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                <i class="bi bi-plus-circle me-2"></i> Thêm loại
+            </button>
+        <?php
+        }
+        ?>
         <form class="search-form" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Categories/Category.php">
             <button class="btn search-btn" type="submit">
@@ -65,21 +72,33 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
 
                             <td>
                                 <div class="action-buttons">
-                                    <button type="button" class="btn btn-sm btn-primary" onclick="openEditCategoryModal(
+                                    <?php
+                                    if (hasPermission('modules/Admin/Categories/UpdateCategory.php')) {
+
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="openEditCategoryModal(
                                         <?= $item['id'] ?>,
                                         '<?= addslashes($item['name']) ?>',
                                         '<?= addslashes($item['icon']) ?>',
                                         <?= $item['status'] ?>
                                         )">
-                                        <i class="fas fa-edit me-1"></i>
-                                        Sửa
-                                    </button>
+                                            <i class="fas fa-edit me-1"></i>
+                                            Sửa
+                                        </button>
+                                    <?php
+                                    }
+                                    if (hasPermission('modules/Admin/Categories/DeleteCategory.php')) {
 
-                                    <!-- Nút xóa -->
-                                    <button type="button" class="btn btn-sm btn-danger delete-category-btn"
-                                        data-id="<?= $item['id'] ?>" data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
-                                        <i class="fas fa-trash-alt me-1"></i> Xóa
-                                    </button>
+                                    ?>
+
+                                        <!-- Nút xóa -->
+                                        <button type="button" class="btn btn-sm btn-danger delete-category-btn"
+                                            data-id="<?= $item['id'] ?>" data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>">
+                                            <i class="fas fa-trash-alt me-1"></i> Xóa
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
 
