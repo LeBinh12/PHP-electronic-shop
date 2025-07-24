@@ -206,4 +206,31 @@ class UserController extends BaseController
     {
         return $this->userModel->countUser($keyword);
     }
+
+    public function updatePasswordByAdmin($userId, $password)
+    {
+        try {
+            if (!v::stringType()->length(6, 32)->validate($password)) {
+                return ['success' => false, 'message' => 'Mật khẩu phải từ 6 đến 32 ký tự'];
+            }
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $data = [
+                'PasswordHash' => $passwordHash,
+                'UpdateAt' => date('Y-m-d H:i:s')
+            ];
+
+            $result = $this->userModel->update($userId, $data);
+
+            if ($result) {
+                return ['success' => true, 'message' => 'Cập nhật mật khẩu thành công'];
+            } else {
+                return ['success' => false, 'message' => 'Cập nhật thất bại'];
+            }
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => "Lỗi: " . $e->getMessage()
+            ];
+        }
+    }
 }

@@ -38,6 +38,8 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
     require_once 'modules/Admin/Customers/DeleteCustomer.php';
     require_once 'modules/Admin/Customers/ReportCustomer.php';
     require_once 'modules/Admin/Customers/DetailCustomer.php';
+    require_once 'modules/Admin/Customers/DeleteCustomerReport.php';
+    require_once 'modules/Admin/Customers/UpdatePassword.php';
 
     ?>
 
@@ -83,10 +85,14 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                         data-fullname="<?= htmlspecialchars($cus['FullName']) ?>"
                                         data-phone="<?= htmlspecialchars($cus['Phone']) ?>"
                                         data-email="<?= htmlspecialchars($cus['Email']) ?>"
+                                        data-address="<?= htmlspecialchars($cus['Address']) ?>"
+                                        data-created="<?= htmlspecialchars($cus['CreatedAt']) ?>"
+                                        data-status="<?= ($reportByUserId && strtotime($reportByUserId['banned_until']) > time()) ? 'Bị cấm đến ' . date('d/m/Y', strtotime($reportByUserId['banned_until'])) : 'Đang hoạt động' ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#detailCustomerModal">
                                         <i class="fas fa-info-circle"></i> Chi tiết
                                     </button>
+
 
                                     <!-- Báo cáo -->
                                     <button class="btn btn-sm btn-warning text-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-report-customer"
@@ -110,7 +116,7 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                     </button>
 
 
-                                    <!-- Nút Xóa -->                                    
+                                    <!-- Nút Xóa -->
                                     <button
                                         class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
                                         data-id="<?= $cus['id'] ?>"
@@ -119,6 +125,22 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
                                         data-bs-target="#deleteCustomerModal">
                                         <i class="fas fa-trash-alt"></i> Xóa
                                     </button>
+
+                                    <button
+                                        class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1 px-2 py-1 btn-delete-customer"
+                                        data-id="<?= $cus['id'] ?>"
+                                        data-name="<?= htmlspecialchars($cus['FullName']) ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteCustomerReportModal">
+                                        <i class="fas fa-trash-alt"></i> Gỡ báo cáo
+                                    </button>
+
+                                    <!-- Đổi mật khẩu -->
+                                    <button class="btn btn-sm btn-dark d-inline-flex align-items-center gap-1 px-2 py-1 btn-update-password"
+                                        data-id="<?= $cus['id'] ?>" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+                                        <i class="fas fa-key"></i> Đổi mật khẩu
+                                    </button>
+
                                 </div>
                             </td>
                         </tr>
@@ -141,4 +163,3 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
             <?php endfor ?>
         </ul>
     </nav>
-    

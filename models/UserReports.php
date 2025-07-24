@@ -31,4 +31,12 @@ class UserReports extends Model
         $stmt->execute(['user_id' => $userId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function DeleteReportUser($id)
+    {
+        $sql = "UPDATE {$this->table} SET isDeleted = 1 WHERE reported_user_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

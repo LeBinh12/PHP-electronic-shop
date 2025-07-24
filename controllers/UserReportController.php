@@ -34,4 +34,20 @@ class UserReportController
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $this->userReportModel->DeleteReportUser($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa báo cáo thành công!'
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
 }

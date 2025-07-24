@@ -41,3 +41,37 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const detailButtons = document.querySelectorAll(".btn-detail-customer");
+
+    detailButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        const fullname = this.getAttribute("data-fullname");
+        const email = this.getAttribute("data-email");
+        const phone = this.getAttribute("data-phone");
+        const address = this.getAttribute("data-address") || "Chưa có";
+        const created = this.getAttribute("data-created") || "Không rõ";
+        const status = this.getAttribute("data-status") || "Không rõ";
+
+        document.getElementById("detail-fullname").textContent = fullname;
+        document.getElementById("detail-email").textContent = email;
+        document.getElementById("detail-phone").textContent = phone;
+        document.getElementById("detail-address").textContent = address;
+        document.getElementById("detail-created").textContent = created;
+
+        const statusElement = document.getElementById("detail-status");
+        statusElement.textContent = status;
+
+        if (status.includes("Bị cấm")) {
+          statusElement.classList.remove("text-success");
+          statusElement.classList.add("text-danger");
+        } else {
+          statusElement.classList.remove("text-danger");
+          statusElement.classList.add("text-success");
+        }
+      });
+    });
+  });
+</script>
