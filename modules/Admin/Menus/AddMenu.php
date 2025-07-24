@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_menu'])) {
     ];
 
     $result = $menuController->add($data);
-    if ($isLoading) {
+    if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {
         $_SESSION['error'] = $result['message'];
