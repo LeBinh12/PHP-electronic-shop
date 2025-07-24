@@ -58,7 +58,7 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                         <td class="text-center">
                             <div class="d-inline-flex gap-2">
                                 <button class="btn btn-sm btn-primary"
-                                style="padding: 2px 8px; font-size: 16px;"
+                                    style="padding: 2px 8px; font-size: 16px;"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editBranchModal"
                                     data-id="<?= $item['id'] ?>"
@@ -68,12 +68,13 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                                     data-email="<?= htmlspecialchars($item['email']) ?>">
                                     <i class="fas fa-edit me-1"></i> Sửa
                                 </button>
-                                <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa chi nhánh <?= $item['name'] ?> ?');">
-                                    <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt me-1"></i> Xóa
-                                    </button>
-                                </form>
+                                <button class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteBranchModal"
+                                    data-id="<?= $branch['id'] ?>"
+                                    data-name="<?= htmlspecialchars($branch['name']) ?>">
+                                    <i class="fas fa-trash-alt"></i> Xóa
+                                </button>
                             </div>
                         </td>
                     </tr>

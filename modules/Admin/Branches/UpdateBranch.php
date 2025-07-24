@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['edit_Branch'])) {
         <form method="POST" action="Admin.php?page=modules/Admin/Branches/Branch.php">
             <input type="hidden" name="id" id="edit-id">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Sửa chi nhánh</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>

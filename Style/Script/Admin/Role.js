@@ -8,6 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editRoleId").value = id;
     document.getElementById("editRoleName").value = name;
   });
+  const deleteRoleModal = document.getElementById("deleteRoleModal");
+    if (deleteRoleModal) {
+        deleteRoleModal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget;
+            const roleId = button.getAttribute("data-id");
+            const roleName = button.getAttribute("data-name");
+
+            document.getElementById("deleteRoleId").value = roleId;
+            document.getElementById("deleteRoleName").textContent = roleName;
+        });
+    }
 });
 
 document

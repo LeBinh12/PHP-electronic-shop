@@ -14,7 +14,7 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
 
 <div class="product-container">
 
-     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <!-- Nút thêm quyền -->
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoleModal">
             <i class="bi bi-plus-circle me-2"></i> Thêm quyền
@@ -50,13 +50,17 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
                     <td class="text-center">
                         <div class="d-flex gap-2 justify-content-center">
                             <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-white">
-                                <i class="fas fa-edit me-1"></i>Sửa
+                                <i class="fas fa-edit me-1"></i> Sửa
                             </a>
 
-                            <form method="POST" onsubmit="return confirm('Xác nhận xóa?')">
-                                <input type="hidden" name="delete_role_id" value="<?= $item['id'] ?>">
-                                <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt me-1"></i>Xóa</button>
-                            </form>
+                            <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteRoleModal"
+                                data-id="<?= $item['id'] ?>"
+                                data-name="<?= htmlspecialchars($item['role_name']) ?>">
+                                <i class="fas fa-trash-alt"></i> Xóa
+                            </button>
+
                         </div>
                     </td>
                 </tr>
