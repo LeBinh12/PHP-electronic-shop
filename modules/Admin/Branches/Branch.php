@@ -80,14 +80,14 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                                 <?php
                                 }
                                 if (hasPermission('modules/Admin/Branches/DeleteBranch.php')) {
-
                                 ?>
-                                    <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa chi nhánh <?= $item['name'] ?> ?');">
-                                        <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash-alt me-1"></i> Xóa
-                                        </button>
-                                    </form>
+                                    <button class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteBranchModal"
+                                        data-id="<?= $branch['id'] ?>"
+                                        data-name="<?= htmlspecialchars($branch['name']) ?>">
+                                        <i class="fas fa-trash-alt"></i> Xóa
+                                    </button>
                                 <?php
                                 }
                                 ?>

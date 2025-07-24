@@ -60,20 +60,25 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
 
                             ?>
                                 <a href="Admin.php?page=modules/Admin/Roles/Role.php&edit_id=<?= $item['id'] ?>" class="btn btn-primary btn-sm text-white">
-                                    <i class="fas fa-edit me-1"></i>Sửa
+                                    <i class="fas fa-edit me-1"></i> Sửa
                                 </a>
                             <?php
                             }
+
                             if (hasPermission('modules/Admin/Role/DeleteRole.php')) {
+
                             ?>
 
-                                <form method="POST" onsubmit="return confirm('Xác nhận xóa?')">
-                                    <input type="hidden" name="delete_role_id" value="<?= $item['id'] ?>">
-                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt me-1"></i>Xóa</button>
-                                </form>
+                                <button class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteRoleModal"
+                                    data-id="<?= $item['id'] ?>"
+                                    data-name="<?= htmlspecialchars($item['role_name']) ?>">
+                                    <i class="fas fa-trash-alt"></i> Xóa
+                                </button>
                             <?php
-                            }
-                            ?>
+
+                            } ?>
                         </div>
                     </td>
                 </tr>

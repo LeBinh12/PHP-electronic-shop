@@ -67,6 +67,7 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
 
                                 ?>
                                     <button
+                                        type="button"
                                         class="btn btn-sm btn-primary d-flex align-items-center justify-content-center px-2"
                                         style="min-width: 65px; height: 30px;"
                                         data-bs-toggle="modal"
@@ -82,21 +83,21 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
                                 ?>
 
                                     <!-- Nút Xóa -->
-                                    <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn xóa menu này?');">
-                                        <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
-                                        <button
-                                            type="submit"
-                                            class="btn btn-sm btn-danger d-flex align-items-center justify-content-center px-2"
-                                            style="min-width: 65px; height: 30px;">
-                                            <i class="fas fa-trash-alt me-1"></i><span>Xóa</span>
-                                        </button>
-                                    </form>
-                            </div>
-                        <?php
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-danger d-flex align-items-center justify-content-center px-2"
+                                        style="min-width: 65px; height: 30px;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteMenuModal"
+                                        data-id="<?= $item['id'] ?>"
+                                        data-name="<?= htmlspecialchars($item['menu_name']) ?>">
+                                        <i class="fas fa-trash-alt me-1"></i><span>Xóa</span>
+                                    </button>
+                                <?php
                                 }
-                        ?>
+                                ?>
+                            </div>
                         </td>
-
                     </tr>
                 <?php } ?>
             </tbody>

@@ -13,25 +13,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_employee'])) {
     exit;
 }
 ?>
-
-
+<!-- Modal xác nhận xóa nhân viên -->
 <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST">
-            <div class="modal-content">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow">
+            <form method="POST" action="index.php?controller=employee&action=delete">
+                <input type="hidden" name="delete_branch" value="1">
+                <input type="hidden" name="employee_id" id="deleteEmployeeId">
+
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Xác nhận xóa nhân viên</h5>
+                    <h6 class="modal-title" id="deleteEmployeeModalLabel">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Xác nhận xóa nhân viên
+                    </h6>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
-                <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa nhân viên: <strong id="deleteEmployeeName"></strong>?
-                    <input type="hidden" name="delete_employee_id" id="deleteEmployeeId">
+
+                <div class="modal-body text-center">
+                    <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
+                    <p>Bạn có chắc chắn muốn xóa nhân viên <strong id="deleteEmployeeName" class="text-danger"></strong> không?</p>
+                    <?php if (!empty($errorMessageDelete)) : ?>
+                        <div class="alert alert-danger"><?= htmlspecialchars($errorMessageDelete) ?></div>
+                    <?php endif; ?>
                 </div>
-                <div class="modal-footer">
+
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-1"></i> Xóa
+                    </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" name="delete_employee" class="btn btn-danger">Xóa</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
