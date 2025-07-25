@@ -101,7 +101,8 @@ $_SESSION['user_type'] = $_SESSION['user_type'] ?? null;
         </div>
     <?php
     } else {
-        echo "<h1>Bạn cần phải đăng nhập</h1>";
+        // echo "<h1>Bạn cần phải đăng nhập</h1>";
+        require './Auth/LoginRequired.php';
     }
     ?>
 
