@@ -92,9 +92,6 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                                     onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
                                     Chuyển đơn
                                 </button>
-                                <h1><?= $order['shipping_id'] ?></h1>
-
-
                             </td>
                         </tr>
                     <?php endforeach; ?>

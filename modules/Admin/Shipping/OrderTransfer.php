@@ -1,12 +1,17 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) {
-  $supplierId = $_POST['supplierId'];
-  $address = $_POST['address'];
-  var_dump($supplierId);
-  var_dump($address);
+  $shippingId = $_POST['shippingId'];
+  $address = trim($_POST['address']);
+  $addressPresent = trim($_POST['addressPresent']);
 
-  $result = $shippingController->update($supplierId, ['address' => $address]);
+  if (strcasecmp($address, $addressPresent) === 0) {
+    $_SESSION['error'] = "Đơn hàng đã được người nhận nhận hàng.";
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Shipping/Shipping.php';</script>";
+    exit;
+  }
+
+  $result = $shippingController->update($shippingId, ['address' => $address]);
   if ($result['success']) {
     $_SESSION['success'] = $result['message'];
   } else {
@@ -32,8 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
       </div>
       <form id="transferForm" method="post">
         <div class="modal-body">
-          <label class="form-label">ID</label>
-          <input type="text" class="form-control" name="shippingId" id="transfer-shipping-id" readonly>
+          <input type="hidden" class="form-control" name="shippingId" id="transfer-shipping-id" readonly>
 
 
           <div class="mb-3">
@@ -43,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
 
           <div class="mb-3">
             <label class="form-label">Vị trí hiện tại</label>
-            <input type="text" class="form-control" id="transfer-current-location" readonly>
+            <input type="text" class="form-control" name="addressPresent" id="transfer-current-location" readonly>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Chuyển đến</label>
-            <input type="text" class="form-control" name="address" id="transfer-destination" placeholder="Nhập nơi cần chuyển đến" required>
+            <input type="text" class="form-control" name="address" placeholder="Nhập nơi cần chuyển đến" required>
           </div>
         </div>
         <div class="modal-footer">

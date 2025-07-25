@@ -50,6 +50,9 @@ $userId = $_GET['chat_user_id'] ?? null;
 $showChatList = isset($_GET['show_chat_list']);
 $employeeData = $employeeController->getCurrentEmployee() ?? null;
 
+
+$_SESSION['user_type'] = $_SESSION['user_type'] ?? null;
+
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +72,6 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
     <link rel="stylesheet" href="./Style/Admin/Product.css">
     <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
     <link rel="stylesheet" href="./Style/Admin/Customer.css">
-    <link rel="stylesheet" href="./Style/Admin/Sidebar.css">
 </head>
 
 <body>
@@ -80,7 +82,7 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
     //     echo "[{$entry->time}] {$entry->from}: {$entry->message} <br>";
     // }
     require_once './Auth/LoginLogic.php';
-    if ($_SESSION['user_type']) {
+    if ($_SESSION['user_type'] !== null) {
         require './modules/Admin/Navbar/Navbar.php';
     ?>
         <!-- Navbar nên đặt ngoài admin-container -->
