@@ -15,28 +15,28 @@ $is_stats_active = in_array($currentPage, [
   </div>
   <ul>
     <li class="<?= ($currentPage === '' || $currentPage == 'dashboard') ? 'active' : '' ?>">
-      <a href="Admin.php"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="Admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Products/Product.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Products/Product.php"><i class="fas fa-box"></i> Sản Phẩm</a>
+      <a href="Admin.php?page=modules/Admin/Products/Product.php"><i class="fas fa-box"></i> Quản lý Sản Phẩm</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Branches/Branch.php"><i class="fas fa-building"></i> Quản lý chi nhánh</a>
+      <a href="Admin.php?page=modules/Admin/Branches/Branch.php"><i class="fas fa-store"></i> Quản lý chi nhánh</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Categories/Category.php"><i class="fas fa-tags"></i> Loại sản phẩm</a>
+      <a href="Admin.php?page=modules/Admin/Categories/Category.php"><i class="fas fa-table"></i> Quản lý Loại sản phẩm</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Suppliers/Supplier.php"><i class="fas fa-truck"></i> Nhà cung cấp</a>
+      <a href="Admin.php?page=modules/Admin/Suppliers/Supplier.php"><i class="fas fa-boxes-packing"></i> Quản lý Nhà cung cấp</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-warehouse"></i> Kho hàng</a>
+      <a href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-warehouse"></i> Quản lý Kho hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Customers/Customer.php"><i class="fas fa-users"></i> Khách hàng</a>
+      <a href="Admin.php?page=modules/Admin/Customers/Customer.php"><i class="fas fa-users"></i> Quản lý Khách hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Orders/Order.php"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+      <a href="Admin.php?page=modules/Admin/Orders/Order.php"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>">
       <a href="Admin.php?page=modules/Admin/Menus/Menu.php"><i class="fas fa-screwdriver-wrench"></i> Quản lý chức năng</a>
@@ -59,14 +59,44 @@ $is_stats_active = in_array($currentPage, [
       </div>
 
       <ul id="dropdown-menu" class="dropdown-menu <?= $is_stats_active ? 'show' : '' ?>">
-        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Product/Product.php') ? 'active-sub' : '' ?>">
-          <a href="Admin.php?page=modules/Admin/RecycleBin/Product/Product.php">
-            <i class="fas fa-dollar-sign"></i> Sản phẩm
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Products/Product.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Products/Product.php">
+            <i class="fas fa-box"></i> Sản phẩm
           </a>
         </li>
-        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Category/Category.php') ? 'active-sub' : '' ?>">
-          <a href="Admin.php?page=modules/Admin/RecycleBin/Category/Category.php">
-            <i class="fas fa-receipt"></i> Loại sản phẩm
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Categories/Category.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Categories/Category.php">
+            <i class="fas fa-store"></i> Loại sản phẩm
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Suppliers/Supplier.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Suppliers/Supplier.php">
+            <i class="fas fa-table"></i> Nhà cung cấp
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Customers/Customer.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Customers/Customer.php">
+            <i class="fas fa-users"></i> Khách hàng
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Orders/Orders.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Orders/Order.php">
+            <i class="fas fa-shopping-cart"></i> Đơn hàng
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Menus/Menu.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Menus/Menu.php">
+            <i class="fas fa-screwdriver-wrench"></i> Chức năng
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Roles/Role.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Roles/Role.php">
+            <i class="fas fa-sitemap"></i> Quyền
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Employees/Employee.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Employees/Employee.php">
+            <i class="fas fa-clipboard-user"></i> Nhân viên
           </a>
         </li>
       </ul>
