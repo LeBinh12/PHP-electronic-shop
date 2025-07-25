@@ -11,6 +11,11 @@ class ShippingController
         $this->shippingModel = new Shipping();
     }
 
+    public function getById($id)
+    {
+        return $this->shippingModel->find($id);
+    }
+
     public function add($data)
     {
         try {

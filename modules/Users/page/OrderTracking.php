@@ -1,5 +1,12 @@
 <?php
-$address = "Trường Đại Học Đồng Tháp";
+
+if ($_GET['order_id']) {
+    $order_id = $_GET['order_id'];
+    $address = $orderController->getById("$order_id");
+    $shipping = $shippingController->getById($address['shipping_id']);
+}
+
+$address = "78-80-82 Hoàng Hoa Thám, Phường Bảy Hiền, Thành phố Hồ Chí Minh";
 ?>
 
 <div class="map-container">

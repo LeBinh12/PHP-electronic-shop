@@ -147,14 +147,18 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                                     Tất cả
                                 </a>
                             </li>
-                            <?php foreach ($categoryGetAll as $item) { ?>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
-                                        <?= $item['name'] ?>
-                                    </a>
-                                </li>
-                            <?php } ?>
+                            <?php foreach ($categoryGetAll as $item) {
+                                if ($item['status'] === 0) {
+                            ?>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
+                                            <?= $item['name'] ?>
+                                        </a>
+                                    </li>
+                            <?php
+                                }
+                            } ?>
                         </ul>
                     </div>
 

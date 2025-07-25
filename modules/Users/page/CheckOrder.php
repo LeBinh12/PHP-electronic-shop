@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <?php if ($order['status_id'] === 4 ) { ?>
+                                <?php if ($order['status_id'] === 4) { ?>
                                     <a href="index.php?subpage=modules/Users/page/OrderTracking.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
                                         class="btn btn-outline-primary btn-sm"
                                         style=" background-color: #007bff; 

@@ -38,7 +38,7 @@
                             <li>
                                 <a class="dropdown-item d-flex align-items-center py-2 px-3" href="?chat_user_id=<?= htmlspecialchars($user) ?>">
                                     <i class="bi bi-person-circle text-success me-2" style="font-size: 1.2rem;"></i>
-                                    <span>Người dùng #<?= htmlspecialchars($user) ?></span>
+                                    <span>Người dùng: <?= $userController->getById($user)['FullName'] ?? "Không có tên"  ?></span>
                                 </a>
                             </li>
                         <?php } ?>
