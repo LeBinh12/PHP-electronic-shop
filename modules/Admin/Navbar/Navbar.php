@@ -87,7 +87,7 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger d-flex align-items-center gap-2" href="modules/Auth/logout.php">
+                        <a class="dropdown-item text-danger d-flex align-items-center gap-2" href="Auth/logout.php">
                             <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </a>
                     </li>

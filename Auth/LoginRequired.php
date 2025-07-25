@@ -7,7 +7,7 @@
         </p>
 
         <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-            <a href="Admin.php?page=Auth/Login.php" class="btn btn-primary">
+            <a href="Auth/Login.php" class="btn btn-primary">
                 <i class="bi bi-box-arrow-in-right" style="margin-right: 5px;"></i> Đăng nhập ngay
             </a>
             <a href="index.php" class="btn btn-outline-secondary">
