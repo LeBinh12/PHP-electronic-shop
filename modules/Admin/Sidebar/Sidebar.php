@@ -1,158 +1,88 @@
 <?php
 $currentPage = $_GET['page'] ?? '';
+$is_stats_active = in_array($currentPage, [
+  'modules/Admin/RecycleBin/Product/Product.php',
+  'modules/Admin/RecycleBin/Category/Category.php',
+  'modules/Admin/RecycleBin/Supplier/Supplier.php'
+]);
 ?>
 
-<div class="sidebar custom-sidebar" style="top: 0; margin-top: 0; padding-top: 0;">
-  <div class="logo">
-    <img src="Style/Images/123.png" alt="Logo" style="max-width: 200px; height: auto; object-fit: contain; border-radius: 20px;">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <a href="Admin.php" style="text-decoration: none;">
+      <h2 class="gradient-text">GARENA</h2>
+    </a>
   </div>
-
-  <ul class="nav flex-column p-3">
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === '' || $currentPage === 'dashboard') ? 'active' : '' ?>" href="Admin.php">
-        <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
-      </a>
+  <ul>
+    <li class="<?= ($currentPage === '' || $currentPage == 'dashboard') ? 'active' : '' ?>">
+      <a href="Admin.php"><i class="fas fa-home"></i> Dashboard</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Products/Product.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Products/Product.php">
-        <i class="fas fa-box"></i><span>Quản lý Sản Phẩm</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Products/Product.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Products/Product.php"><i class="fas fa-box"></i> Sản Phẩm</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Branches/Branch.php">
-        <i class="fas fa-store"></i><span>Quản lý chi nhánh</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Branches/Branch.php"><i class="fas fa-building"></i> Quản lý chi nhánh</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Categories/Category.php">
-        <i class="fas fa-table"></i><span>Quản lý Loại Sản Phẩm</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Categories/Category.php"><i class="fas fa-tags"></i> Loại sản phẩm</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Suppliers/Supplier.php">
-        <i class="fas fa-boxes-packing"></i><span>Quản lý Đối Tác Cung Cấp</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Suppliers/Supplier.php"><i class="fas fa-truck"></i> Nhà cung cấp</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Inventory/Inventory.php">
-        <i class="fas fa-warehouse"></i><span>Quản lý Kho Hàng</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-warehouse"></i> Kho hàng</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Customers/Customer.php">
-        <i class="fas fa-users"></i><span>Quản lý Khách hàng</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Customers/Customer.php"><i class="fas fa-users"></i> Khách hàng</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Orders/Order.php">
-        <i class="fas fa-shopping-cart"></i><span>Quản lý Đơn hàng</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Orders/Order.php"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Menus/Menu.php">
-        <i class="fas fa-screwdriver-wrench"></i><span>Quản lý chức năng</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Menus/Menu.php"><i class="fas fa-screwdriver-wrench"></i> Quản lý chức năng</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Roles/Role.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Roles/Role.php">
-        <i class="fas fa-sitemap"></i><span>Quản lý quyền</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Roles/Role.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Roles/Role.php"><i class="fas fa-sitemap"></i> Quản lý quyền</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Employees/Employee.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Employees/Employee.php">
-        <i class="fas fa-clipboard-user"></i><span>Quản lý nhân viên</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Employees/Employee.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Employees/Employee.php"><i class="fas fa-clipboard-user"></i> Quản lý nhân viên</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/Shipping/Shipping.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/Shipping/Shipping.php">
-        <i class="fas fa-truck"></i><span>Quản lý giao hàng</span>
-      </a>
+    <li class="<?= ($currentPage == 'modules/Admin/Shipping/Shipping.php') ? 'active' : '' ?>">
+      <a href="Admin.php?page=modules/Admin/Shipping/Shipping.php"><i class="fas fa-truck"></i> Quản lý giao hàng</a>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link d-flex justify-content-between align-items-center <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'active' : '' ?>" data-bs-toggle="collapse" href="#recycleCollapse" role="button" aria-expanded="<?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'true' : 'false' ?>" aria-controls="recycleCollapse">
-        <div class="d-flex align-items-center gap-2">
-          <i class="fas fa-trash"></i><span>Recycle Bin</span>
-        </div>
-        <i class="fas fa-chevron-right arrow-icon <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'rotate' : '' ?>"></i>
-      </a>
-
-      <div class="collapse <?= (strpos($currentPage, 'modules/Admin/RecycleBin') !== false) ? 'show' : '' ?>" id="recycleCollapse">
-        <ul class="nav flex-column ms-4">
-          <li>
-            <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/RecycleBin/Product/Product.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/RecycleBin/Product/Product.php">
-              <i class="fas fa-box-open"></i><span>Product</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/RecycleBin/Category/Category.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/RecycleBin/Category/Category.php">
-              <i class="fas fa-table"></i><span>Category</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link d-flex align-items-center gap-2 <?= ($currentPage === 'modules/Admin/RecycleBin/Supplier/Supplier.php') ? 'active' : '' ?>" href="Admin.php?page=modules/Admin/RecycleBin/Supplier/Supplier.php">
-              <i class="fas fa-truck"></i><span>Supplier</span>
-            </a>
-          </li>
-        </ul>
+    <li class="dropdown">
+      <div id="dropdown-toggle" class="dropdown-toggle">
+        <span class="toggle-label">
+          <i class="fas fa-trash-alt" style="margin-right: 8px; width: 20px;"></i> Thùng rác
+        </span>
+        <span class="arrow <?= $is_stats_active ? 'open' : '' ?>">&#9656;</span>
       </div>
-    </li>
 
-    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="#"><i class="fas fa-language"></i><span>Language</span></a></li>
-    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="/Auth/logout.php"><i class="fas fa-sign-in-alt"></i><span>Login</span></a></li>
-    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="#"><i class="fas fa-cogs"></i><span>Settings</span></a></li>
+      <ul id="dropdown-menu" class="dropdown-menu <?= $is_stats_active ? 'show' : '' ?>">
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Product/Product.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Product/Product.php">
+            <i class="fas fa-dollar-sign"></i> Sản phẩm
+          </a>
+        </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Category/Category.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Category/Category.php">
+            <i class="fas fa-receipt"></i> Loại sản phẩm
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
-<style>
-  .sidebar .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
-  }
+<script>
+  const toggle = document.getElementById('dropdown-toggle');
+  const menu = document.getElementById('dropdown-menu');
+  const arrow = toggle.querySelector('.arrow');
 
-  .sidebar .nav-link span {
-    flex-shrink: 1;
+  if (toggle && menu && arrow) {
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('show');
+      arrow.classList.toggle('open');
+    });
   }
-
-  .sidebar .nav-link i {
-    min-width: 20px;
-    text-align: center;
-  }
-
-  .arrow-icon {
-    transition: transform 0.3s ease;
-  }
-
-  .arrow-icon.rotate {
-    transform: rotate(90deg);
-  }
-
-  .sidebar {
-    overflow-y: auto;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* IE & Edge */
-  }
-
-  .sidebar::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari */
-  }
-</style>
+</script>
