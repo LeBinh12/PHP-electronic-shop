@@ -1,7 +1,7 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) {
-  $supplierId = $_POSt['supplierId'];
+  $supplierId = $_POST['supplierId'];
   $address = $_POST['address'];
   var_dump($supplierId);
   var_dump($address);
@@ -32,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
       </div>
       <form id="transferForm" method="post">
         <div class="modal-body">
-          <input type="text" class="form-control" name="supplierId" id="transfer-supplier-id" readonly>
+          <label class="form-label">ID</label>
+          <input type="text" class="form-control" name="shippingId" id="transfer-shipping-id" readonly>
+
 
           <div class="mb-3">
             <label class="form-label">Mã đơn hàng</label>
