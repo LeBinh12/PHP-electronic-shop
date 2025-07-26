@@ -262,8 +262,10 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
-                        <span class="input-group-text bg-white"><i class="bi bi-eye"></i></span>
+                        <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Mật khẩu">
+                        <span class="input-group-text bg-white" id="togglePassword" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="eyeIcon"></i>
+                        </span>
                     </div>
                     <div class="d-flex justify-content-end mb-3">
                         <a href="#" class="small text-decoration-none" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Quên mật khẩu?</a>
@@ -433,6 +435,17 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
             fields.forEach(field => field.disabled = false);
             saveBtn.classList.remove("d-none");
             editBtn.classList.add("d-none");
+        });
+
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('bi-eye');
+            eyeIcon.classList.toggle('bi-eye-slash');
         });
     });
 </script>
