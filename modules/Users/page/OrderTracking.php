@@ -6,10 +6,10 @@ if ($_GET['order_id']) {
     $shipping = $shippingController->getById($address['shipping_id']);
 }
 
-$address = "78-80-82 Hoàng Hoa Thám, Phường Bảy Hiền, Thành phố Hồ Chí Minh";
+$address = "Đại học Đồng Tháp";
 ?>
 
-<div class="map-container">
+<!-- <div class="map-container">
     <div class="map-header">
         <h2 class="text-primary">📍 Vị trí đơn hàng của bạn</h2>
         <div class="address-info">
@@ -18,13 +18,28 @@ $address = "78-80-82 Hoàng Hoa Thám, Phường Bảy Hiền, Thành phố Hồ
     </div>
 
     <div id="map"></div>
+</div> -->
+<div class="map-container">
+    <div class="map-header">
+        <h2 class="text-primary">📍 Vị trí đơn hàng của bạn</h2>
+        <div class="address-info">
+            Địa chỉ: <strong><?= htmlspecialchars($address) ?></strong>
+        </div>
+    </div>
+    <iframe
+        width="100%"
+        height="500"
+        frameborder="0"
+        style="border:0"
+        src="https://www.google.com/maps?q=<?= urlencode($address) ?>&output=embed"
+        allowfullscreen></iframe>
 </div>
 
 
-<script>
+<!-- <script>
     const address = <?= json_encode($address) ?>;
 
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+    fetch(`https://maps.google.com/maps?q=${address}&z=15&output=embed`)
         .then(response => response.json())
         .then(data => {
             if (data && data.length > 0) {
@@ -47,4 +62,4 @@ $address = "78-80-82 Hoàng Hoa Thám, Phường Bảy Hiền, Thành phố Hồ
         .catch(error => {
             console.error("Lỗi khi gọi API Nominatim:", error);
         });
-</script>
+</script> -->
