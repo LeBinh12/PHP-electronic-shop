@@ -1,12 +1,15 @@
 <?php
 
+$address = "Đại học Đồng Tháp";
+
+
 if ($_GET['order_id']) {
     $order_id = $_GET['order_id'];
-    $address = $orderController->getById("$order_id");
-    $shipping = $shippingController->getById($address['shipping_id']);
+    $order = $orderController->getById($order_id);
+    $shipping = $shippingController->getById($order['shipping_id']);
+    $address = $shipping['address'];
 }
 
-$address = "Đại học Đồng Tháp";
 ?>
 
 <!-- <div class="map-container">

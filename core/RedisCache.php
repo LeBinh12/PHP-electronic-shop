@@ -14,6 +14,14 @@ class RedisCache
                 'host' => '127.0.0.1',
                 'port' => 6379,
             ]);
+
+            // chạy khi deploy 
+            // self::$client = new Client([
+            //     'scheme'   => 'tls', // TLS = rediss
+            //     'host'     => 'rare-garfish-50645.upstash.io',
+            //     'port'     => 6379,
+            //     'password' => 'AcXVAAIjcDFhYmY4ZWFiYmI1YTM0ZmY5YTVmZWY3Y2I0ZjhkZmI3Y3AxMA',
+            // ]);
         }
         return self::$client;
     }

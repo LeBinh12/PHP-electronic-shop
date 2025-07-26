@@ -56,11 +56,10 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, e.name AS employee_name
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
             JOIN    users u ON o.user_id = u.id
-            JOIN    employees e ON e.id = o.employee_id 
             WHERE   o.user_id  = :user_id
               AND   o.isDeleted = 0
         ";
@@ -76,6 +75,7 @@ class Order extends Model
             $sql .= " AND o.code LIKE :kw";
             $params['kw'] = '%' . $keyword . '%';
         }
+
 
         $sql .= " ORDER BY o.id DESC LIMIT :limit OFFSET :offset";
 

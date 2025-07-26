@@ -41,6 +41,8 @@ if ($filterStatusId == 0) {
     );
 }
 
+
+
 $totalPages = max(1, ceil($totalRows / $limit));
 $groupSize = 3;
 $pageGroup = ceil($page / $groupSize);
@@ -51,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
     $node_cancel = $_POST['cancel_reason'] ?? "";
     $cancel_by = "user." . $userData->id;
     $id = $_POST['cancel_order'];
-    var_dump($id);
     $data = [
         "status_id" => 5,
         "cancel_reason" => $node_cancel,
