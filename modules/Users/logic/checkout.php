@@ -50,10 +50,9 @@ foreach ($_POST['selected'] as $id) {
     //     exit;
     // }
     if ($quantity >= $productInventory) {
-    swal_alert('warning','Không đủ hàng', 'Hiện cửa hàng này không đủ số lượng sản phẩm bạn mua!', 'index.php?subpage=modules/Users/page/Cart.php');
-    exit;
-}
-
+        swal_alert('warning', 'Không đủ hàng', 'Hiện cửa hàng này không đủ số lượng sản phẩm bạn mua!', 'index.php?subpage=modules/Users/page/Cart.php');
+        exit;
+    }
 }
 $code = strtoupper(string: substr(md5(uniqid(mt_rand(), true)), 0, 8));
 $note = $_POST['note'] ?? '';

@@ -26,7 +26,8 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
     }
 
     .store-box h6 {
-        font-size: 18px;;
+        font-size: 18px;
+        ;
         font-weight: bold;
         margin-bottom: 12px;
         padding-bottom: 8px;
@@ -57,7 +58,6 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                 <?php } ?>
             </div>
         </div>
-
 
         <div class="col-lg-6 col-md-6 col-12">
             <h2><?= $productById['name'] ?></h2>
@@ -114,7 +114,6 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
             </form>
         </div>
     </div>
-
 
     <div class="mt-5 product-description">
         <h4>Mô tả sản phẩm</h4>

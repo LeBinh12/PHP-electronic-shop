@@ -10,6 +10,7 @@ class Admin extends Model
         'password_hash' => 'VARCHAR(255)',
         'email' => 'VARCHAR(255)',
         'role' => 'VARCHAR(255)',
+        'isDeleted' => 'TINYINT(1)',
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
@@ -19,6 +20,16 @@ class Admin extends Model
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(["email" => $email, "password" => $password]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function ExitEmail($email)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE email = :email";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["email" => $email]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

@@ -16,7 +16,6 @@ $getCategory = $category->getAll();
     <h3 class="ecom-title">Danh mục nổi bật</h3>
     <div class="ecom-category-list">
         <?php
-
         foreach ($getCategory as $item) {
         ?>
             <a href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?>" class="ecom-category-card text-decoration-none">

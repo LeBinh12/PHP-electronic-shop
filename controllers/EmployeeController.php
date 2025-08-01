@@ -144,6 +144,34 @@ class EmployeeController
         }
     }
 
+    public function refreshtoken($id)
+    {
+
+        $updatedEmployee = $this->employeeModel->find($id);
+
+        // Tạo lại token
+        $now = time();
+        $token = [
+            'iss' => $this->jwtConfig['issuer'],
+            'aud' => $this->jwtConfig['audience'],
+            'iat' => $now,
+            'nbf' => $now,
+            'exp' => $now + 3600,
+            'data' => [
+                'id' => $updatedEmployee['id'],
+                'email' => $updatedEmployee['email'],
+                'name' => $updatedEmployee['name'],
+                'phone' => $updatedEmployee['phone'],
+                'address' => $updatedEmployee['address'],
+                'position' => $updatedEmployee['position'],
+                'create_at' => $updatedEmployee['created_at']
+            ]
+        ];
+
+        $jwt = JWT::encode($token, $this->jwtConfig['secret_key'], 'HS256');
+        $_SESSION['jwt_employee'] = $jwt;
+    }
+
     public function delete($id)
     {
         $existingById = $this->employeeModel->find($id);
@@ -180,12 +208,44 @@ class EmployeeController
                 'email' => $employee['email'],
                 'name' => $employee['name'],
                 'phone' => $employee['phone'],
-                'address' => $employee['address']
+                'address' => $employee['address'],
+                'position' => $employee['position'],
+                'create_at' => $employee['created_at']
             ]
         ];
         $jwt = JWT::encode($token, $this->jwtConfig['secret_key'], 'HS256');
         return ['success' => true, 'token' => $jwt];
     }
+
+    public function ChangeToPassword($email, $passwordOld, $passwordNew)
+    {
+        $existing = $this->employeeModel->findByEmail($email);
+
+        if (!$existing) {
+            return [
+                'success' => false,
+                'message' => 'Tài khoản không tồn tại!'
+            ];
+        }
+
+        if (!password_verify($passwordOld, $existing['password_hash'])) {
+            return [
+                'success' => false,
+                'message' => 'Mật khẩu cũ không đúng!'
+            ];
+        }
+
+        $newHashedPassword = password_hash($passwordNew, PASSWORD_DEFAULT);
+
+        $updateData = ['password_hash' => $newHashedPassword];
+        $this->employeeModel->update($existing['id'], $updateData);
+
+        return [
+            'success' => true,
+            'message' => 'Đổi mật khẩu thành công!'
+        ];
+    }
+
 
     public function getCurrentEmployee()
     {

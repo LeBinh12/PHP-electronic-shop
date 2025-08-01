@@ -123,14 +123,24 @@ $userData = $userController->getCurrentUser();
     </div>
 
     <!-- Chat Toggle Buttons -->
+
     <div id="chat-toggle-wrapper" style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999;">
-        <div id="chat-toggle-admin" class="chat-toggle-btn" title="Chat với Admin">
-            <i class="bi bi-chat-dots-fill fs-3 text-primary"></i>
-        </div>
+
+        <?php
+        if ($userData) {
+        ?>
+            <div id="chat-toggle-admin" class="chat-toggle-btn" title="Chat với Admin">
+                <i class="bi bi-chat-dots-fill fs-3 text-primary"></i>
+            </div>
+        <?php
+        }
+        ?>
         <div id="chat-toggle-ai" class="chat-toggle-btn" title="Chat với AI">
             <i class="bi bi-robot fs-3 text-success"></i>
         </div>
     </div>
+
+
 
     <!-- Chat -->
     <?php

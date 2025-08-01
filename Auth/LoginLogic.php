@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['login'])) {
         $res = $adminController->Login($email, $password);
         if ($res) {
             $_SESSION['user_type'] = 'admin';
-            $employeeData = $res;
+            $_SESSION['admin'] = $res;
         } else {
             echo "<script>
                 alert('Sai tài khoản hoặc mặt khẩu');

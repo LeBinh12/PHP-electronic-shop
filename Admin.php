@@ -52,7 +52,7 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
 
 
 $_SESSION['user_type'] = $_SESSION['user_type'] ?? null;
-
+$_SESSION['admin'] = $_SESSION['admin'] ?? null;
 ?>
 
 <!DOCTYPE html>

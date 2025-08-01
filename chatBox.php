@@ -19,46 +19,53 @@ if (!isset($_SESSION['chat_history'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
 
-    $message = $_POST['ai_message'];
+    $message = trim($_POST['ai_message']);
     $apiKey = 'AIzaSyAu1vhxh5QbmVGqZ9CmKNg6SSb-Ot-J1Bc';
     $client = new Client();
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
 
-    $prompt = "Bạn là một trợ lý chuyên tư vấn về đồ điện tử cho trang web bán các đồ điện tự.
+    if (strlen($message) > 500) {
+        swal_alert('error', 'Lỗi gửi tin nhắn', 'Bạn không được nhiều quá 500 ký tự', "Index.php");
+    } else {
+
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
+
+        $prompt = "Bạn là một trợ lý chuyên tư vấn về đồ điện tử cho trang web bán các đồ điện tự.
      Hãy gợi ý cho người dùng bằng tiếng Việt, dựa trên yêu cầu sau: \"{$message}\" và trả lời ngắn gọn giúp tôi";
 
-    $requestBody = [
-        'contents' => [
-            [
-                'parts' => [
-                    [
-                        'text' => $prompt
+        $requestBody = [
+            'contents' => [
+                [
+                    'parts' => [
+                        [
+                            'text' => $prompt
+                        ]
                     ]
                 ]
             ]
-        ]
-    ];
-    try {
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $requestBody,
-        ]);
-
-        $result = json_decode($response->getBody(), true);
-        $aiChatResponse = $result['candidates'][0]['content']['parts'][0]['text'] ?? 'Không có phản hồi.';
-
-        $timestamp = date('H:i d/m/Y');
-        $_SESSION['chat_history'][] = [
-            'user_message' => $message,
-            'ai_response' => $aiChatResponse,
-            'timestamp' => $timestamp
         ];
-        $_SESSION['chat_open_ai'] = true;
-        echo '<meta http-equiv="refresh" content="0">';
-    } catch (Exception $e) {
-        $aiChatResponse = "Lỗi gọi API: " . $e->getMessage();
+
+        try {
+            $response = $client->post($url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $requestBody,
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            $aiChatResponse = $result['candidates'][0]['content']['parts'][0]['text'] ?? 'Không có phản hồi.';
+
+            $timestamp = date('H:i d/m/Y');
+            $_SESSION['chat_history'][] = [
+                'user_message' => $message,
+                'ai_response' => $aiChatResponse,
+                'timestamp' => $timestamp
+            ];
+            $_SESSION['chat_open_ai'] = true;
+            echo '<meta http-equiv="refresh" content="0">';
+        } catch (Exception $e) {
+            $aiChatResponse = "Lỗi gọi API: " . $e->getMessage();
+        }
     }
 } else {
     $aiChatResponse = '';
