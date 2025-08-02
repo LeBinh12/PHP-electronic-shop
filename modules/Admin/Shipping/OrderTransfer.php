@@ -5,13 +5,30 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
   $address = trim($_POST['address']);
   $addressPresent = trim($_POST['addressPresent']);
 
-  if (strcasecmp($address, $addressPresent) === 0) {
+
+  $getById = $shippingController->getById($shippingId);
+  $getAddressUser = $orderController->getUserAddressByShippingId($shippingId);
+
+  if ($getById['status'] === 'Hoàn thành' || strcasecmp($address, $addressPresent) === 0) {
     $_SESSION['error'] = "Đơn hàng đã được người nhận nhận hàng.";
     echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Shipping/Shipping.php';</script>";
     exit;
   }
 
-  $result = $shippingController->update($shippingId, ['address' => $address]);
+  if ($getAddressUser['address'] === $address) {
+    $result = $shippingController->update($shippingId, [
+      'address' => $address,
+      'method' => 'Đã nhận hàng',
+      'status' => 'Hoàn thành'
+    ]);
+  } else {
+    $result = $shippingController->update($shippingId, [
+      'address' => $address,
+      'method' => 'Đang giao hàng',
+      'status' => 'Đang vận chuyển'
+    ]);
+  }
+
   if ($result['success']) {
     $_SESSION['success'] = $result['message'];
   } else {

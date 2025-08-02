@@ -50,6 +50,11 @@ class OrderController
         return $this->orderModel->countAllOrders($keyword);
     }
 
+    public function getUserAddressByShippingId($shippingId)
+    {
+        return $this->orderModel->getUserAddressByShippingId($shippingId);
+    }
+
     public function edit($id, $data)
     {
         $orderEdit = $this->orderModel->update($id, $data);

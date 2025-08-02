@@ -56,9 +56,10 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
+            JOIN    shipping sh ON sh.id = o.shipping_id
             JOIN    users u ON o.user_id = u.id
             WHERE   o.user_id  = :user_id
               AND   o.isDeleted = 0
@@ -155,5 +156,21 @@ class Order extends Model
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return (int) $stmt->fetchColumn();
+    }
+
+    public function getUserAddressByShippingId($shippingId)
+    {
+        $sql = "
+        SELECT u.Address AS address, o.id AS order_id
+        FROM orders o
+        JOIN users u ON o.user_id = u.id
+        WHERE o.shipping_id = :shippingId
+          AND o.isDeleted = 0
+        LIMIT 1
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['shippingId' => $shippingId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

@@ -11,7 +11,30 @@ $limit     = 2;
 $offset    = ($page - 1) * $limit;
 
 $userId = $userData->id;
-// $address = "Trường Đại Học Đồng Tháp";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnReview'])) {
+    $order_id = $_POST['order_id'];
+    $rating = $_POST['rating'];
+    $comment = $_POST['comment'];
+
+    $getOrderItem = $orderItemController->getOrderItemById($order_id);
+    foreach ($getOrderItem as $item) {
+        $data = [
+            'rating' => $rating,
+            'comment' => $comment,
+            'user_id' => $userData->id,
+            'product_id' => $item['product_id']
+        ];
+        $result = $reviewController->add($data);
+        if ($result) {
+            swal_alert('success', 'Đánh giá đơn hàng thành công!', '', "Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId");
+        } else {
+            swal_alert('error', 'Đánh giá đơn hàng thất bại!', 'Hệ thống đang bảo trì!', "Index.php?subpage=modules/Users/page/CheckOrder.php&filter_status=$filterStatusId");
+        }
+    }
+    $orderController->edit($order_id, ['status_id' => 6]);
+    exit;
+}
 
 if ($filterStatusId == 0) {
     $orders = $orderController->getOrderPagination(
@@ -141,6 +164,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
                             </div>
                             <div class="d-flex align-items-center gap-2">
+                                <?php if ($order['status_id'] === 4 && $order['status_shipping'] === 'Hoàn thành') { ?>
+                                    <button type="button"
+                                        class="btn btn-outline-success btn-sm open-review-modal"
+                                        data-order-id="<?= htmlspecialchars($order['order_id']) ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        style=" background-color: #28a745; 
+                                                color: #fff; 
+                                                border: none;
+                                                padding: 5px 14px;
+                                                border-radius: 20px;
+                                                font-size: 0.9rem;
+                                                transition: background-color 0.3s ease;
+                                                box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
+                                                text-decoration: none;
+                                                display: inline-block;"
+                                        onmouseover="this.style.backgroundColor='#218838'"
+                                        onmouseout="this.style.backgroundColor='#28a745'">
+                                        Đã nhận được hàng
+                                    </button>
+                                <?php } ?>
                                 <?php if ($order['status_id'] === 4) { ?>
                                     <a href="index.php?subpage=modules/Users/page/OrderTracking.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
                                         class="btn btn-outline-primary btn-sm"
@@ -159,28 +203,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         Xem vị trí đơn hàng
                                     </a>
                                 <?php } ?>
-                                <?php if ($order['status_id'] === 6) { ?>
-                                    <button type="button"
-                                        class="btn btn-outline-success btn-sm open-review-modal"
-                                        data-order-id="<?= htmlspecialchars($order['order_id']) ?>"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#reviewModal"
-                                        style=" background-color: #28a745; 
-                                                color: #fff; 
-                                                border: none;
-                                                padding: 5px 14px;
-                                                border-radius: 20px;
-                                                font-size: 0.9rem;
-                                                transition: background-color 0.3s ease;
-                                                box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
-                                                text-decoration: none;
-                                                display: inline-block;"
-                                        onmouseover="this.style.backgroundColor='#218838'"
-                                        onmouseout="this.style.backgroundColor='#28a745'">
-                                        Đánh giá ngay
-                                    </button>
-                                <?php } ?>
-
                                 <strong class="mb-0">Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
                             </div>
                         </div>
@@ -337,7 +359,7 @@ $cancelReasons = [
 <!-- Modal đánh giá -->
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <form method="post" action="index.php?subpage=modules/Users/page/SubmitReview.php">
+        <form method="post" novalidate id="reviewForm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="reviewModalLabel">Đánh giá sản phẩm</h5>
@@ -367,7 +389,7 @@ $cancelReasons = [
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Gửi đánh giá</button>
+                    <button type="submit" class="btn btn-success" name="btnReview">Gửi đánh giá</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>

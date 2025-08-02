@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         //     </script>";
         swal_alert(
             'error',
-            'Tài khoản bị khóa',
-            'Tài khoản của bạn đã bị khóa đến ' . $res['report']['banned_until'] . '!',
+            'Lỗi đăng nhập',
+            $res['message'] . '!',
             'index.php'
         );
         exit;

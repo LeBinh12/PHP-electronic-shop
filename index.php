@@ -1,4 +1,5 @@
 <?php
+session_name('user_session');
 session_start();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 require_once './controllers/ProductController.php';
@@ -14,6 +15,8 @@ require_once './controllers/StatusController.php';
 require_once './controllers/ChatController.php';
 require_once './controllers/BranchController.php';
 require_once './controllers/ShippingController.php';
+require_once './controllers/ReviewController.php';
+
 
 require_once __DIR__ . '/modules/Users/Notification/alertHelper.php';
 
@@ -32,6 +35,7 @@ $statusController = new StatusController();
 $chatController = new ChatController();
 $branchController = new BranchController();
 $shippingController = new ShippingController();
+$reviewController = new ReviewController();
 
 $cart = $_SESSION['cart'] ?? [];
 $userData = $userController->getCurrentUser();

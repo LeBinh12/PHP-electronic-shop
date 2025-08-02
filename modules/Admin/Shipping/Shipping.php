@@ -54,47 +54,51 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listOrders as $order): ?>
-                        <tr>
-                            <td><?= $order['code'] ?></td>
-                            <td><?= $order['FullName'] ?></td>
-                            <td><?= $order['Address'] ?></td>
-                            <td><?= $order['shipping_address'] ?></td>
-                            <td>
-                                <button class="btn btn-sm btn-info text-white"
-                                    onclick='showSenderInfo(<?= json_encode([
-                                                                "id" => $order["code"],
-                                                                "name" => $order["FullName"],
-                                                                "senderName" => $order["FullName"],
-                                                                "senderPhone" => $order["Phone"],
-                                                                "senderAddress" => $order["Address"]
-                                                            ]) ?>)'>
-                                    <i class="bi bi-geo-alt-fill me-1"></i> Xem vị trí người gửi
-                                </button>
+                    <?php foreach ($listOrders as $order) {
+                        if ($order['status_id'] !== 6) {
+                    ?>
 
-                                <!-- Nút xem vị trí hiện tại của đơn hàng -->
-                                <button class="btn btn-sm btn-success text-white"
-                                    onclick='showCurrentLocation(<?= json_encode([
-                                                                        "id" => $order["code"],
-                                                                        "shipperName" => $order["FullName"],
-                                                                        "shipperPhone" => $order["Phone"],
-                                                                        "status" => $order["shipping_status"],
-                                                                        "currentAddress" => $order["shipping_address"] // vị trí đơn hàng hiện tại
-                                                                    ]) ?>)'>
-                                    <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
-                                </button>
+                            <tr>
+                                <td><?= $order['code'] ?></td>
+                                <td><?= $order['FullName'] ?></td>
+                                <td><?= $order['Address'] ?></td>
+                                <td><?= $order['shipping_address'] ?></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info text-white"
+                                        onclick='showSenderInfo(<?= json_encode([
+                                                                    "id" => $order["code"],
+                                                                    "name" => $order["FullName"],
+                                                                    "senderName" => $order["FullName"],
+                                                                    "senderPhone" => $order["Phone"],
+                                                                    "senderAddress" => $order["Address"]
+                                                                ]) ?>)'>
+                                        <i class="bi bi-geo-alt-fill me-1"></i> Xem vị trí người gửi
+                                    </button>
+
+                                    <!-- Nút xem vị trí hiện tại của đơn hàng -->
+                                    <button class="btn btn-sm btn-success text-white"
+                                        onclick='showCurrentLocation(<?= json_encode([
+                                                                            "id" => $order["code"],
+                                                                            "shipperName" => $order["FullName"],
+                                                                            "shipperPhone" => $order["Phone"],
+                                                                            "status" => $order["shipping_status"],
+                                                                            "currentAddress" => $order["shipping_address"] // vị trí đơn hàng hiện tại
+                                                                        ]) ?>)'>
+                                        <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
+                                    </button>
 
 
-                                <button
-                                    class="btn btn-warning btn-sm text-white"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#transferModal"
-                                    onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
-                                    Chuyển đơn
-                                </button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                                    <button
+                                        class="btn btn-warning btn-sm text-white"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#transferModal"
+                                        onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
+                                        Chuyển đơn
+                                    </button>
+                                </td>
+                            </tr>
+                    <?php }
+                    } ?>
                 </tbody>
             </table>
         </div>

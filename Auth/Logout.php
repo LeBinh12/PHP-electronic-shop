@@ -1,7 +1,7 @@
 <?php
+session_name('admin_session');
 session_start();
-unset($_SESSION['jwt']);
+session_unset();
 session_destroy();
-
 header("Location: Login.php");
 exit;
