@@ -345,30 +345,43 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                 </div>
                 <div class="modal-body pt-0 text-center">
                     <p class="text-muted mb-4">Tạo tài khoản mới để mua sắm</p>
+
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
                         <input type="text" name="fullname" class="form-control" placeholder="Họ và tên">
                     </div>
+
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
                         <input type="email" name="email" class="form-control" placeholder="Email">
                     </div>
+
                     <div class="input-group mb-3">
-                        <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                        <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
                         <input type="number" name="phone" class="form-control" placeholder="Số điện thoại">
                     </div>
+
                     <div class="input-group mb-3">
-                        <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                        <span class="input-group-text bg-white"><i class="bi bi-geo-alt"></i></span>
                         <input type="text" name="address" class="form-control" placeholder="Địa chỉ">
                     </div>
+
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                        <input type="text" name="password" class="form-control" placeholder="Mật khẩu">
+                        <input type="password" name="password" id="registerPassword" class="form-control" placeholder="Mật khẩu">
+                        <span class="input-group-text bg-white" id="toggleRegisterPassword" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="eyeRegisterPassword"></i>
+                        </span>
                     </div>
+
                     <div class="input-group mb-3">
-                        <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                        <input type="text" name="passwordChange" class="form-control" placeholder="Nhập lại mật khẩu">
+                        <span class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" name="passwordChange" id="registerPasswordConfirm" class="form-control" placeholder="Nhập lại mật khẩu">
+                        <span class="input-group-text bg-white" id="toggleRegisterPasswordConfirm" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="eyeRegisterPasswordConfirm"></i>
+                        </span>
                     </div>
+
                     <button class="btn btn-success w-100 mb-3" type="submit" name="register">Đăng ký</button>
                     <p class="mb-0">Đã có tài khoản?
                         <a href="#" class="text-success text-decoration-none" data-bs-dismiss="modal"
@@ -379,6 +392,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
         </div>
     </div>
 </div>
+
 
 <!-- Modal Quên mật khẩu -->
 <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
@@ -437,15 +451,40 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
             editBtn.classList.add("d-none");
         });
 
+        // Đăng nhập
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('passwordInput');
         const eyeIcon = document.getElementById('eyeIcon');
 
-        togglePassword.addEventListener('click', function() {
+        togglePassword?.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             eyeIcon.classList.toggle('bi-eye');
             eyeIcon.classList.toggle('bi-eye-slash');
+        });
+
+        // Đăng ký - Mật khẩu
+        const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
+        const registerPassword = document.getElementById('registerPassword');
+        const eyeRegisterPassword = document.getElementById('eyeRegisterPassword');
+
+        toggleRegisterPassword?.addEventListener('click', function() {
+            const type = registerPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerPassword.setAttribute('type', type);
+            eyeRegisterPassword.classList.toggle('bi-eye');
+            eyeRegisterPassword.classList.toggle('bi-eye-slash');
+        });
+
+        // Đăng ký - Nhập lại mật khẩu
+        const toggleRegisterPasswordConfirm = document.getElementById('toggleRegisterPasswordConfirm');
+        const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
+        const eyeRegisterPasswordConfirm = document.getElementById('eyeRegisterPasswordConfirm');
+
+        toggleRegisterPasswordConfirm?.addEventListener('click', function() {
+            const type = registerPasswordConfirm.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerPasswordConfirm.setAttribute('type', type);
+            eyeRegisterPasswordConfirm.classList.toggle('bi-eye');
+            eyeRegisterPasswordConfirm.classList.toggle('bi-eye-slash');
         });
     });
 </script>
