@@ -110,6 +110,77 @@ class Order extends Model
         return (int) $stmt->fetchColumn();
     }
 
+    public function findOrderWithStatus(
+        ?int $statusId = null,
+        string $keyword    = '',
+        int    $limit      = 10,
+        int    $offset     = 0,
+        ?int $employeeId = null,
+        bool $isAdmin = false
+    ) {
+        $sql = "
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
+            FROM    orders o
+            JOIN    status s   ON o.status_id = s.id
+            JOIN    shipping sh ON sh.id = o.shipping_id
+            JOIN    users u ON o.user_id = u.id
+            WHERE   o.isDeleted = 0
+        ";
+
+        $params = [];
+
+        if ($statusId !== null) {
+            $sql .= " AND o.status_id = :status_id";
+            $params['status_id'] = $statusId;
+        }
+
+        if ($keyword !== '') {
+            $sql .= " AND o.code LIKE :kw";
+            $params['kw'] = '%' . $keyword . '%';
+        }
+
+        if (!$isAdmin && $employeeId !== null && $statusId !== 1) {
+            $sql .= " AND o.employee_id = :employee_id";
+            $params['employee_id'] = $employeeId;
+        }
+
+        $sql .= " ORDER BY o.id DESC LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue(":$k", $v);
+        }
+        $stmt->bindValue(':limit',  $limit,  PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countOrderWithStatus(?int $statusId = null, $keyword = '', ?int $employeeId = null, bool $isAdmin = false): int
+    {
+        $sql = "SELECT COUNT(*) FROM orders WHERE isDeleted = 0";
+
+        $params = [];
+        if ($statusId !== null) {
+            $sql .= " AND status_id = :sid";
+            $params['sid'] = $statusId;
+        }
+        if ($keyword !== '') {
+            $sql .= " AND code LIKE :kw";
+            $params['kw'] = '%' . $keyword . '%';
+        }
+
+        if (!$isAdmin && $employeeId !== null && $statusId !== 1) {
+            $sql .= " AND employee_id = :employee_id";
+            $params['employee_id'] = $employeeId;
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return (int) $stmt->fetchColumn();
+    }
+
     public function findAllOrders(
         string $keyword    = '',
         int    $limit      = 10,

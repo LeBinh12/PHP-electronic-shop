@@ -3,10 +3,18 @@ $keyword = $_GET["search"] ?? "";
 $page    = max(1, ($_GET['pageNumber'] ?? 1));
 $limit   = 6;
 $offset  = ($page - 1) * $limit;
+$status_id = $_GET['status_id'] ?? null;
+if ($status_id === '0') {
+    $status_id = null;
+}
 
+$getAllStatus = $statusController->getAll();
+
+$isAdmin = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
+$employeeId = $isAdmin ? null : ($employeeData->id ?? null);
 // Lấy dữ liệu từ controller
-$listOrders = $orderController->getAllOrdersPagination($keyword, $limit, $offset);
-$totalRows  = $orderController->getAllCountOrder($keyword);
+$listOrders = $orderController->getOrderWithStatusPagination($status_id, $limit, $offset, $keyword, $employeeId, $isAdmin);
+$totalRows = $orderController->getCountOrderWithStatus($status_id, $keyword, $employeeId, $isAdmin);
 $totalPages = max(1, ceil($totalRows / $limit));
 ?>
 
@@ -15,17 +23,31 @@ $totalPages = max(1, ceil($totalRows / $limit));
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <form class="search-form ms-auto" method="GET" action="Admin.php">
+        <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
-            <button class="btn search-btn" type="submit">
-                <i class="bi bi-search text-muted"></i>
-            </button>
+
+            <!-- Thanh chọn trạng thái -->
+            <select name="status_id" class="form-select">
+                <option value="0">Tất cả trạng thái</option>
+                <?php foreach ($getAllStatus as $status): ?>
+                    <option value="<?= $status['id'] ?>" <?= (isset($_GET['status_id']) && $_GET['status_id'] == $status['id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($status['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Ô tìm kiếm -->
             <input type="search"
                 name="search"
                 value="<?= htmlspecialchars($keyword) ?>"
                 class="form-control search-input"
                 placeholder="Tìm mã đơn hàng...">
+
+            <button class="btn btn-secondary" type="submit">
+                <i class="bi bi-search text-white"></i> Tìm
+            </button>
         </form>
+
     </div>
 
 
