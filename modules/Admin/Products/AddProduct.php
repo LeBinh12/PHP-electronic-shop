@@ -5,7 +5,9 @@ require_once  './././config/cloudinary.php';
 use Cloudinary\Api\Upload\UploadApi;
 use Respect\Validation\Rules\Date;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
+
     try {
         $name = $_POST['name'] ?? '';
         $price = $_POST['price'] ?? 0;
@@ -64,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<script>
             window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
+
+            exit;
         } else {
             if ($result['errors']) {
                 $_SESSION['error'] = $result['message'];
@@ -151,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea name="description" class="form-control"></textarea>
             </div>
             <div class="button-group">
-                <button type="submit" class="btn btn-primary">Thêm</button>
+                <button type="submit" class="btn btn-primary" name="btnAddProduct">Thêm</button>
                 <a href="Admin.php?page=modules/Admin/Products/Product.php" class="btn btn-secondary">Hủy</a>
             </div>
         </form>

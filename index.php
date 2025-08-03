@@ -152,7 +152,7 @@ $userData = $userController->getCurrentUser();
     require_once './chatBox.php';
     ?>
 
-    <script src="https://cdn.tiny.cloud/1/qfa0385ogmclp69zgu32jxhpps8qymdvxv9iehmdlbikl7lp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/vdvrq3yfn1mvkxu8e58u6aomn76eh0uqy054jbiq8djjjeqz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 
     <script>

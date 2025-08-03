@@ -2,6 +2,24 @@
 $categoryGetAll = $category->getAll();
 $supplierGetAll = $supplier->getAll();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sendEmail'])) {
+    $userController->sendResetToken($_POST['email']);
+    $_SESSION['email'] = $_POST['email'];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmResetBtn'])) {
+
+    $result = $userController->validateToken($_SESSION['email'], $_POST['otpCode']);
+    if ($result['success']) {
+        $resultPassword = $userController->resetPassword($result['user_id'], $_POST['newPassword']);
+        swal_alert('success', $resultPassword['message']);
+    } else {
+        swal_alert('error', $result['message']);
+    }
+}
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $res = $userController->register([
         'FullName' => $_POST['fullname'],
@@ -398,18 +416,20 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
 <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
         <div class="modal-content rounded-4 shadow">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title text-danger fw-bold w-100 text-center">Quên mật khẩu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-0 text-center">
-                <p class="text-muted mb-4">Nhập email để nhận mã xác nhận</p>
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
-                    <input type="email" id="forgotEmail" class="form-control" placeholder="Email">
+            <form method="post">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-danger fw-bold w-100 text-center">Quên mật khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <button class="btn btn-danger w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#verifyOtpModal">Gửi mã xác nhận</button>
-            </div>
+                <div class="modal-body pt-0 text-center">
+                    <p class="text-muted mb-4">Nhập email để nhận mã xác nhận</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="email" id="forgotEmail" class="form-control" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#verifyOtpModal" name="sendEmail">Gửi mã xác nhận</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -418,22 +438,24 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
 <div class="modal fade" id="verifyOtpModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
         <div class="modal-content rounded-4 shadow">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title text-success fw-bold w-100 text-center">Xác nhận đổi mật khẩu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-0 text-center">
-                <p class="text-muted mb-4">Nhập mã xác nhận và mật khẩu mới</p>
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-white"><i class="bi bi-shield-lock"></i></span>
-                    <input type="text" id="otpCode" class="form-control" placeholder="Mã xác nhận">
+            <form method="post">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-success fw-bold w-100 text-center">Xác nhận đổi mật khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                    <input type="password" id="newPassword" class="form-control" placeholder="Mật khẩu mới">
+                <div class="modal-body pt-0 text-center">
+                    <p class="text-muted mb-4">Nhập mã xác nhận và mật khẩu mới</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="bi bi-shield-lock"></i></span>
+                        <input type="text" id="otpCode" name="otpCode" class="form-control" placeholder="Mã xác nhận">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                        <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Mật khẩu mới">
+                    </div>
+                    <button class="btn btn-success w-100" id="confirmResetBtn" name="confirmResetBtn">Xác nhận đổi mật khẩu</button>
                 </div>
-                <button class="btn btn-success w-100" id="confirmResetBtn">Xác nhận đổi mật khẩu</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

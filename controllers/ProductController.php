@@ -137,8 +137,8 @@ class ProductController extends BaseController
                 'discount' => v::intVal()->between(0, 100)
                     ->setTemplate('Giảm giá 0‑100%'),
 
-                'content' => v::stringType()->length(0, 500)
-                    ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
+                'content' => v::stringType()->length(0, 5000)
+                    ->setTemplate("Mô tả ngắn phải 0-5000 ký tự"),
             ];
 
             if (!$this->validator->validate($data, $rules)) {
@@ -179,13 +179,14 @@ class ProductController extends BaseController
                 'discount'      => v::intVal()->between(0, 100)
                     ->setTemplate('Giảm giá 0‑100%'),
 
-                'content' => v::stringType()->length(0, 500)
-                    ->setTemplate("Mô tả ngắn phải 0-500 ký tự"),
+                'content' => v::stringType()->length(0, 5000)
+                    ->setTemplate("Mô tả ngắn phải 0-5000 ký tự"),
             ];
 
             if (!$this->validator->validate($data, $rules)) {
                 return [
                     'success' => false,
+                    'message' => $this->validator->error(),
                     'errors'  => $this->validator->error()
                 ];
             }

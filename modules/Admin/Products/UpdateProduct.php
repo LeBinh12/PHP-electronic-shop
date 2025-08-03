@@ -8,7 +8,7 @@ if (!$id) {
 
 
 
-$oldProduct = $product->getById($id);
+$oldProduct = $product->getByIdToDB($id);
 if (!$oldProduct) {
     echo "<h3>Sản phẩm không tồn tại!</h3>";
     exit;
@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         'content' => $content,
         'isDeleted' => 0
     ];
+
     $result = $product->edit($id, $updateData);
 
     if ($result['success']) {
@@ -122,11 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             <div class="form-grid">
                 <div class="group mb-3">
                     <label class="form-label">Giá</label>
-                    <input type="number" name="priceProduct" class="form-control" required value="<?= $oldProduct['price'] ?>">
+                    <input type="number" name="priceProduct" class="form-control" required value="<?= (int)$oldProduct['price'] ?>">
                 </div>
                 <div class="group mb-3">
                     <label class="form-label">Giảm giá (%)</label>
-                    <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= $oldProduct['discount'] ?>">
+                    <input type="number" name="discountProduct" class="form-control" step="0.01" min="0" max="100" value="<?= (int)$oldProduct['discount'] ?>">
                 </div>
             </div>
             <div class="form-grid">

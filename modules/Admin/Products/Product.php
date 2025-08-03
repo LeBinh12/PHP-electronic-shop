@@ -70,7 +70,7 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
                             </td>
                             <td><?php echo htmlspecialchars($item['name']) ?></td>
                             <td><?php echo number_format($item['price'], 0) ?></td>
-                            <td><?= $item['discount'] ?>%</td>
+                            <td><?= (int)$item['discount'] ?>%</td>
                             <td>
                                 <?php
                                 $categoryItem = $category->getById($item["category_id"]);

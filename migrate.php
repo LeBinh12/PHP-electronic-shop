@@ -24,8 +24,14 @@ require_once  './models/EmployeeMenu.php';
 require_once  './models/RoleMenu.php';
 require_once  './models/RoleEmployee.php';
 require_once  './models/Branch.php';
+require_once  './models/PasswordResetToken.php';
+
 
 require_once  './models/Image.php';
+
+$passwordReset = new PasswordResetToken();
+$passwordReset->createTable();
+
 
 $branch = new Branch();
 $branch->createTable();

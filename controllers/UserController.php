@@ -2,13 +2,17 @@
 
 require_once './models/User.php';
 require_once './models/UserReports.php';
+require_once './models/PasswordResetToken.php';
 require_once './controllers/BaseController.php';
 
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Respect\Validation\Validator as v;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require 'vendor/autoload.php';
 
 class UserController extends BaseController
 {
@@ -16,11 +20,14 @@ class UserController extends BaseController
     private $userReportModel;
     private $jwtConfig;
 
+    private $resetTokenModel;
+
     public function __construct()
     {
         parent::__construct();
         $this->userModel = new User();
         $this->userReportModel = new UserReports();
+        $this->resetTokenModel = new PasswordResetToken();
         $this->jwtConfig = include   './config/jwt.php';
     }
 
@@ -232,5 +239,90 @@ class UserController extends BaseController
                 'message' => "Lỗi: " . $e->getMessage()
             ];
         }
+    }
+
+
+    public function sendResetToken($email)
+    {
+        $user = $this->userModel->findByEmail($email);
+        if (!$user) {
+            return ['success' => false, 'message' => 'Email không tồn tại'];
+        }
+
+        $token = rand(100000, 999999); // Mã OTP 6 số
+        $expiresAt = date('Y-m-d H:i:s', time() + 300); // Hết hạn sau 5 phút
+
+        $this->resetTokenModel->insert([
+            'user_id' => $user['id'],
+            'token' => $token,
+            'expires_at' => $expiresAt
+        ]);
+
+
+        $this->sendVerificationCode($user['Email'], $token);
+
+        return ['success' => true, 'message' => 'Đã gửi mã xác nhận qua email'];
+    }
+
+    function sendVerificationCode($toEmail, $code)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com'; // Hoặc SMTP server khác
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'lephuocbinh.2000@gmail.com';     // Tài khoản Gmail
+            $mail->Password = 'yhgpditruzfxxqpn';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            // Recipients
+            $mail->setFrom('lephuocbinh.2000@gmail.com', 'Shop Electronic');
+            $mail->addAddress($toEmail);     // Gửi đến người nhận
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Mã xác nhận của bạn';
+            $mail->Body    = "<p>Xin chào,</p><p>Mã xác nhận của bạn là: <strong>$code</strong></p>";
+
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            error_log("Lỗi gửi email: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
+
+    public function verifyResetToken($email, $token)
+    {
+        $user = $this->userModel->findByEmail($email);
+        if (!$user) {
+            return ['success' => false, 'message' => 'Email không tồn tại'];
+        }
+
+        $result = $this->resetTokenModel->verifyResetToken($user['id'], $token);
+
+        if (!$result['success']) {
+            return $result;
+        }
+
+        return $result;
+    }
+
+    public function resetPassword($userId, $newPassword)
+    {
+        if (!v::stringType()->length(6, 32)->validate($newPassword)) {
+            return ['success' => false, 'message' => 'Mật khẩu phải từ 6 đến 32 ký tự'];
+        }
+
+        $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $this->userModel->update($userId, [
+            'PasswordHash' => $hash,
+            'UpdateAt' => date('Y-m-d H:i:s')
+        ]);
+
+        return ['success' => true, 'message' => 'Đặt lại mật khẩu thành công'];
     }
 }

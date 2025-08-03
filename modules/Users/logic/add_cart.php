@@ -6,12 +6,11 @@ if (isset($_POST['addCart'])) {
     $price = $_POST['price'];
     $image = $_POST['image'];
     $quantity = 1;
-    $productInventory = $inventoryController->getProductInventory($id, null);
+    $productInventory = $inventoryController->getProductInventory($id, null, true);
     if ($id && $price) {
         if (isset($cart[$id])) {
             $currentQty = $cart[$id]['quantity'];
             $newQty = $currentQty + $quantity;
-
             if ($newQty <= $productInventory['stock_quantity']) {
                 $cart[$id]['quantity'] = $newQty;
             } else {

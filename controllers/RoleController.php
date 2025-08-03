@@ -83,7 +83,7 @@ class RoleController
             ]);
         }
 
-        return ['success' => true, 'role_id' => $roleId];
+        return ['success' => true, 'role_id' => $roleId, 'message' => 'Thêm quyền thành công'];
     }
 
     public function updateRoleMenus($roleId, array $menuIds)
