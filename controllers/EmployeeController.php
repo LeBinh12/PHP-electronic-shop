@@ -210,6 +210,7 @@ class EmployeeController
                 'phone' => $employee['phone'],
                 'address' => $employee['address'],
                 'position' => $employee['position'],
+                'branch_id' => $employee['branch_id'],
                 'create_at' => $employee['created_at']
             ]
         ];

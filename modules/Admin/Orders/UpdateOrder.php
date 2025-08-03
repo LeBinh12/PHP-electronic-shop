@@ -1,5 +1,6 @@
 <?php
 if (isset($_GET['orderid'])) {
+
   $orderId = $_GET['orderid'];
 
   $orderMap = $orderController->getById($orderId);
@@ -17,6 +18,7 @@ if (isset($_GET['orderid'])) {
     });
   </script>
 <?php
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {

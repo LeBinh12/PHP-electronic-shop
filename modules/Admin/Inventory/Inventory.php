@@ -6,10 +6,14 @@ $page = $_GET['number'] ?? 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
 
-$totalInventory = $inventoryController->countInventory($keyword);
+$isAdmin = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
+$branch_id = $isAdmin ? null : ($employeeData->branch_id ?? null);
+
+
+$totalInventory = $inventoryController->countInventory($keyword, $branch_id, $isAdmin);
 $totalPages = ceil($totalInventory / $limit);
 
-$listItems = $inventoryController->getProductPagination($keyword, $limit, $offset);
+$listItems = $inventoryController->getProductPagination($keyword, $limit, $offset, $branch_id, $isAdmin);
 
 // var_dump($listItems); exit; 
 ?>

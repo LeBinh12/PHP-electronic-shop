@@ -18,7 +18,7 @@
             'product_id' => 'products(id)'
         ];
 
-        public function getFiltered($keyword = '', int $limit = 8, int $offset = 0)
+        public function getFiltered($keyword = '', int $limit = 8, int $offset = 0, $branch_id = null, $isAdmin = false)
         {
             $sql = "
         SELECT inv.*, p.name AS product_name, p.id AS product_id ,b.name AS branch_name, b.id AS branch_id
@@ -35,6 +35,11 @@
                 $params['kw']    = '%' . $keyword . '%';
             }
 
+            if (!$isAdmin && $branch_id !== null) {
+                $sql .= " AND b.id = :branch_id";
+                $params['branch_id'] = $branch_id;
+            }
+
             $sql .= " ORDER BY inv.id DESC LIMIT :limit OFFSET :offset";
 
             $stmt = $this->pdo->prepare($sql);
@@ -48,18 +53,24 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function countFiltered($keyword = '')
+        public function countFiltered($keyword = '', $branch_id = null, $isAdmin = false)
         {
             $sql = "
         SELECT COUNT(*) AS total
         FROM {$this->table} inv
         JOIN products p ON p.id = inv.product_id
+        JOIN branches b ON b.id = inv.branch_id
         WHERE inv.isDeleted = 0
     ";
             $params = [];
             if ($keyword !== '') {
                 $sql           .= " AND p.name LIKE :kw";
                 $params['kw']   = '%' . $keyword . '%';
+            }
+
+            if (!$isAdmin && $branch_id !== null) {
+                $sql .= " AND b.id = :branch_id";
+                $params['branch_id'] = $branch_id;
             }
 
             $stmt = $this->pdo->prepare($sql);

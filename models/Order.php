@@ -115,6 +115,7 @@ class Order extends Model
         string $keyword    = '',
         int    $limit      = 10,
         int    $offset     = 0,
+        ?int $branch_id = null,
         ?int $employeeId = null,
         bool $isAdmin = false
     ) {
@@ -124,6 +125,7 @@ class Order extends Model
             JOIN    status s   ON o.status_id = s.id
             JOIN    shipping sh ON sh.id = o.shipping_id
             JOIN    users u ON o.user_id = u.id
+            JOIN    branches b ON b.id = o.branch_id
             WHERE   o.isDeleted = 0
         ";
 
@@ -139,9 +141,16 @@ class Order extends Model
             $params['kw'] = '%' . $keyword . '%';
         }
 
-        if (!$isAdmin && $employeeId !== null && $statusId !== 1) {
-            $sql .= " AND o.employee_id = :employee_id";
-            $params['employee_id'] = $employeeId;
+        if (!$isAdmin) {
+            if ($branch_id !== null) {
+                $sql .= " AND branch_id = :branch_id";
+                $params['branch_id'] = $branch_id;
+            }
+
+            if ($employeeId !== null && $statusId !== 1) {
+                $sql .= " AND employee_id = :employee_id";
+                $params['employee_id'] = $employeeId;
+            }
         }
 
         $sql .= " ORDER BY o.id DESC LIMIT :limit OFFSET :offset";
@@ -157,8 +166,13 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countOrderWithStatus(?int $statusId = null, $keyword = '', ?int $employeeId = null, bool $isAdmin = false): int
-    {
+    public function countOrderWithStatus(
+        ?int $statusId = null,
+        $keyword = '',
+        ?int $branch_id = null,
+        ?int $employeeId = null,
+        bool $isAdmin = false
+    ): int {
         $sql = "SELECT COUNT(*) FROM orders WHERE isDeleted = 0";
 
         $params = [];
@@ -171,9 +185,16 @@ class Order extends Model
             $params['kw'] = '%' . $keyword . '%';
         }
 
-        if (!$isAdmin && $employeeId !== null && $statusId !== 1) {
-            $sql .= " AND employee_id = :employee_id";
-            $params['employee_id'] = $employeeId;
+        if (!$isAdmin) {
+            if ($branch_id !== null) {
+                $sql .= " AND branch_id = :branch_id";
+                $params['branch_id'] = $branch_id;
+            }
+
+            if ($employeeId !== null && $statusId !== 1) {
+                $sql .= " AND employee_id = :employee_id";
+                $params['employee_id'] = $employeeId;
+            }
         }
 
         $stmt = $this->pdo->prepare($sql);

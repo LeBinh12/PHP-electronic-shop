@@ -35,9 +35,9 @@ class OrderController
         return $this->orderModel->findOrders($userId, $statusId, $keyword, $limit, $offset);
     }
 
-    public function getOrderWithStatusPagination(?int $statusId, int $limit, int $offset, string $keyword, ?int $employeeId = null, bool $isAdmin = false)
+    public function getOrderWithStatusPagination(?int $statusId, int $limit, int $offset, string $keyword, $branch_id = null, ?int $employeeId = null, bool $isAdmin = false)
     {
-        return $this->orderModel->findOrderWithStatus($statusId, $keyword, $limit, $offset, $employeeId, $isAdmin);
+        return $this->orderModel->findOrderWithStatus($statusId, $keyword, $limit, $offset, $branch_id, $employeeId, $isAdmin);
     }
 
     public function getCountOrder(int $userId, ?int $statusId, $keyword): int
@@ -45,9 +45,9 @@ class OrderController
         return $this->orderModel->countOrders($userId, $statusId, $keyword);
     }
 
-    public function getCountOrderWithStatus(?int $statusId, string $keyword, ?int $employeeId = null, bool $isAdmin = false): int
+    public function getCountOrderWithStatus(?int $statusId, string $keyword, $branch_id = null, ?int $employeeId = null, bool $isAdmin = false): int
     {
-        return $this->orderModel->countOrderWithStatus($statusId, $keyword, $employeeId, $isAdmin);
+        return $this->orderModel->countOrderWithStatus($statusId, $keyword, $branch_id,  $employeeId, $isAdmin);
     }
 
     public function getAllOrdersPagination(string $keyword, int $limit, int $offset)

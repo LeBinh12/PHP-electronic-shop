@@ -26,15 +26,16 @@ class InventoryController
         return $this->InventoryController->getInventory($product_id, $branch_id, $isFind, $id);
     }
 
-    public function countInventory($keyword)
+    public function countInventory($keyword, $branch_id = null, $isAdmin = false)
     {
-        return $this->InventoryController->countFiltered($keyword);
+        return $this->InventoryController->countFiltered($keyword, $branch_id, $isAdmin);
     }
 
-    public function getProductPagination($keyword = '', $limit = 8, $offset = 0)
+    public function getProductPagination($keyword = '', $limit = 8, $offset = 0, $branch_id = null, $isAdmin = false)
     {
-        return $this->InventoryController->getFiltered($keyword, $limit, $offset);
+        return $this->InventoryController->getFiltered($keyword, $limit, $offset, $branch_id, $isAdmin);
     }
+
 
     public function add($data)
     {

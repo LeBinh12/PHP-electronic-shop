@@ -9,7 +9,8 @@
         "endroid/qr-code": "^5.1",
         "payos/payos": "^1.0",
         "guzzlehttp/guzzle": "^7.9",
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "erusev/parsedown": "^1.7"
     },
     "type": "project"
 }

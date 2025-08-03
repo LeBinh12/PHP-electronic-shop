@@ -2,6 +2,7 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use Parsedown;
 
 $isChatOpenAi = $_SESSION['chat_open_ai'] ?? false;
 
@@ -78,7 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
         <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
     </div>
     <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; min-height: 405px; max-height: 500px; overflow-y: auto;">
-        <?php foreach ($_SESSION['chat_history'] as $chat) { ?>
+        <?php foreach ($_SESSION['chat_history'] as $i => $chat) {
+            $isLast = $i === array_key_last($_SESSION['chat_history']);
+        ?>
             <div class="d-flex justify-content-end mb-2 flex-column align-items-end">
                 <div class="p-2 bg-primary text-white border rounded">
                     <?= htmlspecialchars($chat['user_message']) ?>
@@ -90,8 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
                 <div class="d-flex" style="max-width: 80%;">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO42z2p6t2s8Sv8gkV_R1aMeIyfmIQR_ss7w&s"
                         class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                    <div class="p-2 bg-light border rounded">
-                        <?= htmlspecialchars($chat['ai_response']) ?>
+                    <div class="p-2 bg-light border rounded ai-response-text <?= $isLast ? 'new' : '' ?>">
+                        <?php
+                        $Parsedown = new Parsedown();
+                        $htmlFormatted = $Parsedown->text($chat['ai_response']);
+                        echo  $htmlFormatted  ?>
                     </div>
                 </div>
                 <div class="small text-muted mt-1" style="margin-left: 40px;"><?= $chat['timestamp'] ?></div>
@@ -115,7 +121,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
                 document.getElementById("ai-chat-form").classList.add("hidden");
             });
         });
+
         const content = document.getElementById("ai-chat-content");
         content.scrollTop = content.scrollHeight;
+
+        const responses = document.querySelectorAll(".ai-response-text.new");
+        responses.forEach(el => {
+            const fullText = el.innerHTML;
+            el.innerHTML = "";
+            let index = 0;
+
+            const typeEffect = () => {
+                if (index < fullText.length) {
+                    el.innerHTML += fullText[index];
+                    index++;
+                    setTimeout(typeEffect, 10); // tốc độ gõ
+                }
+            };
+
+            typeEffect();
+        });
+
     });
 </script>

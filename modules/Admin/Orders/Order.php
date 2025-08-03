@@ -12,18 +12,25 @@ $getAllStatus = $statusController->getAll();
 
 $isAdmin = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
 $employeeId = $isAdmin ? null : ($employeeData->id ?? null);
+$branch_id = $isAdmin ? null : ($employeeData->branch_id ?? null);
+
 // Lấy dữ liệu từ controller
-$listOrders = $orderController->getOrderWithStatusPagination($status_id, $limit, $offset, $keyword, $employeeId, $isAdmin);
-$totalRows = $orderController->getCountOrderWithStatus($status_id, $keyword, $employeeId, $isAdmin);
+$listOrders = $orderController->getOrderWithStatusPagination($status_id, $limit, $offset, $keyword, $branch_id, $employeeId, $isAdmin);
+$totalRows = $orderController->getCountOrderWithStatus($status_id, $keyword, $employeeId, $branch_id, $isAdmin);
 $totalPages = max(1, ceil($totalRows / $limit));
+
+require_once 'modules/Admin/Orders/UpdateOrder.php';
+
 ?>
+
+
 
 
 
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET" action="Admin.php">
+        <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
 
             <!-- Thanh chọn trạng thái -->
