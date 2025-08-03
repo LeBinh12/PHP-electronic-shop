@@ -22,20 +22,22 @@
         </p>
       </div>
     </div>
-    <div>
+    <div class="d-flex align-items-center">
       <button class="btn btn-warning text-white me-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
         <i class="bi bi-shield-lock me-1"></i> Đổi mật khẩu
       </button>
+
       <button class="btn btn-light text-primary me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
         <i class="bi bi-pencil-square me-1"></i> Chỉnh sửa
       </button>
 
-      <form action="Auth/logout.php">
-        <button class="btn btn-danger">
+      <form action="Auth/logout.php" method="post" class="mb-0">
+        <button type="submit" class="btn btn-danger">
           <i class="bi bi-box-arrow-right me-1"></i> Đăng xuất
         </button>
       </form>
     </div>
+
   </div>
 
   <!-- Thống kê dữ liệu ảo -->

@@ -1,9 +1,17 @@
 <?php
 $currentPage = $_GET['page'] ?? '';
 $is_stats_active = in_array($currentPage, [
-  'modules/Admin/RecycleBin/Product/Product.php',
+  'modules/Admin/RecycleBin/Products/Product.php',
   'modules/Admin/RecycleBin/Category/Category.php',
-  'modules/Admin/RecycleBin/Supplier/Supplier.php'
+  'modules/Admin/RecycleBin/Supplier/Supplier.php',
+  'modules/Admin/RecycleBin/Branches/Branch.php',
+  'modules/Admin/RecycleBin/Categories/Category.php',
+  'modules/Admin/RecycleBin/Customers/Customer.php',
+  'modules/Admin/RecycleBin/Orders/Order.php',
+  'modules/Admin/RecycleBin/Menus/Menu.php',
+  'modules/Admin/RecycleBin/Roles/Role.php',
+  'modules/Admin/RecycleBin/Employees/Employee.php'
+
 ]);
 ?>
 
@@ -64,14 +72,19 @@ $is_stats_active = in_array($currentPage, [
             <i class="fas fa-box"></i> Sản phẩm
           </a>
         </li>
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Branches/Branch.php') ? 'active-sub' : '' ?>">
+          <a href="Admin.php?page=modules/Admin/RecycleBin/Branches/Branch.php">
+            <i class="fas fa-store "></i> Chi nhánh
+          </a>
+        </li>
         <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Categories/Category.php') ? 'active-sub' : '' ?>">
           <a href="Admin.php?page=modules/Admin/RecycleBin/Categories/Category.php">
-            <i class="fas fa-store"></i> Loại sản phẩm
+            <i class="fas fa-table"></i> Loại sản phẩm
           </a>
         </li>
         <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Suppliers/Supplier.php') ? 'active-sub' : '' ?>">
           <a href="Admin.php?page=modules/Admin/RecycleBin/Suppliers/Supplier.php">
-            <i class="fas fa-table"></i> Nhà cung cấp
+            <i class="fas fa-boxes-packing "></i> Nhà cung cấp
           </a>
         </li>
         <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Customers/Customer.php') ? 'active-sub' : '' ?>">

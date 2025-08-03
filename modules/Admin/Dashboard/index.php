@@ -1,145 +1,244 @@
 <?php
-
-// Tổng số liệu
+// Dữ liệu giả
 $totalUsers = 15;
 $totalProducts = 30;
 $totalOrdersThisWeek = 22;
-$totalRevenue = 22;
-$totalRevenueFormatted = 10;
+$totalRevenue = 22000;
+$totalRevenueFormatted = number_format($totalRevenue, 0, ',', '.');
 
-$stmt = 30;
-
-
-$labels = ['06/12'];
-$data = ['12000'];
-
-
-
-
+$labels = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+$data1 = [65, 59, 80, 81, 56, 55, 40, 70, 60];
+$data2 = [28, 48, 40, 19, 86, 27, 90, 50, 30];
+$data3 = [45, 25, 60, 35, 80, 45, 20];
 ?>
 
+<!DOCTYPE html>
+<html lang="vi">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Tổng Quan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2e0c6c5ee.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
 
-<div class="container-fluid py-4">
-    <h3 class="mb-4 fw-bold">
-        <i class="fas fa-chart-bar text-info me-2"></i> Tổng quan
-    </h3>
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+        }
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card text-white" style="background: linear-gradient(45deg, #6a11cb, #2575fc);">
-                <div class="card-body">
-                    <h5><i class="fas fa-user me-2"></i><?= $totalUsers ?></h5>
-                    <p class="mb-0">Người dùng</p>
+        .card .card-header {
+            background: none;
+            border-bottom: none;
+            font-weight: bold;
+        }
+
+        canvas {
+            max-height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid py-4">
+        <h3 class="mb-4 fw-bold">
+            <i class="fas fa-chart-bar text-info me-2"></i> Tổng quan
+        </h3>
+
+        <!-- Cards thống kê -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card text-white" style="background: linear-gradient(45deg, #6a11cb, #2575fc);">
+                    <div class="card-body">
+                        <h5><i class="fas fa-user me-2"></i><?= $totalUsers ?></h5>
+                        <p class="mb-0">Người dùng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">
+                    <div class="card-body">
+                        <h5><i class="fas fa-box me-2"></i><?= $totalProducts ?></h5>
+                        <p class="mb-0">Sản phẩm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white" style="background: linear-gradient(45deg, #f7971e, #ffd200);">
+                    <div class="card-body">
+                        <h5><i class="fas fa-calendar-week me-2"></i><?= $totalOrdersThisWeek ?></h5>
+                        <p class="mb-0">Đơn tuần này</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white" style="background: linear-gradient(45deg, #56ab2f, #a8e063);">
+                    <div class="card-body">
+                        <h5><i class="fas fa-dollar-sign me-2"></i><?= $totalRevenueFormatted ?>₫</h5>
+                        <p class="mb-0">Doanh thu</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">
-                <div class="card-body">
-                    <h5><i class="fas fa-box me-2"></i><?= $totalProducts ?></h5>
-                    <p class="mb-0">Sản phẩm</p>
+
+        <!-- Biểu đồ -->
+        <div class="row g-3">
+            <!-- Bar Chart -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Biểu đồ cột</div>
+                    <div class="card-body">
+                        <canvas id="barChart"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white" style="background: linear-gradient(45deg, #f7971e, #ffd200);">
-                <div class="card-body">
-                    <h5><i class="fas fa-calendar-week me-2"></i><?= $totalOrdersThisWeek ?></h5>
-                    <p class="mb-0">Đơn tuần này</p>
+
+            <!-- Polar Area -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Biểu đồ vùng cực</div>
+                    <div class="card-body">
+                        <canvas id="polarChart"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white" style="background: linear-gradient(45deg, #56ab2f, #a8e063);">
-                <div class="card-body">
-                    <h5><i class="fas fa-dollar-sign me-2"></i>$<?= $totalRevenueFormatted ?></h5>
-                    <p class="mb-0">Doanh thu</p>
+
+            <!-- Line Chart -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Doanh thu 7 ngày gần nhất</div>
+                    <div class="card-body">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Tỷ lệ số lượng</div>
+                    <div class="card-body">
+                        <canvas id="pieChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-3">
-        <div class="row g-3">
-            <!-- Biểu đồ đường -->
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card-header fw-bold">Doanh thu 7 ngày gần nhất</div>
-                    <div class="card-body d-flex align-items-center justify-content-center">
-                        <div style="width: 100%; height: 250px;">
-                            <canvas id="lineChart" style="max-height: 100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Chart.js Script -->
+    <script>
+        const labels = <?= json_encode($labels) ?>;
+        const data1 = <?= json_encode($data1) ?>;
+        const data2 = <?= json_encode($data2) ?>;
+        const data3 = <?= json_encode($data3) ?>;
 
-            <!-- Biểu đồ tròn -->
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card-header fw-bold">Tỷ lệ số lượng</div>
-                    <div class="card-body d-flex align-items-center justify-content-center">
-                        <div style="width: 100%; height: 250px;">
-                            <canvas id="pieChart" style="max-height: 100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        // Bar Chart
+        new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                        label: 'Doanh thu',
+                        data: data1,
+                        backgroundColor: '#36a2eb'
+                    },
+                    {
+                        label: 'Số lượng đơn',
+                        data: data2,
+                        backgroundColor: '#ff6384'
+                    },
+                    {
+                        label: 'Khách truy cập',
+                        data: data3,
+                        backgroundColor: '#4bc0c0'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
+        // Polar Area Chart
+        new Chart(document.getElementById('polarChart'), {
+            type: 'polarArea',
+            data: {
+                labels: ['Doanh thu', 'Số lượng đơn', 'Khách truy cập', 'Đơn hàng tuần này', 'Sản phẩm', 'Đơn hàng đã giao', 'Đơn hàng đang xử lý'],
+                datasets: [{
+                    data: data3,
+                    backgroundColor: ['#36a2eb', '#ff6384', '#4bc0c0', '#ff9f40', '#0d47bbff', '#00b894', '#d21b8cff'],
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
 
-        <!-- Chart.js -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            const lineCtx = document.getElementById('lineChart').getContext('2d');
-            new Chart(lineCtx, {
-                type: 'line',
-                data: {
-                    labels: <?= json_encode($labels) ?>,
-                    datasets: [{
-                        label: 'Doanh thu (VND)',
-                        data: <?= json_encode($data) ?>,
-                        fill: true,
-                        borderColor: '#4bc0c0',
-                        backgroundColor: 'rgba(75,192,192,0.2)',
-                        tension: 0.3,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#4bc0c0',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return new Intl.NumberFormat().format(value);
-                                }
+        // Line Chart
+        new Chart(document.getElementById('lineChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: data1,
+                    fill: true,
+                    borderColor: '#4bc0c0',
+                    backgroundColor: 'rgba(75,192,192,0.2)',
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#4bc0c0',
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return new Intl.NumberFormat().format(value) + '₫';
                             }
                         }
                     }
                 }
-            });
+            }
+        });
 
-            const pieCtx = document.getElementById('pieChart').getContext('2d');
-            new Chart(pieCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Người dùng', 'Sản phẩm', 'Đơn hàng'],
-                    datasets: [{
-                        data: [<?= $totalUsers ?>, <?= $totalProducts ?>, <?= $totalOrdersThisWeek ?>],
-                        backgroundColor: ['#36a2eb', '#4bc0c0', '#ff6384']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
+        // Pie Chart
+        new Chart(document.getElementById('pieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Người dùng', 'Sản phẩm', 'Đơn hàng'],
+                datasets: [{
+                    data: [<?= $totalUsers ?>, <?= $totalProducts ?>, <?= $totalOrdersThisWeek ?>],
+                    backgroundColor: ['#36a2eb', '#4bc0c0', '#ff6384']
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom'
                     }
                 }
-            });
-        </script>
+            }
+        });
+    </script>
+
+</body>
+
+</html>

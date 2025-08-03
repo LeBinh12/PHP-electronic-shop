@@ -1,0 +1,83 @@
+<?php
+// Dữ liệu giả lập nhân viên đã bị xóa
+$listDeletedEmployees = [
+    ['id' => 201, 'name' => 'Nguyễn Văn D', 'email' => 'd@company.com', 'phone' => '0912345678', 'position' => 'Quản lý', 'address' => '123 Lê Lợi, Quận 1'],
+    ['id' => 202, 'name' => 'Trần Thị E', 'email' => 'e@company.com', 'phone' => '0988776655', 'position' => 'Nhân viên bán hàng', 'address' => '45 Hai Bà Trưng, Quận 3'],
+    ['id' => 203, 'name' => 'Phạm Văn F', 'email' => 'f@company.com', 'phone' => '0909998888', 'position' => 'Kho hàng', 'address' => '67 Nguyễn Huệ, Quận 1'],
+];
+?>
+
+<?php require_once 'RestoreEmployee.php'; ?>
+<?php require_once 'DeleteEmployee.php'; ?>
+
+<div class="product-container">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
+        <h4 class="mb-0 text-danger"><i class="fas fa-user-times me-2"></i>Nhân viên đã xóa</h4>
+    </div>
+
+    <div class="table-container">
+        <table class="table table-bordered table-hover custom-table">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tên nhân viên</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th>Vị trí</th>
+                    <th>Địa chỉ</th>
+                    <th style="width: 300px">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($listDeletedEmployees as $emp): ?>
+                    <tr>
+                        <td><?= $emp['id'] ?></td>
+                        <td><?= htmlspecialchars($emp['name']) ?></td>
+                        <td><?= htmlspecialchars($emp['email']) ?></td>
+                        <td><?= htmlspecialchars($emp['phone']) ?></td>
+                        <td><?= htmlspecialchars($emp['position']) ?></td>
+                        <td><?= htmlspecialchars($emp['address']) ?></td>
+                        <td>
+                            <div class="action-buttons d-flex gap-2">
+                                <button class="btn btn-sm btn-success restore-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#restoreEmployeeModal"
+                                        data-id="<?= $emp['id'] ?>"
+                                        data-name="<?= htmlspecialchars($emp['name']) ?>">
+                                    <i class="fas fa-undo me-1"></i> Khôi phục
+                                </button>
+
+                                <button class="btn btn-sm btn-danger delete-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteEmployeeModal"
+                                        data-id="<?= $emp['id'] ?>"
+                                        data-name="<?= htmlspecialchars($emp['name']) ?>">
+                                    <i class="fas fa-trash-alt me-1"></i> Xóa
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const restoreButtons = document.querySelectorAll('.restore-btn');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    restoreButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('restoreEmployeeId').value = button.getAttribute('data-id');
+            document.getElementById('restoreEmployeeName').textContent = button.getAttribute('data-name');
+        });
+    });
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('deleteEmployeeId').value = button.getAttribute('data-id');
+            document.getElementById('deleteEmployeeName').textContent = button.getAttribute('data-name');
+        });
+    });
+</script>
