@@ -22,28 +22,50 @@ if (isset($_GET['orderid'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
+  $employeeId = $isAdmin ? 1 : ($employeeData->id ?? null);
   $statusId = $_POST['status'];
   $orderId = $_GET['orderid'];
   $order = $orderController->getById($orderId);
-  if ($statusId == 1) {
+  if ($order['employee_id'] === null) {
+    if ($statusId == 1) {
 
-    $orderDetail = $orderItemController->getOrderItemById($orderId);
-    foreach ($orderDetail as $item) {
-      $productId = $item['product_id'];
-      $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id'], true);
+      $orderDetail = $orderItemController->getOrderItemById($orderId);
+      foreach ($orderDetail as $item) {
+        $productId = $item['product_id'];
+        $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id'], true);
 
-      $totalQuantity = $inventoryByProductId['stock_quantity'] + $item['quantity'];
-      $inventoryController->edit($inventoryByProductId['inventory_id'], ['stock_quantity' => $totalQuantity]);
+        $totalQuantity = $inventoryByProductId['stock_quantity'] + $item['quantity'];
+        $inventoryController->edit($inventoryByProductId['inventory_id'], ['stock_quantity' => $totalQuantity]);
+      }
     }
+    $result = $orderController->edit($orderId, ['status_id' => $statusId, 'employee_id' => $employeeId]);
+  } else {
+    if ($statusId == 1) {
+
+      $orderDetail = $orderItemController->getOrderItemById($orderId);
+      foreach ($orderDetail as $item) {
+        $productId = $item['product_id'];
+        $inventoryByProductId = $inventoryController->getProductInventory($productId, $order['branch_id'], true);
+
+        $totalQuantity = $inventoryByProductId['stock_quantity'] + $item['quantity'];
+        $inventoryController->edit($inventoryByProductId['inventory_id'], ['stock_quantity' => $totalQuantity]);
+      }
+    }
+
+    $result =  $orderController->edit($orderId, ['status_id' => $statusId]);
   }
-  $orderController->edit($orderId, ['status_id' => $statusId]);
+
+  if ($result['success']) {
+    $_SESSION['success'] = $result['message'];
+  } else {
+    $_SESSION['error'] = $result['message'];
+  }
 
   echo "<script>
-            alert('Cập nhật đơn hàng thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Orders/Order.php';
         </script>";
+  exit;
 }
-
 ?>
 
 <div class="modal fade" id="UpdateOrderModal" tabindex="-1">
@@ -95,9 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
             </div>
           </div>
 
-
-
-
           <h5>Sản phẩm</h5>
           <table class="table table-bordered text-center">
             <thead class="table-warning">
@@ -139,3 +158,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

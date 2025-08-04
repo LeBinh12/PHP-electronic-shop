@@ -3,9 +3,17 @@
 // $orderModel = new Order();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
+    $employeeId = $isAdmin ? 1 : ($employeeData->id ?? null);
     $id = $_POST['id'] ?? null;
     if ($id) {
         $order = $orderController->getById($id);
+        if ($order['status_id'] === 4) {
+            echo "      <script>
+                            alert('Đơn hàng này đang vận chuyển!');
+                            window.location.href = 'Admin.php?page=modules/Admin/Orders/Order.php';
+                        </script>";
+            exit;
+        }
         $currentStatus = (int)$order['status_id'];
         if ($currentStatus == 1) {
             $orderDetail = $orderItemController->getOrderItemById($id);
@@ -27,17 +35,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
 
         if ($order) {
             $maxStatus = 5;
-
             $nextStatus = ($currentStatus < $maxStatus) ? $currentStatus + 1 : 1;
             $data = [
                 'status_id' => $nextStatus,
-                'employee_id' => 1
+                'employee_id' =>  $employeeId
             ];
 
-            $orderController->edit($id, $data);
+            $result = $orderController->edit($id, $data);
+        }
+
+        if ($result['success']) {
+            $_SESSION['success'] = $result['message'];
+        } else {
+            $_SESSION['error'] = $result['message'];
         }
         echo "<script>
-            alert('Chuyển đổi trạng thái thành công!');
             window.location.href = 'Admin.php?page=modules/Admin/Orders/Order.php';
         </script>";
         exit;
@@ -68,3 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ChangeStatus'])) {
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.change-status-btn');
+        buttons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-id');
+                document.getElementById('change-status-id').value = orderId;
+            });
+        });
+    });
+</script>

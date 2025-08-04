@@ -68,12 +68,19 @@ class OrderController
 
     public function edit($id, $data)
     {
-        $orderEdit = $this->orderModel->update($id, $data);
-        return [
-            "success" => true,
-            "message" => 'Cập nhật đơn hàng thành công',
-            'order' => $orderEdit
-        ];
+        try {
+            $orderEdit = $this->orderModel->update($id, $data);
+            return [
+                "success" => true,
+                "message" => 'Cập nhật đơn hàng thành công',
+                'order' => $orderEdit
+            ];
+        } catch (Exception $e) {
+            return [
+                "success" => false,
+                "message" => 'Lỗi" ' . $e->getMessage(),
+            ];
+        }
     }
 
     public function delete($id)
