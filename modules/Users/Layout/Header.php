@@ -16,9 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sendEmail'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmResetBtn'])) {
 
-    $result = $userController->validateToken($_SESSION['email'], $_POST['otpCode']);
-    var_dump($result);
-    exit;
+    $result = $userController->verifyResetToken($_SESSION['email'], $_POST['otpCode']);
     if ($result['success']) {
         $resultPassword = $userController->resetPassword($result['user_id'], $_POST['newPassword']);
         swal_alert('success', $resultPassword['message']);
