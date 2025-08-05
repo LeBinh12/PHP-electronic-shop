@@ -38,7 +38,10 @@ $shippingController = new ShippingController();
 $reviewController = new ReviewController();
 
 $cart = $_SESSION['cart'] ?? [];
+// unset($_SESSION['jwt']);
+
 $userData = $userController->getCurrentUser();
+
 
 
 ?>

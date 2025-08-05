@@ -82,35 +82,35 @@ $_SESSION['admin'] = $_SESSION['admin'] ?? null;
 
 <body>
 
-<script>
-    function Loading(status) {
-        if (status) {
-            if (!document.getElementById('loadingOverlay')) {
-                const overlay = document.createElement('div');
-                overlay.id = 'loadingOverlay';
-                overlay.style.position = 'fixed';
-                overlay.style.top = 0;
-                overlay.style.left = 0;
-                overlay.style.right = 0;
-                overlay.style.bottom = 0;
-                overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
-                overlay.style.display = 'flex';
-                overlay.style.flexDirection = 'column';
-                overlay.style.justifyContent = 'center';
-                overlay.style.alignItems = 'center';
-                overlay.style.zIndex = 9999;
-                overlay.innerHTML = `
+    <script>
+        function Loading(status) {
+            if (status) {
+                if (!document.getElementById('loadingOverlay')) {
+                    const overlay = document.createElement('div');
+                    overlay.id = 'loadingOverlay';
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = 0;
+                    overlay.style.left = 0;
+                    overlay.style.right = 0;
+                    overlay.style.bottom = 0;
+                    overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                    overlay.style.display = 'flex';
+                    overlay.style.flexDirection = 'column';
+                    overlay.style.justifyContent = 'center';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.zIndex = 9999;
+                    overlay.innerHTML = `
                     <div class="spinner-border text-light" role="status"></div>
                     <p style="color:white; margin-top: 10px;">Đang xử lý, vui lòng chờ...</p>
                 `;
-                document.body.appendChild(overlay);
+                    document.body.appendChild(overlay);
+                }
+            } else {
+                const overlay = document.getElementById('loadingOverlay');
+                if (overlay) overlay.remove();
             }
-        } else {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) overlay.remove();
         }
-    }
-</script>
+    </script>
 
 
     <?php

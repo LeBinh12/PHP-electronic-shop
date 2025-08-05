@@ -7,9 +7,6 @@ use Respect\Validation\Rules\Date;
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
-    echo "<script>Loading(true);</script>";
-    flush();
-    ob_flush();
     try {
         $name = $_POST['name'] ?? '';
         $price = $_POST['price'] ?? 0;
@@ -172,3 +169,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
 <div id="lightbox" class="lightbox">
     <img id="lightbox-img" src="" alt="Preview">
 </div>
+
+<script>
+    document.getElementById("addProductForm").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>
