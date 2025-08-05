@@ -7,7 +7,9 @@ use Respect\Validation\Rules\Date;
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
-
+    echo "<script>Loading(true);</script>";
+    flush();
+    ob_flush();
     try {
         $name = $_POST['name'] ?? '';
         $price = $_POST['price'] ?? 0;
@@ -63,9 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
                 }
             }
             $_SESSION['success'] = $result['message'];
+
+
             echo "<script>
-            window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
-        </script>";
+                Loading(false);
+                setTimeout(function () {
+                    window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+                }, 500);
+            </script>";
 
             exit;
         } else {
@@ -93,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
         <h2>Thêm Sản Phẩm</h2>
     </div>
     <div class="product-content">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form id="addProductForm" action="" method="POST" enctype="multipart/form-data">
             <div class="form-grid">
                 <div class="group mb-3">
                     <label class="form-label">Tên sản phẩm</label>
@@ -161,7 +168,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
         </form>
     </div>
 </div>
-
 
 <div id="lightbox" class="lightbox">
     <img id="lightbox-img" src="" alt="Preview">
