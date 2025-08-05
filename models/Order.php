@@ -31,6 +31,25 @@ class Order extends Model
         'employee_id' => 'employees(id)',
     ];
 
+    public function countOrdersThisWeek()
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 
+                                                    AND YEARWEEK(create_at, 1) = YEARWEEK(CURDATE(), 1)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
+    public function countOrdersByStatusThisWeek($statusId)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 
+                                                    AND YEARWEEK(create_at, 1) = YEARWEEK(CURDATE(), 1) AND status_id = :status_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["status_id" => $statusId]);
+        return (int) $stmt->fetchColumn();
+    }
+
     public function findByCode($code)
     {
         $sql = "

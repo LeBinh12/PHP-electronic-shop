@@ -1,16 +1,24 @@
 <?php
 // Dữ liệu giả
-$totalUsers = 15;
-$totalProducts = 30;
-$totalOrdersThisWeek = 22;
-$totalRevenue = 22000;
-$totalRevenueFormatted = number_format($totalRevenue, 0, ',', '.');
+$totalUsers = $userController->countUserAll();
+$totalProducts = $product->countProductAll();
+$totalOrdersThisWeek = $orderController->countOrderThisWeek();
+$totalRevenue = $orderItemController->countProductThisWeek();
 
-$labels = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+$monthlyUserCounts = $userController->countUsersByMonthInYear();
+
+$monthLabels = ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'];
+
 $data1 = [65, 59, 80, 81, 56, 55, 40, 70, 60];
 $data2 = [28, 48, 40, 19, 86, 27, 90, 50, 30];
-$data3 = [45, 25, 60, 35, 80, 45, 20];
-?>
+$data3 = [
+    $orderController->countOrdersByStatusThisWeek(1),
+    $orderController->countOrdersByStatusThisWeek(2),
+    $orderController->countOrdersByStatusThisWeek(3),
+    $orderController->countOrdersByStatusThisWeek(4),
+    $orderController->countOrdersByStatusThisWeek(5),
+    $orderController->countOrdersByStatusThisWeek(6),
+]; ?>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -81,8 +89,8 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
             <div class="col-md-3">
                 <div class="card text-white" style="background: linear-gradient(45deg, #56ab2f, #a8e063);">
                     <div class="card-body">
-                        <h5><i class="fas fa-dollar-sign me-2"></i><?= $totalRevenueFormatted ?>₫</h5>
-                        <p class="mb-0">Doanh thu</p>
+                        <h5><i class="fas fa-dollar-sign me-2"></i><?= $totalRevenue ?></h5>
+                        <p class="mb-0">Tổng sản phẩm / tuần</p>
                     </div>
                 </div>
             </div>
@@ -110,7 +118,7 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
                 </div>
             </div>
 
-            <!-- Line Chart -->
+            <!-- Line Chart
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header">Doanh thu 7 ngày gần nhất</div>
@@ -120,7 +128,6 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
                 </div>
             </div>
 
-            <!-- Pie Chart -->
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header">Tỷ lệ số lượng</div>
@@ -128,13 +135,16 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
                         <canvas id="pieChart"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <!-- Chart.js Script -->
     <script>
-        const labels = <?= json_encode($labels) ?>;
+        const labels = <?= json_encode($monthLabels) ?>;
+        const userByMonthData = <?= json_encode(array_values($monthlyUserCounts)) ?>;
+
+
         const data1 = <?= json_encode($data1) ?>;
         const data2 = <?= json_encode($data2) ?>;
         const data3 = <?= json_encode($data3) ?>;
@@ -145,27 +155,17 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
             data: {
                 labels: labels,
                 datasets: [{
-                        label: 'Doanh thu',
-                        data: data1,
-                        backgroundColor: '#36a2eb'
-                    },
-                    {
-                        label: 'Số lượng đơn',
-                        data: data2,
-                        backgroundColor: '#ff6384'
-                    },
-                    {
-                        label: 'Khách truy cập',
-                        data: data3,
-                        backgroundColor: '#4bc0c0'
-                    }
-                ]
+                    label: 'Khách hàng mới theo tháng',
+                    data: userByMonthData,
+                    backgroundColor: '#4bc0c0'
+                }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1
                     }
                 }
             }
@@ -175,10 +175,10 @@ $data3 = [45, 25, 60, 35, 80, 45, 20];
         new Chart(document.getElementById('polarChart'), {
             type: 'polarArea',
             data: {
-                labels: ['Doanh thu', 'Số lượng đơn', 'Khách truy cập', 'Đơn hàng tuần này', 'Sản phẩm', 'Đơn hàng đã giao', 'Đơn hàng đang xử lý'],
+                labels: ['Chờ xử lý', 'Đã xác nhận', 'Đang chuyển hàng', 'Đang giao hàng', 'Đã hủy', 'Thành công'],
                 datasets: [{
                     data: data3,
-                    backgroundColor: ['#36a2eb', '#ff6384', '#4bc0c0', '#ff9f40', '#0d47bbff', '#00b894', '#d21b8cff'],
+                    backgroundColor: ['#36a2eb', '#ff6384', '#4bc0c0', '#ff9f40', '#FF6666', '#00b894'],
                 }]
             },
             options: {

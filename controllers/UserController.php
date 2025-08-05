@@ -325,4 +325,14 @@ class UserController extends BaseController
 
         return ['success' => true, 'message' => 'Đặt lại mật khẩu thành công'];
     }
+
+    public function countUserAll()
+    {
+        return $this->userModel->countUserAll();
+    }
+
+    public function countUsersByMonthInYear($year = null)
+    {
+        return $this->userModel->countUsersByMonthInYear($year);
+    }
 }

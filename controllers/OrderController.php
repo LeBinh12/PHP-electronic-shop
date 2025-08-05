@@ -92,7 +92,13 @@ class OrderController
         ];
     }
 
-    // public function getCountOrder($userId) {
-    //     return $this->orderModel->getCountOrderByUserId($userId);
-    // }
+    public function countOrderThisWeek()
+    {
+        return $this->orderModel->countOrdersThisWeek();
+    }
+
+    public function countOrdersByStatusThisWeek($statusId)
+    {
+        return $this->orderModel->countOrdersByStatusThisWeek($statusId);
+    }
 }

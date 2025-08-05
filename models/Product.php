@@ -23,6 +23,14 @@
             'supplier_id' => 'suppliers(id)',
         ];
 
+        public function countProductAll()
+        {
+            $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) ($result['total'] ?? 0);
+        }
         public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0, array $priceRanges = [])
         {
             $sql = "

@@ -20,6 +20,11 @@ class OrderItemController
         ];
     }
 
+    public function countProductThisWeek()
+    {
+        return $this->orderItemModel->countProductsSoldThisWeek();
+    }
+
     public function getOrderItemById($orderId)
     {
         return $this->orderItemModel->getOrderItemByOrderId($orderId);

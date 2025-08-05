@@ -126,6 +126,11 @@ class ProductController extends BaseController
         // return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
     }
 
+    public function countProductAll()
+    {
+        return $this->productModel->countProductAll();
+    }
+
     public function add($data)
     {
         try {

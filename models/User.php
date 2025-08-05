@@ -68,10 +68,40 @@ class User extends Model
         return (int) ($result['total'] ?? 0);
     }
 
+    public function countUserAll()
+    {
+        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) ($result['total'] ?? 0);
+    }
+
     public function findByEmail($email)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE Email = :email");
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // thống kế tổng số lượng khách hàng tham gia theo tháng
+    public function countUsersByMonthInYear($year = null)
+    {
+        $year = $year ?? date('Y');
+        $sql = "SELECT MONTH(CreatedAt) as month, COUNT(*) as total FROM {$this->table} 
+                        WHERE isDeleted = 0 AND YEAR(CreatedAt) = :year 
+                        GROUP BY MONTH(CreatedAt)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['year' => $year]);
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $monthlyCounts = array_fill(1, 12, 0);
+        foreach ($results as $row) {
+            $monthlyCounts[(int)$row['month']] = (int)$row['total'];
+        }
+
+        return $monthlyCounts;
     }
 }

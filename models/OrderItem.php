@@ -16,6 +16,20 @@ class OrderItem extends Model
         'order_id' => 'orders(id)'
     ];
 
+    public function countProductsSoldThisWeek()
+    {
+        $sql = "SELECT SUM(oi.quantity) AS total_sold
+        FROM {$this->table} oi JOIN orders o ON oi.order_id = o.id 
+        WHERE o.isDeleted = 0 
+                AND o.status_id = 6 
+                AND YEARWEEK(o.create_at, 1) = YEARWEEK(CURDATE(), 1)
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
     public function getOrderItemByOrderId($orderId)
     {
         $sql = "
