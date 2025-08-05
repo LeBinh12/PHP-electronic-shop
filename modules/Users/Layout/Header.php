@@ -5,11 +5,20 @@ $supplierGetAll = $supplier->getAll();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sendEmail'])) {
     $userController->sendResetToken($_POST['email']);
     $_SESSION['email'] = $_POST['email'];
+    // Đặt session để biết modal nào cần mở sau khi reload
+    $_SESSION['open_modal'] = 'verifyOtpModal';
+    // Redirect lại chính trang để tránh gửi lại form
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit;
 }
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmResetBtn'])) {
 
     $result = $userController->validateToken($_SESSION['email'], $_POST['otpCode']);
+    var_dump($result);
+    exit;
     if ($result['success']) {
         $resultPassword = $userController->resetPassword($result['user_id'], $_POST['newPassword']);
         swal_alert('success', $resultPassword['message']);
@@ -427,7 +436,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                         <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
                         <input type="email" name="email" id="forgotEmail" class="form-control" placeholder="Email">
                     </div>
-                    <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#verifyOtpModal" name="sendEmail">Gửi mã xác nhận</button>
+                    <button type="submit" class="btn btn-danger w-100" name="sendEmail">Gửi mã xác nhận</button>
                 </div>
             </form>
         </div>
@@ -459,6 +468,16 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
         </div>
     </div>
 </div>
+
+<?php if (isset($_SESSION['open_modal'])): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const myModal = new bootstrap.Modal(document.getElementById('<?php echo $_SESSION['open_modal']; ?>'));
+            myModal.show();
+        });
+    </script>
+<?php unset($_SESSION['open_modal']);
+endif; ?>
 
 
 <script>
