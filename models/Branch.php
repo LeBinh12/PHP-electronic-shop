@@ -16,10 +16,11 @@ class Branch extends Model
         'updated_at' => 'DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
     ];
 
-    public function getFilteredBranch($limit = 8, $offset = 0, $keyword = '')
+    public function getFilteredBranch($limit = 8, $offset = 0, $keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1 ";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";
@@ -42,10 +43,11 @@ class Branch extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countCategory($keyword = '')
+    public function countCategory($keyword = '', $isDeleted = 0)
     {
         $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";

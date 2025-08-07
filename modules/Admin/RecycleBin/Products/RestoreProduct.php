@@ -1,4 +1,21 @@
-<!-- Modal Khôi phục -->
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_product'])) {
+    $id = $_POST['restore_product_id'];
+
+    $result = $product->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
+
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/RecycleBin/Products/Product.php'</script>";
+    exit;
+}
+?>
+
 <div class="modal fade" id="restoreProductModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form method="POST" action="">
@@ -21,14 +38,14 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const restoreModal = document.getElementById('restoreProductModal');
-    restoreModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const id = button.getAttribute('data-id');
-        const name = button.getAttribute('data-name');
-        document.getElementById('restore-product-id').value = id;
-        document.getElementById('restore-product-name').textContent = name;
+    document.addEventListener('DOMContentLoaded', function() {
+        const restoreModal = document.getElementById('restoreProductModal');
+        restoreModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            document.getElementById('restore-product-id').value = id;
+            document.getElementById('restore-product-name').textContent = name;
+        });
     });
-});
 </script>

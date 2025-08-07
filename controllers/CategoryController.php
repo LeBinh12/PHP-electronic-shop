@@ -7,10 +7,14 @@ require_once './core/RedisCache.php';
 class CategoryController
 {
     private $categoryModel;
+    private $productModel;
+    private $productController;
 
     public function __construct()
     {
         $this->categoryModel = new Category();
+        $this->productModel = new Product();
+        $this->productController = new ProductController();
     }
 
     public function getAll()
@@ -35,24 +39,24 @@ class CategoryController
         return $data;
     }
 
-    public function getFilterCategories($limit, $offset, $keyword)
+    public function getFilterCategories($limit, $offset, $keyword, $isDeleted = 0)
     {
-        $key = "categories:filter:$limit:$offset:$keyword";
+        $key = "categories:filter:$limit:$offset:$keyword:$isDeleted";
         if (RedisCache::exists($key)) {
             return json_decode(RedisCache::get($key), true);
         }
-        $data = $this->categoryModel->getFilteredCategories($limit, $offset, $keyword);
+        $data = $this->categoryModel->getFilteredCategories($limit, $offset, $keyword, $isDeleted);
         RedisCache::set($key, json_encode($data));
         return $data;
     }
 
-    public function countCategories($keyword = '')
+    public function countCategories($keyword = '', $isDeleted = 0)
     {
-        $key = "categories:count:$keyword";
+        $key = "categories:count:$keyword:$isDeleted";
         if (RedisCache::exists($key)) {
             return (int) RedisCache::get($key);
         }
-        $total = $this->categoryModel->countCategory($keyword);
+        $total = $this->categoryModel->countCategory($keyword, $isDeleted);
         RedisCache::set($key, $total);
         return $total;
     }
@@ -132,6 +136,94 @@ class CategoryController
         }
     }
 
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existingBranch = $this->categoryModel->findIsDeled($id);
+
+            if ($existingBranch == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $productId = $this->productModel->getByColumn('category_id', $id);
+
+            if (is_array($productId) && count($productId) > 0) {
+                foreach ($productId as $item) {
+                    $result = $this->productController->deleteIsDeleted($item['id']);
+                    if (!$result['success']) {
+                        return $result;
+                    }
+                }
+            }
+
+            $result = $this->categoryModel->delete($id);
+            $this->invalidateCache($id);
+            if ($result) {
+                return [
+                    'success' => true,
+                    'message' => 'Xóa loại sản phẩm thành công!'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Lỗi Xóa loại sản phẩm!'
+                ];
+            }
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existingBranch = $this->categoryModel->findIsDeled($id);
+
+            if ($existingBranch == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $productId = $this->productModel->getByColumn('category_id', $id);
+
+            if (is_array($productId) && count($productId) > 0) {
+                foreach ($productId as $item) {
+                    $result = $this->productController->deleteIsDeleted($item['id']);
+                    if (!$result['success']) {
+                        return $result;
+                    }
+                }
+            }
+
+            $result = $this->categoryModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            $this->invalidateCache($id);
+            if ($result) {
+                return [
+                    'success' => true,
+                    'message' => 'Khôi phục loại sản phẩm thành công!'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Khôi phục loại sản phẩm!'
+                ];
+            }
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
+        }
+    }
+
     private function invalidateCache($id = null)
     {
         RedisCache::delete('categories:all');
@@ -139,6 +231,13 @@ class CategoryController
 
         $filterKeys = RedisCache::keys('categories:filter:*');
         $countKeys = RedisCache::keys('categories:count:*');
+
+        $filterKeysProduct = RedisCache::keys('products:filter:*');
+        $countKeysProduct = RedisCache::keys('products:count:*');
+
+        foreach (array_merge($filterKeysProduct, $countKeysProduct) as $key) {
+            RedisCache::delete($key);
+        }
 
         foreach (array_merge($filterKeys, $countKeys) as $key) {
             RedisCache::delete($key);

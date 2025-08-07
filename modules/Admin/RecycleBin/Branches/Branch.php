@@ -1,22 +1,17 @@
 <?php
-$deletedBranches = [
-    [
-        'id' => 1,
-        'name' => 'Chi nhánh Hà Nội',
-        'address' => '123 Trần Duy Hưng',
-        'phone' => '0987654321',
-        'email' => 'hanoi@branch.vn',
-        'created_at' => '2024-01-15'
-    ],
-    [
-        'id' => 2,
-        'name' => 'Chi nhánh Đà Nẵng',
-        'address' => '456 Nguyễn Văn Linh',
-        'phone' => '0911222333',
-        'email' => 'danang@branch.vn',
-        'created_at' => '2024-02-10'
-    ]
-];
+
+$keyword = $_GET['search'] ?? '';
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+$totalBranch = $branchController->countBranch($keyword, 1);
+$totalPages = ceil($totalBranch / $limit);
+$deletedBranches = $branchController->getPagination($limit, $offset, $keyword, 1);
+
+
+
 require_once 'RestoreBranch.php';
 require_once 'DeleteBranch.php';
 ?>
@@ -73,6 +68,18 @@ require_once 'DeleteBranch.php';
         </tbody>
     </table>
 </div>
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                <a class="page-link"
+                    href="Admin.php?page=modules/Admin/RecyleBin/Branches/Branch.php&search=<?= urlencode($keyword) ?>&number=<?= $i ?>">
+                    <?= $i ?>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
+</nav>
 </div>
 
 <script>

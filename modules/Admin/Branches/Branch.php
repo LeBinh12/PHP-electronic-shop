@@ -84,8 +84,8 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
                                     <button class="btn btn-danger btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteBranchModal"
-                                        data-id="<?= $branch['id'] ?>"
-                                        data-name="<?= htmlspecialchars($branch['name']) ?>">
+                                        data-id="<?= $item['id'] ?>"
+                                        data-name="<?= htmlspecialchars($item['name']) ?>">
                                         <i class="fas fa-trash-alt"></i> Xóa
                                     </button>
                                 <?php

@@ -1,7 +1,7 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['delete_id'])) {
-    $id = $_POST['delete_id'];
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['delete_branch'])) {
+    $id = $_POST['branch_id'];
 
     $result = $branchController->delete($id);
     if ($result['success']) {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['delete_id'])) {
 <div class="modal fade" id="deleteBranchModal" tabindex="-1" aria-labelledby="deleteBranchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
-            <form method="POST" action="index.php?controller=branch&action=delete">
+            <form method="POST">
                 <input type="hidden" name="delete_branch" value="1">
                 <input type="hidden" name="branch_id" id="deleteBranchId">
 

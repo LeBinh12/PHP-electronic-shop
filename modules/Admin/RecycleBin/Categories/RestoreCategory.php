@@ -1,8 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_category'])) {
     $id = $_POST['restore_category_id'];
-    // Giả lập khôi phục
-    $_SESSION['success'] = "Danh mục ID $id đã được khôi phục!";
+    $result = $category->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

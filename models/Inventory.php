@@ -17,6 +17,47 @@
             'branch_id' => 'branches(id)',
             'product_id' => 'products(id)'
         ];
+        public function hasProduct(int $productId): bool
+        {
+            $sql = "SELECT COUNT(*) FROM {$this->table} WHERE product_id = :product_id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['product_id' => $productId]);
+            $count = $stmt->fetchColumn();
+
+            return $count > 0;
+        }
+
+        public function hasBranch(int $branch_id): bool
+        {
+            $sql = "SELECT COUNT(*) FROM {$this->table} WHERE branch_id = :branch_id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['branch_id' => $branch_id]);
+            $count = $stmt->fetchColumn();
+
+            return $count > 0;
+        }
+
+        public function getInventoryWithProducts($branch_id = null)
+        {
+            $sql = "SELECT inv.*, inv.id AS inventory_id, p.*, b.name AS branch_name
+            FROM inventory inv
+            JOIN products p ON inv.product_id = p.id
+            JOIN branches b ON inv.branch_id = b.id
+            WHERE inv.isDeleted = 0";
+
+            $params = [];
+
+            if ($branch_id !== null) {
+                $sql .= " AND inv.branch_id = :branch_id";
+                $params['branch_id'] = $branch_id;
+            }
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
 
         public function getFiltered($keyword = '', int $limit = 8, int $offset = 0, $branch_id = null, $isAdmin = false)
         {

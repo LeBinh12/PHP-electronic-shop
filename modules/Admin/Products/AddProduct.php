@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
 
             echo "<script>
                 Loading(false);
-                window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+                    window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
             </script>";
 
             exit;

@@ -24,6 +24,13 @@ class Image extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getImagesByProductIdIsDeleted($productId)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE product_id = :product_id");
+        $stmt->execute(['product_id' => $productId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function deleteByProductId($productId)
     {

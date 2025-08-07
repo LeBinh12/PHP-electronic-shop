@@ -3,26 +3,20 @@ require_once 'RestoreProduct.php';
 require_once 'DeleteProduct.php';
 
 // Dữ liệu ảo
-$listDeletedProducts = [
-    [
-        'id' => 101,
-        'name' => 'Giày thể thao nam',
-        'image_url' => 'https://via.placeholder.com/100x80',
-        'price' => 850000,
-        'discount' => 10,
-        'category' => 'Thời trang',
-        'supplier' => 'Adidas',
-    ],
-    [
-        'id' => 102,
-        'name' => 'Balo du lịch',
-        'image_url' => 'https://via.placeholder.com/100x80',
-        'price' => 450000,
-        'discount' => 5,
-        'category' => 'Phụ kiện',
-        'supplier' => 'North Face',
-    ]
-];
+$id_category = null;
+$id_supplier = null;
+$keyword = $_GET['search'] ?? '';
+
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+$totalProducts = $product->countProducts($id_category, $id_supplier, $keyword, [], 1);
+$totalPages = ceil($totalProducts / $limit);
+
+$listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword, $limit, $offset, [], 1);
+
 ?>
 
 <div class="product-container">
@@ -47,15 +41,17 @@ $listDeletedProducts = [
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($listDeletedProducts as $item): ?>
+                <?php foreach ($listProduct as $item): ?>
                     <tr>
                         <td><?= $item["id"] ?></td>
                         <td><img src="<?= $item['image_url'] ?>" alt="Ảnh" style="width: 100px; height: 80px;"></td>
                         <td><?= htmlspecialchars($item['name']) ?></td>
                         <td><?= number_format($item['price'], 0) ?>₫</td>
                         <td><?= $item['discount'] ?>%</td>
-                        <td><?= htmlspecialchars($item['category']) ?></td>
-                        <td><?= htmlspecialchars($item['supplier']) ?></td>
+                        <td><?php $categoryItem = $category->getById($item["category_id"]);
+                            echo $categoryItem['name']; ?></td>
+                        <td><?php $supplierItem = $supplier->getById($item["supplier_id"]);
+                            echo $supplierItem['name']; ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">
                                 <button type="button" class="btn btn-sm btn-success"
@@ -80,6 +76,17 @@ $listDeletedProducts = [
             </tbody>
         </table>
     </div>
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link" href="Admin.php?page=modules/Admin/RecycleBin/Products/Product.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
+    </nav>
 </div>
 
 <script>
@@ -88,13 +95,6 @@ $listDeletedProducts = [
         btn.addEventListener('click', () => {
             document.getElementById('restoreProductId').value = btn.getAttribute('data-id');
             document.getElementById('restoreProductName').textContent = btn.getAttribute('data-name');
-        });
-    });
-
-    document.querySelectorAll('.btn-danger').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.getElementById('deleteProductId').value = btn.getAttribute('data-id');
-            document.getElementById('deleteProductName').textContent = btn.getAttribute('data-name');
         });
     });
 </script>

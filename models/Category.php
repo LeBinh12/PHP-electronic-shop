@@ -14,10 +14,11 @@ class Category extends Model
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
-    public function getFilteredCategories($limit = 8, $offset = 0, $keyword = '')
+    public function getFilteredCategories($limit = 8, $offset = 0, $keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1 ";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";
@@ -41,10 +42,11 @@ class Category extends Model
     }
 
 
-    public function countCategory($keyword = '')
+    public function countCategory($keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE 1=1";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";
