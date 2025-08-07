@@ -96,6 +96,22 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
         swal_alert('success', 'Cập nhật tài khoản thành công!', '', 'index.php');
     }
 }
+
+$totalCartItems = 0;
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        if (isset($item['quantity'])) {
+            $totalCartItems += $item['quantity'];
+        }
+    }
+}
+
+
+// echo '<pre>';
+// print_r($_SESSION['cart']);
+// echo '</pre>';
+
+
 ?>
 
 <div id="multiBannerCarousel" class="carousel slide mb-2 mt-1" data-bs-ride="carousel">
@@ -243,7 +259,12 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['update_account'])) {
                     </li>
                     <li class="nav-item">
                         <a href="index.php?subpage=modules/Users/page/Cart.php" class="nav-link text-white">
-                            <i class="bi bi-cart-fill me-1"></i> Giỏ hàng
+                            <i class="bi bi-cart-plus-fill me-2" style="font-size: 1.2rem;"></i>
+                            <span class="position-absolute top-3 translate-middle badge rounded-pill 
+                                <?= $totalCartItems > 0 ? 'bg-warning text-dark' : 'bg-warning text-dark' ?>"
+                                style="font-size: 0.65rem;">
+                                <?= $totalCartItems ?>
+                            </span>
                         </a>
                     </li>
                     <li class="nav-item">

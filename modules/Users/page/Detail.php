@@ -139,7 +139,9 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
                     <div class="card related-product">
                         <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="Sản phẩm 3">
                         <div class="card-body text-center">
-                            <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>" class="card-title text-decoration-none fs-6"><?= $item['name'] ?></a>
+                            <div class="card-title-container">
+                                <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>" class="card-title text-decoration-none fs-6" style="height: 48px;"><?= $item['name'] ?></a>
+                            </div>
                             <p class="card-price">Giá: <?= $item['price'] ?>đ</p>
                         </div>
                     </div>

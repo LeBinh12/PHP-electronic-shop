@@ -85,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         $_SESSION['success'] = $result['message'];
 
         echo "<script>
+        Loading(false);
             window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
         </script>";
         exit;
@@ -109,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
         <h2>Cập Nhật Sản Phẩm</h2>
     </div>
     <div class="product-content">
-        <form method="post" enctype="multipart/form-data">
+        <form id="updateProductForm" method="post" enctype="multipart/form-data">
             <div class="form-grid">
                 <div class="group mb-3">
                     <label class="form-label">Mã sản phẩm</label>
@@ -207,3 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
     <span class="close-btn">&times;</span>
     <img id="modalImage" src="" alt="Phóng to ảnh">
 </div>
+
+<script>
+    document.getElementById("updateProductForm").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>

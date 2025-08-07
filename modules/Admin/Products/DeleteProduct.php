@@ -10,7 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
         $_SESSION['error'] = $result['message'];
     }
 
-    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php'</script>";
+    echo "<script>
+        Loading(false);
+        window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php'
+    </script>";
     exit;
 }
 ?>
@@ -18,8 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
 <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
-            <form method="POST">
-
+            <form id="deleteProductForm" method="POST">
                 <input type="hidden" name="delete_product" value="1">
                 <input type="hidden" name="delete_product_id" id="deleteProductId">
 
@@ -45,3 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("deleteProductForm").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>

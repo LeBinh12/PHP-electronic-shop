@@ -33,14 +33,17 @@
     margin-top: 15px;
 }
 
+.card-title-container {
+    height: 55px;
+}
 
 .card-title {
     font-size: 15px;
-    height: 48px;
     text-align: center;
     overflow: hidden;
     margin-bottom: 10px;
 }
+
 
 .card-price {
     text-align: center;
