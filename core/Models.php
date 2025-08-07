@@ -69,9 +69,22 @@ abstract class Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function allDeleted()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM {$this->table} WHERE isDeleted = 1");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function find($id)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id AND isDeleted = 0");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function findIsDeled($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -81,6 +94,13 @@ abstract class Model
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} WHERE name = :name AND isDeleted = 0");
         $stmt->execute(['name' => $name]);
         return $stmt->fetchColumn() > 0;
+    }
+
+    public function getByColumn(string $column, $value): bool
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE {$column} = :value";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(['value' => $value]);
     }
 
     public function existsByNameExceptId($id, $name): bool
@@ -125,11 +145,42 @@ abstract class Model
         return $stmt->execute($data);
     }
 
+    public function updateIsDeleted($id, $data)
+    {
+        $setParts = [];
+        foreach ($data as $column => $value) {
+            $setParts[] = "$column = :$column";
+        }
+
+        $setClause = implode(", ", $setParts);
+
+        $data['id'] = $id;
+
+        $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute($data);
+    }
+
     public function delete($id)
     {
         $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+    public function deleteByColumn(string $column, $value): bool
+    {
+        $sql = "DELETE FROM {$this->table} WHERE {$column} = :value";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(['value' => $value]);
+    }
+
+    public function updateDeletedByColumn($column, $id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 1 WHERE  {$column} = :value");
+        return $stmt->execute(['value' => $id]);
+    }
+
 
     public function updateDeleted($id)
     {

@@ -1,10 +1,17 @@
 <?php
-// Dữ liệu ảo danh mục đã bị xóa
-$listDeletedCategories = [
-    ['id' => 1, 'name' => 'Điện thoại', 'icon' => 'fas fa-mobile-alt', 'status' => 'Ẩn'],
-    ['id' => 2, 'name' => 'Laptop', 'icon' => 'fas fa-laptop', 'status' => 'Hiện'],
-    ['id' => 3, 'name' => 'Phụ kiện', 'icon' => 'fas fa-headphones', 'status' => 'Ẩn'],
-];
+$keyword = $_GET['search'] ?? '';
+
+
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+
+
+$totalCategories = $category->countCategories($keyword, 1);
+$totalPages = ceil($totalCategories / $limit);
+$listDeletedCategories = $category->getFilterCategories($limit, $offset, $keyword, 1);
 ?>
 
 <?php require_once 'RestoreCategory.php'; ?>
@@ -31,7 +38,9 @@ $listDeletedCategories = [
                     <tr>
                         <td><?= $item['id'] ?></td>
                         <td><?= htmlspecialchars($item['name']) ?></td>
-                        <td><i class="<?= $item['icon'] ?>"></i></td>
+                        <td>
+                            <img src="<?= htmlspecialchars($item['icon']) ?>" width="100">
+                        </td>
                         <td><?= $item['status'] ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">

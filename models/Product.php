@@ -23,25 +23,26 @@
             'supplier_id' => 'suppliers(id)',
         ];
 
-        public function countProductAll()
+        public function countProductAll($isDeleted = 0)
         {
-            $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
+            $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = :isDeleted";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute(['isDeleted' => $isDeleted]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return (int) ($result['total'] ?? 0);
         }
-        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0, array $priceRanges = [])
+        public function getFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
         {
             $sql = "
         SELECT p.*, c.name as category_name, s.name as supplier_name
         FROM products p
         JOIN categories c ON p.category_id = c.id
         JOIN suppliers s ON p.supplier_id = s.id
-        WHERE p.isDeleted = 0
+        WHERE 1=1
     ";
 
-            $params = [];
+            $params = ['isDeleted' => $isDeleted];
+            $sql .= " AND p.isDeleted = :isDeleted";
 
             if ($categoryId !== null) {
                 $sql .= " AND p.category_id = :category_id";
@@ -113,15 +114,21 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function countFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, array $priceRanges = [])
+        public function countFilteredProducts($categoryId = null, $supplierId = null, $keyword = null, array $priceRanges = [], $isDeleted = 0)
         {
             $sql = "
         SELECT COUNT(*) as total
         FROM products p
-        WHERE p.isDeleted = 0
+         WHERE 1=1
     ";
 
-            $params = [];
+            $params = ['isDeleted' => $isDeleted];
+            $sql .= " AND p.isDeleted = :isDeleted";
+
+            if ($isDeleted !== null) {
+                $sql .= " AND p.isDeleted = :isDeleted";
+                $params['isDeleted'] = $isDeleted;
+            }
 
             if ($categoryId !== null) {
                 $sql .= " AND p.category_id = :category_id";

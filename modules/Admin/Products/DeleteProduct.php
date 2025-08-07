@@ -2,7 +2,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
-    $result = $product->delete($productId);
+    $result = $product->deleted($productId);
 
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];

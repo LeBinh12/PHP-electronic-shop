@@ -1,8 +1,15 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_branch'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_branch_isDeleted'])) {
     $id = $_POST['delete_branch_id'];
-    // Xử lý xóa vĩnh viễn ở đây (xóa khỏi DB)
-    $_SESSION['success'] = "Xóa vĩnh viễn chi nhánh thành công.";
+
+    $result = $branchController->deleteIsDeleted($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
+
     echo "<script>window.location.href='Admin.php?page=modules/Admin/RecycleBin/Branches/Product.php'</script>";
     exit;
 }
@@ -12,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_branch'])) {
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
             <form method="POST">
-                <input type="hidden" name="delete_branch" value="1">
+                <input type="hidden" name="delete_branch_isDeleted" value="1">
                 <input type="hidden" name="delete_branch_id" id="deleteBranchId">
                 <div class="modal-header bg-danger text-white">
                     <h6 class="modal-title d-flex align-items-center" id="deleteBranchModalLabel">

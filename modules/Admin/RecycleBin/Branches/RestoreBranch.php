@@ -1,11 +1,20 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_branch'])) {
     $id = $_POST['restore_branch_id'];
+    $result = $branchController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     // Xử lý khôi phục dữ liệu ở đây (ví dụ cập nhật isDelete = 0)
     $_SESSION['success'] = "Khôi phục chi nhánh thành công.";
-    echo "<script>window.location.href='Admin.php?page=modules/Admin/RecycleBin/Branches/Product.php'</script>";
+    echo "<script>window.location.href='Admin.php?page=modules/Admin/RecycleBin/Branches/Branch.php'</script>";
     exit;
 }
+
+
 ?>
 
 <div class="modal fade" id="restoreBranchModal" tabindex="-1" aria-labelledby="restoreBranchModalLabel" aria-hidden="true">

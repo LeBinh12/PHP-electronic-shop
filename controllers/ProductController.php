@@ -8,11 +8,21 @@ use Respect\Validation\Validator as v;
 class ProductController extends BaseController
 {
     private $productModel;
+    private $orderItemModel;
+    private $orderModel;
+    private $inventoryModel;
+
+    private $imageModel;
+
 
     public function __construct()
     {
         parent::__construct();
         $this->productModel = new Product();
+        $this->orderItemModel = new OrderItem();
+        $this->orderModel = new Order();
+        $this->inventoryModel = new Inventory();
+        $this->imageModel = new Image();
     }
 
     public function getAll()
@@ -90,11 +100,11 @@ class ProductController extends BaseController
         // return $this->productModel->getProductsByCategory($id);
     }
 
-    public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [])
+    public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
     {
         $start = microtime(true);
         $priceKey = implode(',', $priceRanges);
-        $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$priceKey:$limit:$offset";
+        $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$priceKey:$limit:$offset:$isDeleted";
         if (RedisCache::exists($cacheKey)) {
 
             $end = microtime(true);
@@ -102,7 +112,7 @@ class ProductController extends BaseController
             return json_decode(RedisCache::get($cacheKey), true);
         }
 
-        $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset, $priceRanges);
+        $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset, $priceRanges, $isDeleted);
         RedisCache::set($cacheKey, json_encode($products));
 
         $end = microtime(true);
@@ -112,15 +122,15 @@ class ProductController extends BaseController
         // return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
     }
 
-    public function countProducts($categoryId, $supplierId, $keyword, array $priceRanges = [])
+    public function countProducts($categoryId, $supplierId, $keyword, array $priceRanges = [], $isDeleted = 0)
     {
         $priceKey = implode(',', $priceRanges);
-        $cacheKey = "products:count:$categoryId:$supplierId:$keyword:$priceKey";
+        $cacheKey = "products:count:$categoryId:$supplierId:$keyword:$priceKey:$isDeleted";
         if (RedisCache::exists($cacheKey)) {
             return json_decode(RedisCache::get($cacheKey), true);
         }
 
-        $total = $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword,);
+        $total = $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword, $priceRanges, $isDeleted);
         RedisCache::set($cacheKey, json_encode($total));
         return $total;
         // return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
@@ -226,7 +236,7 @@ class ProductController extends BaseController
 
 
 
-    public function delete($id)
+    public function deleted($id)
     {
         try {
             $existingProduct = $this->productModel->find($id);
@@ -236,12 +246,118 @@ class ProductController extends BaseController
                     'message' => 'Sản phẩm không tồn tại!'
                 ];
             }
+
+            if ($this->orderItemModel->hasPendingOrCompletedOrdersByProduct($id)) {
+                return [
+                    'success' => false,
+                    'message' => 'Không thể xóa sản phẩm vì đang có đơn hàng liên quan với trạng thái 1 hoặc 6'
+                ];
+            }
+            $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
+
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderModel->updateDeleted($item);
+                }
+                $this->orderItemModel->updateDeletedByColumn('product_id', $id);
+            }
+
+
+            if ($this->inventoryModel->hasProduct($id)) {
+
+                $this->inventoryModel->updateDeletedByColumn('product_id', $id);
+            }
+
             $deleted = $this->productModel->updateDeleted($id);
             $this->clearCacheAfterChange($id);
             return [
                 'success' => true,
                 'message' => 'Xóa sản phẩm thành công!',
             ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existingProduct = $this->productModel->findIsDeled($id);
+
+            if ($existingProduct == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+            $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderModel->delete($item);
+                }
+                $this->orderItemModel->deleteByColumn('product_id', $id);
+            }
+
+
+            if ($this->inventoryModel->hasProduct($id)) {
+
+                $this->inventoryModel->deleteByColumn('product_id', $id);
+            }
+
+            $image = $this->imageModel->getImagesByProductIdIsDeleted($id);
+
+            if (is_array($image) && count($image) > 0) {
+                foreach ($image as $item) {
+                    $this->imageModel->delete($item['id']);
+                }
+            }
+
+
+            $deleted = $this->productModel->delete($id);
+            $this->clearCacheAfterChange($id);
+            return [
+                'success' => true,
+                'message' => 'Xóa sản phẩm thành công!',
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existingProduct = $this->productModel->findIsDeled($id);
+
+            if ($existingProduct == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderModel->delete($item);
+                    $this->orderItemModel->deleteByColumn('order_id', $item);
+                }
+                $this->orderItemModel->deleteByColumn('product_id', $id);
+            }
+
+
+            if ($this->inventoryModel->hasProduct($id)) {
+
+                $this->inventoryModel->deleteByColumn('product_id', $id);
+            }
+
+            $result = $this->productModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            $this->clearCacheAfterChange($id);
+            if ($result) {
+                return ['success' => true, 'message' => 'Khôi phục thành công'];
+            } else {
+                return ['success' => false, 'message' => 'khôi phục thất bại'];
+            }
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

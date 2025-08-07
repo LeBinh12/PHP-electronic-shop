@@ -2,8 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
     // Giả sử $product là instance của class quản lý sản phẩm
-    $result = $product->delete($productId); // Xóa vĩnh viễn ở DB
-
+    $result = $product->deleteIsDeleted($productId);
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {
@@ -56,5 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
             document.getElementById('deleteProductId').value = id;
             document.getElementById('deleteProductName').textContent = name;
         });
+
     });
 </script>

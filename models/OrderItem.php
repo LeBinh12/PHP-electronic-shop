@@ -35,7 +35,7 @@ class OrderItem extends Model
         $sql = "
         SELECT 
             *
-        FROM order_items oi
+        FROM {$this->table} oi
         JOIN products p ON oi.product_id = p.id
         WHERE oi.order_id = :order_id
     ";
@@ -43,5 +43,34 @@ class OrderItem extends Model
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['order_id' => $orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function hasPendingOrCompletedOrdersByProduct($productId): bool
+    {
+        $sql = "
+        SELECT 1
+        FROM {$this->table} oi
+        JOIN orders o ON oi.order_id = o.id
+        WHERE oi.product_id = :pid
+          AND o.isDeleted = 0
+          AND o.status_id IN (1, 6)
+        LIMIT 1
+    ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['pid' => $productId]);
+        return (bool) $stmt->fetchColumn();
+    }
+
+    public function getOrderIdsByProductId($productId): array
+    {
+        $sql = "
+        SELECT DISTINCT od.order_id
+        FROM {$this->table} od
+        WHERE od.product_id = :product_id
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['product_id' => $productId]);
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }

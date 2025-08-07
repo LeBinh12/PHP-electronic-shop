@@ -1,8 +1,11 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
     $id = $_POST['delete_category_id'];
-    // Giả lập xóa vĩnh viễn
-    $_SESSION['success'] = "Danh mục ID $id đã bị xóa vĩnh viễn!";
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }
