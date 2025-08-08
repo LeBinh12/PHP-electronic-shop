@@ -27,7 +27,6 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 
     .store-box h6 {
         font-size: 18px;
-        ;
         font-weight: bold;
         margin-bottom: 12px;
         padding-bottom: 8px;
@@ -61,7 +60,7 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 
         <div class="col-lg-6 col-md-6 col-12">
             <h2><?= $productById['name'] ?></h2>
-            <?= $productById['content'] ?>
+            <?= strip_tags($productById['content']) ?>
             <?php
             $originalPrice = $productById['price'];
             $discount = $productById['discount'];
