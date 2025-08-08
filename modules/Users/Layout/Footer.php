@@ -19,8 +19,8 @@
                 <h5 class="mb-3 fw-bold">Liên Hệ</h5>
                 <ul class="list-unstyled small text-muted">
                     <li class="mb-2"><i class="fas fa-phone-alt me-2 text-primary"></i> 0123 456 789</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> support@bvc.vn</li>
-                    <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>Đảo quân sự</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> support@garena.vn</li>
+                    <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>123 Street, New York, USA</li>
                 </ul>
             </div>
             <div class="col">

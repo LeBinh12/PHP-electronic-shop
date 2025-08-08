@@ -48,10 +48,11 @@
 
 .dropdown-menu-grid.show {
     display: grid;
+    margin-top: 18px;
 }
 
 .dropdown-menu-grid li {
-    list-style: none;
+    /* list-style: none; */
 }
 
 .dropdown-menu-grid .dropdown-item {

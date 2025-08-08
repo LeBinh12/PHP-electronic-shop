@@ -134,7 +134,8 @@ $getCategory = $category->getAll();
                                         </a>
                                     </h6>
                                     <div class="ecom-price mb-1">
-                                        <span class="text-muted text-decoration-line-through me-2"><?= number_format($originalPrice, 0, ',', '.') ?>₫</span>
+                                        <span class="text-muted text-decoration-line-through"><?= number_format($originalPrice, 0, ',', '.') ?>₫</span>
+                                        <br>
                                         <span class="text-danger fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</span>
                                     </div>
                                 </div>
