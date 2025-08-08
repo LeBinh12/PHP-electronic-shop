@@ -145,6 +145,13 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
     const addBtn = document.querySelector('a[href*="AddProduct.php"]');
     const loadingOverlay = document.getElementById('loadingOverlay');
 
+    document.querySelectorAll('#deleteProductForm').forEach(form => {
+        form.addEventListener('submit', function() {
+            loadingOverlay.style.display = 'flex';
+        });
+    });
+
+
     if (addBtn) {
         addBtn.addEventListener('click', function(e) {
             e.preventDefault();

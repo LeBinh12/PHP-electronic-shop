@@ -103,3 +103,41 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
             </table>
         </div>
     </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lắng nghe submit form trong modal (nếu có)
+        document.querySelectorAll(
+            "#transferModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe click nút submit trong modal (nếu có)
+        document.querySelectorAll(
+            "#transferModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe submit form tìm kiếm
+        const searchForm = document.querySelector(".search-form");
+        if (searchForm) {
+            searchForm.addEventListener("submit", function() {
+                Loading(true);
+            });
+        }
+
+        // Lắng nghe click phân trang
+        document.querySelectorAll(".pagination .page-link").forEach(link => {
+            link.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

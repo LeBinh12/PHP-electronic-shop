@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
         'password' => $password,
         'isDeleted' => 0
     ];
+
     $result = $employeeController->add($data, $roleIds, $menuIds);
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];

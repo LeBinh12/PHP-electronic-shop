@@ -148,11 +148,55 @@ $totalPages = max(1, ceil($totalRows / $limit));
             </ul>
         </nav>
     <?php endif; ?>
+</div>
 
 
-    <?php
-    require_once 'modules/Admin/Orders/ChangeStatusOrder.php';
-    require_once 'modules/Admin/Orders/DeleteOrder.php';
-    require_once 'modules/Admin/Orders/UpdateOrder.php';
-    require_once 'modules/Admin/Orders/ViewOrder.php';
-    ?>
+<?php
+require_once 'modules/Admin/Orders/ChangeStatusOrder.php';
+require_once 'modules/Admin/Orders/DeleteOrder.php';
+require_once 'modules/Admin/Orders/UpdateOrder.php';
+require_once 'modules/Admin/Orders/ViewOrder.php';
+?>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lắng nghe submit form trong các modal đơn hàng
+        document.querySelectorAll(
+            "#changeStatusModal form, \
+         #deleteOrderModal form, \
+         #updateOrderModal form, \
+         #viewOrderModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe click vào nút submit trong các modal đơn hàng
+        document.querySelectorAll(
+            "#changeStatusModal button[type=submit], \
+         #deleteOrderModal button[type=submit], \
+         #updateOrderModal button[type=submit], \
+         #viewOrderModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe submit form tìm kiếm
+        const searchForm = document.querySelector(".search-form");
+        if (searchForm) {
+            searchForm.addEventListener("submit", function() {
+                Loading(true);
+            });
+        }
+
+        // Lắng nghe click phân trang
+        document.querySelectorAll(".pagination .page-link").forEach(link => {
+            link.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

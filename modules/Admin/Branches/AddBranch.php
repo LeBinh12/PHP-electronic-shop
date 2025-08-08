@@ -21,10 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
     }
 
     echo "<script>
-                Loading(false);
-                setTimeout(function () {
                     window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
-                }, 500);
             </script>";
 }
 ?>
@@ -63,8 +60,3 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
         </form>
     </div>
 </div>
-<script>
-    document.getElementById("addBranchModal").addEventListener("submit", function() {
-        Loading(true);
-    });
-</script>

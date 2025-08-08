@@ -106,3 +106,45 @@ require_once './modules/Admin/Roles/UpdateRole.php';
 
 require_once './modules/Admin/Roles/AddRole.php';
 ?>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lắng nghe submit form trong các modal role
+        document.querySelectorAll(
+            "#addRoleModal form, \
+         #editRoleModal form, \
+         #deleteRoleModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe click nút submit trong các modal role
+        document.querySelectorAll(
+            "#addRoleModal button[type=submit], \
+         #editRoleModal button[type=submit], \
+         #deleteRoleModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe submit form tìm kiếm
+        const searchForm = document.querySelector(".search-form");
+        if (searchForm) {
+            searchForm.addEventListener("submit", function() {
+                Loading(true);
+            });
+        }
+
+        // Lắng nghe click phân trang
+        document.querySelectorAll(".pagination .page-link").forEach(link => {
+            link.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

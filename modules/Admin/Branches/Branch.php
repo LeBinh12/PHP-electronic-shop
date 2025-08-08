@@ -116,38 +116,19 @@ require_once './modules/Admin/Branches/DeleteBranch.php';
 require_once './modules/Admin/Branches/AddBranch.php';
 require_once './modules/Admin/Branches/UpdateBranch.php';
 ?>
-<!-- Spinner -->
-<div id="loadingOverlay" style="display:none; position:fixed; z-index:9999; background:rgba(0,0,0,0.5); top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center;">
-    <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div>
+
 
 <script>
-    const addBtn = document.querySelector('a[href*="AddBranch.php"]');
     const loadingOverlay = document.getElementById('loadingOverlay');
 
-    if (addBtn) {
-        addBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loadingOverlay.style.display = 'flex';
-            setTimeout(() => {
-                window.location.href = addBtn.href;
-            }, 300);
+    document.querySelectorAll('#addBranchForm, #editBranchModal form, #deleteBranchModal form')
+        .forEach(form => {
+            form.addEventListener('submit', function() {
+                loadingOverlay.style.display = 'flex';
+            });
         });
-    }
 
-    const editButtons = document.querySelectorAll('a[href*="UpdateBranch.php"]');
-    editButtons.forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loadingOverlay.style.display = 'flex';
-            setTimeout(() => {
-                window.location.href = btn.href;
-            }, 300);
-        });
-    });
-
+    // Loading khi chuyển trang phân trang
     const pageLinks = document.querySelectorAll('a.page-link');
     pageLinks.forEach(link => {
         link.addEventListener('click', function(e) {

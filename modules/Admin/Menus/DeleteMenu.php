@@ -1,7 +1,7 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-    $id = $_POST['delete_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_id'])) {
+    $id = $_POST['menu_id'];
 
     $result = $menuController->delete($id);
 
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 <div class="modal fade" id="deleteMenuModal" tabindex="-1" aria-labelledby="deleteMenuModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
-            <form method="POST" action="index.php?controller=menu&action=delete">
+            <form method="POST">
                 <input type="hidden" name="delete_branch" value="1">
                 <input type="hidden" name="menu_id" id="deleteMenuId">
 

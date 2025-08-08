@@ -187,3 +187,35 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
             <?php endfor ?>
         </ul>
     </nav>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(
+            "#detailCustomerModal form, \
+         #reportCustomerModal form, \
+         #editCustomerModal form, \
+         #deleteCustomerModal form, \
+         #deleteCustomerReportModal form, \
+         #updatePasswordModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        document.querySelectorAll(
+            "#detailCustomerModal button[type=submit], \
+         #reportCustomerModal button[type=submit], \
+         #editCustomerModal button[type=submit], \
+         #deleteCustomerModal button[type=submit], \
+         #deleteCustomerReportModal button[type=submit], \
+         #updatePasswordModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

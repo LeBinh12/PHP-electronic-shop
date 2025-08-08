@@ -117,14 +117,66 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
         </ul>
     </nav>
 
+</div>
+<!-- Các form xử lý ẩn -->
 
-    <!-- Các form xử lý ẩn -->
+<?php
+// xử lý xóa
 
-    <?php
-    // xử lý xóa
+require_once './modules/Admin/Menus/DeleteMenu.php';
+require_once './modules/Admin/Menus/AddMenu.php';
+require_once './modules/Admin/Menus/UpdateMenu.php';
 
-    require_once './modules/Admin/Menus/DeleteMenu.php';
-    require_once './modules/Admin/Menus/AddMenu.php';
-    require_once './modules/Admin/Menus/UpdateMenu.php';
+?>
 
-    ?>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const deleteModal = document.getElementById('deleteMenuModal');
+        deleteModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget; // Nút bấm mở modal
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+
+            // Gán vào input hidden và hiển thị tên
+            document.getElementById('deleteMenuId').value = id;
+            document.getElementById('deleteBranchName').textContent = name;
+        });
+
+        // Lắng nghe submit form trong các modal menu
+        document.querySelectorAll(
+            "#addMenuModal form, \
+         #editMenuModal form, \
+         #deleteMenuModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe click nút submit trong các modal menu
+        document.querySelectorAll(
+            "#addMenuModal button[type=submit], \
+         #editMenuModal button[type=submit], \
+         #deleteMenuModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe submit form tìm kiếm
+        const searchForm = document.querySelector(".search-form");
+        if (searchForm) {
+            searchForm.addEventListener("submit", function() {
+                Loading(true);
+            });
+        }
+
+        // Lắng nghe click phân trang
+        document.querySelectorAll(".pagination .page-link").forEach(link => {
+            link.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

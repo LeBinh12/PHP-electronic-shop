@@ -129,3 +129,24 @@ $listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
             <?php } ?>
         </ul>
     </nav>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('#addSupplierModal form, #editSupplierModal form, #deleteSupplierModal form')
+            .forEach(form => {
+                form.addEventListener('submit', () => {
+                    Loading(true);
+                });
+            });
+
+        document.querySelectorAll('.delete-supplier-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const deleteForm = document.querySelector('#deleteSupplierModal form');
+                if (deleteForm) {
+                    deleteForm.addEventListener('submit', () => Loading(true));
+                }
+            });
+        });
+    });
+</script>

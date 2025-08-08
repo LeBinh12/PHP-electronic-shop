@@ -32,10 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     }
 
     echo "<script>
-                Loading(false);
-                setTimeout(function () {
                     window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
-                }, 500);
             </script>";
 }
 
@@ -118,10 +115,5 @@ $listCategory = $category->getAll();
                 }
             });
         }
-    });
-</script>
-<script>
-    document.getElementById("addCategoryModal").addEventListener("submit", function() {
-        Loading(true);
     });
 </script>

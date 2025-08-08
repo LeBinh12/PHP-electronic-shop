@@ -134,3 +134,45 @@ require_once './modules/Admin/Employees/DeleteEmployee.php';
 require_once './modules/Admin/Employees/UpdateEmployee.php';
 
 ?>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lắng nghe submit form trong các modal employee
+        document.querySelectorAll(
+            "#addEmployeeModal form, \
+         #editEmployeeModal form, \
+         #deleteEmployeeModal form"
+        ).forEach(form => {
+            form.addEventListener("submit", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe click nút submit trong các modal employee
+        document.querySelectorAll(
+            "#addEmployeeModal button[type=submit], \
+         #editEmployeeModal button[type=submit], \
+         #deleteEmployeeModal button[type=submit]"
+        ).forEach(btn => {
+            btn.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+
+        // Lắng nghe submit form tìm kiếm
+        const searchForm = document.querySelector(".search-form");
+        if (searchForm) {
+            searchForm.addEventListener("submit", function() {
+                Loading(true);
+            });
+        }
+
+        // Lắng nghe click phân trang
+        document.querySelectorAll(".pagination .page-link").forEach(link => {
+            link.addEventListener("click", function() {
+                Loading(true);
+            });
+        });
+    });
+</script>

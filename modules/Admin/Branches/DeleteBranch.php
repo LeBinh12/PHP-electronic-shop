@@ -47,3 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['delete_branch'])) {
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("deleteBranchModal").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>

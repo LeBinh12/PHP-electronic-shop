@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_employee'])) {
-    $id = $_POST['delete_employee_id'];
+    $id = $_POST['employee_id'];
     $result = $employeeController->delete($id);
 
     if ($result['success']) {
@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_employee'])) {
 <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content shadow">
-            <form method="POST" action="index.php?controller=employee&action=delete">
-                <input type="hidden" name="delete_branch" value="1">
+            <form method="POST">
+                <input type="hidden" name="delete_employee" value="1">
                 <input type="hidden" name="employee_id" id="deleteEmployeeId">
 
                 <div class="modal-header bg-danger text-white">

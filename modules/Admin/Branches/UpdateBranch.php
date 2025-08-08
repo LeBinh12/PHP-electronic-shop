@@ -51,3 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['edit_Branch'])) {
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById("editBranchModal").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>

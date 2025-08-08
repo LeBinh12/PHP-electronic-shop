@@ -185,7 +185,10 @@ class EmployeeController
         $this->roleEmployeeModel->deleteByEmployee(employeeId: $id);
         $this->employeeMenuModel->deleteByEmployee($id);
 
-        return ['success' => true];
+        return [
+            'success' => true,
+            'message' => 'Xóa nhân viên thành công!'
+        ];
     }
 
     public function login($data)
