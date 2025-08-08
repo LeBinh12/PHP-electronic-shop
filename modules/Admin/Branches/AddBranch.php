@@ -20,14 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
         $_SESSION['error'] = $result['message'];
     }
 
-    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';</script>";
-    exit;
+    echo "<script>
+                Loading(false);
+                setTimeout(function () {
+                    window.location.href = 'Admin.php?page=modules/Admin/Branches/Branch.php';
+                }, 500);
+            </script>";
 }
 ?>
 
 <div class="modal fade" id="addBranchModal" tabindex="-1" aria-labelledby="addBranchModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="Admin.php?page=modules/Admin/Branches/Branch.php">
+        <form id="addBranchForm" method="POST" action="Admin.php?page=modules/Admin/Branches/Branch.php">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title" id="addBranchModalLabel">Thêm chức năng mới</h5>
@@ -59,3 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
         </form>
     </div>
 </div>
+<script>
+    document.getElementById("addBranchModal").addEventListener("submit", function() {
+        Loading(true);
+    });
+</script>

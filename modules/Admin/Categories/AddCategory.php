@@ -31,8 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
         $_SESSION['error'] = $result['message'];
     }
 
-    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';</script>";
-    exit;
+    echo "<script>
+                Loading(false);
+                setTimeout(function () {
+                    window.location.href = 'Admin.php?page=modules/Admin/Categories/Category.php';
+                }, 500);
+            </script>";
 }
 
 
@@ -43,7 +47,7 @@ $listCategory = $category->getAll();
 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
-            <form method="POST" enctype="multipart/form-data">
+            <form id="addCategoryForm" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="add_category" value="1">
 
                 <div class="modal-header bg-primary text-white">
@@ -114,5 +118,10 @@ $listCategory = $category->getAll();
                 }
             });
         }
+    });
+</script>
+<script>
+    document.getElementById("addCategoryModal").addEventListener("submit", function() {
+        Loading(true);
     });
 </script>

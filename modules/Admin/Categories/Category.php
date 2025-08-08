@@ -122,3 +122,46 @@ $listCategories = $category->getFilterCategories($limit, $offset, $keyword);
         </ul>
     </nav>
 </div>
+<!-- Spinner -->
+<div id="loadingOverlay" style="display:none; position:fixed; z-index:9999; background:rgba(0,0,0,0.5); top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center;">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<script>
+    const addBtn = document.querySelector('a[href*="AddCategory.php"]');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    if (addBtn) {
+        addBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loadingOverlay.style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = addBtn.href;
+            }, 300);
+        });
+    }
+
+    const editButtons = document.querySelectorAll('a[href*="UpdateCategory.php"]');
+    editButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loadingOverlay.style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = btn.href;
+            }, 300);
+        });
+    });
+
+    const pageLinks = document.querySelectorAll('a.page-link');
+    pageLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            loadingOverlay.style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 300);
+        });
+    });
+</script>
