@@ -2,14 +2,21 @@
 
 require_once './models/Supplier.php';
 require_once './core/RedisCache.php';
+require_once './models/Product.php';
+require_once './controllers/ProductController.php';
+
 
 class SupplierController
 {
     private $supplierModel;
+    private $productModel;
+    private $productController;
 
     public function __construct()
     {
         $this->supplierModel = new Supplier();
+        $this->productModel = new Product();
+        $this->productController = new ProductController();
     }
 
     public function getAll()
@@ -32,6 +39,17 @@ class SupplierController
         $supplier = $this->supplierModel->find($id);
         RedisCache::set($cacheKey, json_encode($supplier));
         return $supplier;
+    }
+
+    public function getFilterSuppliersToDB($limit, $offset, $keyword, $isDeleted = 0)
+    {
+
+        return $this->supplierModel->getFilteredSuppliers($limit, $offset, $keyword, $isDeleted);
+    }
+
+    public function countSuppliersToDB($keyword = '', $isDeleted = 0)
+    {
+        return $this->supplierModel->countSupplier($keyword, $isDeleted);
     }
 
     public function getFilterSuppliers($limit, $offset, $keyword)
@@ -121,6 +139,94 @@ class SupplierController
             ];
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existingBranch = $this->supplierModel->findIsDeled($id);
+
+            if ($existingBranch == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $productId = $this->productModel->getByColumn('supplier_id', $id);
+
+            if (is_array($productId) && count($productId) > 0) {
+                foreach ($productId as $item) {
+                    $result = $this->productController->deleteIsDeleted($item['id']);
+                    if (!$result['success']) {
+                        return $result;
+                    }
+                }
+            }
+
+            $result = $this->supplierModel->delete($id);
+            $this->invalidateCache($id);
+            if ($result) {
+                return [
+                    'success' => true,
+                    'message' => 'Xóa loại sản phẩm thành công!'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Lỗi Xóa loại sản phẩm!'
+                ];
+            }
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existingBranch = $this->supplierModel->findIsDeled($id);
+
+            if ($existingBranch == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Sản phẩm không tồn tại!'
+                ];
+            }
+
+            $productId = $this->productModel->getByColumn('supplier_id', $id);
+
+            if (is_array($productId) && count($productId) > 0) {
+                foreach ($productId as $item) {
+                    $result = $this->productController->deleteIsDeleted($item['id']);
+                    if (!$result['success']) {
+                        return $result;
+                    }
+                }
+            }
+
+            $result = $this->supplierModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            $this->invalidateCache($id);
+            if ($result) {
+                return [
+                    'success' => true,
+                    'message' => 'Khôi phục nhà cung cấp thành công!'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Lỗi Khôi phục nhà cung cấp!'
+                ];
+            }
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Lỗi ' . $e->getMessage()
+            ];
         }
     }
 

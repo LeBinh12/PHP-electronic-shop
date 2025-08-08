@@ -1,12 +1,15 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Khôi phục
-    if (isset($_POST['restore_supplier'])) {
-        $id = $_POST['restore_supplier_id'];
-        $_SESSION['success'] = "Nhà cung cấp ID $id đã được khôi phục!";
-        echo "<script>window.location.href = window.location.href;</script>";
-        exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_supplier'])) {
+    $id = $_POST['restore_supplier_id'];
+    $result = $supplier->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+    echo "<script>window.location.href ='Admin.php?page=modules/Admin/RecycleBin/Suppliers/Supplier.php';</script>";
+    exit;
 }
 ?>
 <!-- Modal Khôi phục -->

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_branch_isDelet
         $_SESSION['error'] = $result['message'];
     }
 
-    echo "<script>window.location.href='Admin.php?page=modules/Admin/RecycleBin/Branches/Product.php'</script>";
+    echo "<script>window.location.href='Admin.php?page=modules/Admin/RecycleBin/Branches/Branch.php'</script>";
     exit;
 }
 ?>

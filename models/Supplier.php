@@ -16,10 +16,11 @@ class Supplier extends Model
         'isDeleted' => 'TINYINT(1)',
     ];
 
-    public function getFilteredSuppliers($limit = 8, $offset = 0, $keyword = '')
+    public function getFilteredSuppliers($limit = 8, $offset = 0, $keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1 ";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";
@@ -43,11 +44,11 @@ class Supplier extends Model
     }
 
 
-    public function countSupplier($keyword = '')
+    public function countSupplier($keyword = '', $isDeleted = 0)
     {
         $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
-
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if (!empty($keyword)) {
             $sql .= " AND name LIKE :keyword";
             $params[':keyword'] = '%' . $keyword . '%';

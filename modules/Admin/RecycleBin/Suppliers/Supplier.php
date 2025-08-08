@@ -1,25 +1,20 @@
 <?php
 // Dữ liệu giả lập nhà cung cấp đã xóa
-$listDeletedSuppliers = [
-    [
-        'id' => 701,
-        'name' => 'Công ty TNHH Thiết bị ABC',
-        'contact' => 'Nguyễn Văn A',
-        'phone' => '0912345678',
-        'email' => 'abc@suppliers.vn',
-        'image' => 'https://via.placeholder.com/60',
-        'address' => '123 Lê Lợi, Quận 1, TP.HCM',
-    ],
-    [
-        'id' => 702,
-        'name' => 'Thiết bị Minh Long',
-        'contact' => 'Trần Thị B',
-        'phone' => '0933667788',
-        'email' => 'minhlong@sup.vn',
-        'image' => 'https://via.placeholder.com/60',
-        'address' => '45 Nguyễn Trãi, Quận 5, TP.HCM',
-    ],
-];
+
+$keyword = $_GET['search'] ?? '';
+
+
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+
+
+$totalSuppliers = $supplier->countSuppliersToDB($keyword, 1);
+$totalPages = ceil($totalSuppliers / $limit);
+$listDeletedSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword, 1);
+
 ?>
 
 <?php require_once 'RestoreSupplier.php'; ?>
@@ -49,26 +44,26 @@ $listDeletedSuppliers = [
                     <tr>
                         <td><?= $supplier['id'] ?></td>
                         <td><?= htmlspecialchars($supplier['name']) ?></td>
-                        <td><?= htmlspecialchars($supplier['contact']) ?></td>
-                        <td><?= $supplier['phone'] ?></td>
-                        <td><?= $supplier['email'] ?></td>
-                        <td><img src="<?= $supplier['image'] ?>" width="60"></td>
-                        <td><?= $supplier['address'] ?></td>
+                        <td><?= htmlspecialchars($supplier['contact_person']) ?></td>
+                        <td><?= $supplier['Phone'] ?></td>
+                        <td><?= $supplier['Email'] ?></td>
+                        <td><img src="<?= $supplier['image_url'] ?>" width="60"></td>
+                        <td><?= $supplier['Address'] ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">
                                 <button class="btn btn-sm btn-success restore-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#restoreSupplierModal"
-                                        data-id="<?= $supplier['id'] ?>"
-                                        data-name="<?= htmlspecialchars($supplier['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#restoreSupplierModal"
+                                    data-id="<?= $supplier['id'] ?>"
+                                    data-name="<?= htmlspecialchars($supplier['name']) ?>">
                                     <i class="fas fa-undo me-1"></i> Khôi phục
                                 </button>
 
                                 <button class="btn btn-sm btn-danger delete-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteSupplierModal"
-                                        data-id="<?= $supplier['id'] ?>"
-                                        data-name="<?= htmlspecialchars($supplier['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteSupplierModal"
+                                    data-id="<?= $supplier['id'] ?>"
+                                    data-name="<?= htmlspecialchars($supplier['name']) ?>">
                                     <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </div>

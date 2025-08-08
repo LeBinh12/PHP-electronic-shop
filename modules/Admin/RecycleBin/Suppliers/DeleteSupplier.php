@@ -1,8 +1,14 @@
 <?php
-if (isset($_POST['delete_supplier'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_supplier'])) {
     $id = $_POST['delete_supplier_id'];
-    $_SESSION['success'] = "Nhà cung cấp ID $id đã bị xóa vĩnh viễn!";
-    echo "<script>window.location.href = window.location.href;</script>";
+    $result = $supplier->deleteIsDeleted($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
+    echo "<script>window.location.href ='Admin.php?page=modules/Admin/RecycleBin/Suppliers/Supplier.php';</script>";
     exit;
 }
 ?>

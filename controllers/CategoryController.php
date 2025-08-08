@@ -3,6 +3,8 @@
 
 require_once './models/Category.php';
 require_once './core/RedisCache.php';
+require_once './models/Product.php';
+require_once './controllers/ProductController.php';
 
 class CategoryController
 {

@@ -1,5 +1,9 @@
 <?php
 require_once './models/Product.php';
+require_once './models/Order.php';
+require_once './models/OrderItem.php';
+require_once './models/Image.php';
+
 require_once './core/RedisCache.php';
 require_once './controllers/BaseController.php';
 
