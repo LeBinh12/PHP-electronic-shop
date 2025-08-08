@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
             exit;
         }
         $result = $orderController->delete($id);
+
         if ($result['success']) {
             echo "<script>
             alert('Xóa đơn hàng thành công!');

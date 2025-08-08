@@ -96,12 +96,14 @@ abstract class Model
         return $stmt->fetchColumn() > 0;
     }
 
-    public function getByColumn(string $column, $value): bool
+    public function getByColumn(string $column, $value): array
     {
-        $sql = "SELECT * FROM {$this->table} WHERE {$column} = :value";
+        $sql = "SELECT * FROM {$this->table} WHERE {$column} = :value ";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute(['value' => $value]);
+        $stmt->execute(['value' => $value]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function existsByNameExceptId($id, $name): bool
     {

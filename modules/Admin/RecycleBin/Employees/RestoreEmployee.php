@@ -1,8 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_employee'])) {
     $id = $_POST['restore_employee_id'];
-    // Giả lập khôi phục nhân viên
-    $_SESSION['success'] = "Nhân viên ID $id đã được khôi phục!";
+    $result = $employeeController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

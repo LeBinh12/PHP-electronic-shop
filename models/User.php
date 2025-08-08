@@ -22,12 +22,12 @@ class User extends Model
         'isDeleted' => 'TINYINT(1)',
     ];
 
-    public function getFilteredUsers($limit = 8, $offset = 0, $keyword = '')
+    public function getFilteredUsers($limit = 8, $offset = 0, $keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT * FROM {$this->table} Where isDeleted = 0";
+        $sql = "SELECT * FROM {$this->table} Where 1=1 ";
 
-        $params = [];
-
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if (!empty($keyword)) {
             $sql .= " AND FullName LIKE :keyword";
             $params[':keyword'] = '%' . $keyword . '%';
@@ -47,11 +47,11 @@ class User extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countUser($keyword = '')
+    public function countUser($keyword = '', $isDeleted = 0)
     {
-        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE isDeleted = 0";
-        $params = [];
-
+        $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE 1=1 ";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if (!empty($keyword)) {
             $sql .= " AND FullName LIKE :keyword";
             $params[':keyword'] = '%' . $keyword . '%';

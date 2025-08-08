@@ -24,11 +24,12 @@ class Employee extends Model
         'branch_id' => 'branches(id)'
     ];
 
-    public function getFilterEmployees($keyword = null, $limit = 8, $offset = 0)
+    public function getFilterEmployees($keyword = null, $limit = 8, $offset = 0, $isDeleted = 0)
     {
-        $sql = "SELECT * FROM employees WHERE isDeleted = 0";
+        $sql = "SELECT * FROM employees WHERE 1=1 ";
 
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND (name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword)";
@@ -50,10 +51,11 @@ class Employee extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countFilteredEmployees($keyword = null)
+    public function countFilteredEmployees($keyword = null, $isDeleted = 0)
     {
-        $sql = "SELECT COUNT(*) as total FROM employees WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT COUNT(*) as total FROM employees WHERE 1=1 ";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND (name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword)";

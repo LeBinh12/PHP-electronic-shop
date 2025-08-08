@@ -1,10 +1,14 @@
 <?php
-// Dữ liệu giả lập các quyền đã bị xóa
-$listDeletedRoles = [
-    ['id' => 601, 'name' => 'Admin hệ thống'],
-    ['id' => 602, 'name' => 'Nhân viên bán hàng'],
-    ['id' => 603, 'name' => 'Chăm sóc khách hàng'],
-];
+$keyword = $_GET['search'] ?? '';
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+$totalRole = $roleController->countRole($keyword, 1);
+$totalPages = ceil($totalRole / $limit);
+
+$listDeletedRoles = $roleController->getPagination($keyword, $limit, $offset, 1);
+
 ?>
 
 <?php require_once 'RestoreRole.php'; ?>
@@ -28,22 +32,22 @@ $listDeletedRoles = [
                 <?php foreach ($listDeletedRoles as $role): ?>
                     <tr>
                         <td><?= $role['id'] ?></td>
-                        <td><?= htmlspecialchars($role['name']) ?></td>
+                        <td><?= htmlspecialchars($role['role_name']) ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">
                                 <button class="btn btn-sm btn-success restore-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#restoreRoleModal"
-                                        data-id="<?= $role['id'] ?>"
-                                        data-name="<?= htmlspecialchars($role['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#restoreRoleModal"
+                                    data-id="<?= $role['id'] ?>"
+                                    data-name="<?= htmlspecialchars($role['role_name']) ?>">
                                     <i class="fas fa-undo me-1"></i> Khôi phục
                                 </button>
 
                                 <button class="btn btn-sm btn-danger delete-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteRoleModal"
-                                        data-id="<?= $role['id'] ?>"
-                                        data-name="<?= htmlspecialchars($role['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteRoleModal"
+                                    data-id="<?= $role['id'] ?>"
+                                    data-name="<?= htmlspecialchars($role['role_name']) ?>">
                                     <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </div>

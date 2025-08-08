@@ -1,10 +1,14 @@
 <?php
 // Dữ liệu giả lập nhân viên đã bị xóa
-$listDeletedEmployees = [
-    ['id' => 201, 'name' => 'Nguyễn Văn D', 'email' => 'd@company.com', 'phone' => '0912345678', 'position' => 'Quản lý', 'address' => '123 Lê Lợi, Quận 1'],
-    ['id' => 202, 'name' => 'Trần Thị E', 'email' => 'e@company.com', 'phone' => '0988776655', 'position' => 'Nhân viên bán hàng', 'address' => '45 Hai Bà Trưng, Quận 3'],
-    ['id' => 203, 'name' => 'Phạm Văn F', 'email' => 'f@company.com', 'phone' => '0909998888', 'position' => 'Kho hàng', 'address' => '67 Nguyễn Huệ, Quận 1'],
-];
+$keyword = $_GET['search'] ?? '';
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+$totalEmployees = $employeeController->countEmployees($keyword, 1);
+$totalPages = ceil($totalEmployees / $limit);
+
+$listDeletedEmployees = $employeeController->getPagination($keyword, $limit, $offset, 1);
 ?>
 
 <?php require_once 'RestoreEmployee.php'; ?>
@@ -40,18 +44,18 @@ $listDeletedEmployees = [
                         <td>
                             <div class="action-buttons d-flex gap-2">
                                 <button class="btn btn-sm btn-success restore-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#restoreEmployeeModal"
-                                        data-id="<?= $emp['id'] ?>"
-                                        data-name="<?= htmlspecialchars($emp['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#restoreEmployeeModal"
+                                    data-id="<?= $emp['id'] ?>"
+                                    data-name="<?= htmlspecialchars($emp['name']) ?>">
                                     <i class="fas fa-undo me-1"></i> Khôi phục
                                 </button>
 
                                 <button class="btn btn-sm btn-danger delete-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteEmployeeModal"
-                                        data-id="<?= $emp['id'] ?>"
-                                        data-name="<?= htmlspecialchars($emp['name']) ?>">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteEmployeeModal"
+                                    data-id="<?= $emp['id'] ?>"
+                                    data-name="<?= htmlspecialchars($emp['name']) ?>">
                                     <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </div>

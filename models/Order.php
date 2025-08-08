@@ -31,6 +31,44 @@ class Order extends Model
         'employee_id' => 'employees(id)',
     ];
 
+    public function getOrderIdsByUser($userId)
+    {
+        if ($userId === null) {
+            return [];
+        }
+
+        $sql = "SELECT id 
+            FROM {$this->table} 
+            WHERE isDeleted = 0 
+              AND user_id = :user_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+
+        // Lấy tất cả ID về dạng mảng
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+
+    public function hasUserOrder($id)
+    {
+        // Nếu không truyền id thì mặc định false
+        if ($id === null) {
+            return false;
+        }
+
+        $sql = "SELECT COUNT(*) 
+            FROM {$this->table} 
+            WHERE isDeleted = 0 
+              AND user_id = :user_id 
+              AND status_id != 6";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user_id' => $id]);
+        $count = (int) $stmt->fetchColumn();
+
+        return $count > 0;
+    }
+
+
     public function countOrdersThisWeek()
     {
         $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 
@@ -110,10 +148,12 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countOrders(int $userId, ?int $statusId = null, $keyword = ''): int
+    public function countOrders(int $userId, ?int $statusId = null, $keyword = '', $isDeleted = 0): int
     {
         $sql = "SELECT COUNT(*) FROM orders WHERE user_id = :uid AND isDeleted = 0";
-        $params = ['uid' => $userId];
+        $params = ['uid' => $userId, 'isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
+
 
         if ($statusId !== null) {
             $sql .= " AND status_id = :sid";
@@ -136,7 +176,8 @@ class Order extends Model
         int    $offset     = 0,
         ?int $branch_id = null,
         ?int $employeeId = null,
-        bool $isAdmin = false
+        bool $isAdmin = false,
+        $isDeleted = 0
     ) {
         $sql = "
             SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
@@ -145,10 +186,11 @@ class Order extends Model
             JOIN    shipping sh ON sh.id = o.shipping_id
             JOIN    users u ON o.user_id = u.id
             JOIN    branches b ON b.id = o.branch_id
-            WHERE   o.isDeleted = 0
+            WHERE   1=1
         ";
 
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND o.isDeleted = :isDeleted";
 
         if ($statusId !== null) {
             $sql .= " AND o.status_id = :status_id";
@@ -190,11 +232,13 @@ class Order extends Model
         $keyword = '',
         ?int $branch_id = null,
         ?int $employeeId = null,
-        bool $isAdmin = false
+        bool $isAdmin = false,
+        $isDeleted = 0
     ): int {
         $sql = "SELECT COUNT(*) FROM orders WHERE isDeleted = 0";
 
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if ($statusId !== null) {
             $sql .= " AND status_id = :sid";
             $params['sid'] = $statusId;

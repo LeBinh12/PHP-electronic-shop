@@ -1,6 +1,9 @@
 <?php
 
 require_once './models/User.php';
+require_once './models/Order.php';
+require_once './models/OrderItem.php';
+require_once './models/ChatMessage.php';
 require_once './models/UserReports.php';
 require_once './models/PasswordResetToken.php';
 require_once './controllers/BaseController.php';
@@ -22,12 +25,22 @@ class UserController extends BaseController
 
     private $resetTokenModel;
 
+    private $orderModel;
+    private $orderItemModel;
+    private $chatModel;
+    private $reportModel;
+
+
     public function __construct()
     {
         parent::__construct();
         $this->userModel = new User();
         $this->userReportModel = new UserReports();
         $this->resetTokenModel = new PasswordResetToken();
+        $this->orderModel = new Order();
+        $this->orderItemModel = new OrderItem();
+        $this->chatModel = new ChatMessage();
+        $this->reportModel = new UserReports();
         $this->jwtConfig = include   './config/jwt.php';
     }
 
@@ -204,14 +217,14 @@ class UserController extends BaseController
     }
 
 
-    public function getPagination($limit, $offset, $keyword)
+    public function getPagination($limit, $offset, $keyword, $isDeleted = 0)
     {
-        return $this->userModel->getFilteredUsers($limit, $offset, $keyword);
+        return $this->userModel->getFilteredUsers($limit, $offset, $keyword, $isDeleted);
     }
 
-    public function countUser($keyword)
+    public function countUser($keyword, $isDeleted = 0)
     {
-        return $this->userModel->countUser($keyword);
+        return $this->userModel->countUser($keyword, $isDeleted);
     }
 
     public function updatePasswordByAdmin($userId, $password)
@@ -334,5 +347,86 @@ class UserController extends BaseController
     public function countUsersByMonthInYear($year = null)
     {
         return $this->userModel->countUsersByMonthInYear($year);
+    }
+
+    public function delete($id)
+    {
+        try {
+            $existingUser = $this->userModel->findIsDeled($id);
+
+            if ($existingUser == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Người dùng không tồn tại!'
+                ];
+            }
+
+            if ($this->reportModel->hasReportOfUser($id)) {
+                $this->reportModel->deleteByColumn('reported_user_id', $id);
+            }
+
+            if ($this->chatModel->hasUserMessage($id)) {
+                $this->chatModel->deleteByColumn('user_id', $id);
+            }
+
+            $orderId = $this->orderModel->getOrderIdsByUser($id);
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderItemModel->deleteByColumn('order_id', $item);
+                    $this->orderModel->delete($item);
+                }
+            }
+
+            $result = $this->userModel->delete($id);
+
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn người dùng này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa người dùng'];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Lỗi ' . $e->getMessage()];
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existingUser = $this->userModel->findIsDeled($id);
+
+            if ($existingUser == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Người dùng không tồn tại!'
+                ];
+            }
+
+            if ($this->reportModel->hasReportOfUser($id)) {
+                $this->reportModel->deleteByColumn('reported_user_id', $id);
+            }
+
+            if ($this->chatModel->hasUserMessage($id)) {
+                $this->chatModel->deleteByColumn('user_id', $id);
+            }
+
+            $orderId = $this->orderModel->getOrderIdsByUser($id);
+
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderItemModel->deleteByColumn('order_id', $item);
+                    $this->orderModel->delete($item);
+                }
+            }
+
+            $result = $this->userModel->updateIsDeleted($id, ['isDeleted' => 0]);
+
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã khôi phục người dùng này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi khôi phục người dùng'];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Lỗi ' . $e->getMessage()];
+        }
     }
 }

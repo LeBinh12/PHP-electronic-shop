@@ -2,16 +2,19 @@
 
 require_once './models/Role.php';
 require_once './models/RoleMenu.php';
+require_once './models/RoleEmployee.php';
 
 class RoleController
 {
     private $roleModel;
     private $roleMenuModel;
+    private $roleEmployeeModel;
 
     public function __construct()
     {
         $this->roleModel = new Role();
         $this->roleMenuModel = new RoleMenu();
+        $this->roleEmployeeModel = new RoleEmployee();
     }
 
     public function getAll()
@@ -24,14 +27,14 @@ class RoleController
         return $this->roleModel->find($id);
     }
 
-    public function getPagination($keyword, $limit, $offset)
+    public function getPagination($keyword, $limit, $offset, $isDeleted = 0)
     {
-        return $this->roleModel->getFilterRoles($keyword, $limit, $offset);
+        return $this->roleModel->getFilterRoles($keyword, $limit, $offset, $isDeleted);
     }
 
-    public function countRole($keyword)
+    public function countRole($keyword, $isDeleted = 0)
     {
-        return $this->roleModel->countFilteredRoles($keyword);
+        return $this->roleModel->countFilteredRoles($keyword, $isDeleted);
     }
 
     public function add($data)
@@ -143,12 +146,96 @@ class RoleController
     public function delete($id)
     {
         try {
+
+            $existingMenu = $this->roleMenuModel->getByColumn('role_id', $id);
+
+            if (is_array($existingMenu) && count($existingMenu) > 0) {
+                foreach ($existingMenu as $item) {
+                    $this->roleMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 1]);
+                }
+            }
+
+            $existingEmployee = $this->roleEmployeeModel->getByColumn('role_id', $id);
+            if (is_array($existingEmployee) && count($existingEmployee) > 0) {
+                foreach ($existingEmployee as $item) {
+                    $this->roleEmployeeModel->updateIsDeleted($item['id'], ['isDeleted' => 1]);
+                }
+            }
             $delete = $this->roleModel->updateDeleted($id);
+
             return [
                 'success' => true,
                 'message' => 'Xóa quyền thành công',
                 'Role' => $delete
             ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existing = $this->roleModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Quyền không tồn tại!'
+                ];
+            }
+
+            $existingMenu = $this->roleMenuModel->getByColumn('role_id', $id);
+            if (is_array($existingMenu) && count($existingMenu) > 0) {
+                $this->roleMenuModel->deleteByColumn('role_id', $id);
+            }
+
+            $existingEmployee = $this->roleEmployeeModel->getByColumn('role_id', $id);
+            if (is_array($existingEmployee) && count($existingEmployee) > 0) {
+                $this->roleEmployeeModel->deleteByColumn('role_id', $id);
+            }
+
+            $result = $this->roleModel->delete($id);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn quyền này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa quyền'];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existing = $this->roleModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Quyền không tồn tại!'
+                ];
+            }
+
+            $existingMenu = $this->roleMenuModel->getByColumn('role_id', $id);
+            if (is_array($existingMenu) && count($existingMenu) > 0) {
+                foreach ($existingMenu as $item) {
+                    $this->roleMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 0]);
+                }
+            }
+
+            $existingEmployee = $this->roleEmployeeModel->getByColumn('role_id', $id);
+            if (is_array($existingEmployee) && count($existingEmployee) > 0) {
+                foreach ($existingEmployee as $item) {
+                    $this->roleEmployeeModel->updateIsDeleted($item['id'], ['isDeleted' => 0]);
+                }
+            }
+
+            $result = $this->roleModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn quyền này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa quyền'];
+            }
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

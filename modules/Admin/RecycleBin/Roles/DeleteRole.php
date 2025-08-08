@@ -1,20 +1,17 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Khôi phục
-    if (isset($_POST['restore_role'])) {
-        $id = $_POST['restore_role_id'];
-        $_SESSION['success'] = "Quyền ID $id đã được khôi phục!";
-        echo "<script>window.location.href = window.location.href;</script>";
-        exit;
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_role'])) {
 
-    // Xóa vĩnh viễn
-    if (isset($_POST['delete_role'])) {
-        $id = $_POST['delete_role_id'];
-        $_SESSION['success'] = "Quyền ID $id đã bị xóa vĩnh viễn!";
-        echo "<script>window.location.href = window.location.href;</script>";
-        exit;
+    $id = $_POST['delete_role_id'];
+
+    $result = $roleController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+    echo "<script>window.location.href = window.location.href;</script>";
+    exit;
 }
 ?>
 

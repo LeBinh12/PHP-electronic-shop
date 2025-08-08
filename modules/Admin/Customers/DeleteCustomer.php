@@ -12,8 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     'deleted_by_type' => 'admin',
     'deleted_at' => date("Y-m-d H:i:s"),
     'reason' => $reason,
-    'isDeleted' => 0
+    'isDeleted' => 1
   ];
+
+  $checkOrder = $orderController->hasUserOrder($id);
+  if (!$checkOrder['success']) {
+    $_SESSION['error'] = $checkOrder['message'];
+    echo "<script>
+            window.location.href = 'Admin.php?page=modules/Admin/Customers/Customer.php';
+          </script>";
+    exit;
+  }
 
   $result = $userController->updateProfile($id, $data, false);
 

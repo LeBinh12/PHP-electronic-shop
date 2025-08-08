@@ -15,11 +15,12 @@ class Menu extends Model
 
 
 
-    public function getFilterMenus($keyword = null, $limit = 8, $offset = 0)
+    public function getFilterMenus($keyword = null, $limit = 8, $offset = 0, $isDeleted = 0)
     {
-        $sql = "SELECT * FROM menus WHERE isDeleted = 0";
+        $sql = "SELECT * FROM menus WHERE 1=1 ";
 
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND menu_name LIKE :keyword";
@@ -41,10 +42,11 @@ class Menu extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countFilteredMenus($keyword)
+    public function countFilteredMenus($keyword, $isDeleted = 0)
     {
-        $sql = "SELECT COUNT(*) as total FROM menus WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT COUNT(*) as total FROM menus WHERE 1=1";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if (!empty($keyword)) {
             $sql .= " AND menu_name LIKE :keyword";
             $params['keyword'] = "%" . $keyword . "%";

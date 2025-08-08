@@ -22,6 +22,24 @@ class UserReports extends Model
         'reason_id' => 'reports(id)'
     ];
 
+    public function hasReportOfUser($userId)
+    {
+        if ($userId === null) {
+            return false;
+        }
+
+        $sql = "SELECT EXISTS(
+                SELECT 1
+                FROM {$this->table}
+                WHERE reported_user_id = :user_id
+            ) AS found";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return (bool) $stmt->fetchColumn();
+    }
+
+
     public function getLatestByUserId($userId)
     {
         $sql = "SELECT * FROM {$this->table}

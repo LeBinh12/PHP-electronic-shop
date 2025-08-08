@@ -12,11 +12,12 @@ class Role extends Model
         'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
     ];
 
-    public function getFilterRoles($keyword = null, $limit = 8, $offset = 0)
+    public function getFilterRoles($keyword = null, $limit = 8, $offset = 0, $isDeleted = 0)
     {
-        $sql = "SELECT * FROM roles WHERE isDeleted = 0 ";
+        $sql = "SELECT * FROM roles WHERE 1=1 ";
 
-        $params = [];
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
 
         if (!empty($keyword)) {
             $sql .= " AND role_name LIKE :keyword";
@@ -38,10 +39,11 @@ class Role extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function countFilteredRoles($keyword)
+    public function countFilteredRoles($keyword, $isDeleted = 0)
     {
-        $sql = "SELECT COUNT(*) as total FROM roles WHERE isDeleted = 0";
-        $params = [];
+        $sql = "SELECT COUNT(*) as total FROM roles WHERE 1=1";
+        $params = ['isDeleted' => $isDeleted];
+        $sql .= " AND isDeleted = :isDeleted";
         if (!empty($keyword)) {
             $sql .= " AND role_name LIKE :keyword";
             $params['keyword'] = "%" . $keyword . "%";
