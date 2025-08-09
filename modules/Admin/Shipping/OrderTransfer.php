@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
 <div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content shadow">
-      <div class="modal-header bg-warning text-dark">
+      <div class="modal-header bg-primary text-dark">
         <h5 class="modal-title text-white" id="transferLabel">
           <i class="bi bi-arrow-left-right me-2"></i> Chuyển đơn hàng
         </h5>
@@ -73,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['transferShipping'])) 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-warning text-white" name="transferShipping">Xác nhận chuyển</button>
+          <button type="submit" class="btn btn-primary text-white" name="transferShipping">Xác nhận chuyển</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
         </div>
       </form>
     </div>

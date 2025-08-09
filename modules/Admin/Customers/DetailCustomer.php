@@ -2,7 +2,7 @@
 <div class="modal fade" id="detailCustomerModal" tabindex="-1" aria-labelledby="detailCustomerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content shadow">
-      <div class="modal-header bg-info text-white">
+      <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="detailCustomerModalLabel"><i class="fas fa-user me-2"></i> Chi tiết khách hàng</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
       </div>
@@ -35,9 +35,9 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer justify-content-center">
+      <!-- <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

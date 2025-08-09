@@ -73,7 +73,7 @@ $employeeList = $employeeController->getPagination($keyword, $limit, $offset);
                             ?>
                                 <!-- Nút sửa -->
                                 <button class="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
-                                    style="padding: 2px 8px; font-size: 16px;"
+                                    style="padding: 2px 8px;"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editEmployeeModal"
                                     data-id="<?= $emp['id'] ?>"
@@ -95,7 +95,7 @@ $employeeList = $employeeController->getPagination($keyword, $limit, $offset);
                                 <!-- Nút xóa -->
                                 <button type="button"
                                     class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
-                                    style="padding: 2px 8px; font-size: 16px; "
+                                    style="padding: 2px 8px;"
                                     data-bs-toggle="modal"
                                     data-bs-target="#deleteEmployeeModal"
                                     data-id="<?= $emp['id'] ?>"

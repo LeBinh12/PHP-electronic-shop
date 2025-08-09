@@ -1,4 +1,4 @@
-<div class="container mt-5 pt-4">
+<div class="container">
 
   <!-- Hero -->
   <div class="bg-primary text-white rounded-4 p-4 d-flex align-items-center justify-content-between shadow-lg">
@@ -109,7 +109,7 @@
 
   <!-- Thông tin người dùng -->
   <div class="card mt-5 shadow">
-    <div class="card-header bg-light">
+    <div class="card-header bg-primary text-white">
       <h5 class="mb-0">Thông tin cá nhân</h5>
     </div>
     <div class="card-body">

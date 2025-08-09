@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['report'])) {
 
 <!-- Modal Báo cáo khách hàng -->
 <div class="modal fade" id="reportCustomerModal" tabindex="-1" aria-labelledby="reportCustomerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST">
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST">
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title" id="reportCustomerModalLabel">Báo cáo người dùng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
@@ -58,8 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['report'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-warning" name="report">Gửi báo cáo</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

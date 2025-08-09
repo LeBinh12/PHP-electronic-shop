@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
                   <li><strong>Ngày đặt:</strong> <?= date('d/m/Y H:i', strtotime($orderMap['create_at'])) ?></li>
                   <li class="d-flex align-items-center gap-2">
                     <strong>Trạng thái:</strong>
-                    <select name="status" class="form-select form-select-sm w-auto pe-4" style="padding: 2px 8px;">
+                    <select name="status" class="form-select form-select-sm w-auto pe-4" style="padding: 2px 8px; border: none;">
                       <?php
                       $statusOptions = $statusController->getAll();
                       foreach ($statusOptions as $status) {
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['UpdateOrder'])) {
         </div>
 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success" data-bs-dismiss="modal" name="UpdateOrder">Thay đổi</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="UpdateOrder">Thay đổi</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
         </div>
       </form>

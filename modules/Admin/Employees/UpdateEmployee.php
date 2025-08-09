@@ -62,9 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
                             <label class="form-label">Vị trí</label>
                             <input type="text" name="edit_position" id="edit_position" class="form-control">
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label">Địa chỉ</label>
                             <input type="text" name="edit_address" id="edit_address" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Chi nhánh</label>
+                            <select name="branch_id" id="edit_branch_id" class="form-select" required>
+                                <?php foreach ($allBranches as $branch) { ?>
+                                    <option value="<?= $branch['id'] ?>">
+                                        <?= htmlspecialchars($branch['name']) ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
 
@@ -97,20 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['update_employee'])) {
                         }
                         ?>
                     </div>
-
-                    <div class="col-md-12">
-                        <label class="form-label">Chi nhánh</label>
-                        <select name="branch_id" id="edit_branch_id" class="form-select" required>
-                            <?php foreach ($allBranches as $branch) { ?>
-                                <option value="<?= $branch['id'] ?>">
-                                    <?= htmlspecialchars($branch['name']) ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-
-                    </div>
-
-
                 </div>
 
                 <div class="modal-footer">

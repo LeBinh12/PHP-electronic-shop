@@ -27,11 +27,11 @@ $totalPages = max(1, ceil($totalRows / $limit));
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET">
+        <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET" style="width: 100%; max-width: 600px;">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
 
             <!-- Thanh chọn trạng thái -->
-            <select name="status_id" class="form-select">
+            <select name="status_id" class="form-select" style="padding: 5px; margin: 0; border: 1px solid #ccc;">
                 <option value="0">Tất cả trạng thái</option>
                 <?php foreach ($getAllStatus as $status): ?>
                     <option value="<?= $status['id'] ?>" <?= (isset($_GET['status_id']) && $_GET['status_id'] == $status['id']) ? 'selected' : '' ?>>
@@ -47,8 +47,8 @@ $totalPages = max(1, ceil($totalRows / $limit));
                 class="form-control search-input"
                 placeholder="Tìm mã đơn hàng...">
 
-            <button class="btn btn-secondary" type="submit">
-                <i class="bi bi-search text-white"></i> Tìm
+            <button class="btn btn-secondary" type="submit" style="background-color: blue;">
+                <i class="bi bi-search text-white"></i>
             </button>
         </form>
 
@@ -89,7 +89,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                 </td>
                                 <td>
                                     <a href="Admin.php?page=modules/Admin/Orders/Order.php&id=<?= $item['order_id'] ?>"
-                                        class="btn btn-sm btn-info text-white btn-sm-fixed">
+                                        class="btn btn-sm btn-info text-white btn-sm-fixed text-decoration-none">
                                         <i class="fas fa-eye me-1"></i> Xem
                                     </a>
                                     <?php
@@ -97,7 +97,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
 
                                     ?>
                                     <a href="Admin.php?page=modules/Admin/Orders/Order.php&orderid=<?= $item['order_id'] ?>"
-                                        class="btn btn-sm btn-warning text-white btn-sm-fixed">
+                                        class="btn btn-sm btn-warning text-white btn-sm-fixed text-decoration-none">
                                         <i class="fas fa-edit me-1"></i> Sửa
                                     </a>
 
@@ -117,7 +117,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     if (hasPermission('modules/Admin/Inventory/DeleteOrder.php')) {
                                     ?>
                                         <button type="button"
-                                            class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                                            class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-name="<?= $item['code'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
                                             <i class="fas fa-trash-alt me-1"></i> Xóa
                                         </button>
                                     <?php

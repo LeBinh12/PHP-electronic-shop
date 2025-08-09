@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
                     <input type="hidden" name="id" id="editItemWarehouseId">
                     <input type="hidden" name="product_id" id="editIdProduct">
 
-                    <div class="modal-body pt-0">
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Tên sản phẩm</label>
                             <input type="text" name="product_name" id="editItemProductName" class="form-control" readonly>
@@ -57,9 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
                                 <?php } ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-save me-1"></i> Lưu thay đổi
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Lưu thay đổi
                         </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     </div>
                 </form>
         </div>

@@ -65,7 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
         buttons.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 const orderId = this.getAttribute('data-id');
+                const orderName = this.getAttribute('data-name') || orderId;
+
                 document.getElementById('deleteOrderId').value = orderId;
+                document.getElementById('deleteOrderName').textContent = orderName;
             });
         });
     });
