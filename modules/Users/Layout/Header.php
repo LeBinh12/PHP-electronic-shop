@@ -480,6 +480,9 @@ if (isset($_SESSION['cart'])) {
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
                         <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Mật khẩu mới">
+                        <span class="input-group-text bg-white" id="toggleNewPassword" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="eyeNewPassword"></i>
+                        </span>
                     </div>
                     <button class="btn btn-success w-100" id="confirmResetBtn" name="confirmResetBtn">Xác nhận đổi mật khẩu</button>
                 </div>
@@ -545,6 +548,18 @@ endif; ?>
             registerPasswordConfirm.setAttribute('type', type);
             eyeRegisterPasswordConfirm.classList.toggle('bi-eye');
             eyeRegisterPasswordConfirm.classList.toggle('bi-eye-slash');
+        });
+
+        // Modal đổi mật khẩu - Mật khẩu mới
+        const toggleNewPassword = document.getElementById('toggleNewPassword');
+        const newPassword = document.getElementById('newPassword');
+        const eyeNewPassword = document.getElementById('eyeNewPassword');
+
+        toggleNewPassword?.addEventListener('click', function() {
+            const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            newPassword.setAttribute('type', type);
+            eyeNewPassword.classList.toggle('bi-eye');
+            eyeNewPassword.classList.toggle('bi-eye-slash');
         });
     });
 </script>

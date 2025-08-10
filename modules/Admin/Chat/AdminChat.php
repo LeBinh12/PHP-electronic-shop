@@ -22,7 +22,7 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
         <div id="chat-content" class="p-2 overflow-auto" style="background: #f8f9fa; max-height: 400px;">
             <?php foreach ($messages as $msg) { ?>
                 <?php if ($msg->from === 'user') { ?>
-                    <div class="d-flex align-items-start mb-2">
+                    <div class="d-flex align-items-start mb-2" style="margin-right: 100px;">
                         <img src="https://tse4.mm.bing.net/th?id=OIP.kQyrx9VbuWXWxCVxoreXOgHaHN&pid=Api&P=0&h=220"
                             class="rounded-circle me-2" style="width: 30px; height: 30px;">
                         <div>
@@ -32,7 +32,7 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
                         </div>
                     </div>
                 <?php } else { ?>
-                    <div class="d-flex justify-content-end mb-2">
+                    <div class="d-flex justify-content-end mb-2" style="margin-left: 100px;">
                         <div>
                             <div class="p-2 bg-success text-white rounded"><?= htmlspecialchars($msg->message) ?></div>
                             <div class="small text-muted text-end"><?= $msg->time ?></div>

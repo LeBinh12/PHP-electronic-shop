@@ -117,7 +117,12 @@ $totalPages = max(1, ceil($totalRows / $limit));
                                     if (hasPermission('modules/Admin/Inventory/DeleteOrder.php')) {
                                     ?>
                                         <button type="button"
-                                            class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed" data-id="<?= $item['order_id'] ?>" data-name="<?= $item['code'] ?>" data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                                            class="btn btn-sm btn-danger delete-order-btn btn-sm-fixed"
+                                            data-id="<?= $item['order_id'] ?>"
+                                            data-code="<?= htmlspecialchars($item['code']) ?>"
+                                            data-customer="<?= htmlspecialchars($item['FullName']) ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteOrderModal">
                                             <i class="fas fa-trash-alt me-1"></i> Xóa
                                         </button>
 

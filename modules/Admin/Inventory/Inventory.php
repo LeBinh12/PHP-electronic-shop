@@ -25,7 +25,7 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
         if (hasPermission('modules/Admin/Inventory/Warehouse.php')) {
 
         ?>
-            <button class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#importGeneralModal">
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importGeneralModal">
                 <i class="fas fa-truck-loading me-1"></i> Nhập hàng
             </button>
         <?php

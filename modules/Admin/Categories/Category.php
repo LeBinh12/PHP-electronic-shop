@@ -29,7 +29,7 @@ $listCategories = $category->getFilterCategoriesToDb($limit, $offset, $keyword);
         <?php
         }
         ?>
-        <form class="search-form" method="GET" action="Admin.php">
+        <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Categories/Category.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>

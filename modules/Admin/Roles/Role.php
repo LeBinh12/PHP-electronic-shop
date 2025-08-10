@@ -27,7 +27,7 @@ $listItems = $roleController->getPagination($keyword, $limit, $offset);
         ?>
 
         <!-- Form tìm kiếm quyền -->
-        <form class="search-form" method="GET" action="Admin.php">
+        <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Roles/Role.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>

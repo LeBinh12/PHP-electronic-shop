@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['saveChange'])) {
 
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <form method="POST">
         <div class="modal-header bg-primary text-white">
@@ -58,30 +58,28 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['saveChange'])) {
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
         </div>
         <div class="modal-body">
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" name="fullname" value="<?= $fullName ?>" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" name="email" value="<?= $email ?>" required>
-            </div>
-            <?php
-            if ($employeeData) {
-            ?>
-              <div class="col-md-6">
-                <label class="form-label">Số điện thoại</label>
-                <input type="text" class="form-control" name="phone" value="<?= $phone ?>">
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Địa chỉ</label>
-                <input type="text" class="form-control" name="address" value="<?= $address ?>">
-              </div>
+          <div class="mb-3">
+            <label class="form-label">Họ và tên</label>
+            <input type="text" class="form-control" name="fullname" value="<?= $fullName ?>" required>
           </div>
-        <?php
-            }
-        ?>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="<?= $email ?>" required>
+          </div>
+          <?php
+          if ($employeeData) {
+          ?>
+            <div class="mb-3">
+              <label class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" name="phone" value="<?= $phone ?>">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" name="address" value="<?= $address ?>">
+            </div>
+          <?php
+          }
+          ?>
         </div>
         <div class="modal-footer justify-content-end">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
