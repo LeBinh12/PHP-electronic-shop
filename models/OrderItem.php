@@ -73,4 +73,42 @@ class OrderItem extends Model
 
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
+    public function canDeleteCategory($category_id)
+    {
+        $sql = "
+        SELECT COUNT(*) as cnt
+        FROM {$this->table} od
+        INNER JOIN products p ON od.product_id = p.id
+        INNER JOIN orders o ON od.order_id = o.id
+        WHERE p.category_id = :category_id
+          AND o.status_id NOT IN (1, 5, 6)
+          AND o.isDeleted = 0
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['category_id' => $category_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['cnt'] == 0;
+    }
+
+    public function canDeleteSupplier($supplier_id)
+    {
+        $sql = "
+        SELECT COUNT(*) as cnt
+        FROM {$this->table} od
+        INNER JOIN products p ON od.product_id = p.id
+        INNER JOIN orders o ON od.order_id = o.id
+        WHERE p.supplier_id = :supplier_id
+          AND o.status_id NOT IN (1, 5, 6)
+          AND o.isDeleted = 0
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['supplier_id' => $supplier_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['cnt'] == 0;
+    }
 }

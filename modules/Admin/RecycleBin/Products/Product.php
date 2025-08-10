@@ -35,8 +35,6 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
                     <th style="width: 260px">Tên sản phẩm</th>
                     <th style="width: 100px">Giá</th>
                     <th style="width: 100px">Giảm giá</th>
-                    <th style="width: 160px">Loại</th>
-                    <th style="width: 160px">Nhà cung cấp</th>
                     <th style="width: 300px">Chức năng</th>
                 </tr>
             </thead>
@@ -48,10 +46,6 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
                         <td><?= htmlspecialchars($item['name']) ?></td>
                         <td><?= number_format($item['price'], 0) ?>₫</td>
                         <td><?= $item['discount'] ?>%</td>
-                        <td><?php $categoryItem = $category->getById($item["category_id"]);
-                            echo $categoryItem['name']; ?></td>
-                        <td><?php $supplierItem = $supplier->getById($item["supplier_id"]);
-                            echo $supplierItem['name']; ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">
                                 <button type="button" class="btn btn-sm btn-success"

@@ -183,6 +183,12 @@ abstract class Model
         return $stmt->execute(['value' => $id]);
     }
 
+    public function updateNotDeletedByColumn($column, $id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 0 WHERE  {$column} = :value");
+        return $stmt->execute(['value' => $id]);
+    }
+
 
     public function updateDeleted($id)
     {

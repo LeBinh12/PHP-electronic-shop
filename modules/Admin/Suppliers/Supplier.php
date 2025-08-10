@@ -12,9 +12,9 @@ $offset = ($page - 1) * $limit;
 
 
 
-$totalSuppliers = $supplier->countSuppliers();
+$totalSuppliers = $supplier->countSuppliersToDB($keyword);
 $totalPages = ceil($totalSuppliers / $limit);
-$listSuppliers = $supplier->getFilterSuppliers($limit, $offset, $keyword);
+$listSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword);
 
 
 

@@ -104,6 +104,16 @@ class ProductController extends BaseController
         // return $this->productModel->getProductsByCategory($id);
     }
 
+    public function getFilterProductsToDb($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
+    {
+        return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);
+    }
+
+    public function countProductsToDb($categoryId, $supplierId, $keyword, array $priceRanges = [], $isDeleted = 0)
+    {
+        return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
+    }
+
     public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
     {
         $start = microtime(true);
@@ -328,7 +338,7 @@ class ProductController extends BaseController
         }
     }
 
-    public function restore($id)
+    public function restore($id, $data)
     {
         try {
             $existingProduct = $this->productModel->findIsDeled($id);
@@ -355,7 +365,7 @@ class ProductController extends BaseController
                 $this->inventoryModel->deleteByColumn('product_id', $id);
             }
 
-            $result = $this->productModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            $result = $this->productModel->updateIsDeleted($id, $data);
             $this->clearCacheAfterChange($id);
             if ($result) {
                 return ['success' => true, 'message' => 'Khôi phục thành công'];

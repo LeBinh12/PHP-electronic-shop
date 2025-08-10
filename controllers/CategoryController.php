@@ -4,6 +4,7 @@
 require_once './models/Category.php';
 require_once './core/RedisCache.php';
 require_once './models/Product.php';
+require_once './models/OrderItem.php';
 require_once './controllers/ProductController.php';
 
 class CategoryController
@@ -11,12 +12,14 @@ class CategoryController
     private $categoryModel;
     private $productModel;
     private $productController;
+    private $orderItemModel;
 
     public function __construct()
     {
         $this->categoryModel = new Category();
         $this->productModel = new Product();
         $this->productController = new ProductController();
+        $this->orderItemModel = new OrderItem();
     }
 
     public function getAll()
@@ -30,6 +33,11 @@ class CategoryController
         return $data;
     }
 
+    public function getAllToDb()
+    {
+        return $this->categoryModel->all();
+    }
+
     public function getById($id)
     {
         $key = "category:$id";
@@ -39,6 +47,21 @@ class CategoryController
         $data = $this->categoryModel->find($id);
         RedisCache::set($key, json_encode($data));
         return $data;
+    }
+
+    public function getByIdToDb($id)
+    {
+        return $this->categoryModel->find($id);
+    }
+
+    public function getFilterCategoriesToDb($limit, $offset, $keyword, $isDeleted = 0)
+    {
+        return $this->categoryModel->getFilteredCategories($limit, $offset, $keyword, $isDeleted);
+    }
+
+    public function countCategoriesToDb($keyword = '', $isDeleted = 0)
+    {
+        return $this->categoryModel->countCategory($keyword, $isDeleted);
     }
 
     public function getFilterCategories($limit, $offset, $keyword, $isDeleted = 0)
@@ -124,6 +147,15 @@ class CategoryController
                 ];
             }
 
+            if (!$this->orderItemModel->canDeleteCategory($id)) {
+                return [
+                    'success' => false,
+                    'message' => 'Đang có 1 đơn hàng xử lý của loại sản phẩm này!',
+                ];
+            }
+
+            $this->productModel->updateDeletedByColumn('category_id', $id);
+
             $categoryDelete = $this->categoryModel->updateDeleted($id);
             $this->invalidateCache($id);
             return [
@@ -150,16 +182,7 @@ class CategoryController
                 ];
             }
 
-            $productId = $this->productModel->getByColumn('category_id', $id);
-
-            if (is_array($productId) && count($productId) > 0) {
-                foreach ($productId as $item) {
-                    $result = $this->productController->deleteIsDeleted($item['id']);
-                    if (!$result['success']) {
-                        return $result;
-                    }
-                }
-            }
+            $this->productModel->deleteByColumn('category_id', $id);
 
             $result = $this->categoryModel->delete($id);
             $this->invalidateCache($id);
@@ -193,18 +216,7 @@ class CategoryController
                     'message' => 'Sản phẩm không tồn tại!'
                 ];
             }
-
-            $productId = $this->productModel->getByColumn('category_id', $id);
-
-            if (is_array($productId) && count($productId) > 0) {
-                foreach ($productId as $item) {
-                    $result = $this->productController->deleteIsDeleted($item['id']);
-                    if (!$result['success']) {
-                        return $result;
-                    }
-                }
-            }
-
+            $this->productModel->updateNotDeletedByColumn('category_id', $id);
             $result = $this->categoryModel->updateIsDeleted($id, ['isDeleted' => 0]);
             $this->invalidateCache($id);
             if ($result) {

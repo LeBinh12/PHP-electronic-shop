@@ -10,10 +10,10 @@ $page = $_GET['number'] ?? 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
 
-$totalProducts = $product->countProducts($id_category, $id_supplier, $keyword);
+$totalProducts = $product->countProductsToDb($id_category, $id_supplier, $keyword);
 $totalPages = ceil($totalProducts / $limit);
 
-$listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword, $limit, $offset);
+$listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyword, $limit, $offset);
 
 
 ?>

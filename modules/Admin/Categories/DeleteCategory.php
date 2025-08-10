@@ -4,6 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
 
     if ($id) {
         $result = $category->delete($id); // Xóa mềm: cập nhật isDeleted = 1
+
         if ($result['success']) {
             $_SESSION['success'] = $result['message'];
         } else {

@@ -3,6 +3,8 @@
 require_once './models/Supplier.php';
 require_once './core/RedisCache.php';
 require_once './models/Product.php';
+require_once './models/OrderItem.php';
+
 require_once './controllers/ProductController.php';
 
 
@@ -12,11 +14,15 @@ class SupplierController
     private $productModel;
     private $productController;
 
+    private $orderItemModel;
+
+
     public function __construct()
     {
         $this->supplierModel = new Supplier();
         $this->productModel = new Product();
         $this->productController = new ProductController();
+        $this->orderItemModel = new OrderItem();
     }
 
     public function getAll()
@@ -28,6 +34,11 @@ class SupplierController
         $suppliers = $this->supplierModel->all();
         RedisCache::set($cacheKey, json_encode($suppliers));
         return $suppliers;
+    }
+
+    public function getAllToDb()
+    {
+        return $this->supplierModel->all();
     }
 
     public function getById($id)
@@ -130,6 +141,16 @@ class SupplierController
     public function delete($id)
     {
         try {
+
+            if (!$this->orderItemModel->canDeleteSupplier($id)) {
+                return [
+                    'success' => false,
+                    'message' => 'Đang có 1 đơn hàng xử lý của nhà cung cấp sản phẩm này!',
+                ];
+            }
+
+            $this->productModel->updateDeletedByColumn('supplier_id', $id);
+
             $supplierDelete = $this->supplierModel->updateDeleted($id);
             $this->invalidateCache($id);
 
@@ -154,16 +175,7 @@ class SupplierController
                 ];
             }
 
-            $productId = $this->productModel->getByColumn('supplier_id', $id);
-
-            if (is_array($productId) && count($productId) > 0) {
-                foreach ($productId as $item) {
-                    $result = $this->productController->deleteIsDeleted($item['id']);
-                    if (!$result['success']) {
-                        return $result;
-                    }
-                }
-            }
+            $this->productModel->deleteByColumn('supplier_id', $id);
 
             $result = $this->supplierModel->delete($id);
             $this->invalidateCache($id);
@@ -198,16 +210,8 @@ class SupplierController
                 ];
             }
 
-            $productId = $this->productModel->getByColumn('supplier_id', $id);
+            $this->productModel->updateNotDeletedByColumn('supplier_id', $id);
 
-            if (is_array($productId) && count($productId) > 0) {
-                foreach ($productId as $item) {
-                    $result = $this->productController->deleteIsDeleted($item['id']);
-                    if (!$result['success']) {
-                        return $result;
-                    }
-                }
-            }
 
             $result = $this->supplierModel->updateIsDeleted($id, ['isDeleted' => 0]);
             $this->invalidateCache($id);

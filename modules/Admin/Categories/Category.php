@@ -10,9 +10,9 @@ $offset = ($page - 1) * $limit;
 
 
 
-$totalCategories = $category->countCategories();
+$totalCategories = $category->countCategoriesToDb($keyword);
 $totalPages = ceil($totalCategories / $limit);
-$listCategories = $category->getFilterCategories($limit, $offset, $keyword);
+$listCategories = $category->getFilterCategoriesToDb($limit, $offset, $keyword);
 
 
 
