@@ -17,14 +17,20 @@ $branch_id = $isAdmin ? null : ($employeeData->branch_id ?? null);
 $listDeletedOrders = $orderController->getOrderWithStatusPagination($status_id, $limit, $offset, $keyword, $branch_id, $employeeId, $isAdmin, 1);
 $totalRows = $orderController->getCountOrderWithStatus($status_id, $keyword, $employeeId, $branch_id, $isAdmin, 1);
 $totalPages = max(1, ceil($totalRows / $limit));
+
 ?>
 
 <?php require_once 'RestoreOrder.php'; ?>
 <?php require_once 'DeleteOrder.php'; ?>
 
 <div class="product-container">
-    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <h4 class="mb-0 text-danger"><i class="fas fa-box me-2"></i>Đơn hàng đã xóa</h4>
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap p-3 rounded shadow-sm bg-light border">
+        <h4 class="mb-0 fw-bold text-danger d-flex align-items-center">
+            <i class="fas fa-trash-alt me-2"></i> Thùng rác - Đơn hàng đã xóa
+        </h4>
+        <span class="badge bg-danger px-3 py-2 fs-6">
+            <?= $totalRows ?> mục đã xóa
+        </span>
     </div>
 
     <div class="table-container">

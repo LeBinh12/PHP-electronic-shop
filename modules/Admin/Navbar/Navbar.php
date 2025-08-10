@@ -56,7 +56,7 @@
 
             <!-- Profile -->
             <a class="nav-link text-black mx-2" href="Admin.php?page=modules/Admin/Profile/index.php" style="transition: color 0.3s, transform 0.2s;">
-                <i class="bi bi-person" style="font-size: 1.2rem;"></i>
+                <i class="bi bi-person" style="font-size: 1.4rem;"></i>
             </a>
 
             <!-- Settings dropdown -->

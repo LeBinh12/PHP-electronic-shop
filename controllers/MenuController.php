@@ -147,7 +147,7 @@ class MenuController
 
             $result = $this->menuModel->delete($id);
             if ($result) {
-                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn chức năng này!'];
+                return ['success' => true, 'message' => 'Đã xóa vĩnh viễn chức năng này!'];
             } else {
                 return ['success' => false, 'message' => 'Lỗi xóa chức năng'];
             }
@@ -184,7 +184,7 @@ class MenuController
 
             $result = $this->menuModel->updateIsDeleted($id, ['isDeleted' => 0]);
             if ($result) {
-                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn chức năng này!'];
+                return ['success' => true, 'message' => 'Khôi phục chức năng thành công!'];
             } else {
                 return ['success' => false, 'message' => 'Lỗi xóa chức năng'];
             }
