@@ -5,6 +5,7 @@ require_once './models/Category.php';
 require_once './core/RedisCache.php';
 require_once './models/Product.php';
 require_once './models/OrderItem.php';
+require_once './models/Inventory.php';
 require_once './controllers/ProductController.php';
 
 class CategoryController
@@ -13,6 +14,7 @@ class CategoryController
     private $productModel;
     private $productController;
     private $orderItemModel;
+    private $inventoryModel;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class CategoryController
         $this->productModel = new Product();
         $this->productController = new ProductController();
         $this->orderItemModel = new OrderItem();
+        $this->inventoryModel = new Inventory();
     }
 
     public function getAll()
@@ -152,6 +155,15 @@ class CategoryController
                     'success' => false,
                     'message' => 'Đang có 1 đơn hàng xử lý của loại sản phẩm này!',
                 ];
+            }
+
+
+            $product = $this->productModel->getByColumn('category_id', $id);
+
+            if (is_array($product) && count($product) > 0) {
+                foreach ($product as $item) {
+                    $this->inventoryModel->deleteByColumn('product_id', $item['id']);
+                }
             }
 
             $this->productModel->updateDeletedByColumn('category_id', $id);

@@ -4,6 +4,7 @@ require_once './models/Supplier.php';
 require_once './core/RedisCache.php';
 require_once './models/Product.php';
 require_once './models/OrderItem.php';
+require_once './models/Inventory.php';
 
 require_once './controllers/ProductController.php';
 
@@ -15,6 +16,7 @@ class SupplierController
     private $productController;
 
     private $orderItemModel;
+    private $inventoryModel;
 
 
     public function __construct()
@@ -23,6 +25,7 @@ class SupplierController
         $this->productModel = new Product();
         $this->productController = new ProductController();
         $this->orderItemModel = new OrderItem();
+        $this->inventoryModel = new Inventory();
     }
 
     public function getAll()
@@ -147,6 +150,14 @@ class SupplierController
                     'success' => false,
                     'message' => 'Đang có 1 đơn hàng xử lý của nhà cung cấp sản phẩm này!',
                 ];
+            }
+
+            $product = $this->productModel->getByColumn('supplier_id', $id);
+
+            if (is_array($product) && count($product) > 0) {
+                foreach ($product as $item) {
+                    $this->inventoryModel->deleteByColumn('product_id', $item['id']);
+                }
             }
 
             $this->productModel->updateDeletedByColumn('supplier_id', $id);
