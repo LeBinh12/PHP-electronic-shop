@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
     <div class="modal-dialog modal-lg">
         <form method="POST" action="Admin.php?page=modules/Admin/Employees/Employee.php">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Thêm nhân viên</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -64,13 +64,26 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                             <label class="form-label">Chức vụ</label>
                             <input type="text" name="position" class="form-control">
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label">Địa chỉ</label>
                             <input type="text" name="address" class="form-control">
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label">Mật khẩu cơ bản</label>
                             <input type="password" name="password" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Thuộc chi nhánh:</label>
+                            <select class="form-select" name="branch_id" aria-label="Default select example">
+                                <option selected>-- Chọn chi nhánh --</option>
+                                <?php
+                                foreach ($branchGetAll as $item) {
+                                ?>
+                                    <option value="<?= htmlentities($item['id']) ?>"><?= htmlentities($item['name']) ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
 
@@ -82,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                         ?>
                             <div class="mb-2">
                                 <div class="form-check mb-1">
-                                    <input class="form-check-input role-checkbox" type="checkbox" name="role_ids[]" value=" <?= $role['role_id'] ?>" data-role-id="<?= $role['role_id'] ?>">
+                                    <input class="form-check-input role-checkbox" style="border: 1px solid #232323ff;" type="checkbox" name="role_ids[]" value=" <?= $role['role_id'] ?>" data-role-id="<?= $role['role_id'] ?>">
                                     <label class="form-check-label fw-bold"><?= htmlspecialchars($role['role_name']) ?></label>
                                 </div>
 
@@ -90,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                                     foreach ($role['menus'] as $menu) {
                                 ?>
                                         <div class="form-check ms-4">
-                                            <input class="form-check-input menu-checkbox" type="checkbox" name="menu_ids[]" value="<?= $menu['menu_id'] ?>" data-role-id="<?= $role['role_id'] ?>">
+                                            <input class="form-check-input menu-checkbox" style="border: 1px solid #232323ff;" type="checkbox" name="menu_ids[]" value="<?= $menu['menu_id'] ?>" data-role-id="<?= $role['role_id'] ?>">
                                             <label class="form-check-label"><?= htmlspecialchars($menu['menu_name']) ?></label>
                                         </div>
                                 <?php
@@ -102,22 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['add_employee'])) {
                         }
                         ?>
                     </div>
-
-                    <label class="form-label">Thuộc chi nhánh:</label>
-                    <select class="form-select" name="branch_id" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <?php
-                        foreach ($branchGetAll as $item) {
-                        ?>
-                            <option value="<?= htmlentities($item['id']) ?>"><?= htmlentities($item['name']) ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit" name="add_employee">Thêm</button>
+                    <button class="btn btn-primary" type="submit" name="add_employee">Thêm</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
             </div>
         </form>

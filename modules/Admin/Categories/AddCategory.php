@@ -49,7 +49,7 @@ $listCategory = $category->getAll();
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addCategoryModalLabel">
-                        Thêm loại sản phẩm mới
+                        <i class="bi bi-plus-circle me-2"></i> Thêm loại sản phẩm
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Đóng"></button>
@@ -67,7 +67,7 @@ $listCategory = $category->getAll();
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Biểu tượng loại sản phẩm</label>
-                        <input type="file" name="main_image" class="form-control" accept="image/*" id="categoryImageInput">
+                        <input type="file" name="main_image" class="form-control" accept="image/*" id="categoryImageInput" style="width: 466px;">
                         <div id="categoryImagePreview" class="mt-2"></div>
                     </div>
 

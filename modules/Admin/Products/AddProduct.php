@@ -150,11 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAddProduct'])) {
             </div>
             <div class="group mb-3">
                 <label class="form-label">Mô tả ngắn</label>
-                <textarea name="content" class="form-control"></textarea>
+                <textarea id="content" name="content" class="form-control"></textarea>
             </div>
             <div class="group mb-3">
                 <label class="form-label">Mô tả</label>
-                <textarea name="description" class="form-control"></textarea>
+                <textarea id="content" name="description" class="form-control"></textarea>
             </div>
             <div class="button-group">
                 <button type="submit" class="btn btn-primary" name="btnAddProduct">Thêm</button>

@@ -47,10 +47,11 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                 <thead class="table-dark">
                     <tr>
                         <th style="width: 50px">ID</th>
-                        <th style="width: 200px">Tên khách hàng</th>
+                        <th style="width: 180px">Tên khách hàng</th>
                         <th style="width: 200px">Địa chỉ người gửi</th>
                         <th style="width: 200px">Địa chỉ hiện tại</th>
                         <th style="width: 380px">Chức năng</th>
+
                     </tr>
                 </thead>
                 <tbody>

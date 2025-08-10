@@ -14,9 +14,9 @@
         <div class="navbar-nav ms-3 align-items-center">
 
             <!-- Notification icon -->
-            <a class="nav-link text-black mx-2" href="#" style="transition: color 0.3s, transform 0.2s;">
+            <!-- <a class="nav-link text-black mx-2" href="#" style="transition: color 0.3s, transform 0.2s;">
                 <i class="bi bi-bell" style="font-size: 1.2rem;"></i>
-            </a>
+            </a> -->
 
             <!-- Chat dropdown -->
             <li class="nav-item dropdown mx-2">
@@ -38,7 +38,7 @@
                             <li>
                                 <a class="dropdown-item d-flex align-items-center py-2 px-3" href="?chat_user_id=<?= htmlspecialchars($user) ?>">
                                     <i class="bi bi-person-circle text-success me-2" style="font-size: 1.2rem;"></i>
-                                    <span>Người dùng: <?= $userController->getById($user)['FullName'] ?? "Không có tên"  ?></span>
+                                    <span class="text-dark custom-text">Người dùng: <strong> <?= $userController->getById($user)['FullName'] ?? "Không có tên"  ?></strong></span>
                                 </a>
                             </li>
                         <?php } ?>
@@ -50,7 +50,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item text-end text-danger" href="Admin.php"><i class="bi bi-box-arrow-left me-1"></i>Đóng</a></li>
+                    <!-- <li><a class="dropdown-item text-end text-danger" href="Admin.php"><i class="bi bi-box-arrow-left me-1"></i>Đóng</a></li> -->
                 </ul>
             </li>
 
@@ -120,11 +120,24 @@
         color: #fff;
     }
 
+    .dropdown-item:hover {
+        background-color: #0087fdff !important;
+    }
+
+    .dropdown-item:hover .custom-text {
+        color: #fff !important;
+    }
+
+    .dropdown-item:hover i {
+        color: #fff !important;
+    }
+
+
     body.dark-mode .dropdown-item {
         color: #f8f9fa;
     }
 
-    body.dark-mode .dropdown-item:hover {
+    body.dark-mode:hover {
         background-color: #6c757d;
     }
 </style>

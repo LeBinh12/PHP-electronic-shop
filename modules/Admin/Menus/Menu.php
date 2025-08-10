@@ -22,7 +22,7 @@ $listItems = $menuController->getPagination($keyword, $limit, $offset);
         if (hasPermission('modules/Admin/Menus/AddMenu.php')) {
         ?>
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMenuModal">
-                <i class="bi bi-plus-circle me-2"></i> Thêm loại
+                <i class="bi bi-plus-circle me-2"></i> Thêm chức năng
             </button>
         <?php
         }

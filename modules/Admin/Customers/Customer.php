@@ -15,8 +15,6 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
 
 ?>
 
-<h1 class="h3">Danh sách khách hàng</h1>
-
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">

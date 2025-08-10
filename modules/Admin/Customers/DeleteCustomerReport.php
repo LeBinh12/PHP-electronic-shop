@@ -23,11 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_customer_repor
 
 
 <div class="modal fade" id="deleteCustomerReportModal" tabindex="-1" aria-labelledby="deleteCustomerReportModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST">
-            <input type="hidden" name="remove_report_id" id="removeReportCustomerId">
-
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST">
+                <input type="hidden" name="remove_report_id" id="removeReportCustomerId">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteCustomerReportModalLabel"><i class="fas fa-exclamation-triangle"></i> Gỡ báo cáo khách hàng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
@@ -36,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_customer_repor
                     Bạn có chắc chắn muốn <strong>gỡ báo cáo</strong> cho khách hàng <span id="removeReportCustomerName" class="fw-bold text-danger"></span> không?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     <button type="submit" name="remove_customer_report" class="btn btn-danger">Gỡ báo cáo</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

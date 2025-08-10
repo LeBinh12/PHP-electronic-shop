@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_menu'])) {
 ?>
 
 <div class="modal fade" id="editMenuModal" tabindex="-1" aria-labelledby="editMenuModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="Admin.php?page=modules/Admin/Menus/Menu.php">
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="Admin.php?page=modules/Admin/Menus/Menu.php">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editMenuModalLabel">Sửa chức năng</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_menu'])) {
                     <button type="submit" name="update_menu" class="btn btn-primary">Cập nhật</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

@@ -190,11 +190,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
             </div>
             <div class="group mb-3">
                 <label class="form-label">Mô tả ngắn</label>
-                <textarea name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
+                <textarea id="content" name="contentProduct" class="form-control"><?= htmlspecialchars($oldProduct['content']) ?></textarea>
             </div>
             <div class="group mb-3">
                 <label class="form-label">Mô tả</label>
-                <textarea name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
+                <textarea id="content" name="descriptionProduct" class="form-control"><?= htmlspecialchars($oldProduct['description']) ?></textarea>
             </div>
             <div class="button-group">
                 <button type="submit" name="updateProduct" class="btn btn-primary">Cập nhật</button>

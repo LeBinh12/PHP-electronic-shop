@@ -74,6 +74,7 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                                     ?>
                                         <button
                                             class="btn btn-success"
+                                            style="padding:4px 8px;"
                                             data-bs-toggle="modal"
                                             data-bs-target="#addItemModal"
                                             data-id="<?= htmlspecialchars($item['id']) ?>"
@@ -87,14 +88,15 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
 
                                     if (hasPermission('modules/Admin/Inventory/UpdateInventory.php')) {
                                     ?>
-                                        <button type="button" class="btn btn-sm btn-primary px-3 py-1"
+                                        <button type="button" class="btn btn-primary"
+                                            style="padding:4px 8px; "
                                             data-id="<?= htmlspecialchars($item['id']) ?>"
                                             data-product-name="<?= htmlspecialchars($item['product_name']) ?>"
                                             data-stock-quantity="<?= htmlspecialchars($item['stock_quantity']) ?>"
                                             data-branch-id="<?= htmlspecialchars($item['branch_id']) ?>"
                                             data-product-id="<?= htmlspecialchars($item['product_id']) ?>"
                                             data-bs-toggle="modal" data-bs-target="#editItemModal">
-                                            <i class="fas fa-edit me-1"></i><small>Sửa số lượng</small>
+                                            <i class="fas fa-edit me-1"></i>Sửa số lượng
                                         </button>
                                     <?php
                                     }
@@ -102,7 +104,8 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                                     if (hasPermission('modules/Admin/Inventory/TransferWarehouse.php')) {
 
                                     ?>
-                                        <button type="button" class="btn btn-sm btn-warning px-3 py-1"
+                                        <button type="button" class="btn btn-warning"
+                                            style="padding:4px 8px;"
                                             data-id="<?= $item['id'] ?>"
                                             data-product-name="<?= $item['product_name'] ?>"
                                             data-stock-quantity="<?= $item['stock_quantity'] ?>"
@@ -111,7 +114,7 @@ $listItems = $inventoryController->getProductPagination($keyword, $limit, $offse
                                             data-product-id="<?= $item['product_id'] ?>"
                                             data-bs-toggle="modal"
                                             data-bs-target="#transferWarehouseModal">
-                                            <i class="fas fa-random me-1"></i><small>Chuyển kho</small>
+                                            <i class="fas fa-random me-1"></i>Chuyển kho
                                         </button>
                                     <?php
                                     }

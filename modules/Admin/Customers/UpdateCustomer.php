@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_customer_id'])) 
 ?>
 <!-- Modal Sửa Khách Hàng -->
 <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <form id="editCustomerForm" method="POST" action="Admin.php?page=modules/Admin/Customers/Customer.php">
         <div class="modal-header bg-primary text-white">
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_customer_id'])) 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
           <button type="button" class="btn btn-primary" id="saveCustomerBtn">Lưu thay đổi</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
         </div>
       </form>
     </div>
