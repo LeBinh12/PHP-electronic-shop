@@ -1,14 +1,21 @@
 <?php
 
 require_once './models/Menu.php';
+require_once './models/RoleMenu.php';
+require_once './models/EmployeeMenu.php';
+
 
 class MenuController
 {
     private $menuModel;
+    private $roleMenuModel;
+    private $employeeMenuModel;
 
     public function __construct()
     {
         $this->menuModel = new Menu();
+        $this->roleMenuModel = new RoleMenu();
+        $this->employeeMenuModel = new EmployeeMenu();
     }
 
     public function getAll()
@@ -21,14 +28,14 @@ class MenuController
         return $this->menuModel->find($id);
     }
 
-    public function getPagination($keyword, $limit, $offset)
+    public function getPagination($keyword, $limit, $offset, $isDeleted = 0)
     {
-        return $this->menuModel->getFilterMenus($keyword, $limit, $offset);
+        return $this->menuModel->getFilterMenus($keyword, $limit, $offset, $isDeleted);
     }
 
-    public function countMenu($keyword)
+    public function countMenu($keyword, $isDeleted = 0)
     {
-        return $this->menuModel->countFilteredMenus($keyword);
+        return $this->menuModel->countFilteredMenus($keyword, $isDeleted);
     }
 
     public function add($data)
@@ -91,12 +98,96 @@ class MenuController
                     'message' => 'Chức năng không tồn tại!'
                 ];
             }
+
+            $existingRoleMenu = $this->roleMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingRoleMenu) && count($existingRoleMenu) > 0) {
+                foreach ($existingRoleMenu as $item) {
+                    $this->roleMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 1]);
+                }
+            }
+
+            $existingEmployeeMenu = $this->employeeMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingEmployeeMenu) && count($existingEmployeeMenu) > 0) {
+                foreach ($existingEmployeeMenu as $item) {
+                    $this->employeeMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 1]);
+                }
+            }
+
             $delete = $this->menuModel->updateDeleted($id);
             return [
                 'success' => true,
                 'message' => 'Xóa chức năng thành công',
                 'menu' => $delete
             ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existing = $this->menuModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chức năng không tồn tại!'
+                ];
+            }
+
+            $existingRoleMenu = $this->roleMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingRoleMenu) && count($existingRoleMenu) > 0) {
+                $this->roleMenuModel->deleteByColumn('menu_id', $id);
+            }
+
+            $existingEmployeeMenu = $this->employeeMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingEmployeeMenu) && count($existingEmployeeMenu) > 0) {
+                $this->employeeMenuModel->deleteByColumn('menu_id', $id);
+            }
+
+            $result = $this->menuModel->delete($id);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn chức năng này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa chức năng'];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+
+    public function restore($id)
+    {
+        try {
+            $existing = $this->menuModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Chức năng không tồn tại!'
+                ];
+            }
+
+            $existingRoleMenu = $this->roleMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingRoleMenu) && count($existingRoleMenu) > 0) {
+                foreach ($existingRoleMenu as $item) {
+                    $this->roleMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 0]);
+                }
+            }
+
+            $existingEmployeeMenu = $this->employeeMenuModel->getByColumn('menu_id', $id);
+            if (is_array($existingEmployeeMenu) && count($existingEmployeeMenu) > 0) {
+                foreach ($existingEmployeeMenu as $item) {
+                    $this->employeeMenuModel->updateIsDeleted($item['id'], ['isDeleted' => 0]);
+                }
+            }
+
+            $result = $this->menuModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn chức năng này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa chức năng'];
+            }
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

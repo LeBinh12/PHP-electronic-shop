@@ -3,6 +3,8 @@
 require_once './models/Employee.php';
 require_once './models/EmployeeMenu.php';
 require_once './models/RoleEmployee.php';
+require_once './models/Order.php';
+require_once './models/OrderItem.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -12,6 +14,8 @@ class EmployeeController
     private $employeeModel;
     private $employeeMenuModel;
     private $roleEmployeeModel;
+    private $orderModel;
+    private $orderItemModel;
     private $jwtConfig;
 
 
@@ -20,6 +24,8 @@ class EmployeeController
         $this->employeeModel = new Employee();
         $this->employeeMenuModel = new EmployeeMenu();
         $this->roleEmployeeModel = new RoleEmployee();
+        $this->orderModel = new Order();
+        $this->orderItemModel = new OrderItem();
         $this->jwtConfig = include   './config/jwt.php';
     }
 
@@ -51,14 +57,14 @@ class EmployeeController
     }
 
 
-    public function getPagination($keyword, $limit, $offset)
+    public function getPagination($keyword, $limit, $offset, $isDeleted = 0)
     {
-        return $this->employeeModel->getFilterEmployees($keyword, $limit, $offset);
+        return $this->employeeModel->getFilterEmployees($keyword, $limit, $offset, $isDeleted);
     }
 
-    public function countEmployees($keyword)
+    public function countEmployees($keyword, $isDeleted = 0)
     {
-        return $this->employeeModel->countFilteredEmployees($keyword);
+        return $this->employeeModel->countFilteredEmployees($keyword, $isDeleted);
     }
 
     public function add($data, $roleIds = [], $menuIds = [])
@@ -181,6 +187,7 @@ class EmployeeController
                 'message' => 'Nhân viên không tồn tại!'
             ];
         }
+
         $this->employeeModel->updateDeleted($id);
         $this->roleEmployeeModel->deleteByEmployee(employeeId: $id);
         $this->employeeMenuModel->deleteByEmployee($id);
@@ -259,6 +266,86 @@ class EmployeeController
         try {
             $decoded = JWT::decode($_SESSION['jwt_employee'], new Key($this->jwtConfig['secret_key'], 'HS256'));
             return $decoded->data;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function deleteIsDeleted($id)
+    {
+        try {
+            $existing = $this->employeeModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Nhân viên không tồn tại!'
+                ];
+            }
+
+            $existingRoleMenu = $this->roleEmployeeModel->getByColumn('employee_id', $id);
+            if (is_array($existingRoleMenu) && count($existingRoleMenu) > 0) {
+                $this->roleEmployeeModel->deleteByColumn('employee_id', $id);
+            }
+
+            $existingEmployeeMenu = $this->employeeMenuModel->getByColumn('employee_id', $id);
+            if (is_array($existingEmployeeMenu) && count($existingEmployeeMenu) > 0) {
+                $this->employeeMenuModel->deleteByColumn('employee_id', $id);
+            }
+
+            $orderId = $this->orderModel->getByColumn('employee_id', $id);
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderItemModel->deleteByColumn('order_id', $item['id']);
+                    $this->orderModel->delete($item['id']);
+                }
+            }
+
+            $result = $this->employeeModel->delete($id);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn nhân viên này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa nhân viên'];
+            }
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $existing = $this->employeeModel->findIsDeled($id);
+            if ($existing == null) {
+                return [
+                    'success' => false,
+                    'message' => 'Nhân viên không tồn tại!'
+                ];
+            }
+
+            $existingRoleMenu = $this->roleEmployeeModel->getByColumn('employee_id', $id);
+            if (is_array($existingRoleMenu) && count($existingRoleMenu) > 0) {
+                $this->roleEmployeeModel->deleteByColumn('employee_id', $id);
+            }
+
+            $existingEmployeeMenu = $this->employeeMenuModel->getByColumn('employee_id', $id);
+            if (is_array($existingEmployeeMenu) && count($existingEmployeeMenu) > 0) {
+                $this->employeeMenuModel->deleteByColumn('employee_id', $id);
+            }
+
+            $orderId = $this->orderModel->getByColumn('employee_id', $id);
+            if (is_array($orderId) && count($orderId) > 0) {
+                foreach ($orderId as $item) {
+                    $this->orderItemModel->deleteByColumn('order_id', $item['id']);
+                    $this->orderModel->delete($item['id']);
+                }
+            }
+
+            $result = $this->employeeModel->updateIsDeleted($id, ['isDeleted' => 0]);
+            if ($result) {
+                return ['success' => true, 'message' => 'Đã xóa Vĩnh viễn nhân viên này!'];
+            } else {
+                return ['success' => false, 'message' => 'Lỗi xóa nhân viên'];
+            }
         } catch (Exception $e) {
             return null;
         }

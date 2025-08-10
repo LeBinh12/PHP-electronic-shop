@@ -1,10 +1,17 @@
 <?php
 // Dữ liệu giả lập menu đã bị xóa
-$listDeletedMenus = [
-    ['id' => 301, 'name' => 'Quản lý người dùng', 'path' => '/admin/users', 'created_at' => '2024-01-05'],
-    ['id' => 302, 'name' => 'Quản lý đơn hàng', 'path' => '/admin/orders', 'created_at' => '2024-03-15'],
-    ['id' => 303, 'name' => 'Thống kê doanh thu', 'path' => '/admin/revenue', 'created_at' => '2024-06-01'],
-];
+$keyword = $_GET['search'] ?? '';
+
+$page = $_GET['number'] ?? 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+$totalMenu = $menuController->countMenu($keyword, 1);
+
+$totalPages = ceil($totalMenu / $limit);
+
+$listDeletedMenus = $menuController->getPagination($keyword, $limit, $offset,  1);
+
 ?>
 
 <?php require_once 'RestoreMenu.php'; ?>
@@ -30,8 +37,8 @@ $listDeletedMenus = [
                 <?php foreach ($listDeletedMenus as $menu): ?>
                     <tr>
                         <td><?= $menu['id'] ?></td>
-                        <td><?= htmlspecialchars($menu['name']) ?></td>
-                        <td><?= htmlspecialchars($menu['path']) ?></td>
+                        <td><?= htmlspecialchars($menu['menu_name']) ?></td>
+                        <td><?= htmlspecialchars($menu['menu_url']) ?></td>
                         <td><?= $menu['created_at'] ?></td>
                         <td>
                             <div class="action-buttons d-flex gap-2">
@@ -39,7 +46,7 @@ $listDeletedMenus = [
                                     data-bs-toggle="modal"
                                     data-bs-target="#restoreMenuModal"
                                     data-id="<?= $menu['id'] ?>"
-                                    data-name="<?= htmlspecialchars($menu['name']) ?>">
+                                    data-name="<?= htmlspecialchars($menu['menu_name']) ?>">
                                     <i class="fas fa-undo me-1"></i> Khôi phục
                                 </button>
 
@@ -47,7 +54,7 @@ $listDeletedMenus = [
                                     data-bs-toggle="modal"
                                     data-bs-target="#deleteMenuModal"
                                     data-id="<?= $menu['id'] ?>"
-                                    data-name="<?= htmlspecialchars($menu['name']) ?>">
+                                    data-name="<?= htmlspecialchars($menu['menu_name']) ?>">
                                     <i class="fas fa-trash-alt me-1"></i> Xóa
                                 </button>
                             </div>

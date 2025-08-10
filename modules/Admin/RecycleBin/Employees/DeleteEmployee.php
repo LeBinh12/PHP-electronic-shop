@@ -2,7 +2,13 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_employee'])) {
     $id = $_POST['delete_employee_id'];
     // Giả lập xóa vĩnh viễn
-    $_SESSION['success'] = "Nhân viên ID $id đã bị xóa vĩnh viễn!";
+    $result = $employeeController->deleteIsDeleted($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

@@ -1,8 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_menu'])) {
     $id = $_POST['restore_menu_id'];
-    // Giả lập khôi phục
-    $_SESSION['success'] = "Menu ID $id đã được khôi phục!";
+    $result = $menuController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

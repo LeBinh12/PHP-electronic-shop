@@ -1,8 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_customer'])) {
     $id = $_POST['restore_customer_id'];
-    // Giả lập khôi phục
-    $_SESSION['success'] = "Khách hàng ID $id đã được khôi phục!";
+
+    $result = $userController->restore($id);
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

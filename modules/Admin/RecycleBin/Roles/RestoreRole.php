@@ -1,7 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_role'])) {
     $id = $_POST['restore_role_id'];
-    $_SESSION['success'] = "Quyền ID $id đã được khôi phục!";
+    $result = $roleController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

@@ -1,7 +1,15 @@
 <?php
-if (isset($_POST['delete_order'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
+
     $id = $_POST['delete_order_id'];
-    $_SESSION['success'] = "Đơn hàng ID $id đã bị xóa vĩnh viễn!";
+
+    $result = $orderController->deleteIsDeleted($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

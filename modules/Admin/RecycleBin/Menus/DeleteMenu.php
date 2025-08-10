@@ -1,8 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_menu'])) {
     $id = $_POST['delete_menu_id'];
-    // Giả lập xóa vĩnh viễn
-    $_SESSION['success'] = "Menu ID $id đã bị xóa vĩnh viễn!";
+    $result = $menuController->deleteIsDeleted($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

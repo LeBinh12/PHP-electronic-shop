@@ -1,8 +1,12 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     $id = $_POST['delete_customer_id'];
-    // Giả lập xóa vĩnh viễn
-    $_SESSION['success'] = "Khách hàng ID $id đã bị xóa vĩnh viễn!";
+    $result = $userController->delete($id);
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
+    }
     echo "<script>window.location.href = window.location.href;</script>";
     exit;
 }

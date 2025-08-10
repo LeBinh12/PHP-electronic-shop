@@ -136,8 +136,9 @@ class BranchController
             $orderId = $this->orderModel->getByColumn('branch_id', $id);
             if (is_array($orderId) && count($orderId) > 0) {
                 foreach ($orderId as $item) {
-                    $this->orderModel->delete($item);
-                    $this->orderItemModel->deleteByColumn('order_id', $item);
+                    $this->orderItemModel->deleteByColumn('order_id', $item['id']);
+
+                    $this->orderModel->delete($item['id']);
                 }
             }
             $result = $this->branchController->delete($id);
@@ -173,8 +174,9 @@ class BranchController
             $orderId = $this->orderModel->getByColumn('branch_id', $id);
             if (is_array($orderId) && count($orderId) > 0) {
                 foreach ($orderId as $item) {
-                    $this->orderModel->delete($item);
-                    $this->orderItemModel->deleteByColumn('order_id', $item);
+                    $this->orderItemModel->deleteByColumn('order_id', $item['id']);
+
+                    $this->orderModel->delete($item['id']);
                 }
             }
             $result = $this->branchController->updateIsDeleted($id, ['isDeleted' => 0]);

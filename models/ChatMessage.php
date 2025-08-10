@@ -16,8 +16,24 @@ class ChatMessage extends Model
         'isDeleted' => 'TINYINT(1)'
     ];
 
-
     protected $foreignKeys = [
         'user_id' => 'users(id)'
     ];
+
+    public function hasUserMessage($userId)
+    {
+        if ($userId === null) {
+            return false;
+        }
+
+        $sql = "SELECT EXISTS(
+                SELECT 1 
+                FROM {$this->table} 
+                WHERE user_id = :user_id 
+            ) AS found";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return (bool) $stmt->fetchColumn();
+    }
 }

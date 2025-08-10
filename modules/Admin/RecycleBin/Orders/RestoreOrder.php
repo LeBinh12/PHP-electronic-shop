@@ -1,11 +1,16 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['restore_order'])) {
-        $id = $_POST['restore_order_id'];
-        $_SESSION['success'] = "Đơn hàng ID $id đã được khôi phục!";
-        echo "<script>window.location.href = window.location.href;</script>";
-        exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_order'])) {
+
+    $id = $_POST['restore_order_id'];
+    $result = $orderController->restore($id);
+
+    if ($result['success']) {
+        $_SESSION['success'] = $result['message'];
+    } else {
+        $_SESSION['error'] = $result['message'];
     }
+    echo "<script>window.location.href = window.location.href;</script>";
+    exit;
 }
 ?>
 <!-- Modal Khôi phục -->
