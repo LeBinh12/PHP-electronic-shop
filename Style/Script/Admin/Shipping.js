@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   window.showSenderInfo = function (order) {
     document.getElementById("modal_order_id").textContent = order.id;
-    document.getElementById("modal_order_name").textContent = order.name;
+    // document.getElementById("modal_order_name").textContent = order.name;
     document.getElementById("modal_sender_name").textContent = order.senderName;
     document.getElementById("modal_sender_phone").textContent =
       order.senderPhone;

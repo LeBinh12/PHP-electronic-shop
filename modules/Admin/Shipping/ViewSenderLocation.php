@@ -12,7 +12,7 @@
         <!-- Thông tin -->
         <ul class="list-unstyled mb-4">
           <li>Mã đơn hàng: <strong id="modal_order_id"></strong></li>
-          <li>Tên đơn hàng: <strong id="modal_order_name"></strong></li>
+          <li><strong id="modal_order_name"></strong></li>
           <li>Người gửi: <strong id="modal_sender_name"></strong></li>
           <li>Số điện thoại: <strong id="modal_sender_phone"></strong></li>
           <li>Địa chỉ gửi: <strong id="modal_sender_address"></strong></li>
