@@ -31,7 +31,7 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
         }
         ?>
 
-        <form class="search-form" method="GET" action="Admin.php">
+        <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search text-muted"></i>

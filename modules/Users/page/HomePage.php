@@ -19,7 +19,8 @@ $getCategory = $category->getAll();
         foreach ($getCategory as $item) {
         ?>
             <a href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?>" class="ecom-category-card text-decoration-none">
-                <i class="fa-solid fa-laptop"></i>
+                <!-- <i class="fa-solid fa-laptop"></i> -->
+                <img src="<?= $item['icon'] ?>" alt="<?= $item['name'] ?>" style="width: 50px; height: 50px; object-fit: contain;">
                 <div class="ecom-category-title"><?= $item['name'] ?></div>
             </a>
         <?php

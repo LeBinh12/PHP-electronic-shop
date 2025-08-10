@@ -116,9 +116,9 @@ $is_stats_active = in_array($currentPage, [
     </li>
   </ul>
 
-  <ul>
+  <ul class="mb-4">
     <li>
-      <a class="dropdown-item text-danger d-flex align-items-center gap-2" href="Auth/logout.php">
+      <a class="text-danger d-flex align-items-center gap-2" href="Auth/logout.php">
         <i class="fas fa-sign-out-alt"></i> Đăng xuất
       </a>
     </li>
