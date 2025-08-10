@@ -7,11 +7,11 @@
       </div>
       <div class="modal-body">
         <ul class="list-unstyled mb-3">
-          <li><strong>Mã đơn hàng:</strong> <span id="current-order-id"></span></li>
-          <li><strong>Người giao hàng:</strong> <span id="current-shipper-name"></span></li>
-          <li><strong>Số điện thoại:</strong> <span id="current-shipper-phone"></span></li>
-          <li><strong>Địa chỉ hiện tại của đơn hàng:</strong> <span id="current-address"></span></li>
-          <li><strong>Trạng thái:</strong> <span id="current-order-status"></span></li>
+          <li>Mã đơn hàng: <strong id="current-order-id"></strong></li>
+          <li>Người giao hàng: <strong id="current-shipper-name"></strong></li>
+          <li>Số điện thoại: <strong id="current-shipper-phone"></strong></li>
+          <li>Địa chỉ hiện tại của đơn hàng: <strong id="current-address"></strong></li>
+          <li>Trạng thái: <strong id="current-order-status"></strong></li>
         </ul>
         <div class="ratio ratio-16x9">
           <iframe id="current-location-map" class="border rounded shadow" allowfullscreen loading="lazy"></iframe>

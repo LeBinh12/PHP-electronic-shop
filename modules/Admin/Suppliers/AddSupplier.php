@@ -52,7 +52,7 @@ $listSupplier = $supplier->getAll();
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addSupplierModalLabel">
-                        Thêm nhà cung cấp mới
+                        <i class="bi bi-plus-circle me-2"></i> Thêm nhà cung cấp mới
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>

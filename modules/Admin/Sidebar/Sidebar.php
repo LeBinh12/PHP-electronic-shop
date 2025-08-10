@@ -23,28 +23,28 @@ $is_stats_active = in_array($currentPage, [
   </div>
   <ul>
     <li class="<?= ($currentPage === '' || $currentPage == 'dashboard') ? 'active' : '' ?>">
-      <a href="Admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="Admin.php"><i class="fas fa-tachometer-alt"></i> Thống kê </a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Products/Product.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Products/Product.php"><i class="fas fa-box"></i> Quản lý Sản Phẩm</a>
+      <a href="Admin.php?page=modules/Admin/Products/Product.php"><i class="fas fa-box"></i> Quản lý sản phẩm</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Branches/Branch.php') ? 'active' : '' ?>">
       <a href="Admin.php?page=modules/Admin/Branches/Branch.php"><i class="fas fa-store"></i> Quản lý chi nhánh</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Categories/Category.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Categories/Category.php"><i class="fas fa-table"></i> Quản lý Loại sản phẩm</a>
+      <a href="Admin.php?page=modules/Admin/Categories/Category.php"><i class="fas fa-table"></i> Quản lý loại sản phẩm</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Suppliers/Supplier.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Suppliers/Supplier.php"><i class="fas fa-boxes-packing"></i> Quản lý Nhà cung cấp</a>
+      <a href="Admin.php?page=modules/Admin/Suppliers/Supplier.php"><i class="fas fa-boxes-packing"></i> Quản lý nhà cung cấp</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Inventory/Inventory.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-warehouse"></i> Quản lý Kho hàng</a>
+      <a href="Admin.php?page=modules/Admin/Inventory/Inventory.php"><i class="fas fa-warehouse"></i> Quản lý kho hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Customers/Customer.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Customers/Customer.php"><i class="fas fa-users"></i> Quản lý Khách hàng</a>
+      <a href="Admin.php?page=modules/Admin/Customers/Customer.php"><i class="fas fa-users"></i> Quản lý khách hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Orders/Order.php') ? 'active' : '' ?>">
-      <a href="Admin.php?page=modules/Admin/Orders/Order.php"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
+      <a href="Admin.php?page=modules/Admin/Orders/Order.php"><i class="fas fa-shopping-cart"></i> Quản lý đơn hàng</a>
     </li>
     <li class="<?= ($currentPage == 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>">
       <a href="Admin.php?page=modules/Admin/Menus/Menu.php"><i class="fas fa-screwdriver-wrench"></i> Quản lý chức năng</a>
@@ -113,6 +113,14 @@ $is_stats_active = in_array($currentPage, [
           </a>
         </li>
       </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <a class="dropdown-item text-danger d-flex align-items-center gap-2" href="Auth/logout.php">
+        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+      </a>
     </li>
   </ul>
 </div>

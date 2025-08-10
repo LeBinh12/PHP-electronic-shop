@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <?php if ($order['status_id'] === 4 && $order['status_shipping'] === 'Hoàn thành') { ?>
+                                <?php if ($order['status_id'] === 6 && $order['status_shipping'] === 'Hoàn thành') { ?>
                                     <button type="button"
                                         class="btn btn-outline-success btn-sm open-review-modal"
                                         data-order-id="<?= htmlspecialchars($order['order_id']) ?>"

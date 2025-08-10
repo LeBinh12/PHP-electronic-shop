@@ -68,13 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['transferWarehouseModal'])) {
 
 <!-- Modal Chuyển Kho -->
 <div class="modal fade" id="transferWarehouseModal" tabindex="-1" aria-labelledby="transferWarehouseLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="transferWarehouseLabel">
                     <i class="fas fa-random me-2"></i> Chuyển kho sản phẩm
                 </h5>
-                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <form method="POST">
@@ -82,10 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['transferWarehouseModal'])) {
                     <!-- Bên trái: Thông tin sản phẩm -->
                     <div class="col-md-6 border-end">
                         <h6 class="fw-bold">Thông tin sản phẩm:</h6>
-                        <p><strong>ID:</strong> <span id="transferProductId"></span></p>
-                        <p><strong>Tên sản phẩm:</strong> <span id="transferProductName"></span></p>
-                        <p><strong>Số lượng hiện tại:</strong> <span id="transferStockQuantity"></span></p>
-                        <p><strong>Chi nhánh hiện tại:</strong> <span id="transferBranchName"></span></p>
+                        <p>ID: <strong id="transferProductId"></strong></p>
+                        <p>Tên sản phẩm: <strong id="transferProductName"></strong></p>
+                        <p>Số lượng hiện tại: <strong id="transferStockQuantity"></strong></p>
+                        <p>Chi nhánh hiện tại: <strong id="transferBranchName"></strong></p>
                     </div>
 
                     <!-- Bên phải: Form chuyển -->

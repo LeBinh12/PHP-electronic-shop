@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
 ?>
 
 <div class="modal fade" id="addBranchModal" tabindex="-1" aria-labelledby="addBranchModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="addBranchForm" method="POST" action="Admin.php?page=modules/Admin/Branches/Branch.php">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="addBranchForm" method="POST" action="Admin.php?page=modules/Admin/Branches/Branch.php">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addBranchModalLabel">Thêm chức năng mới</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
@@ -53,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_branch'])) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="add_branch" class="btn btn-success">Lưu</button>
+                    <button type="submit" name="add_branch" class="btn btn-primary">Lưu</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+
+            </form>
+        </div>
     </div>
 </div>

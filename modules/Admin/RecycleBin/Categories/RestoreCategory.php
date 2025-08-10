@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_category'])) 
 
 <div class="modal fade" id="restoreCategoryModal" tabindex="-1" aria-labelledby="restoreCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content shadow">
+        <div class="modal-content">
             <form method="POST">
                 <input type="hidden" name="restore_category" value="1">
                 <input type="hidden" name="restore_category_id" id="restoreCategoryId">

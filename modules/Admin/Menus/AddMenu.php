@@ -23,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_menu'])) {
 
 
 <div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="Admin.php?page=modules/Admin/Menus/Menu.php">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="Admin.php?page=modules/Admin/Menus/Menu.php">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addMenuModalLabel">Thêm chức năng mới</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
@@ -41,10 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['add_menu'])) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="add_menu" class="btn btn-success">Lưu</button>
+                    <button type="submit" name="add_menu" class="btn btn-primary">Lưu</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

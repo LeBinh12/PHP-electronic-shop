@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_role_id'])) {
 ?>
 
 <div class="modal fade" id="editRoleModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <form method="POST" action="Admin.php?page=modules/Admin/Roles/Role.php">
-            <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="Admin.php?page=modules/Admin/Roles/Role.php">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Cập nhật quyền</h5>
                     <a href="Admin.php?page=modules/Admin/Roles/Role.php" class="btn-close btn-close-white"></a>
@@ -75,8 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_role_id'])) {
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit" name="update_role_with_menus">Cập nhật</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
