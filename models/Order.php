@@ -328,4 +328,6 @@ class Order extends Model
         $stmt->execute(['shippingId' => $shippingId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    
 }
