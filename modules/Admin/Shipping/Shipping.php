@@ -50,7 +50,9 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                         <th style="width: 180px">Tên khách hàng</th>
                         <th style="width: 200px">Địa chỉ người gửi</th>
                         <th style="width: 200px">Địa chỉ hiện tại</th>
-                        <th style="width: 360px">Chức năng</th>
+
+                        <th style="width: 380px">Chức năng</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +69,6 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                                     <button class="btn btn-sm btn-info text-white"
                                         onclick='showSenderInfo(<?= json_encode([
                                                                     "id" => $order["code"],
-                                                                    "name" => $order["FullName"],
                                                                     "senderName" => $order["FullName"],
                                                                     "senderPhone" => $order["Phone"],
                                                                     "senderAddress" => $order["Address"]

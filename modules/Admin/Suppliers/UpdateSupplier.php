@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
                             <input type="text" name="name" id="editSupplierName" class="form-control" required>
                         </div>
 
-                       <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Người liên hệ</label>
                             <input type="text" name="contact_person" id="editSupplierContact" class="form-control">
                         </div>
