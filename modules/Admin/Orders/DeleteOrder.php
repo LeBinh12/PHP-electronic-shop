@@ -60,17 +60,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
     </div>
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const buttons = document.querySelectorAll('.delete-order-btn');
         buttons.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 const orderId = this.getAttribute('data-id');
-                const orderName = this.getAttribute('data-name') || orderId;
+                const orderCode = this.getAttribute('data-code') || orderId;
 
                 document.getElementById('deleteOrderId').value = orderId;
-                document.getElementById('deleteOrderName').textContent = orderName;
+                document.getElementById('deleteOrderName').textContent = orderCode;
             });
         });
+    });
+</script> -->
+
+<script>
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.delete-order-btn')) {
+            const btn = e.target.closest('.delete-order-btn');
+            const orderId = btn.dataset.id;
+            const orderCode = btn.dataset.code || orderId;
+            document.getElementById('deleteOrderId').value = orderId;
+            document.getElementById('deleteOrderName').textContent = orderCode;
+        }
     });
 </script>

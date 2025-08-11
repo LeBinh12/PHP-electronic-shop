@@ -13,6 +13,28 @@ $productByCategoryId = $product->getFilterProducts($productById['category_id'], 
 $imageByProductId = $imageController->getImageById($id_product);
 
 $inventoryProduct = $inventoryController->getProductInventory($id_product, null) ?? 0;
+
+
+$reviews = [
+    [
+        'username' => 'nguyenvana',
+        'rating' => 5,
+        'comment' => 'Sản phẩm rất tốt, giao hàng nhanh, đóng gói cẩn thận!',
+        'created_at' => '2025-08-10'
+    ],
+    [
+        'username' => 'tranthib',
+        'rating' => 4,
+        'comment' => 'Hàng đẹp nhưng giao hơi chậm 1 chút.',
+        'created_at' => '2025-08-09'
+    ],
+    [
+        'username' => 'lequangc',
+        'rating' => 3,
+        'comment' => 'Sản phẩm ổn nhưng chất lượng chưa như mong đợi.',
+        'created_at' => '2025-08-08'
+    ]
+];
 ?>
 
 <style>
@@ -41,6 +63,70 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 
     .store-box li {
         margin-bottom: 4px;
+    }
+
+    .product-description-content {
+        max-height: 300px;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .product-description-content.expanded {
+        max-height: none;
+    }
+
+    .review-item {
+        display: flex;
+        gap: 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .review-avatar {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #555;
+        font-size: 18px;
+    }
+
+    .review-content {
+        flex: 1;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+
+    .review-username {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .review-date {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .review-stars {
+        color: #ffc107;
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .review-text {
+        font-size: 14px;
+        color: #333;
     }
 </style>
 
@@ -114,15 +200,61 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
         </div>
     </div>
 
-    <div class="mt-5 product-description">
-        <h4>Mô tả sản phẩm</h4>
-        <div id="descriptionContent" class="product-description-content">
-            <?= $productById['description'] ?>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mt-5" id="productTab" role="tablist">
+        <li class="nav-item" role="presentation" style="font-weight: bold; font-size: 1.2rem;">
+            <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description-pane" type="button" role="tab">
+                Mô tả sản phẩm
+            </button>
+        </li>
+        <li class="nav-item" role="presentation" style="font-weight: bold; font-size: 1.2rem;">
+            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-pane" type="button" role="tab">
+                Đánh giá
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content border p-3" id="productTabContent">
+        <!-- Tab mô tả -->
+        <div class="tab-pane fade show active" id="description-pane" role="tabpanel" aria-labelledby="description-tab">
+            <div id="descriptionContent" class="product-description-content">
+                <?= $productById['description'] ?>
+            </div>
+            <div class="show-more-wrapper">
+                <span id="toggleDescription" class="show-more-btn" style="display: none; cursor:pointer; color:blue;">Xem thêm</span>
+            </div>
         </div>
-        <div class="show-more-wrapper">
-            <span id="toggleDescription" class="show-more-btn" style="display: none;">Xem thêm</span>
+
+        <div class="tab-pane fade" id="reviews-pane" role="tabpanel" aria-labelledby="reviews-tab">
+            <?php if (!empty($reviews)) { ?>
+                <?php foreach ($reviews as $review) { ?>
+                    <div class="review-item">
+                        <!-- Avatar -->
+                        <div class="review-avatar">
+                            <?= strtoupper(substr($review['username'], 0, 1)) ?>
+                        </div>
+
+                        <!-- Nội dung -->
+                        <div class="review-content">
+                            <div class="review-header">
+                                <span class="review-username"><?= htmlspecialchars($review['username']) ?></span>
+                                <span class="review-date"><?= date('d/m/Y', strtotime($review['created_at'])) ?></span>
+                            </div>
+                            <div class="review-stars">
+                                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                    <i class="bi <?= $i <= $review['rating'] ? 'bi-star-fill' : 'bi-star' ?>"></i>
+                                <?php } ?>
+                            </div>
+                            <p class="review-text"><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <p class="text-muted text-center my-4">Chưa có đánh giá nào cho sản phẩm này.</p>
+            <?php } ?>
         </div>
     </div>
+
 
     <!-- Sp tương tự -->
     <div class="mt-5">
@@ -171,23 +303,31 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
     </div>
 </div>
 
+
 <script>
     const description = document.getElementById('descriptionContent');
     const toggleBtn = document.getElementById('toggleDescription');
 
-    // Kiểm tra xem nội dung có bị tràn hay không
-    window.addEventListener('load', () => {
+    function checkDescriptionHeight() {
         if (description.scrollHeight > description.clientHeight + 5) {
             toggleBtn.style.display = 'inline-block';
+        } else {
+            toggleBtn.style.display = 'none';
         }
-    });
+    }
 
     toggleBtn.addEventListener('click', function() {
         description.classList.toggle('expanded');
-        if (description.classList.contains('expanded')) {
-            toggleBtn.textContent = 'Thu gọn';
-        } else {
-            toggleBtn.textContent = 'Xem thêm';
-        }
+        toggleBtn.textContent = description.classList.contains('expanded') ? 'Thu gọn' : 'Xem thêm';
+    });
+
+    // Khi load trang
+    window.addEventListener('load', () => {
+        setTimeout(checkDescriptionHeight, 200);
+    });
+
+    // Khi chuyển sang tab mô tả
+    document.getElementById('description-tab').addEventListener('shown.bs.tab', () => {
+        checkDescriptionHeight();
     });
 </script>
