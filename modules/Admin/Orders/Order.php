@@ -26,6 +26,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
         <form class="search-form ms-auto d-flex align-items-center gap-2" method="GET" style="width: 100%; max-width: 600px;">
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
+            <input type="hidden" name="pageNumber" value="1">
 
             <!-- Thanh chọn trạng thái -->
             <select name="status_id"
@@ -132,26 +133,22 @@ $totalPages = max(1, ceil($totalRows / $limit));
                         <?php endforeach ?>
                     <?php endif; ?>
                 </tbody>
-
             </table>
         </div>
-        </table>
     </div>
 
     <!-- PHÂN TRANG -->
-    <?php if ($totalPages > 1): ?>
-        <nav aria-label="Page navigation" class="mt-4">
-            <ul class="pagination justify-content-center">
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                        <a class="page-link" href="Admin.php?page=modules/Admin/Orders/Order.php&search=<?= urlencode($keyword) ?>&pageNumber=<?= $i ?>">
-                            <?= $i ?>
-                        </a>
-                    </li>
-                <?php endfor; ?>
-            </ul>
-        </nav>
-    <?php endif; ?>
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                    <a class="page-link" href="Admin.php?page=modules/Admin/Orders/Order.php&search=<?= urlencode($keyword) ?>&status_id=<?= urlencode($_GET['status_id'] ?? 0) ?>&pageNumber=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 </div>
 
 

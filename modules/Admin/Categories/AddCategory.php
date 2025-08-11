@@ -69,7 +69,7 @@ $listCategory = $category->getAll();
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Biểu tượng loại sản phẩm</label>
                         <input type="file" name="main_image" class="form-control" accept="image/*" id="categoryImageInput" style="width: 466px;">
-                        <div id="categoryImagePreview" class="mt-2"></div>
+                        <div id="categoryImagePreview" class="mt-2" style="text-align:center; margin-left: 180px;"></div>
                     </div>
 
                     <div class="mb-3">

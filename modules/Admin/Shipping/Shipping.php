@@ -104,6 +104,17 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
             </table>
         </div>
     </div>
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                    <a class="page-link" href="Admin.php?page=modules/Admin/Shipping/Shipping.php&search=<?= urlencode($keyword) ?>&pageNumber=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 </div>
 
 <script>
