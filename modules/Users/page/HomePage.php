@@ -16,7 +16,11 @@ $getCategory = $category->getAll();
     <h3 class="ecom-title">Danh mục nổi bật</h3>
     <div class="ecom-category-list">
         <?php
+        $count = 0;
         foreach ($getCategory as $item) {
+            if ($count === 7) {
+                break;
+            }
         ?>
             <a href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?>" class="ecom-category-card text-decoration-none">
                 <!-- <i class="fa-solid fa-laptop"></i> -->
@@ -24,6 +28,7 @@ $getCategory = $category->getAll();
                 <div class="ecom-category-title"><?= $item['name'] ?></div>
             </a>
         <?php
+            $count++;
         }
 
         ?>
