@@ -53,9 +53,9 @@ $listCategories = $category->getFilterCategoriesToDb($limit, $offset, $keyword);
             <table class="table table-bordered table-hover custom-table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="width: 80px">ID</th>
-                        <th style="width: 180px">Tên</th>
-                        <th>Biểu tượng</th>
+                        <th style="width: 120px">ID</th>
+                        <th style="width: 250px">Tên</th>
+                        <th style="width: 160px">Biểu tượng</th>
                         <th style="width: 160px">Trạng thái</th>
                         <th style="width: 160px">Chức năng</th>
                     </tr>

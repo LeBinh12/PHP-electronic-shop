@@ -75,34 +75,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
 
 <div id="ai-chat-form" class="chat-box <?= $isChatOpenAi ? '' : 'hidden' ?>">
     <div class="p-2 bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 8px 8px 0 0;">
-        <p class="m-0">Hỗ trợ AI</p>
+        <!-- Bên trái: Avatar + Tiêu đề -->
+        <div class="d-flex align-items-center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO42z2p6t2s8Sv8gkV_R1aMeIyfmIQR_ss7w&s"
+                alt="AI Avatar"
+                class="rounded-circle me-2"
+                style="width: 36px; height: 36px; object-fit: cover;">
+            <p class="m-0 fw-bold">Hỗ trợ AI</p>
+        </div>
+
+        <!-- Nút đóng -->
         <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;"></i>
     </div>
-    <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; min-height: 405px; max-height: 500px; overflow-y: auto;">
-        <?php foreach ($_SESSION['chat_history'] as $i => $chat) {
-            $isLast = $i === array_key_last($_SESSION['chat_history']);
-        ?>
-            <div class="d-flex justify-content-end mb-2 flex-column align-items-end">
-                <div class="p-2 bg-primary text-white border rounded">
-                    <?= htmlspecialchars($chat['user_message']) ?>
-                </div>
-                <div class="small text-muted mt-1"><?= $chat['timestamp'] ?></div>
+    <div id="ai-chat-content" class="p-2" style="background: #f8f9fa; min-height: 399px; max-height: 399px; overflow-y: auto;">
+        <?php if (empty($_SESSION['chat_history'])): ?>
+            <div class="text-center text-muted" style="margin-top: 150px;">
+                <i class="bi bi-chat-dots fs-1"></i>
+                <p class="mt-2">Chưa có tin nhắn</p>
             </div>
+        <?php else: ?>
 
-            <div class="d-flex align-items-start mb-2 flex-column">
-                <div class="d-flex" style="max-width: 80%;">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO42z2p6t2s8Sv8gkV_R1aMeIyfmIQR_ss7w&s"
-                        class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                    <div class="p-2 bg-light border rounded ai-response-text <?= $isLast ? 'new' : '' ?>">
-                        <?php
-                        $Parsedown = new Parsedown();
-                        $htmlFormatted = $Parsedown->text($chat['ai_response']);
-                        echo  $htmlFormatted  ?>
+            <?php foreach ($_SESSION['chat_history'] as $i => $chat) {
+                $isLast = $i === array_key_last($_SESSION['chat_history']);
+            ?>
+                <div class="d-flex justify-content-end mb-2 flex-column align-items-end">
+                    <div class="p-2 bg-primary text-white border rounded">
+                        <?= htmlspecialchars($chat['user_message']) ?>
                     </div>
+                    <div class="small text-muted mt-1"><?= $chat['timestamp'] ?></div>
                 </div>
-                <div class="small text-muted mt-1" style="margin-left: 40px;"><?= $chat['timestamp'] ?></div>
-            </div>
-        <?php } ?>
+
+                <div class="d-flex align-items-start mb-2 flex-column">
+                    <div class="d-flex" style="max-width: 80%;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO42z2p6t2s8Sv8gkV_R1aMeIyfmIQR_ss7w&s"
+                            class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                        <div class="p-2 bg-light border rounded ai-response-text <?= $isLast ? 'new' : '' ?>">
+                            <?php
+                            $Parsedown = new Parsedown();
+                            $htmlFormatted = $Parsedown->text($chat['ai_response']);
+                            echo  $htmlFormatted  ?>
+                        </div>
+                    </div>
+                    <div class="small text-muted mt-1" style="margin-left: 40px;"><?= $chat['timestamp'] ?></div>
+                </div>
+            <?php } ?>
+        <?php endif; ?>
 
     </div>
     <form method="POST" class="border-top d-flex align-items-center">
