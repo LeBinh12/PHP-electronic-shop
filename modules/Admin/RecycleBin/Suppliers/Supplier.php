@@ -21,8 +21,13 @@ $listDeletedSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyw
 <?php require_once 'DeleteSupplier.php'; ?>
 
 <div class="product-container">
-    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <h4 class="mb-0 text-danger"><i class="fas fa-truck me-2"></i>Nhà cung cấp đã xóa</h4>
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap p-3 rounded shadow-sm bg-light border">
+        <h4 class="mb-0 fw-bold text-danger d-flex align-items-center">
+            <i class="fas fa-trash-alt me-2"></i> Thùng rác - Nhà cung cấp đã xóa
+        </h4>
+        <span class="badge bg-danger px-3 py-2 fs-6">
+            <?= $totalSuppliers ?> mục đã xóa
+        </span>
     </div>
 
     <div class="table-container">

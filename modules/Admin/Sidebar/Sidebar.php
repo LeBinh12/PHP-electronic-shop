@@ -3,7 +3,7 @@ $currentPage = $_GET['page'] ?? '';
 $is_stats_active = in_array($currentPage, [
   'modules/Admin/RecycleBin/Products/Product.php',
   'modules/Admin/RecycleBin/Category/Category.php',
-  'modules/Admin/RecycleBin/Supplier/Supplier.php',
+  'modules/Admin/RecycleBin/Suppliers/Supplier.php',
   'modules/Admin/RecycleBin/Branches/Branch.php',
   'modules/Admin/RecycleBin/Categories/Category.php',
   'modules/Admin/RecycleBin/Customers/Customer.php',
@@ -92,7 +92,7 @@ $is_stats_active = in_array($currentPage, [
             <i class="fas fa-users"></i> Khách hàng
           </a>
         </li>
-        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Orders/Orders.php') ? 'active-sub' : '' ?>">
+        <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Orders/Order.php') ? 'active-sub' : '' ?>">
           <a href="Admin.php?page=modules/Admin/RecycleBin/Orders/Order.php">
             <i class="fas fa-shopping-cart"></i> Đơn hàng
           </a>

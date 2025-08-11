@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
-use Parsedown;
+// use Parsedown;
 
 $isChatOpenAi = $_SESSION['chat_open_ai'] ?? false;
 

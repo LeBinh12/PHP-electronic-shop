@@ -18,9 +18,9 @@
             <div class="col">
                 <h5 class="mb-3 fw-bold">Liên Hệ</h5>
                 <ul class="list-unstyled small text-muted">
-                    <li class="mb-2"><i class="fas fa-phone-alt me-2 text-primary"></i> 0123 456 789</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> support@garena.vn</li>
-                    <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>123 Street, New York, USA</li>
+                    <li class="mb-2"><i class="fas fa-phone-alt me-2 text-primary"></i> 0394529044</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> vinh092004@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>xã An Hiệp, tỉnh Vĩnh Long, Việt Nam</li>
                 </ul>
             </div>
             <div class="col">

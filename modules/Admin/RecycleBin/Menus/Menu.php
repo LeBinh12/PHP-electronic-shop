@@ -18,8 +18,13 @@ $listDeletedMenus = $menuController->getPagination($keyword, $limit, $offset,  1
 <?php require_once 'DeleteMenu.php'; ?>
 
 <div class="product-container">
-    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <h4 class="mb-0 text-danger"><i class="fas fa-bars me-2"></i>Chức năng đã xóa</h4>
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap p-3 rounded shadow-sm bg-light border">
+        <h4 class="mb-0 fw-bold text-danger d-flex align-items-center">
+            <i class="fas fa-trash-alt me-2"></i> Thùng rác - Chức năng đã xóa
+        </h4>
+        <span class="badge bg-danger px-3 py-2 fs-6">
+            <?= $totalMenu ?> mục đã xóa
+        </span>
     </div>
 
     <div class="table-container">

@@ -156,9 +156,9 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 <!-- modal hình  -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content bg-dark border-0 position-relative">
+        <div class="modal-content border-0 position-relative w-100">
             <!-- <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button> -->
-            <div class="modal-body text-center position-relative p-0">
+            <div class="modal-body text-center position-relative p-0" style="height: auto; margin: 10px;">
                 <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y" style="z-index:2;" onclick="prevImage()">
                     &#10094;
                 </button>

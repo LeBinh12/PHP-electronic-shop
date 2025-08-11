@@ -193,12 +193,12 @@ class SupplierController
             if ($result) {
                 return [
                     'success' => true,
-                    'message' => 'Xóa loại sản phẩm thành công!'
+                    'message' => 'Xóa nhà cung cấp thành công!'
                 ];
             } else {
                 return [
                     'success' => false,
-                    'message' => 'Lỗi Xóa loại sản phẩm!'
+                    'message' => 'Lỗi xóa nhà cung cấp!'
                 ];
             }
         } catch (Exception $e) {
@@ -234,7 +234,7 @@ class SupplierController
             } else {
                 return [
                     'success' => false,
-                    'message' => 'Lỗi Khôi phục nhà cung cấp!'
+                    'message' => 'Lỗi khôi phục nhà cung cấp!'
                 ];
             }
         } catch (Exception $e) {

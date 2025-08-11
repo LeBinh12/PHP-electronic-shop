@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Ảnh hiện tại</label><br>
                             <input type="file" name="image_supplier" class="form-control" accept="image/*">
-                            <img id="editSupplierPreview" src="" class="img-thumbnail mb-2" style="max-width: 200px">
+                            <img id="editSupplierPreview" src="" class="img-thumbnail mb-2" style="max-width: 200px; display: block; margin: 0 auto; margin-top: 10px;">
                         </div>
 
                         <div class="col-md-6 mb-3">
