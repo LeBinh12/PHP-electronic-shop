@@ -1,5 +1,6 @@
 <?php
 
+
 $page = $_GET['number'] ?? 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
@@ -14,7 +15,11 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
 
 <div class="container mt-3 product-list">
     <div class="row g-3">
-        <?php foreach ($products as $item) { ?>
+        <?php foreach ($products as $item) {
+            $originalPrice = $item['price'];
+            $discount = $item['discount'];
+            $finalPrice = $originalPrice * (1 - $discount / 100);
+        ?>
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="product-card h-100 shadow-sm">
                     <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
@@ -24,7 +29,19 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
                         <h5 class="product-title fs-6"><a class="text-decoration-none" href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
                     </div>
                     <div class="product-footer">
-                        <p class="product-price mb-2">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <?php
+                        if ($discount <= 0) {
+                        ?>
+                            <p class="product-price mb-2">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <?php
+                        } else {
+                        ?>
+                            <span class="text-muted text-decoration-line-through"><?= number_format($originalPrice, 0, ',', '.') ?>₫</span>
+                            <br>
+                            <span class="text-danger fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</span>
+                        <?php
+                        }
+                        ?>
                         <!-- <a href="#" class="text-primary text-decoration-none">Xem chi tiết >></a> -->
                     </div>
                 </div>
@@ -37,12 +54,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
     <ul class="pagination justify-content-center">
         <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link"
-                    href="index.php?subpage=modules/Users/Layout/Main.php
-   &category=<?= urlencode($id_category) ?>
-   &supplier=<?= urlencode($id_supplier) ?>
-   &search=<?= urlencode($keyword) ?>
-   <?= $priceQuery ?>&number=<?= $i ?>">
+                <a class="page-link" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
                     <?= $i ?>
                 </a>
             </li>

@@ -5,6 +5,7 @@ require_once './core/RedisCache.php';
 require_once './models/Product.php';
 require_once './models/OrderItem.php';
 require_once './models/Inventory.php';
+require_once './models/Image.php';
 
 require_once './controllers/ProductController.php';
 
@@ -14,6 +15,7 @@ class SupplierController
     private $supplierModel;
     private $productModel;
     private $productController;
+    private $imageModel;
 
     private $orderItemModel;
     private $inventoryModel;
@@ -26,6 +28,7 @@ class SupplierController
         $this->productController = new ProductController();
         $this->orderItemModel = new OrderItem();
         $this->inventoryModel = new Inventory();
+        $this->imageModel = new Image();
     }
 
     public function getAll()
@@ -191,7 +194,20 @@ class SupplierController
                 ];
             }
 
-            $this->productModel->deleteByColumn('supplier_id', $id);
+            $product = $this->productModel->deleteByColumn('supplier_id', $id);
+
+            if (is_array($product) && count($product) > 0) {
+                foreach ($product as $item) {
+                    $orderItem = $this->orderItemModel->getByColumn('product_id', $item['id']);
+                    $imageProduct = $this->imageModel->getByColumn('product_id', $item['id']);
+                    if (is_array($orderItem) && count($orderItem) > 0) {
+                        $this->orderItemModel->deleteByColumn('product_id', $item['id']);
+                    }
+                    if (is_array($imageProduct) && count($imageProduct) > 0) {
+                        $this->imageModel->deleteByColumn('product_id', $item['id']);
+                    }
+                }
+            }
 
             $result = $this->supplierModel->delete($id);
             $this->invalidateCache($id);

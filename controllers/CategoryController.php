@@ -6,6 +6,7 @@ require_once './core/RedisCache.php';
 require_once './models/Product.php';
 require_once './models/OrderItem.php';
 require_once './models/Inventory.php';
+require_once './models/Image.php';
 require_once './controllers/ProductController.php';
 
 class CategoryController
@@ -15,6 +16,7 @@ class CategoryController
     private $productController;
     private $orderItemModel;
     private $inventoryModel;
+    private $imageModel;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class CategoryController
         $this->productController = new ProductController();
         $this->orderItemModel = new OrderItem();
         $this->inventoryModel = new Inventory();
+        $this->imageModel = new Image();
     }
 
     public function getAll()
@@ -199,7 +202,22 @@ class CategoryController
                 ];
             }
 
-            $this->productModel->deleteByColumn('category_id', $id);
+            $product = $this->productModel->getByColumn('category_id', $id);
+
+            if (is_array($product) && count($product) > 0) {
+                foreach ($product as $item) {
+                    $orderItem = $this->orderItemModel->getByColumn('product_id', $item['id']);
+                    $imageProduct = $this->imageModel->getByColumn('product_id', $item['id']);
+                    if (is_array($orderItem) && count($orderItem) > 0) {
+                        $this->orderItemModel->deleteByColumn('product_id', $item['id']);
+                    }
+                    if (is_array($imageProduct) && count($imageProduct) > 0) {
+                        $this->imageModel->deleteByColumn('product_id', $item['id']);
+                    }
+                }
+            }
+
+            $resultProduct = $this->productModel->deleteByColumn('category_id', $id);
 
             $result = $this->categoryModel->delete($id);
             $this->invalidateCache($id);
