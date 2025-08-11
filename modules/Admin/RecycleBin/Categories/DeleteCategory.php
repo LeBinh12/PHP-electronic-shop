@@ -1,6 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
     $id = $_POST['delete_category_id'];
+    $result = $category->deleteIsDeleted($id);
+
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {
