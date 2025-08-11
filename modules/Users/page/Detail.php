@@ -151,6 +151,9 @@ $reviews = $reviewController->getAllReviewUser($id_product);
             <?php
             $count = 0;
             foreach ($productByCategoryId as $item) {
+                $originalPrice = $item['price'];
+                $discount = $item['discount'];
+                $finalPrice = $originalPrice * (1 - $discount / 100);
                 if ($count == 4)
                     break;
             ?>
@@ -161,7 +164,19 @@ $reviews = $reviewController->getAllReviewUser($id_product);
                             <div class="card-title-container">
                                 <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>" class="card-title text-decoration-none fs-6" style="height: 48px;"><?= $item['name'] ?></a>
                             </div>
-                            <p class="card-price">Giá: <?= $item['price'] ?>đ</p>
+                            <?php
+                            if ($discount <= 0) {
+                            ?>
+                                <p class="product-price mb-2">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                            <?php
+                            } else {
+                            ?>
+                                <span class="text-muted text-decoration-line-through"><?= number_format($originalPrice, 0, ',', '.') ?>₫</span>
+                                <br>
+                                <span class="text-danger fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</span>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
