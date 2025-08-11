@@ -93,7 +93,7 @@ $listSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword);
                                             data-contact="<?= htmlspecialchars($item['contact_person'] ?? '') ?>"
                                             data-phone="<?= htmlspecialchars($item['Phone'] ?? '') ?>"
                                             data-email="<?= htmlspecialchars($item['Email'] ?? '') ?>"
-                                            data-address="<?= htmlspecialchars($item['Address'] ?? '') ?>"
+                                            data-address="<?= htmlspecialchars($item['Address'] ?? '', ENT_QUOTES) ?>"
                                             data-image="<?= htmlspecialchars($item['image_url'] ?? '') ?>">
                                             <i class="fas fa-edit me-1"></i> Sửa
                                         </button>
@@ -133,6 +133,34 @@ $listSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword);
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const editModal = document.getElementById('editSupplierModal');
+
+        editModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget; // Nút đã bấm "Sửa"
+
+            // Lấy dữ liệu từ các thuộc tính data-*
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const contact = button.getAttribute('data-contact');
+            const phone = button.getAttribute('data-phone');
+            const email = button.getAttribute('data-email');
+            const address = button.getAttribute('data-address');
+            const image = button.getAttribute('data-image');
+
+            // Gán giá trị vào các field trong modal
+            editModal.querySelector('#editSupplierId').value = id;
+            editModal.querySelector('#editSupplierName').value = name;
+            editModal.querySelector('#editSupplierContact').value = contact;
+            editModal.querySelector('#editSupplierPhone').value = phone;
+            editModal.querySelector('#editSupplierEmail').value = email;
+            editModal.querySelector('#editAddressSupplier').value = address;
+
+            // Gán ảnh hiện tại
+            const preview = editModal.querySelector('#editSupplierPreview');
+            preview.src = image && image.trim() !== '' ? image : '<?= $imageFail ?>';
+        });
+
+
         document.querySelectorAll('#addSupplierModal form, #editSupplierModal form, #deleteSupplierModal form')
             .forEach(form => {
                 form.addEventListener('submit', () => {

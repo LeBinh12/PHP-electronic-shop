@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Địa chỉ</label>
-                            <input type="text" name="address" id="editSupplierAddress" class="form-control">
+                            <input type="text" name="address" id="editAddressSupplier" class="form-control">
                         </div>
                     </div>
 
@@ -111,17 +111,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_supplier'])) {
 </div>
 
 <!-- Script mở modal sửa -->
-<!-- <script>
-    function openEditSupplierModal(id, name, contact, phone, email, address, imageUrl) {
-        document.getElementById('editSupplierId').value = id;
-        document.getElementById('editSupplierName').value = name;
-        document.getElementById('editSupplierContact').value = contact;
-        document.getElementById('editSupplierPhone').value = phone;
-        document.getElementById('editSupplierEmail').value = email;
-        document.getElementById('editSupplierAddress').value = address;
-        document.getElementById('editSupplierPreview').src = imageUrl || 'path/to/no-image.png';
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editModal = document.getElementById('editSupplierModal');
 
-        const modal = new bootstrap.Modal(document.getElementById('editSupplierModal'));
-        modal.show();
-    }
-</script> -->
+        editModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget; // Nút đã bấm "Sửa"
+
+            // Lấy dữ liệu từ các thuộc tính data-*
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const contact = button.getAttribute('data-contact');
+            const phone = button.getAttribute('data-phone');
+            const email = button.getAttribute('data-email');
+            const address = button.getAttribute('data-address');
+            const image = button.getAttribute('data-image');
+
+            console.log(address);
+
+            // Gán giá trị vào các field trong modal
+            editModal.querySelector('#editSupplierId').value = id;
+            editModal.querySelector('#editSupplierName').value = name;
+            editModal.querySelector('#editSupplierContact').value = contact;
+            editModal.querySelector('#editSupplierPhone').value = phone;
+            editModal.querySelector('#editSupplierEmail').value = email;
+            editModal.querySelector('#editAddressSupplier').value = address;
+
+            // Gán ảnh hiện tại
+            const preview = editModal.querySelector('#editSupplierPreview');
+            preview.src = image && image.trim() !== '' ? image : '<?= $imageFail ?>';
+        });
+    });
+</script>
