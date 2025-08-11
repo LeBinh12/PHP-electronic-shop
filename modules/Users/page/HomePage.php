@@ -21,6 +21,10 @@ $getCategory = $category->getAll();
             if ($count === 7) {
                 break;
             }
+
+            if ($item['status'] === 1) {
+                continue;
+            }
         ?>
             <a href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?>" class="ecom-category-card text-decoration-none">
                 <!-- <i class="fa-solid fa-laptop"></i> -->

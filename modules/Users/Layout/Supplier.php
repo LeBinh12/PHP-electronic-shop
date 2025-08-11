@@ -1,5 +1,5 @@
 <?php
-$supplierGetAll = $supplier->getAll();
+$supplierGetAll = $supplier->getAllToDb();
 ?>
 
 <div class="container my-5">

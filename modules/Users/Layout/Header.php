@@ -1,6 +1,6 @@
 <?php
 $categoryGetAll = $category->getAll();
-$supplierGetAll = $supplier->getAll();
+$supplierGetAll = $supplier->getAllToDb();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sendEmail'])) {
     $userController->sendResetToken($_POST['email']);
