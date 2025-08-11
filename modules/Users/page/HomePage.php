@@ -34,7 +34,7 @@ $getCategory = $category->getAll();
 
 <!-- Sản phẩm nổi bật -->
 <div class="container ecom-section ecom-carousel">
-    <h3 class="ecom-title">Sản phẩm nổi bật</h3>
+    <h3 class="ecom-title">Sản phẩm mới nhất</h3>
     <div id="featuredCarousel" class="carousel slide" data-bs-ride="false">
         <div class="carousel-inner">
             <?php foreach (array_chunk($featuredProducts, 6) as $i => $group) { ?>
@@ -44,7 +44,9 @@ $getCategory = $category->getAll();
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card h-100 shadow-sm">
                                     <span class="ecom-product-badge new">Mới</span>
-                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
+                                    <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
+                                        <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
+                                    </a>
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
                                             <?= htmlspecialchars($item['name']) ?>
@@ -128,7 +130,9 @@ $getCategory = $category->getAll();
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card">
                                     <span class="ecom-product-badge sale">Giảm <?= $discount ?>%</span>
-                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
+                                    <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
+                                        <img src="<?= htmlspecialchars($item['image_url']) ?>" class="ecom-product-img" alt="<?= htmlspecialchars($item['name']) ?>">
+                                    </a>
                                     <h6 class="ecom-product-title">
                                         <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
                                             <?= htmlspecialchars($item['name']) ?>

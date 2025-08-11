@@ -48,7 +48,9 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
         <?php foreach ($products as $item) { ?>
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="product-card h-100 shadow-sm">
-                    <img src="<?= htmlspecialchars($item['image_url']) ?>" class="product-img" alt="<?= htmlspecialchars($item['name']) ?>" style="height: 200px; object-fit: contain;">
+                    <a href="index.php?subpage=modules/Users/page/Detail.php&id=<?= $item['id'] ?>">
+                        <img src="<?= htmlspecialchars($item['image_url']) ?>" class="product-img" alt="<?= htmlspecialchars($item['name']) ?>" style="height: 200px; object-fit: contain;">
+                    </a>
                     <div class="product-body text-center">
                         <h5 class="product-title fs-6"><a class="text-decoration-none" href="index.php?subpage=modules/Users/page/Detail.php&id=<?= htmlspecialchars($item['id']) ?>"><?= htmlspecialchars($item['name']) ?></a></h5>
                     </div>

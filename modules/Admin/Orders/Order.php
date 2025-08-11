@@ -21,9 +21,6 @@ $totalPages = max(1, ceil($totalRows / $limit));
 ?>
 
 
-
-
-
 <!-- Form tìm kiếm -->
 <div class="product-container">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
@@ -31,7 +28,10 @@ $totalPages = max(1, ceil($totalRows / $limit));
             <input type="hidden" name="page" value="modules/Admin/Orders/Order.php">
 
             <!-- Thanh chọn trạng thái -->
-            <select name="status_id" class="form-select" style="padding: 5px; margin: 0; border: 1px solid #ccc;">
+            <select name="status_id"
+                class="form-select rounded-pill"
+                style="padding: 6px 15px; margin: 0; border: 1px solid #ccc; background-color: #fff; cursor: pointer; width: 320px"
+                onchange="this.form.submit()">
                 <option value="0">Tất cả trạng thái</option>
                 <?php foreach ($getAllStatus as $status): ?>
                     <option value="<?= $status['id'] ?>" <?= (isset($_GET['status_id']) && $_GET['status_id'] == $status['id']) ? 'selected' : '' ?>>
@@ -40,21 +40,19 @@ $totalPages = max(1, ceil($totalRows / $limit));
                 <?php endforeach; ?>
             </select>
 
-            <!-- Ô tìm kiếm -->
-            <input type="search"
-                name="search"
-                value="<?= htmlspecialchars($keyword) ?>"
-                class="form-control search-input"
-                placeholder="Tìm mã đơn hàng...">
-
-            <button class="btn btn-secondary" type="submit" style="background-color: blue;">
-                <i class="bi bi-search text-white"></i>
-            </button>
+            <div class="input-group rounded-pill overflow-hidden" style="border: 1px solid #ccc;">
+                <button class="input-group-text bg-white border-0" type="submit" style="cursor: pointer;">
+                    <i class="bi bi-search text-muted"></i>
+                </button>
+                <input type="search"
+                    name="search"
+                    value="<?= htmlspecialchars($keyword) ?>"
+                    class="form-control border-0"
+                    placeholder="Tìm mã đơn hàng..."
+                    style="padding: 5px;">
+            </div>
         </form>
-
     </div>
-
-
 
     <!-- Bảng danh sách -->
     <div class="d-flex justify-content-center">
