@@ -15,7 +15,7 @@ $messages = $userId ? $chatController->getChatHistory($userId) : [];
 <?php if ($userId) { ?>
     <div id="chat-form" class="chat-box-admin">
         <div class="p-2 bg-success text-white d-flex justify-content-between align-items-center" style="border-radius: 8px 8px 0 0;">
-            <p class="m-0">Chat với User #<?= $userId ?></p>
+            <p class="m-0">Chat với User #<?= $userController->getById($userId)['FullName'] ?? "Không có tên" ?></p>
             <a href="Admin.php" class="text-white"><i class="bi bi-x-lg"></i></a>
         </div>
 
