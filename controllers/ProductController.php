@@ -114,6 +114,11 @@ class ProductController extends BaseController
         return $this->productModel->countFilteredProducts($categoryId, $supplierId, $keyword);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->productModel->countDeleted();
+    }
+
     public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
     {
         $start = microtime(true);

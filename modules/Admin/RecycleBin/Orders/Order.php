@@ -18,6 +18,8 @@ $listDeletedOrders = $orderController->getOrderWithStatusPagination($status_id, 
 $totalRows = $orderController->getCountOrderWithStatus($status_id, $keyword, $employeeId, $branch_id, $isAdmin, 1);
 $totalPages = max(1, ceil($totalRows / $limit));
 
+$totalOrdersIsDeleted = $orderController->countIsDeleted();
+
 ?>
 
 <?php require_once 'RestoreOrder.php'; ?>
@@ -29,7 +31,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Đơn hàng đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalRows ?> mục đã xóa
+            <?= $totalOrdersIsDeleted ?> mục đã xóa
         </span>
     </div>
 

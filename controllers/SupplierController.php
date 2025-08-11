@@ -44,6 +44,11 @@ class SupplierController
         return $this->supplierModel->all();
     }
 
+    public function countIsDeleted()
+    {
+        return $this->supplierModel->countDeleted();
+    }
+
     public function getById($id)
     {
         $cacheKey = "supplier:$id";

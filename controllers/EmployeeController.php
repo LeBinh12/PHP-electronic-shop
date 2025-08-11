@@ -67,6 +67,11 @@ class EmployeeController
         return $this->employeeModel->countFilteredEmployees($keyword, $isDeleted);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->employeeModel->countDeleted();
+    }
+
     public function add($data, $roleIds = [], $menuIds = [])
     {
         try {

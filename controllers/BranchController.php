@@ -27,6 +27,11 @@ class BranchController
         return $this->branchController->find($id);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->branchController->countDeleted();
+    }
+
     public function getPagination($limit, $offset, $keyword, $isDeleted = 0)
     {
         return $this->branchController->getFilteredBranch($limit, $offset, $keyword, $isDeleted);

@@ -67,6 +67,11 @@ class CategoryController
         return $this->categoryModel->countCategory($keyword, $isDeleted);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->categoryModel->countDeleted();
+    }
+
     public function getFilterCategories($limit, $offset, $keyword, $isDeleted = 0)
     {
         $key = "categories:filter:$limit:$offset:$keyword:$isDeleted";

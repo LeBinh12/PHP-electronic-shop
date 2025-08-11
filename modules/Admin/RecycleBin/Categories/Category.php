@@ -12,6 +12,9 @@ $offset = ($page - 1) * $limit;
 $totalCategories = $category->countCategories($keyword, 1);
 $totalPages = ceil($totalCategories / $limit);
 $listDeletedCategories = $category->getFilterCategories($limit, $offset, $keyword, 1);
+
+$totalCategoriesIsDeleted = $category->countIsDeleted();
+
 ?>
 
 <?php require_once 'RestoreCategory.php'; ?>
@@ -23,7 +26,7 @@ $listDeletedCategories = $category->getFilterCategories($limit, $offset, $keywor
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Danh mục đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalCategories ?> mục đã xóa
+            <?= $totalCategoriesIsDeleted ?> mục đã xóa
         </span>
     </div>
 

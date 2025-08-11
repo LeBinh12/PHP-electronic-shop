@@ -9,6 +9,8 @@ $totalPages = ceil($totalRole / $limit);
 
 $listDeletedRoles = $roleController->getPagination($keyword, $limit, $offset, 1);
 
+$totalRolesIsDeleted = $roleController->countIsDeleted();
+
 ?>
 
 <?php require_once 'RestoreRole.php'; ?>
@@ -20,7 +22,7 @@ $listDeletedRoles = $roleController->getPagination($keyword, $limit, $offset, 1)
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Quyền đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalRole ?> mục đã xóa
+            <?= $totalRolesIsDeleted ?> mục đã xóa
         </span>
     </div>
 

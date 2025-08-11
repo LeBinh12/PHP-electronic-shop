@@ -17,6 +17,8 @@ $totalPages = ceil($totalProducts / $limit);
 
 $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword, $limit, $offset, [], 1);
 
+$totalProductsIsDeleted = $product->countIsDeleted();
+
 ?>
 
 <div class="product-container">
@@ -25,7 +27,7 @@ $listProduct = $product->getFilterProducts($id_category, $id_supplier, $keyword,
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Sản phẩm đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalProducts ?> mục đã xóa
+            <?= $totalProductsIsDeleted ?> mục đã xóa
         </span>
     </div>
 
