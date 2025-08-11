@@ -7,7 +7,15 @@
 
     <form method="get" id="filterForm">
         <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
-
+        <?php if (!empty($id_category)) { ?>
+            <input type="hidden" name="category" value="<?= htmlspecialchars($id_category) ?>">
+        <?php } ?>
+        <?php if (!empty($id_supplier)) { ?>
+            <input type="hidden" name="supplier" value="<?= htmlspecialchars($id_supplier) ?>">
+        <?php } ?>
+        <?php if (!empty($keyword)) { ?>
+            <input type="hidden" name="search" value="<?= htmlspecialchars($keyword) ?>">
+        <?php } ?>
         <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="price[]" value="1"
                 id="price1" <?= in_array(1, $_GET['price'] ?? []) ? 'checked' : '' ?>>
