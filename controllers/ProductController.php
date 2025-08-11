@@ -3,7 +3,7 @@ require_once './models/Product.php';
 require_once './models/Order.php';
 require_once './models/OrderItem.php';
 require_once './models/Image.php';
-
+require_once './models/Review.php';
 require_once './core/RedisCache.php';
 require_once './controllers/BaseController.php';
 
@@ -18,6 +18,8 @@ class ProductController extends BaseController
 
     private $imageModel;
 
+    private $reviewModel;
+
 
     public function __construct()
     {
@@ -27,6 +29,7 @@ class ProductController extends BaseController
         $this->orderModel = new Order();
         $this->inventoryModel = new Inventory();
         $this->imageModel = new Image();
+        $this->reviewModel = new Review();
     }
 
     public function getAll()
@@ -317,6 +320,10 @@ class ProductController extends BaseController
                 $this->orderItemModel->deleteByColumn('product_id', $id);
             }
 
+            $review = $this->reviewModel->getByColumn('product_id', $id);
+            if (is_array($review) && count($review) > 0) {
+                $this->reviewModel->deleteByColumn('product_id', $id);
+            }
 
             if ($this->inventoryModel->hasProduct($id)) {
 
@@ -363,7 +370,6 @@ class ProductController extends BaseController
                 }
                 $this->orderItemModel->deleteByColumn('product_id', $id);
             }
-
 
             if ($this->inventoryModel->hasProduct($id)) {
 

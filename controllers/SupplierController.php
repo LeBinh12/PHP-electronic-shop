@@ -6,6 +6,8 @@ require_once './models/Product.php';
 require_once './models/OrderItem.php';
 require_once './models/Inventory.php';
 require_once './models/Image.php';
+require_once './models/Review.php';
+
 
 require_once './controllers/ProductController.php';
 
@@ -19,6 +21,7 @@ class SupplierController
 
     private $orderItemModel;
     private $inventoryModel;
+    private $reviewModel;
 
 
     public function __construct()
@@ -29,6 +32,7 @@ class SupplierController
         $this->orderItemModel = new OrderItem();
         $this->inventoryModel = new Inventory();
         $this->imageModel = new Image();
+        $this->reviewModel = new Review();
     }
 
     public function getAll()
@@ -198,6 +202,7 @@ class SupplierController
 
             if (is_array($product) && count($product) > 0) {
                 foreach ($product as $item) {
+                    $review = $this->reviewModel->getByColumn('product_id', $item['id']);
                     $orderItem = $this->orderItemModel->getByColumn('product_id', $item['id']);
                     $imageProduct = $this->imageModel->getByColumn('product_id', $item['id']);
                     if (is_array($orderItem) && count($orderItem) > 0) {
@@ -205,6 +210,9 @@ class SupplierController
                     }
                     if (is_array($imageProduct) && count($imageProduct) > 0) {
                         $this->imageModel->deleteByColumn('product_id', $item['id']);
+                    }
+                    if (is_array($review) && count($review) > 0) {
+                        $this->reviewModel->deleteByColumn('product_id', $item['id']);
                     }
                 }
             }

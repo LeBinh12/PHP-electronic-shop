@@ -93,20 +93,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($cmd) {
                 case 'inc':
                     $branch = $_POST['branch_id'];
-                    $productInventory = $inventoryController->getProductInventory($id, $branch, true);
-                    if (!$_SESSION['branch_select']) {
-                        $_SESSION['branch_select'] = $branch;
-                    }
-                    if ($cart[$id]['quantity'] >= $productInventory['stock_quantity']) {
-                        // echo "<script>
-                        //     alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
-                        // </script>";
-                        swal_alert('warning', 'Không đủ hàng', 'Cửa hàng hiện tại không đủ số lượng bạn mua!');
+                    if (empty($branch)) {
+                        swal_alert('warning', 'Chọn cửa hàng', 'Bạn cần chọn cửa hàng đẻ tôi kiểm tra kho hàng cho bạn!');
+                        break;
+                    } else {
+                        $productInventory = $inventoryController->getProductInventory($id, $branch, true);
+                        if (!$_SESSION['branch_select']) {
+                            $_SESSION['branch_select'] = $branch;
+                        }
+                        if ($cart[$id]['quantity'] >= $productInventory['stock_quantity']) {
+                            // echo "<script>
+                            //     alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
+                            // </script>";
+                            swal_alert('warning', 'Không đủ hàng', 'Cửa hàng hiện tại không đủ số lượng bạn mua!');
 
+                            break;
+                        }
+                        $cart[$id]['quantity']++;
                         break;
                     }
-                    $cart[$id]['quantity']++;
-                    break;
                 case 'dec':
                     if ($cart[$id]['quantity'] > 1) $cart[$id]['quantity']--;
                     break;

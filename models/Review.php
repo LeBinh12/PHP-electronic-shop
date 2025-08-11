@@ -10,6 +10,7 @@ class Review extends Model
         'comment' => 'TEXT',
         'user_id' => 'INT',
         'product_id' => 'INT',
+        'isDeleted' => 'TINYINT(1)',
     ];
 
     protected $foreignKeys = [

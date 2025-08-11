@@ -5,6 +5,7 @@ require_once './models/Order.php';
 require_once './models/OrderItem.php';
 require_once './models/ChatMessage.php';
 require_once './models/UserReports.php';
+require_once './models/Review.php';
 require_once './models/PasswordResetToken.php';
 require_once './controllers/BaseController.php';
 
@@ -29,6 +30,7 @@ class UserController extends BaseController
     private $orderItemModel;
     private $chatModel;
     private $reportModel;
+    private $reviewModel;
 
 
     public function __construct()
@@ -41,6 +43,7 @@ class UserController extends BaseController
         $this->orderItemModel = new OrderItem();
         $this->chatModel = new ChatMessage();
         $this->reportModel = new UserReports();
+        $this->reviewModel = new Review();
         $this->jwtConfig = include   './config/jwt.php';
     }
 
@@ -380,6 +383,11 @@ class UserController extends BaseController
                     $this->orderItemModel->deleteByColumn('order_id', $item);
                     $this->orderModel->delete($item);
                 }
+            }
+
+            $review = $this->reviewModel->getByColumn('user_id', $id);
+            if (is_array($review) && count($review) > 0) {
+                $this->reviewModel->deleteByColumn('user_id', $id);
             }
 
             $result = $this->userModel->delete($id);
