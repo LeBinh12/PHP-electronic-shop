@@ -15,121 +15,9 @@ $imageByProductId = $imageController->getImageById($id_product);
 $inventoryProduct = $inventoryController->getProductInventory($id_product, null) ?? 0;
 
 
-$reviews = [
-    [
-        'username' => 'nguyenvana',
-        'rating' => 5,
-        'comment' => 'Sản phẩm rất tốt, giao hàng nhanh, đóng gói cẩn thận!',
-        'created_at' => '2025-08-10'
-    ],
-    [
-        'username' => 'tranthib',
-        'rating' => 4,
-        'comment' => 'Hàng đẹp nhưng giao hơi chậm 1 chút.',
-        'created_at' => '2025-08-09'
-    ],
-    [
-        'username' => 'lequangc',
-        'rating' => 3,
-        'comment' => 'Sản phẩm ổn nhưng chất lượng chưa như mong đợi.',
-        'created_at' => '2025-08-08'
-    ]
-];
+$reviews = $reviewController->getAllReviewUser($id_product);
+
 ?>
-
-<style>
-    .store-box {
-        width: 100%;
-        background-color: #fffbe6;
-        border: 1px solid #ffe58f;
-        padding: 16px;
-        border-radius: 8px;
-        margin-top: 16px;
-    }
-
-    .store-box h6 {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 12px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #ffe58f;
-    }
-
-
-    .store-box ul {
-        padding-left: 20px;
-        margin-bottom: 0;
-    }
-
-    .store-box li {
-        margin-bottom: 4px;
-    }
-
-    .product-description-content {
-        max-height: 300px;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-    }
-
-    .product-description-content.expanded {
-        max-height: none;
-    }
-
-    .review-item {
-        display: flex;
-        gap: 12px;
-        padding: 16px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .review-avatar {
-        flex-shrink: 0;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        overflow: hidden;
-        background: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #555;
-        font-size: 18px;
-    }
-
-    .review-content {
-        flex: 1;
-    }
-
-    .review-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 4px;
-    }
-
-    .review-username {
-        font-weight: 600;
-        color: #007bff;
-    }
-
-    .review-date {
-        font-size: 13px;
-        color: #999;
-    }
-
-    .review-stars {
-        color: #ffc107;
-        font-size: 14px;
-        margin-bottom: 4px;
-    }
-
-    .review-text {
-        font-size: 14px;
-        color: #333;
-    }
-</style>
-
 
 <div class="container py-5">
     <!-- Sản phẩm -->
@@ -231,13 +119,13 @@ $reviews = [
                     <div class="review-item">
                         <!-- Avatar -->
                         <div class="review-avatar">
-                            <?= strtoupper(substr($review['username'], 0, 1)) ?>
+                            <?= strtoupper(substr($review['FullName'], 0, 1)) ?>
                         </div>
 
                         <!-- Nội dung -->
                         <div class="review-content">
                             <div class="review-header">
-                                <span class="review-username"><?= htmlspecialchars($review['username']) ?></span>
+                                <span class="review-username"><?= htmlspecialchars($review['FullName']) ?></span>
                                 <span class="review-date"><?= date('d/m/Y', strtotime($review['created_at'])) ?></span>
                             </div>
                             <div class="review-stars">
@@ -245,7 +133,7 @@ $reviews = [
                                     <i class="bi <?= $i <= $review['rating'] ? 'bi-star-fill' : 'bi-star' ?>"></i>
                                 <?php } ?>
                             </div>
-                            <p class="review-text"><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
+                            <p class="review-text"><?= nl2br($review['comment']) ?></p>
                         </div>
                     </div>
                 <?php } ?>

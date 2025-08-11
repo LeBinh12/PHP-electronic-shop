@@ -61,6 +61,7 @@ $userData = $userController->getCurrentUser();
     <link rel="stylesheet" href="./Style/Users/Sidebar.css">
     <link rel="stylesheet" href="./Style/Users/Cart.css">
     <link rel="stylesheet" href="./Style/Users/Chat.css">
+    <link rel="stylesheet" href="./Style/Users/Review.css">
     <link rel="stylesheet" href="./Style/Users/Supplier.css">
     <link rel="stylesheet" href="./Style/Users/Product.css">
     <link rel="stylesheet" href="./Style/Users/CheckOrder.css">

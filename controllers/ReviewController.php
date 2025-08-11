@@ -11,6 +11,11 @@ class ReviewController
         $this->reviewModel = new Review();
     }
 
+    public function getAllReviewUser($id)
+    {
+        return $this->reviewModel->getAllOfProduct($id);
+    }
+
     public function add($data)
     {
         $result = $this->reviewModel->insert($data);
