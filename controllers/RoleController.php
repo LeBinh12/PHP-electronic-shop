@@ -62,6 +62,11 @@ class RoleController
         return $this->roleMenuModel->getMenuIdsByRole($id);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->roleMenuModel->countDeleted();
+    }
+
     public function getRoleWithMenu()
     {
         return $this->roleModel->getAllRolesWithMenus();

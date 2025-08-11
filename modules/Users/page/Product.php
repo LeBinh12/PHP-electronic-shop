@@ -1,36 +1,5 @@
 <?php
 
-$id_category = null;
-$id_supplier = null;
-$priceRanges = [];
-$arrayBrand = [];
-$arrayPrice = [];
-$keyword = null;
-if (isset($_GET['category']) && $_GET['category'] !== '') {
-    $id_category = $_GET['category'];
-}
-
-if (isset($_GET['supplier']) && $_GET['supplier'] !== '') {
-    $id_supplier = $_GET['supplier'];
-}
-
-if (isset($_GET['brand']) && $_GET['brand'] !== '') {
-    $arrayBrand = (array) $_GET['brand'];
-    var_dump($arrayBrand);
-}
-if (isset($_GET['price']) && $_GET['price'] !== '') {
-    $arrayPrice = (array) $_GET['price'];
-    var_dump($arrayPrice);
-}
-
-if (isset($_GET['price']) && $_GET['price'] !== '') {
-    $priceRanges = $_GET['price'];
-}
-
-if (isset($_GET['search'])) {
-    $keyword = $_GET['search'];
-}
-
 $page = $_GET['number'] ?? 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
@@ -68,7 +37,12 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
     <ul class="pagination justify-content-center">
         <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
+                <a class="page-link"
+                    href="index.php?subpage=modules/Users/Layout/Main.php
+   &category=<?= urlencode($id_category) ?>
+   &supplier=<?= urlencode($id_supplier) ?>
+   &search=<?= urlencode($keyword) ?>
+   <?= $priceQuery ?>&number=<?= $i ?>">
                     <?= $i ?>
                 </a>
             </li>

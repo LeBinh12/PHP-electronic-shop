@@ -15,6 +15,8 @@ $totalSuppliers = $supplier->countSuppliersToDB($keyword, 1);
 $totalPages = ceil($totalSuppliers / $limit);
 $listDeletedSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword, 1);
 
+$totalSuppliersIsDeleted = $supplier->countIsDeleted();
+
 ?>
 
 <?php require_once 'RestoreSupplier.php'; ?>
@@ -26,7 +28,7 @@ $listDeletedSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyw
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Nhà cung cấp đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalSuppliers ?> mục đã xóa
+            <?= $totalSuppliersIsDeleted ?> mục đã xóa
         </span>
     </div>
 

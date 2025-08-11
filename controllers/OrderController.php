@@ -38,6 +38,11 @@ class OrderController
         return $this->orderModel->findByCode($code);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->orderModel->countDeleted();
+    }
+
     public function getOrderPagination(int $userId, ?int $statusId, int $limit, int $offset, $keyword)
     {
         return $this->orderModel->findOrders($userId, $statusId, $keyword, $limit, $offset);

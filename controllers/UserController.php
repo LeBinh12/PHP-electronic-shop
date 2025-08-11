@@ -344,6 +344,11 @@ class UserController extends BaseController
         return $this->userModel->countUserAll();
     }
 
+    public function countIsDeleted()
+    {
+        return $this->userModel->countDeleted();
+    }
+
     public function countUsersByMonthInYear($year = null)
     {
         return $this->userModel->countUsersByMonthInYear($year);

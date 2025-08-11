@@ -104,6 +104,13 @@ abstract class Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function countDeleted(): int
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 1");
+        return (int) $stmt->fetchColumn();
+    }
+
+
 
     public function existsByNameExceptId($id, $name): bool
     {

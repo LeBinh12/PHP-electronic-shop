@@ -28,6 +28,11 @@ class MenuController
         return $this->menuModel->find($id);
     }
 
+    public function countIsDeleted()
+    {
+        return $this->menuModel->countDeleted();
+    }
+
     public function getPagination($keyword, $limit, $offset, $isDeleted = 0)
     {
         return $this->menuModel->getFilterMenus($keyword, $limit, $offset, $isDeleted);

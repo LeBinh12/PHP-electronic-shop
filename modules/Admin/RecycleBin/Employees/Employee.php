@@ -9,6 +9,9 @@ $totalEmployees = $employeeController->countEmployees($keyword, 1);
 $totalPages = ceil($totalEmployees / $limit);
 
 $listDeletedEmployees = $employeeController->getPagination($keyword, $limit, $offset, 1);
+
+$totalEmployeesIsDeleted = $employeeController->countIsDeleted();
+
 ?>
 
 <?php require_once 'RestoreEmployee.php'; ?>
@@ -20,7 +23,7 @@ $listDeletedEmployees = $employeeController->getPagination($keyword, $limit, $of
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Nhân viên đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalEmployees ?> mục đã xóa
+            <?= $totalEmployeesIsDeleted ?> mục đã xóa
         </span>
     </div>
 

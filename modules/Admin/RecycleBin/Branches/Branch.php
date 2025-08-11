@@ -10,7 +10,7 @@ $totalBranch = $branchController->countBranch($keyword, 1);
 $totalPages = ceil($totalBranch / $limit);
 $deletedBranches = $branchController->getPagination($limit, $offset, $keyword, 1);
 
-
+$totalBranchIsDeleted = $branchController->countIsDeleted();
 
 require_once 'RestoreBranch.php';
 require_once 'DeleteBranch.php';
@@ -22,7 +22,7 @@ require_once 'DeleteBranch.php';
             <i class="fas fa-trash-alt me-2"></i> Thùng rác - Chi nhánh đã xóa
         </h4>
         <span class="badge bg-danger px-3 py-2 fs-6">
-            <?= $totalBranch ?> mục đã xóa
+            <?= $totalBranchIsDeleted ?> mục đã xóa
         </span>
     </div>
 
