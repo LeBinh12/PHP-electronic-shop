@@ -3,6 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
     $productId = $_POST['delete_product_id'] ?? 0;
     // Giả sử $product là instance của class quản lý sản phẩm
     $result = $product->deleteIsDeleted($productId);
+
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {

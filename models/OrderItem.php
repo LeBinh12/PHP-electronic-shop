@@ -9,6 +9,7 @@ class OrderItem extends Model
         'unit_price' => 'DECIMAL(12,2)',
         'product_id' => 'INT',
         'order_id' => 'INT',
+        'isDeleted' => 'TINYINT(1) DEFAULT 0'
     ];
 
     protected $foreignKeys = [
@@ -52,7 +53,7 @@ class OrderItem extends Model
         JOIN orders o ON oi.order_id = o.id
         WHERE oi.product_id = :pid
           AND o.isDeleted = 0
-          AND o.status_id IN (1, 6)
+          AND o.status_id IN (2, 4)
         LIMIT 1
     ";
         $stmt = $this->pdo->prepare($sql);

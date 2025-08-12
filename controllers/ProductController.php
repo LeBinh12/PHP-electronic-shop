@@ -269,12 +269,15 @@ class ProductController extends BaseController
                 ];
             }
 
+
+
             if ($this->orderItemModel->hasPendingOrCompletedOrdersByProduct($id)) {
                 return [
                     'success' => false,
                     'message' => 'Không thể xóa sản phẩm vì đang có đơn hàng liên quan với trạng thái 1 hoặc 6'
                 ];
             }
+
             $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
 
             if (is_array($orderId) && count($orderId) > 0) {
@@ -314,10 +317,11 @@ class ProductController extends BaseController
             }
             $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
             if (is_array($orderId) && count($orderId) > 0) {
+                $this->orderItemModel->deleteByColumn('product_id', $id);
+
                 foreach ($orderId as $item) {
                     $this->orderModel->delete($item);
                 }
-                $this->orderItemModel->deleteByColumn('product_id', $id);
             }
 
             $review = $this->reviewModel->getByColumn('product_id', $id);
