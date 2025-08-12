@@ -122,7 +122,7 @@ $reviews = $reviewController->getAllReviewUser($id_product);
                 <?= $productById['description'] ?>
             </div>
             <div class="show-more-wrapper">
-                <span id="toggleDescription" class="show-more-btn" style="display: none; cursor:pointer; color:blue;">Xem thêm</span>
+                <span id="toggleDescription" class="show-more-btn" style="display: none; cursor:pointer;">Xem thêm</span>
             </div>
         </div>
 
@@ -159,7 +159,7 @@ $reviews = $reviewController->getAllReviewUser($id_product);
 
     <!-- Sp tương tự -->
     <div class="mt-5">
-        <h4>Sản phẩm tương tự</h4>
+        <h4 class="fw-bold text-center mb-4 fs-4 text-primary">Sản phẩm tương tự</h4>
         <div class="row row-cols-1 row-cols-md-5 g-4">
             <?php
             $count = 0;
