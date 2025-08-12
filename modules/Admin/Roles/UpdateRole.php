@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_role_id'])) {
         $roleController->updateRoleMenus($id, $menuIds);
     }
 
+
     if ($result['success']) {
         $_SESSION['success'] = $result['message'];
     } else {

@@ -113,7 +113,7 @@ class Role extends Model
         $name = trim(mb_strtolower($name));
 
         $sql = "SELECT COUNT(*) FROM {$this->table} 
-            WHERE LOWER(TRIM(role_menu)) = :name AND id != :id AND isDeleted = 0";
+            WHERE LOWER(TRIM(role_name)) = :name AND id != :id AND isDeleted = 0";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':name', $name, PDO::PARAM_STR);

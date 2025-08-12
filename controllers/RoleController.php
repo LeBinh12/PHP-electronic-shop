@@ -129,7 +129,7 @@ class RoleController
                 ];
             }
 
-            $existingByName = $this->roleModel->existsByNameExceptIdRole($id, $data['name']);
+            $existingByName = $this->roleModel->existsByNameExceptIdRole($id, $data['role_name']);
             if ($existingByName) {
                 return [
                     'success' => false,
