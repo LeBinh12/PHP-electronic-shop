@@ -18,6 +18,19 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 $reviews = $reviewController->getAllReviewUser($id_product);
 
 ?>
+<style>
+    .card-title-container a {
+        font-weight: bold;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: auto;
+        line-height: 1.2em;
+        max-height: calc(1.2em * 2);
+    }
+</style>
 
 <div class="container py-5">
     <!-- Sản phẩm -->

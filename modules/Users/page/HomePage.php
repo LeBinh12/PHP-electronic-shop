@@ -10,6 +10,24 @@ $getCategory = $category->getAll();
 
 ?>
 
+<style>
+    .ecom-product-title a {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /* Giới hạn 2 dòng */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 2.8em;
+        /* Giữ chiều cao cố định để không bị lệch layout */
+        line-height: 1.4em;
+        /* Khoảng cách giữa các dòng */
+        font-size: 14px;
+        color: inherit;
+        text-decoration: none;
+    }
+</style>
+
 
 <!-- Danh mục tiêu biểu -->
 <div class="container ecom-section">
