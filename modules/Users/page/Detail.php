@@ -18,6 +18,19 @@ $inventoryProduct = $inventoryController->getProductInventory($id_product, null)
 $reviews = $reviewController->getAllReviewUser($id_product);
 
 ?>
+<style>
+    .card-title-container a {
+        font-weight: bold;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: auto;
+        line-height: 1.2em;
+        max-height: calc(1.2em * 2);
+    }
+</style>
 
 <div class="container py-5">
     <!-- Sản phẩm -->
@@ -109,7 +122,7 @@ $reviews = $reviewController->getAllReviewUser($id_product);
                 <?= $productById['description'] ?>
             </div>
             <div class="show-more-wrapper">
-                <span id="toggleDescription" class="show-more-btn" style="display: none; cursor:pointer; color:blue;">Xem thêm</span>
+                <span id="toggleDescription" class="show-more-btn" style="display: none; cursor:pointer;">Xem thêm</span>
             </div>
         </div>
 
@@ -146,7 +159,7 @@ $reviews = $reviewController->getAllReviewUser($id_product);
 
     <!-- Sp tương tự -->
     <div class="mt-5">
-        <h4>Sản phẩm tương tự</h4>
+        <h4 class="fw-bold text-center mb-4 fs-4 text-primary">Sản phẩm tương tự</h4>
         <div class="row row-cols-1 row-cols-md-5 g-4">
             <?php
             $count = 0;
