@@ -101,7 +101,7 @@ class OrderItem extends Model
         INNER JOIN products p ON od.product_id = p.id
         INNER JOIN orders o ON od.order_id = o.id
         WHERE p.supplier_id = :supplier_id
-          AND o.status_id NOT IN (1, 5, 6)
+          AND o.status_id NOT IN (2, 3, 4)
           AND o.isDeleted = 0
     ";
 
