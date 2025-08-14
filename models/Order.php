@@ -78,6 +78,16 @@ class Order extends Model
         return (int) $stmt->fetchColumn();
     }
 
+    public function GetOrdersThisWeek()
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 
+                                                    AND YEARWEEK(create_at, 1) = YEARWEEK(CURDATE(), 1)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
+
     public function countOrdersByStatusThisWeek($statusId)
     {
         $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 
@@ -328,6 +338,4 @@ class Order extends Model
         $stmt->execute(['shippingId' => $shippingId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
-    
 }

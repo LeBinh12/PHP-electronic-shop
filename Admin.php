@@ -58,6 +58,12 @@ $employeeData = $employeeController->getCurrentEmployee() ?? null;
 
 $_SESSION['user_type'] = $_SESSION['user_type'] ?? null;
 $_SESSION['admin'] = $_SESSION['admin'] ?? null;
+
+if (isset($_GET['export_excel'])) {
+    $this->exportProductsExcel();
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>

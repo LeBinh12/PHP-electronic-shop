@@ -15,6 +15,8 @@ use Firebase\JWT\Key;
 use Respect\Validation\Validator as v;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 require 'vendor/autoload.php';
 
@@ -346,6 +348,50 @@ class UserController extends BaseController
     {
         return $this->userModel->countUserAll();
     }
+
+    public function exportUserExcel()
+    {
+        $users = $this->userModel->all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Tên Người dùng');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Số điện thoại');
+        $sheet->setCellValue('E1', 'Địa chỉ');
+        $sheet->setCellValue('F1', 'Ngày tham gia');
+
+
+        $row = 2;
+
+        foreach ($users as $user) {
+
+            $sheet->setCellValue('A' . $row, $user['id']);
+            $sheet->setCellValue('B' . $row, $user['FullName']);
+            $sheet->setCellValue('C' . $row, $user['Email']);
+            $sheet->setCellValue('D' . $row, $user['Phone']);
+            $sheet->setCellValue('E' . $row, $user['Address']);
+            $sheet->setCellValue('F' . $row, $user['CreatedAt']);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'products_' . date('Y-m-d') . '.xlsx';
+
+        if (ob_get_length()) ob_end_clean();
+
+        $filepath = 'exports/' . $filename;
+        $writer->save($filepath);
+        echo "<script>
+        window.location.href='$filepath'; 
+setTimeout(function() {
+        window.location.href = 'Admin.php?page=modules/Admin/Dashboard/Dashboard.php';
+    }, 1000);</script>";
+    }
+
+
 
     public function countIsDeleted()
     {

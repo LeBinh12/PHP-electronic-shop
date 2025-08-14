@@ -1,5 +1,17 @@
 <?php
 // Dữ liệu giả
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_excel'])) {
+    $product->exportProductsExcel();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_excel_user'])) {
+    $userController->exportUserExcel();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_excel_order'])) {
+    $orderController->exportOrderThisWeekExcel();
+}
 $totalUsers = $userController->countUserAll();
 $totalProducts = $product->countProductAll();
 $totalOrdersThisWeek = $orderController->countOrderThisWeek();
@@ -64,25 +76,59 @@ $data3 = [
         <div class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="card text-white" style="background: linear-gradient(45deg, #6a11cb, #2575fc);">
-                    <div class="card-body">
-                        <h5><i class="fas fa-user me-2"></i><?= $totalUsers ?></h5>
-                        <p class="mb-0">Người dùng</p>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5><i class="fas fa-box me-2"></i><?= $totalUsers ?></h5>
+                            <p class="mb-0">Người dùng</p>
+                        </div>
+                        <div>
+                            <form action="" method="post">
+                                <button type="submit" name="export_excel_user"
+                                    class="btn btn-light btn-sm"
+                                    style="color:#11998e; font-weight:bold;">
+                                    <i class="fas fa-file-excel"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">
-                    <div class="card-body">
-                        <h5><i class="fas fa-box me-2"></i><?= $totalProducts ?></h5>
-                        <p class="mb-0">Sản phẩm</p>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5><i class="fas fa-box me-2"></i><?= $totalProducts ?></h5>
+                            <p class="mb-0">Sản phẩm</p>
+                        </div>
+                        <div>
+                            <form action="" method="post">
+                                <button type="submit" name="export_excel"
+                                    class="btn btn-light btn-sm"
+                                    style="color:#11998e; font-weight:bold;">
+                                    <i class="fas fa-file-excel"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card text-white" style="background: linear-gradient(45deg, #f7971e, #ffd200);">
-                    <div class="card-body">
-                        <h5><i class="fas fa-calendar-week me-2"></i><?= $totalOrdersThisWeek ?></h5>
-                        <p class="mb-0">Đơn tuần này</p>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h5><i class="fas fa-box me-2"></i><?= $totalOrdersThisWeek ?></h5>
+                            <p class="mb-0">Đơn tuần này</p>
+                        </div>
+                        <div>
+                            <form action="" method="post">
+                                <button type="submit" name="export_excel_order"
+                                    class="btn btn-light btn-sm"
+                                    style="color:#11998e; font-weight:bold;">
+                                    <i class="fas fa-file-excel"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

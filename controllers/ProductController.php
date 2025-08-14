@@ -4,10 +4,15 @@ require_once './models/Order.php';
 require_once './models/OrderItem.php';
 require_once './models/Image.php';
 require_once './models/Review.php';
+require_once './models/Category.php';
+require_once './models/Supplier.php';
+
 require_once './core/RedisCache.php';
 require_once './controllers/BaseController.php';
 
 use Respect\Validation\Validator as v;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ProductController extends BaseController
 {
@@ -20,6 +25,9 @@ class ProductController extends BaseController
 
     private $reviewModel;
 
+    private $categoryModel;
+    private $supplierModel;
+
 
     public function __construct()
     {
@@ -30,6 +38,8 @@ class ProductController extends BaseController
         $this->inventoryModel = new Inventory();
         $this->imageModel = new Image();
         $this->reviewModel = new Review();
+        $this->categoryModel = new Category();
+        $this->supplierModel = new Supplier();
     }
 
     public function getAll()
@@ -121,6 +131,58 @@ class ProductController extends BaseController
     {
         return $this->productModel->countDeleted();
     }
+
+    public function exportProductsExcel()
+    {
+        $products = $this->productModel->all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Tên sản phẩm');
+        $sheet->setCellValue('C1', 'Giá');
+        $sheet->setCellValue('D1', 'Giảm giá');
+        $sheet->setCellValue('E1', 'Mô tả');
+        $sheet->setCellValue('F1', 'Ảnh');
+        $sheet->setCellValue('G1', 'Loại sản phẩm');
+        $sheet->setCellValue('H1', 'Nhà cung cấp');
+        $sheet->setCellValue('I1', 'Content');
+        $sheet->setCellValue('J1', 'Ngày tạo');
+
+        $row = 2;
+
+        foreach ($products as $product) {
+            $category = $this->categoryModel->find($product['category_id']);
+            $supplier = $this->supplierModel->find($product['supplier_id']);
+            $sheet->setCellValue('A' . $row, $product['id']);
+            $sheet->setCellValue('B' . $row, $product['name']);
+            $sheet->setCellValue('C' . $row, $product['price']);
+            $sheet->setCellValue('D' . $row, $product['discount']);
+            $sheet->setCellValue('E' . $row, $product['description']);
+            $sheet->setCellValue('F' . $row, $product['image_url']);
+            $sheet->setCellValue('G' . $row, $category['name']);
+            $sheet->setCellValue('H' . $row, $supplier['name']);
+            $sheet->setCellValue('I' . $row, $product['content']);
+            $sheet->setCellValue('J' . $row, $product['created_at']);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'products_' . date('Y-m-d') . '.xlsx';
+
+        if (ob_get_length()) ob_end_clean();
+
+        $filepath = 'exports/' . $filename;
+        $writer->save($filepath);
+        echo "<script>
+        window.location.href='$filepath'; 
+setTimeout(function() {
+        window.location.href = 'Admin.php?page=modules/Admin/Dashboard/Dashboard.php';
+    }, 1000);</script>";
+    }
+
+
 
     public function getFilterProducts($categoryId, $supplierId, $keyword, $limit = 8, $offset = 0, array $priceRanges = [], $isDeleted = 0)
     {
@@ -269,15 +331,12 @@ class ProductController extends BaseController
                 ];
             }
 
-
-
             if ($this->orderItemModel->hasPendingOrCompletedOrdersByProduct($id)) {
                 return [
                     'success' => false,
                     'message' => 'Không thể xóa sản phẩm vì đang có đơn hàng liên quan với trạng thái 1 hoặc 6'
                 ];
             }
-
             $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
 
             if (is_array($orderId) && count($orderId) > 0) {
@@ -317,11 +376,10 @@ class ProductController extends BaseController
             }
             $orderId = $this->orderItemModel->getOrderIdsByProductId($id);
             if (is_array($orderId) && count($orderId) > 0) {
-                $this->orderItemModel->deleteByColumn('product_id', $id);
-
                 foreach ($orderId as $item) {
                     $this->orderModel->delete($item);
                 }
+                $this->orderItemModel->deleteByColumn('product_id', $id);
             }
 
             $review = $this->reviewModel->getByColumn('product_id', $id);

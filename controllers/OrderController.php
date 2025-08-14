@@ -4,18 +4,39 @@ require_once './models/Order.php';
 require_once './models/Shipping.php';
 require_once './models/OrderItem.php';
 
+require_once './models/Employee.php';
+
+require_once './models/User.php';
+
+require_once './models/Branch.php';
+
+require_once './models/Status.php';
+
+
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 class OrderController
 {
     private $orderModel;
     private $shippingModel;
     private $orderItemModel;
+    private $employeeModel;
+    private $userModel;
+    private $branchModel;
+    private $statusModel;
 
     public function __construct()
     {
         $this->orderModel = new Order();
         $this->shippingModel = new Shipping();
         $this->orderItemModel = new OrderItem();
+        $this->employeeModel = new Employee();
+        $this->userModel = new User();
+        $this->branchModel = new Branch();
+        $this->statusModel = new Status();
     }
 
     public function add($data)
@@ -119,6 +140,61 @@ class OrderController
     {
         return $this->orderModel->countOrdersThisWeek();
     }
+
+    public function exportOrderThisWeekExcel()
+    {
+        $orders = $this->orderModel->all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Mã đơn hàng');
+        $sheet->setCellValue('C1', 'Tổng tiền đơn hàng');
+        $sheet->setCellValue('D1', 'Trạng thái đơn hàng');
+        $sheet->setCellValue('E1', 'Trạng thái giao hàng');
+        $sheet->setCellValue('F1', 'Khách hàng');
+        $sheet->setCellValue('G1', 'Chi nhánh');
+        $sheet->setCellValue('H1', 'Nhân viên');
+        $sheet->setCellValue('I1', 'Ghi chú');
+        $sheet->setCellValue('J1', 'Ngày đặt');
+
+        $row = 2;
+
+        foreach ($orders as $order) {
+
+            $status = $this->statusModel->find($order['status_id']);
+            $shipping = $this->shippingModel->find($order['shipping_id']);
+            $user = $this->userModel->find($order['user_id']);
+            $branch = $this->branchModel->find($order['branch_id']);
+            $employee = $this->employeeModel->find($order['employee_id']) ?? 'Chưa có người nhận';
+            $sheet->setCellValue('A' . $row, $order['id']);
+            $sheet->setCellValue('B' . $row, $order['code']);
+            $sheet->setCellValue('C' . $row, $order['total_amount']);
+            $sheet->setCellValue('D' . $row, $status['name']);
+            $sheet->setCellValue('E' . $row, $shipping['status']);
+            $sheet->setCellValue('F' . $row, $user['FullName']);
+            $sheet->setCellValue('G' . $row, $branch['name']);
+            $sheet->setCellValue('H' . $row, $employee['name']);
+            $sheet->setCellValue('I' . $row, $order['note']);
+            $sheet->setCellValue('J' . $row, $order['create_at']);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'products_' . date('Y-m-d') . '.xlsx';
+
+        if (ob_get_length()) ob_end_clean();
+
+        $filepath = 'exports/' . $filename;
+        $writer->save($filepath);
+        echo "<script>
+        window.location.href='$filepath'; 
+setTimeout(function() {
+        window.location.href = 'Admin.php?page=modules/Admin/Dashboard/Dashboard.php';
+    }, 1000);</script>";
+    }
+
 
     public function countOrdersByStatusThisWeek($statusId)
     {
