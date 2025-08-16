@@ -49,38 +49,45 @@ $totalOrdersIsDeleted = $orderController->countIsDeleted();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($listDeletedOrders as $order): ?>
+                <?php if (empty($listDeletedOrders)): ?>
                     <tr>
-                        <td><?= $order['code'] ?></td>
-                        <td><?= htmlspecialchars($order['FullName']) ?></td>
-                        <td><?= date('d/m/Y H:i', strtotime($order['create_at'])) ?></td>
-                        <td><span class="badge bg-danger"><?= ucfirst($order['status_name']) ?></span></td>
-                        <td><?= number_format($order['total_amount'], 0, ',', '.') ?> đ</td>
-                        <td>
-                            <?= $order['employee_id'] ? "Đã có người nhận" : 'không có nhân viên phụ trách' ?>
-                        </td>
-                        <td>
-                            <div class="action-buttons d-flex gap-2">
-                                <button class="btn btn-sm btn-success restore-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#restoreOrderModal"
-                                    data-id="<?= $order['order_id'] ?>"
-                                    data-name="Đơn hàng #<?= $order['code'] ?>">
-                                    <i class="fas fa-undo me-1"></i> Khôi phục
-                                </button>
-
-                                <button class="btn btn-sm btn-danger delete-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#deleteOrderModal"
-                                    data-id="<?= $order['order_id'] ?>"
-                                    data-name="Đơn hàng #<?= $order['code'] ?>">
-                                    <i class="fas fa-trash-alt me-1"></i> Xóa
-                                </button>
-                            </div>
-                        </td>
+                        <td colspan="7" class="text-center">Không có đơn hàng nào trong thùng rác.</td>
                     </tr>
-                <?php endforeach ?>
+                <?php else: ?>
+                    <?php foreach ($listDeletedOrders as $order): ?>
+                        <tr>
+                            <td><?= $order['code'] ?></td>
+                            <td><?= htmlspecialchars($order['FullName']) ?></td>
+                            <td><?= date('d/m/Y H:i', strtotime($order['create_at'])) ?></td>
+                            <td><span class="badge bg-danger"><?= ucfirst($order['status_name']) ?></span></td>
+                            <td><?= number_format($order['total_amount'], 0, ',', '.') ?> đ</td>
+                            <td>
+                                <?= $order['employee_id'] ? "Đã có người nhận" : 'không có nhân viên phụ trách' ?>
+                            </td>
+                            <td>
+                                <div class="action-buttons d-flex gap-2">
+                                    <button class="btn btn-sm btn-success restore-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#restoreOrderModal"
+                                        data-id="<?= $order['order_id'] ?>"
+                                        data-name="Đơn hàng #<?= $order['code'] ?>">
+                                        <i class="fas fa-undo me-1"></i> Khôi phục
+                                    </button>
+
+                                    <button class="btn btn-sm btn-danger delete-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteOrderModal"
+                                        data-id="<?= $order['order_id'] ?>"
+                                        data-name="Đơn hàng #<?= $order['code'] ?>">
+                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php endif; ?>
             </tbody>
+
         </table>
     </div>
 </div>

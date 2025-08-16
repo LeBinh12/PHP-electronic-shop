@@ -37,7 +37,7 @@ require_once 'DeleteBranch.php';
                     <th>Số điện thoại</th>
                     <th>Email</th>
                     <th>Ngày tạo</th>
-                    <th>Chức năng</th>
+                    <th style="width: 250px">Chức năng</th>
                 </tr>
             </thead>
             <tbody>

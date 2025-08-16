@@ -67,13 +67,13 @@ $totalPages = max(1, ceil($totalRows / $limit));
                         <th style="width: 200px">Trạng thái</th>
                         <th style="width: 210px">Tổng tiền</th>
                         <th style="width: 100px">Nhân viên phụ trách</th>
-                        <th style="width: 350px">Chức năng</th>
+                        <th style="width: 400px">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <?php if (empty($listOrders)): ?>
                         <tr>
-                            <td colspan="6" class="text-center">Không tìm thấy đơn hàng nào.</td>
+                            <td colspan="7" class="text-center">Không tìm thấy đơn hàng nào.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($listOrders as $item): ?>

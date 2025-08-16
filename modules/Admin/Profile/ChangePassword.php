@@ -41,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] && isset($_POST['ChangeToPassword'])) {
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label"></label>
+            <label class="form-label">Nhập mật khẩu hiện tại</label>
             <input type="password" class="form-control" name="current_password" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Mật khẩu mới</label>
+            <label class="form-label">Nhập mật khẩu mới</label>
             <input type="password" class="form-control" name="new_password" required>
           </div>
           <div class="mb-3">
