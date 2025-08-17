@@ -91,7 +91,6 @@ $getCategory = $category->getAll();
                                     } else {
                                     ?>
                                         <p class="text-muted product-price text-decoration-line-through"><?= number_format($originalPrice, 0, ',', '.') ?>₫</p>
-                                        <br>
                                         <p class="text-danger product-price  fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</p>
                                     <?php
                                     }
