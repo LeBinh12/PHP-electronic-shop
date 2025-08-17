@@ -17,11 +17,9 @@ if (isset($_GET['supplier']) && $_GET['supplier'] !== '') {
 
 if (isset($_GET['brand']) && $_GET['brand'] !== '') {
     $arrayBrand = (array) $_GET['brand'];
-    var_dump($arrayBrand);
 }
 if (isset($_GET['price']) && $_GET['price'] !== '') {
     $arrayPrice = (array) $_GET['price'];
-    var_dump($arrayPrice);
 }
 
 if (isset($_GET['price']) && $_GET['price'] !== '') {

@@ -103,7 +103,7 @@ class Role extends Model
 
     public function existsByNameRole($name): bool
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} WHERE role_menu = :name AND isDeleted = 0");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} WHERE role_name = :name AND isDeleted = 0");
         $stmt->execute(['name' => $name]);
         return $stmt->fetchColumn() > 0;
     }

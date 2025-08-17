@@ -78,6 +78,13 @@ class RoleController
             return ['success' => false, 'message' => 'Phải nhập tên quyền và chọn ít nhất 1 chức năng'];
         }
 
+        if ($this->roleModel->existsByNameRole($roleName)) {
+            return [
+                'success' => false,
+                'message' => 'Tên chức năng đã tồn tại!'
+            ];
+        }
+
         $roleId = $this->roleModel->insert([
             'role_name' => $roleName,
             'isDeleted' => 0

@@ -5,7 +5,7 @@
     <div class="d-flex align-items-center">
       <img src="
         <?=
-        $_SESSION['admin'] ? 'https://cdn3.f-cdn.com/contestentries/1733723/31242958/5e49683f03d42_thumb900.jpg' :
+        $_SESSION['admin'] ? 'https://cdn3d.iconscout.com/3d/premium/thumb/admin-10961827-8772657.png' :
           'https://cdn3d.iconscout.com/3d/premium/thumb/employee-avatar-10232456-8264146.png';
         ?>
       " class="rounded-circle border border-3 border-white shadow" width="100" height="100">
@@ -48,8 +48,8 @@
   $lastLogin = '2025-07-11 08:00:00';
   ?>
 
-  <div class="row text-center mt-4 g-4">
-    <!-- Đơn đã xử lý -->
+  <!-- <div class="row text-center mt-4 g-4">
+     Đơn đã xử lý
     <div class="col-md-3">
       <div class="card border-0 shadow bg-success-subtle position-relative overflow-hidden">
         <div class="position-absolute top-0 end-0 me-3 mt-3">
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <!-- Đơn đang xử lý -->
+     Đơn đang xử lý 
     <div class="col-md-3">
       <div class="card border-0 shadow bg-warning-subtle position-relative overflow-hidden">
         <div class="position-absolute top-0 end-0 me-3 mt-3">
@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <!-- Doanh thu tháng -->
+     Doanh thu tháng 
     <div class="col-md-3">
       <div class="card border-0 shadow bg-info-subtle position-relative overflow-hidden">
         <div class="position-absolute top-0 end-0 me-3 mt-3">
@@ -91,7 +91,7 @@
       </div>
     </div>
 
-    <!-- Lần đăng nhập gần nhất -->
+     Lần đăng nhập gần nhất 
     <div class="col-md-3">
       <div class="card border-0 shadow bg-danger-subtle position-relative overflow-hidden">
         <div class="position-absolute top-0 end-0 me-3 mt-3">
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <!-- Thông tin người dùng -->

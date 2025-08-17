@@ -19,40 +19,46 @@
             </a> -->
 
             <!-- Chat dropdown -->
-            <li class="nav-item dropdown mx-2">
-                <a class="nav-link text-black position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-chat" style="font-size: 1.4rem;"></i>
-                    <?php if (!empty($userList)) { ?>
-                        <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger">
-                            <?= count($userList) ?>
-                        </span>
-                    <?php } ?>
-                </a>
+            <?php
+            if (hasPermission('modules/Admin/Chat')) {
+            ?>
+                <li class="nav-item dropdown mx-2">
+                    <a class="nav-link text-black position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-chat" style="font-size: 1.4rem;"></i>
+                        <?php if (!empty($userList)) { ?>
+                            <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?= count($userList) ?>
+                            </span>
+                        <?php } ?>
+                    </a>
 
-                <ul class="dropdown-menu dropdown-menu-end shadow p-2" style="width: 280px; max-height: 350px; overflow-y: auto; background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 10px;">
-                    <li>
-                        <h6 class="dropdown-header text-primary fw-bold">💬 Tin nhắn đến</h6>
-                    </li>
-                    <?php if (!empty($userList)) { ?>
-                        <?php foreach ($userList as $user) { ?>
+                    <ul class="dropdown-menu dropdown-menu-end shadow p-2" style="width: 280px; max-height: 350px; overflow-y: auto; background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 10px;">
+                        <li>
+                            <h6 class="dropdown-header text-primary fw-bold">💬 Tin nhắn đến</h6>
+                        </li>
+                        <?php if (!empty($userList)) { ?>
+                            <?php foreach ($userList as $user) { ?>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2 px-3" href="?chat_user_id=<?= htmlspecialchars($user) ?>">
+                                        <i class="bi bi-person-circle text-success me-2" style="font-size: 1.2rem;"></i>
+                                        <span class="text-dark custom-text">Người dùng: <strong> <?= $userController->getById($user)['FullName'] ?? "Không có tên"  ?></strong></span>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        <?php } else { ?>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center py-2 px-3" href="?chat_user_id=<?= htmlspecialchars($user) ?>">
-                                    <i class="bi bi-person-circle text-success me-2" style="font-size: 1.2rem;"></i>
-                                    <span class="text-dark custom-text">Người dùng: <strong> <?= $userController->getById($user)['FullName'] ?? "Không có tên"  ?></strong></span>
-                                </a>
+                                <span class="dropdown-item fst-italic">Không có tin nhắn nào</span>
                             </li>
                         <?php } ?>
-                    <?php } else { ?>
                         <li>
-                            <span class="dropdown-item fst-italic">Không có tin nhắn nào</span>
+                            <hr class="dropdown-divider">
                         </li>
-                    <?php } ?>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <!-- <li><a class="dropdown-item text-end text-danger" href="Admin.php"><i class="bi bi-box-arrow-left me-1"></i>Đóng</a></li> -->
-                </ul>
-            </li>
+                        <!-- <li><a class="dropdown-item text-end text-danger" href="Admin.php"><i class="bi bi-box-arrow-left me-1"></i>Đóng</a></li> -->
+                    </ul>
+                </li>
+            <?php
+            }
+            ?>
 
             <!-- Profile -->
             <a class="nav-link text-black mx-2" href="Admin.php?page=modules/Admin/Profile/index.php" style="transition: color 0.3s, transform 0.2s;">

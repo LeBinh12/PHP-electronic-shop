@@ -191,16 +191,16 @@ setTimeout(function() {
         $cacheKey = "products:filter:$categoryId:$supplierId:$keyword:$priceKey:$limit:$offset:$isDeleted";
         if (RedisCache::exists($cacheKey)) {
 
-            $end = microtime(true);
-            echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
+            // $end = microtime(true);
+            // echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
             return json_decode(RedisCache::get($cacheKey), true);
         }
 
         $products = $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset, $priceRanges, $isDeleted);
         RedisCache::set($cacheKey, json_encode($products));
 
-        $end = microtime(true);
-        echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
+        // $end = microtime(true);
+        // echo "⏱ Thời gian xử lý: " . round(($end - $start) * 1000, 2) . " ms";
 
         return $products;
         // return $this->productModel->getFilteredProducts($categoryId, $supplierId, $keyword, $limit, $offset);

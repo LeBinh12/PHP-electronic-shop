@@ -67,7 +67,11 @@ $getCategory = $category->getAll();
             <?php foreach (array_chunk($featuredProducts, 6) as $i => $group) { ?>
                 <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
                     <div class="row g-3 product-list">
-                        <?php foreach ($group as $item) { ?>
+                        <?php foreach ($group as $item) {
+                            $originalPrice = $item['price'];
+                            $discount = $item['discount'];
+                            $finalPrice = $originalPrice * (1 - $discount / 100);
+                        ?>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="ecom-product-card h-100 shadow-sm">
                                     <span class="ecom-product-badge new">Mới</span>
@@ -79,7 +83,19 @@ $getCategory = $category->getAll();
                                             <?= htmlspecialchars($item['name']) ?>
                                         </a>
                                     </h6>
-                                    <div class="ecom-price mb-2"><?= number_format($item['price'], 0, ',', '.') ?>₫</div>
+                                    <?php
+                                    if ($discount <= 0) {
+                                    ?>
+                                        <p class="product-price mb-2">Giá: <?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <p class="text-muted product-price text-decoration-line-through"><?= number_format($originalPrice, 0, ',', '.') ?>₫</p>
+                                        <br>
+                                        <p class="text-danger product-price  fw-bold"><?= number_format($finalPrice, 0, ',', '.') ?>₫</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         <?php } ?>

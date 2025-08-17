@@ -48,7 +48,7 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                     <tr>
                         <th style="width: 50px">ID</th>
                         <th style="width: 180px">Tên khách hàng</th>
-                        <th style="width: 200px">Địa chỉ người gửi</th>
+                        <th style="width: 200px">Địa chỉ người nhận</th>
                         <th style="width: 200px">Địa chỉ hiện tại</th>
 
                         <th style="width: 380px">Chức năng</th>
@@ -88,14 +88,19 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                                         <i class="bi bi-geo-alt me-1"></i> Vị trí hiện tại
                                     </button>
 
-
-                                    <button
-                                        class="btn btn-warning btn-sm text-white"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#transferModal"
-                                        onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
-                                        Chuyển đơn
-                                    </button>
+                                    <?php
+                                    if (hasPermission('modules/Admin/Shipping/OrderTransfer.php')) {
+                                    ?>
+                                        <button
+                                            class="btn btn-warning btn-sm text-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#transferModal"
+                                            onclick="loadTransferForm('<?= $order['code'] ?>', '<?= $order['shipping_address'] ?>', '<?= $order['shipping_id'] ?>')">
+                                            Chuyển đơn
+                                        </button>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                     <?php }

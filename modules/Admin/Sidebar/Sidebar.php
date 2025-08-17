@@ -59,12 +59,20 @@ $is_stats_active = in_array($currentPage, [
       <a href="Admin.php?page=modules/Admin/Shipping/Shipping.php"><i class="fas fa-truck"></i> Quản lý giao hàng</a>
     </li>
     <li class="dropdown">
-      <div id="dropdown-toggle" class="dropdown-toggle">
-        <span class="toggle-label">
-          <i class="fas fa-trash-alt" style="margin-right: 8px; width: 20px;"></i> Thùng rác
-        </span>
-        <span class="arrow <?= $is_stats_active ? 'open' : '' ?>">&#9656;</span>
-      </div>
+
+      <?php
+      if (hasPermission('modules/Admin/RecycleBin')) {
+      ?>
+        <div id="dropdown-toggle" class="dropdown-toggle">
+          <span class="toggle-label">
+            <i class="fas fa-trash-alt" style="margin-right: 8px; width: 20px;"></i> Thùng rác
+          </span>
+          <span class="arrow <?= $is_stats_active ? 'open' : '' ?>">&#9656;</span>
+        </div>
+
+      <?php
+      }
+      ?>
 
       <ul id="dropdown-menu" class="dropdown-menu <?= $is_stats_active ? 'show' : '' ?>">
         <li class="<?= ($currentPage == 'modules/Admin/RecycleBin/Products/Product.php') ? 'active-sub' : '' ?>">

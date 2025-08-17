@@ -46,12 +46,13 @@ class MenuController
     public function add($data)
     {
         try {
-            if ($this->menuModel->existsByNameMenu($data['name'])) {
+            if ($this->menuModel->existsByNameMenu($data['menu_name'])) {
                 return [
                     'success' => false,
                     'message' => 'Tên chức năng đã tồn tại!'
                 ];
             }
+
             $menu = $this->menuModel->insert($data);
             return [
                 'success' => true,
